@@ -54,7 +54,7 @@ ENV_GLOBALS =
     BUNDLE_ID: "com.jtomaszewski.ionicstarter.production"
     BUNDLE_NAME: "clurtch"
 
-    BACKEND_URL: "https://ionicstarter.com"
+    BACKEND_URL: "https://clurtch-v1.azurewebsites.net"
     WEINRE_ADDRESS: null
 
     # If those 2 variables are defined, the app will be deployed to the remote server after compiling the release.
