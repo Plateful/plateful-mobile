@@ -1,0 +1,3 @@
+[submodule "vendor/plugins/ionic-plugins-keyboard"]
+	path = vendor/plugins/ionic-plugins-keyboard
+	url = https://github.com/joelcoxokc/clurtch-prototype

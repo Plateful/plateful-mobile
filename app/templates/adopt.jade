@@ -1,0 +1,15 @@
+html
+  body
+    //
+        This template loads for the 'tab.adopt' state (app.js)
+    ion-view(title='Adopt A Pet')
+      ion-content(has-header='true', has-tabs='true')
+        .list.list-inset
+          label.item.item-input
+            span.input-label Your name
+            input(type='text')
+          label.item.item-input
+            span.input-label Your email
+            input(type='email')
+          toggle Subscribe To Newsletter
+          button.button.button-positive.button-block Adopt

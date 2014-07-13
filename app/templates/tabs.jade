@@ -1,0 +1,23 @@
+html
+  body
+    //
+
+        Create tabs with an icon and label, using the tabs-positive style.
+        Each tab's child <nav-view> directive will have its own
+        navigation history that also transitions its views in and out.
+    ion-tabs.tabs-icon-top.tabs-default
+      // Pets Tab
+      ion-tab(title='Find', icon='icon ion-ios7-search', href='#/tab/pets')
+        ion-nav-view(name='pets-tab')
+      // Adopt Tab
+      ion-tab(title='Home', icon='icon ion-ios7-home', href='#/tab/adopt')
+        ion-nav-view(name='adopt-tab')
+      // About Tab
+      ion-tab(title='Share', icon='icon ion-ios7-camera', href='#/tab/about')
+        ion-nav-view(name='about-tab')
+
+      ion-tab(title='Contacts', icon='icon ion-ios7-contact', href='#/tab/about')
+        ion-nav-view(name='about-tab')
+
+      ion-tab(title='Me', icon='icon ion-ios7-cog-outline', href='#/tab/about')
+        ion-nav-view(name='about-tab')

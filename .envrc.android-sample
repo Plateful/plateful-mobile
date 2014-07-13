@@ -1,0 +1,8 @@
+# Copy this file to '.envrc' and fill in the variables.
+
+export CORDOVA_PLATFORM="android"
+
+export ANDROID_KEYSTORE_NAME="ionicstarter"
+export ANDROID_KEYSTORE_PASSWORD="123"
+export ANDROID_ALIAS_NAME="ionicstarter"
+export ANDROID_ALIAS_PASSWORD="456"

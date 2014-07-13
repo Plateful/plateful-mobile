@@ -8,6 +8,7 @@ module.exports = function(app) {
   app.use(cors())
   // app.use('/api/businesses', require('./api/business'));
   app.use('/api/users', require('./api/user'));
+  app.use('/api/businesses', require('./api/business'));
 
   // app.use('/auth', require('./auth'));
 

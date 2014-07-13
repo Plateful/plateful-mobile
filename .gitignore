@@ -1,7 +1,8 @@
+platforms/^.*
 node_modules
-public
-.tmp
-.sass-cache
-client/bower_components
+assets/components
+www
 dist
-/server/config/local.env.js
+/keys
+.envrc
+npm-debug.log
