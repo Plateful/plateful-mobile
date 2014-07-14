@@ -8,9 +8,9 @@ angular.module('clurtch.components.tabs', [
 .config ($stateProvider, $urlRouterProvider) ->
   $stateProvider
     .state "tab",
-        url: "/tab"
-        abstract: true
-        templateUrl: "js/components/tabs/tabs.html"
+      url: "/tab"
+      abstract: true
+      templateUrl: "js/components/tabs/tabs.html"
 
     .state "tab.find",
       url: "/find"
