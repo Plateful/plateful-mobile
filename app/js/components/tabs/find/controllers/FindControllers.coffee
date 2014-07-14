@@ -1,6 +1,6 @@
-angular.module('clurtch.components.tabs.find.controllers', [])
-
-
-.controller 'FindControllers', [
-  ()->
-]
+# angular.module('clurtch.components.tabs.find.controllers', [])
+#
+#
+# .controller 'FindControllers', [
+#   ()->
+# ]

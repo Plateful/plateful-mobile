@@ -1,7 +1,7 @@
 # ==> Initialize angular's app.
 app = angular.module("clurtch", [
   "ionic"
-  # "clurtch.components"
+  "clurtch.components"
 ])
 
 for k, v of GLOBALS

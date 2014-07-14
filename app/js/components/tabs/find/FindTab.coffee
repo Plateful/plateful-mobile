@@ -1,10 +1,10 @@
 angular.module('clurtch.components.tabs.find', [
   'clurtch.components.tabs.find.controllers'
-  'clurtch.components.tabs.find.directives'
-  'clurtch.components.tabs.find.services'
+  # 'clurtch.components.tabs.find.directives'
+  # 'clurtch.components.tabs.find.services'
   ])
 
-.config ($stateProvider)->
+# .config ($stateProvider)->
 
     # ########
     #
