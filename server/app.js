@@ -5,9 +5,12 @@ var express = require('express');
 var _ = require('underscore');
 var app = express();
 
+
+
+
+var port = 9000;
 // var port = process.env.PORT or || 9000
 
-var port = 9000
 
 var server = require('http').createServer(app);
 
