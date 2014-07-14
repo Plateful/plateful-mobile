@@ -1,7 +1,6 @@
-div.row(ng-repeat="itemTuple in items")
-  div.col.col-50(ng-repeat="item in itemTuple")
-    div.card
-      div.item.item-divider {{item.name}}
-      div.item.item-text-wrap
-        img(src='{{item.image_url}}')
-      div.item.item-divider {{item.rating}}
+div(ng-repeat="item in items" style="width:50%; float:left")
+  div.card
+    div.item.item-divider {{item.name}}
+    div.item.item-text-wrap
+      img(src='{{item.image_url}}')
+    div.item.item-divider {{item.stars}}
