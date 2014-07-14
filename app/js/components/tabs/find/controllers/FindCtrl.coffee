@@ -4,8 +4,7 @@ angular.module('clurtch.components.tabs.find.controllers', [])
 .controller 'FindCtrl', [
   '$scope'
   'Yelp'
-  'SortTwoColumns'
-  ($scope, Yelp, SortTwoColumns)->
+  ($scope, Yelp)->
     Yelp.get().success (data) ->
-      $scope.items = $scope.sortTwoColumns data.businesses
+      $scope.items = data.businesses
 ]
