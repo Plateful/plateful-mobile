@@ -51,18 +51,11 @@ html
             h1.title Filters
             button.button.button-clear(ng-click="modal.hide()") Search
           ion-content
-            h4 Price
-            div.button-bar
-              a.button.button-small $
-              a.button.button-small $$
-              a.button.button-small $$$
-              a.button.button-small $$$$
             h4 Distance
-            div.button-bar
-              a.button.button-small(ng-class="{'active': active === 1}" ng-click="activateButton(1)") 2 blocks
-              a.button.button-small(ng-class="{'active': active === 2}" ng-click="activateButton(2)") 6 blocks
-              a.button.button-small(ng-class="{'active': active === 3}" ng-click="activateButton(3)") 1 mile
-              a.button.button-small(ng-class="{'active': active === 4}" ng-click="activateButton(4)") 5 miles
+              ng-single-select(options='distanceOptions')
+            h4 Price
+              ng-multi-select(options='priceOptions')
+
 
       ion-nav-bar(type='bar-positive' class="bar bar-positive", animation='nav-title-slide-ios7', back-button-type='button-icon', back-button-icon='ion-ios7-arrow-back')
 
