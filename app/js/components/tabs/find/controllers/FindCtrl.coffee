@@ -5,9 +5,9 @@ angular.module('clurtch.components.tabs.find.controllers', [])
   '$scope'
   '$rootScope'
   '$ionicModal'
-  'Yelp'
+  'Business'
   'Geo'
-  ($scope, $rootScope, $ionicModal, Yelp, Geo)->
+  ($scope, $rootScope, $ionicModal, Business, Geo)->
 
     # Creating filters options for filter modal
     $rootScope.distanceOptions = [
@@ -24,7 +24,7 @@ angular.module('clurtch.components.tabs.find.controllers', [])
     ]
 
     # Grab data from Yelp then load numeric ratings as stars
-    Yelp.get().success (data) ->
+    Business.get().success (data) ->
       $scope.items = data.businesses
       # Convert rating to stars in unicode
       for item in $scope.items

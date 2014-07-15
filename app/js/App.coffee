@@ -2,6 +2,7 @@
 app = angular.module("clurtch", [
   "ionic"
   "clurtch.components"
+  "clurtch.models"
 ])
 .controller('AppCtrl', [
   '$scope'
