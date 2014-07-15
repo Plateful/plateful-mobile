@@ -1,6 +1,8 @@
 # ==> Initialize angular's app.
 app = angular.module("clurtch", [
   "ionic"
+  "ngAnimate"
+  "fx.animations"
   "clurtch.components"
 ])
 .controller('AppCtrl', [
@@ -23,9 +25,9 @@ app = angular.module("clurtch", [
       animation: 'slide-in-up'
     )
     $ionicModal.fromTemplateUrl(
-      'commentModal.html'
+      'collectModal.html'
       ($ionicModal) ->
-        $rootScope.commentModal = $ionicModal
+        $rootScope.collectModal = $ionicModal
       scope: $scope
       animation: 'slide-in-up'
     )

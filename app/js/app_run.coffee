@@ -1,5 +1,4 @@
 app = angular.module("clurtch")
-
 ionic.Platform.ready ->
   app.config ($provide, $httpProvider) ->
     # Add support for PATCH requests

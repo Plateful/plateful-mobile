@@ -64,3 +64,47 @@ a.menu-card .item.item-divider{
 .over {
   background: red;
 }
+
+.circle-container {
+  margin-top:80%;
+  width:100%;
+  background-color: #DDD;
+  position:absolute;
+}
+.circle-container .circle {
+  float: left;
+  width: 80px;
+  height: 80px;
+  // margin:10px;
+  position: absolute;
+  text-align: center;
+  vertical-align: center;
+  font-size:50px;
+  background-color:white;
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  box-shadow: 0 2px 4px rgba(0,0,0,.3);
+  -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.3);
+
+
+}
+.circle-container .circle:nth-child(1) {
+  left:10px;
+  top: 20px;
+}
+.circle-container .circle:nth-child(2) {
+  left:39%;
+}
+.circle-container .circle:nth-child(3) {
+  right:10px;
+  top: 20px;
+}
+.circle-container .circle i {
+  margin:0;
+  margin-top:18%;
+}
+.circle-container .circle p {
+  display: block;
+  margin-top:20px;
+  font-size:12px;
+}
