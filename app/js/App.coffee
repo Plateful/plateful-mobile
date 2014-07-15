@@ -3,6 +3,19 @@ app = angular.module("clurtch", [
   "ionic"
   "clurtch.components"
 ])
+.controller('AppCtrl', [
+  '$scope'
+  '$rootScope'
+  '$ionicModal'
+  ($scope, $rootScope, $ionicModal) ->
+    $ionicModal.fromTemplateUrl(
+      'filterModal.html'
+      ($ionicModal) ->
+        $rootScope.modal = $ionicModal
+      scope: $scope
+      animation: 'slide-in-up'
+    )
+])
 
 for k, v of GLOBALS
   app.constant k, v

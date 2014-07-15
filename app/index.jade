@@ -43,15 +43,27 @@ html
     //- script(id="cdv-plugin-fb-connect-js" src="cdv-plugin-fb-connect.js")
 
   body(animation='slide-left-right-ios7')
-    //
-            The nav bar that will be updated as we navigate between views
-            Additional attributes set its look, nav-bar animation and icons
-            Icons provided by Ionicons: http://ionicons.com/
+    div(ng-controller='AppCtrl')
+      script(type='text/ng-template' id='filterModal.html')
+        div.modal
+          ion-header-bar
+            button.button.button-clear(ng-click="modal.hide()") Cancel
+            h1.title Filters
+            button.button.button-clear(ng-click="modal.hide()") Search
+          ion-content
+            h4 Price
+            div.button-bar
+              a.button.button-small $
+              a.button.button-small $$
+              a.button.button-small $$$
+              a.button.button-small $$$$
+            h4 Distance
+            div.button-bar
+              a.button.button-small(ng-class="{'active': active === 1}" ng-click="activateButton(1)") 2 blocks
+              a.button.button-small(ng-class="{'active': active === 2}" ng-click="activateButton(2)") 6 blocks
+              a.button.button-small(ng-class="{'active': active === 3}" ng-click="activateButton(3)") 1 mile
+              a.button.button-small(ng-class="{'active': active === 4}" ng-click="activateButton(4)") 5 miles
 
-    ion-nav-bar(type='bar-positive' class="bar bar-positive", animation='nav-title-slide-ios7', back-button-type='button-icon', back-button-icon='ion-ios7-arrow-back')
-    //
-            The views will be rendered in the <nav-view> directive below
-            Templates are in the /templates folder (but you could also
-            have templates inline in this html file if you'd like).
+      ion-nav-bar(type='bar-positive' class="bar bar-positive", animation='nav-title-slide-ios7', back-button-type='button-icon', back-button-icon='ion-ios7-arrow-back')
 
-    ion-nav-view
+      ion-nav-view
