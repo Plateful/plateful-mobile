@@ -6,7 +6,8 @@ angular.module('clurtch.components.tabs.find.controllers', [])
   '$rootScope'
   '$ionicModal'
   'Yelp'
-  ($scope, $rootScope, $ionicModal, Yelp)->
+  'Geo'
+  ($scope, $rootScope, $ionicModal, Yelp, Geo)->
     Yelp.get().success (data) ->
       $scope.items = data.businesses
       # Convert rating to stars in unicode
@@ -25,4 +26,15 @@ angular.module('clurtch.components.tabs.find.controllers', [])
         $rootScope.active = off
       else
         $rootScope.active = num
+
+    # Get the latitude and longitude of the user when app find tab loads
+    Geo.getLocation().then(
+      (position) ->
+        lat = position.coords.latitude
+        lng = position.coords.longitude
+        console.log lat, lng
+      (error) ->
+        console.log 'Unable to get current location: ' + error
+    )
+
 ])
