@@ -29,11 +29,11 @@ var businesses;
 // Get list of links
 exports.index = function(req, res) {
   // http://api.yelp.com/v2/search?term=food&location=San+Francisco
-  // yelp.search({term: "food", location: "yelp-san-francisco"}, function(error, data) {
+  yelp.search({term: "food", location: "yelp-san-francisco"}, function(error, data) {
   //   console.log(error);
-  //   businesses = data.businesses;
-    res.json(200, Business);
-  // });
+    businesses = data.businesses;
+    res.json(200, data);
+  });
 };
 
 // Get a single link
