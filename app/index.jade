@@ -56,6 +56,30 @@ html
             h4 Price
               ng-multi-select(options='priceOptions')
 
+      script(type="text/ng-template" id="rateModal.html")
+        div.modal
+          ion-header-bar
+            button.button(ng-click="rateModal.hide()") Cancel
+            h1.title Rate
+            button.button(ng-click="rateModal.hide()") Done
+          ion-content
+            h1 Rating modal
+      script(type="text/ng-template" id="imageModal.html")
+        div.modal
+          ion-header-bar
+            button.button(ng-click="imageModal.hide()") Cancel
+            h1.title Rate
+            button.button(ng-click="imageModal.hide()") Done
+          ion-content
+            h1 image modal
+      script(type="text/ng-template" id="commentModal.html")
+        div.modal
+          ion-header-bar
+            button.button(ng-click="commentModal.hide()") Cancel
+            h1.title Rate
+            button.button(ng-click="commentModal.hide()") Done
+          ion-content
+            h1 comment modal
 
       ion-nav-bar(type='bar-positive' class="bar bar-positive", animation='nav-title-slide-ios7', back-button-type='button-icon', back-button-icon='ion-ios7-arrow-back')
 

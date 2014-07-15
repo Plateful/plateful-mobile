@@ -1,7 +1,7 @@
 angular.module('clurtch.components.tabs', [
   'clurtch.components.tabs.find'
+  'clurtch.components.tabs.review'
   # 'clurtch.components.tabs.home'
-  # 'clurtch.components.tabs.share'
   # 'clurtch.components.tabs.notify'
   # 'clurtch.components.tabs.settings'
   ])
@@ -19,25 +19,19 @@ angular.module('clurtch.components.tabs', [
           templateUrl: "js/components/tabs/find/views/find.html"
           controller: "FindCtrl"
 
-    # .state "tab.pet-detail",
-    #   url: "/pet/:petId"
-    #   views:
-    #     "pets-tab":
-    #       templateUrl: "templates/pet-detail.html"
-    #       controller: "PetDetailCtrl"
-    #
-    # .state "tab.adopt",
-    #   url: "/adopt"
-    #   views:
-    #     "adopt-tab":
-    #       templateUrl: "templates/adopt.html"
-    #
-    # .state "tab.about",
-    #   url: "/about"
-    #   views:
-    #     "about-tab":
-    #       templateUrl: "templates/about.html"
+    .state "tab.review",
+      url: "/review"
+      views:
+        "tab-review":
+          templateUrl: "js/components/tabs/review/views/review.html"
+          # controller: 'ReviewCtrl'
 
+    # .state 'tab.review-comment',
+    #   url: 'reviews/comment'
+    #   views:
+    #     'tab-review':
+    #       tempateUrl: 'js/components/tabs/review/views/comment.html'
+    #       # controler: 'CommentCtrl'
 
     # if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise "/tab/find"
