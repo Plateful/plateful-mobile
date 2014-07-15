@@ -1,6 +1,6 @@
 // Request API access: http://www.yelp.com/developers/getting_started/api_access
 'use strict';
-
+var _ = require("underscore");
 var yelp = require("yelp").createClient({
   consumer_key: "hq_KSPooNh3W8tq4royv5w",
   consumer_secret: "5Vhff5nu84H1pNMCQ_52INZuSfA",
@@ -23,12 +23,14 @@ var yelp = require("yelp").createClient({
 
 // var _ = require('lodash');
 
+var businesses;
 
 // Get list of links
 exports.index = function(req, res) {
-  http://api.yelp.com/v2/search?term=food&location=San+Francisco
+  // http://api.yelp.com/v2/search?term=food&location=San+Francisco
   yelp.search({term: "food", location: "yelp-san-francisco"}, function(error, data) {
     console.log(error);
+    businesses = data.businesses;
     res.json(200, data);
   });
 };
@@ -40,6 +42,17 @@ exports.show = function(req, res) {
   //   if(!link) { return res.send(404); }
   //   return res.json(link);
   // });
+  // yelp.search({term: "food", location: "yelp-san-francisco"}, function(error, data) {
+  //   console.log(error);
+  //   res.json(200, business);
+  // });
+  if(businesses.length){
+    var business = _.where(businesses, {phone:req.params.id})
+    res.json(200, business[0]);
+  }else{
+    res.end(404, "Businesses are not found.")
+  }
+
 };
 
 // Creates a new link in the DB.

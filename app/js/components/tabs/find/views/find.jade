@@ -7,7 +7,7 @@ ion-header-bar.bar-positive.item-input-inset
 
 ion-content.bg-grey
   div(ng-repeat="item in items | filter:search" style="width:50%; float:left")
-    div.card
+    a.card(href="#/menu/{{item.phone}}")
       div.item.item-divider {{item.name}}
       div.item.item-text-wrap(style="text-align:center")
         img(src='{{item.image_url}}' style="width:80%")

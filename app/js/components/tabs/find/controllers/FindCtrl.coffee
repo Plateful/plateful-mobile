@@ -9,7 +9,6 @@ angular.module('clurtch.components.tabs.find.controllers', [])
   ($scope, $rootScope, $ionicModal, Yelp)->
     Yelp.get().success (data) ->
       $scope.items = data.businesses
-
       # Convert rating to stars in unicode
       for item in $scope.items
         tempRating = item.rating
