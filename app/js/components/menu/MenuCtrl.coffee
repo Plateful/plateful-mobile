@@ -8,7 +8,6 @@ angular.module('clurtch.components.menu')
     $scope.businessId = $stateParams.businessId
     $http.get('http://localhost:9000/api/businesses/' + $scope.businessId)
       .success((data) ->
-        console.log data
         $scope.item = data
       )
 ])

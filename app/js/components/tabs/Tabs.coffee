@@ -1,6 +1,6 @@
 angular.module('clurtch.components.tabs', [
   'clurtch.components.tabs.find'
-  # 'clurtch.components.tabs.home'
+  'clurtch.components.tabs.nearby'
   # 'clurtch.components.tabs.share'
   # 'clurtch.components.tabs.notify'
   # 'clurtch.components.tabs.settings'
@@ -18,6 +18,13 @@ angular.module('clurtch.components.tabs', [
         "tab-find":
           templateUrl: "js/components/tabs/find/views/find.html"
           controller: "FindCtrl"
+
+    .state "tab.nearby",
+      url: "/nearby"
+      views:
+        "tab-nearby":
+          templateUrl: "js/components/tabs/nearby/views/nearby.html"
+          controller: "NearbyCtrl"
 
     # .state "tab.pet-detail",
     #   url: "/pet/:petId"
