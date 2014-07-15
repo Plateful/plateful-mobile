@@ -1,6 +1,8 @@
 # ==> Initialize angular's app.
 app = angular.module("clurtch", [
   "ionic"
+  "ngAnimate"
+  "fx.animations"
   "clurtch.components"
   "clurtch.models"
 ])
@@ -13,6 +15,27 @@ app = angular.module("clurtch", [
       'filterModal.html'
       ($ionicModal) ->
         $rootScope.modal = $ionicModal
+      scope: $scope
+      animation: 'slide-in-up'
+    )
+    $ionicModal.fromTemplateUrl(
+      'imageModal.html'
+      ($ionicModal) ->
+        $rootScope.imageModal = $ionicModal
+      scope: $scope
+      animation: 'slide-in-up'
+    )
+    $ionicModal.fromTemplateUrl(
+      'collectModal.html'
+      ($ionicModal) ->
+        $rootScope.collectModal = $ionicModal
+      scope: $scope
+      animation: 'slide-in-up'
+    )
+    $ionicModal.fromTemplateUrl(
+      'rateModal.html'
+      ($ionicModal) ->
+        $rootScope.rateModal = $ionicModal
       scope: $scope
       animation: 'slide-in-up'
     )

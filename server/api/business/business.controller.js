@@ -1,5 +1,6 @@
 // Request API access: http://www.yelp.com/developers/getting_started/api_access
 'use strict';
+var Business = require('./data.js')
 var _ = require("underscore");
 var yelp = require("yelp").createClient({
   consumer_key: "hq_KSPooNh3W8tq4royv5w",
@@ -29,7 +30,7 @@ var businesses;
 exports.index = function(req, res) {
   // http://api.yelp.com/v2/search?term=food&location=San+Francisco
   yelp.search({term: "food", location: "yelp-san-francisco"}, function(error, data) {
-    console.log(error);
+  //   console.log(error);
     businesses = data.businesses;
     res.json(200, data);
   });

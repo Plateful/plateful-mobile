@@ -1,5 +1,6 @@
 angular.module('clurtch.components.tabs', [
   'clurtch.components.tabs.find'
+  'clurtch.components.tabs.review'
   'clurtch.components.tabs.nearby'
   # 'clurtch.components.tabs.share'
   # 'clurtch.components.tabs.notify'
@@ -19,6 +20,12 @@ angular.module('clurtch.components.tabs', [
           templateUrl: "js/components/tabs/find/views/find.html"
           controller: "FindCtrl"
 
+    .state "tab.review",
+      url: "/review"
+      views:
+        "tab-review":
+          templateUrl: "js/components/tabs/review/views/review.html"
+          # controller: 'ReviewCtrl'
     .state "tab.nearby",
       url: "/nearby"
       views:
@@ -45,6 +52,13 @@ angular.module('clurtch.components.tabs', [
     #     "about-tab":
     #       templateUrl: "templates/about.html"
 
+
+    # .state 'tab.review-comment',
+    #   url: 'reviews/comment'
+    #   views:
+    #     'tab-review':
+    #       tempateUrl: 'js/components/tabs/review/views/comment.html'
+    #       # controler: 'CommentCtrl'
 
     # if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise "/tab/find"

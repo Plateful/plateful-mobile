@@ -114,6 +114,8 @@ paths =
       "assets/components/angular/angular.js"
       "assets/components/angular-animate/angular-animate.js"
       "assets/components/angular-sanitize/angular-sanitize.js"
+      "assets/components/gsap/src/minified/TweenMax.min.js"
+      "assets/components/ng-Fx/dist/ngFx.min.js"
       "assets/components/angular-ui-router/release/angular-ui-router.js"
       "assets/components/ionic/release/js/ionic-angular.js"
       # Here add any vendor files that should be included in vendor.js
