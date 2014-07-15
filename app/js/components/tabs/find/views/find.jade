@@ -6,9 +6,12 @@ ion-header-bar.bar-positive.item-input-inset
   button.button.button-clear Map
 
 ion-content.bg-grey
-  div(ng-repeat="item in items | filter:search" style="width:50%; float:left")
-    a.card(href="#/menu/{{item.phone}}")
+
+  ng-single-select(options="options")
+
+
+  a.menu-card(ng-repeat="item in items | filter:search" href="#/menu/{{item.phone}}")
+    div.menu-card-content
       div.item.item-divider {{item.name}}
-      div.item.item-text-wrap(style="text-align:center")
-        img(src='{{item.image_url}}' style="width:80%")
-      div.item.item-divider {{item.stars}}
+      img(src='{{item.image_url}}')
+      div.menu-card-footer {{item.stars}}
