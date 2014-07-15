@@ -1,1 +1,14 @@
-h1 This is the find tab
+ion-header-bar.bar-positive.item-input-inset
+  button.button.button-clear(ng-click="modal.show()") Filter&nbsp&nbsp
+  label.item-input-wrapper
+    i.icon.ion-ios7-search.placeholder-icon
+    input(type="search" placeholder="Search" ng-model="search")
+  button.button.button-clear Map
+
+ion-content.bg-grey
+  div(ng-repeat="item in items | filter:search" style="width:50%; float:left")
+    a.card(href="#/menu/{{item.phone}}")
+      div.item.item-divider {{item.name}}
+      div.item.item-text-wrap(style="text-align:center")
+        img(src='{{item.image_url}}' style="width:80%")
+      div.item.item-divider {{item.stars}}
