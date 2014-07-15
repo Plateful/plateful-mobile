@@ -4,6 +4,7 @@ app = angular.module("clurtch", [
   "ngAnimate"
   "fx.animations"
   "clurtch.components"
+  "clurtch.models"
 ])
 .controller('AppCtrl', [
   '$scope'
@@ -75,8 +76,6 @@ app = angular.module("clurtch", [
           unless item.id is $scope.options[index].id
             item.active = !$scope.options[index].active
 )
-
-
 
 for k, v of GLOBALS
   app.constant k, v

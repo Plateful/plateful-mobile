@@ -1,10 +1,22 @@
-angular.module('clurtch.components.tabs.home', [
-  'clurtch.components.tabs.home.controllers'
-  'clurtch.components.tabs.home.directives'
-  'clurtch.components.tabs.home.services'
+angular.module('clurtch.components.tabs.nearby', [
+  'clurtch.components.tabs.nearby.controllers'
+  #'clurtch.components.tabs.nearby.directives'
+  'clurtch.components.tabs.nearby.services'
   ])
 
 .config ($stateProvider)->
+  $stateProvider
+    # .state "tab.nearby",
+    #   url: "/nearby"
+    #   views:
+    #     "tab-nearby":
+    #       templateUrl: "js/components/tabs/nearby/views/nearby.html"
+    #       controller: "NearbyCtrl"
+    .state "tab.nearby.menu",
+      url: "/menu/:businessId"
+      templateUrl: "js/components/menu/menu.html"
+      controller: 'MenuCtrl'
+      #this one has no view yet
 
     # ########
     #

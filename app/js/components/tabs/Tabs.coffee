@@ -1,7 +1,8 @@
 angular.module('clurtch.components.tabs', [
   'clurtch.components.tabs.find'
   'clurtch.components.tabs.review'
-  # 'clurtch.components.tabs.home'
+  'clurtch.components.tabs.nearby'
+  # 'clurtch.components.tabs.share'
   # 'clurtch.components.tabs.notify'
   # 'clurtch.components.tabs.settings'
   ])
@@ -25,6 +26,32 @@ angular.module('clurtch.components.tabs', [
         "tab-review":
           templateUrl: "js/components/tabs/review/views/review.html"
           # controller: 'ReviewCtrl'
+    .state "tab.nearby",
+      url: "/nearby"
+      views:
+        "tab-nearby":
+          templateUrl: "js/components/tabs/nearby/views/nearby.html"
+          controller: "NearbyCtrl"
+
+    # .state "tab.pet-detail",
+    #   url: "/pet/:petId"
+    #   views:
+    #     "pets-tab":
+    #       templateUrl: "templates/pet-detail.html"
+    #       controller: "PetDetailCtrl"
+    #
+    # .state "tab.adopt",
+    #   url: "/adopt"
+    #   views:
+    #     "adopt-tab":
+    #       templateUrl: "templates/adopt.html"
+    #
+    # .state "tab.about",
+    #   url: "/about"
+    #   views:
+    #     "about-tab":
+    #       templateUrl: "templates/about.html"
+
 
     # .state 'tab.review-comment',
     #   url: 'reviews/comment'
