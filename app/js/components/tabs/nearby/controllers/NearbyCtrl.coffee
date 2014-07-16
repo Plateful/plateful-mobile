@@ -3,9 +3,9 @@ angular.module('clurtch.components.tabs.nearby.controllers')
 
 .controller 'NearbyCtrl', [
   '$scope'
-  'Yelp'
-  ($scope, Yelp)->
-    Yelp.get().success (data) ->
-      $scope.businesses = data.businesses
+  'Business'
+  ($scope, Business)->
+    Business.get().success (data) ->
+      $scope.businesses = data
       console.log($scope.businesses)
 ]
