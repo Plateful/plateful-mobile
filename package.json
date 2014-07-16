@@ -75,5 +75,21 @@
     "static-favicon": "^2.0.0-alpha",
     "underscore": "^1.6.0",
     "yelp": "^0.1.1"
-  }
+  },
+  "version": "0.0.0",
+  "main": "gulpfile.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joelcoxokc/clurtch-prototype.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joelcoxokc/clurtch-prototype/issues"
+  },
+  "homepage": "https://github.com/joelcoxokc/clurtch-prototype"
 }
