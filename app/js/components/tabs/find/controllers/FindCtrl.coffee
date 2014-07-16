@@ -25,7 +25,7 @@ angular.module('clurtch.components.tabs.find.controllers', [])
 
     # Grab data from Yelp then load numeric ratings as stars
     Business.get().success (data) ->
-      $scope.items = data.businesses
+      $scope.items = data
       # Convert rating to stars in unicode
       for item in $scope.items
         tempRating = item.rating

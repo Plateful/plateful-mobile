@@ -10,7 +10,7 @@ ion-content.bg-grey
   ng-single-select(options="options")
 
 
-  a.menu-card(ng-repeat="item in items | filter:search" href="#/menu/{{item.phone}}")
+  a.menu-card(ng-repeat="item in items | filter:search" href="#/menu/{{item._id}}")
     div.menu-card-content
       div.item.item-divider {{item.name}}
       img(src='{{item.image_url}}')

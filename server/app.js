@@ -1,21 +1,35 @@
+/**
+ * Main application file
+ */
+//53c5cf5c80a3c64a2669c8da
+'use strict';
+
+// Set default node environment to development
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
 var express = require('express');
-// var config = require('./config/environment');
+var mongoose = require('mongoose');
+var config = require('./config/environment');
 
+// Connect to database
+mongoose.connect(config.mongo.uri, config.mongo.options);
 
-var _ = require('underscore');
+// Populate DB with sample data
+if(config.seedDB) { require('./config/seed'); }
+
+// Setup server
 var app = express();
-
-
-
-
-var port = 9000;
-// var port = process.env.PORT or || 9000
-
-
 var server = require('http').createServer(app);
-
+var socketio = require('socket.io').listen(server);
+require('./config/socketio')(socketio);
+require('./config/express')(app);
 require('./routes')(app);
 
-server.listen(port, '127.0.0.1', function () {
-  console.log('Express server listening on %d, in %s mode', 9000);
+
+// Start server
+server.listen(config.port, config.ip, function () {
+  console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
 });
+
+// Expose app
+exports = module.exports = app;
