@@ -1,5 +1,6 @@
-angular.module('clurtch.components.tabs.review', [])
-  # 'clurtch.components.tabs.review.controllers'
+angular.module('clurtch.components.tabs.review', [
+  'clurtch.components.tabs.review.controllers'
+])
   # 'clurtch.components.tabs.share.services'
   # 'clurtch.components.tabs.share.directives'
 

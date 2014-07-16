@@ -81,16 +81,16 @@ html
           ion-content
             h1 collect modal
       script(type="text/ng-template" id="createItemModal.html")
-        div.modal
+        div.modal(ng-controller="addItemCtrl")
           ion-header-bar
             button.button(ng-click="createItemModal.hide()") Cancel
             h1.title Add Item
-            button.button(ng-click="createItemModal.hide()") Done
+            button.button(ng-click="addItem(newReview); createItemModal.hide()") Done
           ion-content
             ion-list
               label.item.item-input.item-floating-label.bg-white
                 span.input-label Please be precise
-                textarea(placeholder="Menu Item Title" style="height:100px;")
+                input(type="text" placeholder="Menu Item Title" ng-model="newReview.name")
 
       ion-nav-bar(type='bar-positive' class="bar bar-positive", animation='nav-title-slide-ios7', back-button-type='button-icon', back-button-icon='ion-ios7-arrow-back')
 
