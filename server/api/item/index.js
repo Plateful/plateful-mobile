@@ -7,6 +7,7 @@ var router = express.Router();
 
 router.get('/', controller.index);
 router.get('/business/:business_id', controller.getByBusiness);
+router.post('/location', controller.getByLocation);
 router.get('/user/:user_id', controller.getByUser);
 router.get('/:id', controller.show);
 router.post('/', controller.create);

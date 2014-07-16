@@ -25,6 +25,15 @@ exports.getByUser = function(req, res) {
     return res.json(200, items);
   });
 };
+exports.getByLocation = function(req, res) {
+  // yelp.search({term: "food", location: "yelp-san-francisco"}, function(error, data) {
+  // var user_id = req.params.user_id;
+  var location = req.body.location
+  Item.find(function (err, items) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, items);
+  });
+};
 
 // Get a single item
 exports.show = function(req, res) {
