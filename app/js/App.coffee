@@ -6,7 +6,7 @@ app = angular.module("clurtch", [
   "clurtch.components"
   "clurtch.models"
 ])
-.constant('ServerUrl', 'http://localhost:9000/')
+.constant('ServerUrl', 'http://10.8.29.210:9000/')
 .controller('AppCtrl', [
   '$scope'
   '$rootScope'
