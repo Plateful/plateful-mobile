@@ -11,7 +11,8 @@ app = angular.module("clurtch", [
   '$scope'
   '$rootScope'
   '$ionicModal'
-  ($scope, $rootScope, $ionicModal) ->
+  '$ionicNavBarDelegate'
+  ($scope, $rootScope, $ionicModal, $ionicNavBarDelegate) ->
     $ionicModal.fromTemplateUrl(
       'filterModal.html'
       ($ionicModal) ->
@@ -40,6 +41,8 @@ app = angular.module("clurtch", [
       scope: $scope
       animation: 'slide-in-up'
     )
+    $scope.goBack = ()->
+      $ionicNavBarDelegate.back() 
 ])
 
 .directive('ngMultiSelect', ()->
