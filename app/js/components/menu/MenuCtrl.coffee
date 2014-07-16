@@ -4,10 +4,11 @@ angular.module('clurtch.components.menu')
   '$scope'
   '$stateParams'
   '$http'
-  ($scope, $stateParams, $http) ->
+  'ServerUrl'
+  ($scope, $stateParams, $http, ServerUrl) ->
     $scope.businessId = $stateParams.businessId
-    $http.get('http://localhost:9000/api/businesses/' + $scope.businessId)
+    $http.get(ServerUrl + 'api/businesses/' + $scope.businessId)
       .success((data) ->
-        $scope.item = data
+        $scope.business = data
       )
 ])

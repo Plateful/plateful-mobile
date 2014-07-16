@@ -20,18 +20,24 @@ angular.module('clurtch.components.tabs', [
           templateUrl: "js/components/tabs/find/views/find.html"
           controller: "FindCtrl"
 
-    .state "tab.review",
-      url: "/review"
-      views:
-        "tab-review":
-          templateUrl: "js/components/tabs/review/views/review.html"
-          # controller: 'ReviewCtrl'
     .state "tab.nearby",
       url: "/nearby"
       views:
         "tab-nearby":
           templateUrl: "js/components/tabs/nearby/views/nearby.html"
           controller: "NearbyCtrl"
+    .state "tab.nearby-business",
+      url: "/business/:businessId"
+      views:
+        "tab-nearby":
+          templateUrl: "js/components/menu/menu.html"
+          controller: "MenuCtrl"
+    .state "tab.review",
+      url: "/review"
+      views:
+        "tab-review":
+          templateUrl: "js/components/tabs/review/views/review.html"
+          # controller: 'ReviewCtrl'
 
     # .state "tab.pet-detail",
     #   url: "/pet/:petId"
