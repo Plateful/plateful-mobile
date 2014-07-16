@@ -1,7 +1,10 @@
 angular.module('clurtch.models.item', [])
 
 .factory 'MenuItem', ($http, ServerUrl)->
-  get: (id)->
+  get: ()->
+    $http.get(ServerUrl + 'api/items')
+  getByLocation: (location)->
+    $http.post(ServerUrl + 'api/items/location', location)
   getByBusiness: (business_id)->
     $http.get(ServerUrl + 'api/items/business/' + business_id)
   getByUser: (user_id)->
