@@ -37,8 +37,10 @@ exports.show = function(req, res) {
 
 // Creates a new item in the DB.
 exports.create = function(req, res) {
+  console.log(req.body)
   Item.create(req.body, function(err, item) {
     if(err) { return handleError(res, err); }
+    console.log(item)
     return res.json(201, item);
   });
 };

@@ -9,6 +9,6 @@ angular.module('clurtch.models.item', [])
   find: (id)->
     $http.get(ServerUrl + 'api/items/' + id)
   create: (data)->
-    $http.post(ServerUrl + 'api/items')
+    $http.post(ServerUrl + 'api/items', data)
   destroy: (id)->
     $http.delete(ServerUrl + 'api/items/' + id)
