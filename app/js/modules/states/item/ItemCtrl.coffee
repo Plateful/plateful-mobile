@@ -1,4 +1,4 @@
-angular.module('clurtch.modules.menu.item')
+angular.module('clurtch.modules.states.item')
 
 .controller('ItemCtrl', [
   '$scope'

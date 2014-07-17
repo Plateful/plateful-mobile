@@ -8,7 +8,7 @@ angular.module('clurtch')
   '$ionicNavBarDelegate'
   ($scope, $rootScope, $ionicModal, $ionicNavBarDelegate) ->
     $ionicModal.fromTemplateUrl(
-      'filterModal.html'
+      'js/modules/tabs/find/modals/filterModal.html'
       ($ionicModal) ->
         $rootScope.modal = $ionicModal
       scope: $scope
