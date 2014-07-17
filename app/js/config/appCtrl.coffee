@@ -7,13 +7,7 @@ angular.module('clurtch')
   '$ionicModal'
   '$ionicNavBarDelegate'
   ($scope, $rootScope, $ionicModal, $ionicNavBarDelegate) ->
-    $ionicModal.fromTemplateUrl(
-      'js/modules/tabs/find/modals/filterModal.html'
-      ($ionicModal) ->
-        $rootScope.modal = $ionicModal
-      scope: $scope
-      animation: 'slide-in-up'
-    )
+
     $ionicModal.fromTemplateUrl(
       'imageModal.html'
       ($ionicModal) ->
