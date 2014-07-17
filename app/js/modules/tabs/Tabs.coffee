@@ -19,8 +19,6 @@ angular.module('clurtch.modules.tabs', [
         "tab-review":
           templateUrl: "js/modules/tabs/review/views/review.html"
           controller: 'ReviewCtrl'
-
-
-
+      
     # if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise "/tab/find"

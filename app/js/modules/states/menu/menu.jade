@@ -1,21 +1,15 @@
 ion-view(title="{{business.name}}")
-
   ion-content.bg-grey
-
     ion-list
-
       ion-item.item-thumbnail-left
         img(src='{{business.image_url}}')
         h2 {{business.name}}
         h4 {{business.location.address[0] + " " + business.location.city }}
         h4 {{business.phone}}
-
       div.item-divider
-
       ion-item
         h4 Items go here
         i(class="ion ion-chevron-down")
-
       ion-item.item-thumbnail-left(ng-repeat="item in items")
         img(src='{{item.image_url}}')
         h2 {{item.name}}
