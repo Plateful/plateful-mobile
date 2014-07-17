@@ -3,37 +3,12 @@ angular.module('clurtch.modules.tabs.find.controllers', [])
 
 .controller('FindCtrl', [
   '$scope'
-  '$rootScope'
   '$ionicModal'
   'Business'
   'Geo'
-  ($scope, $rootScope, $ionicModal, Business, Geo)->
-    $ionicModal.fromTemplateUrl(
-      'js/modules/tabs/find/modals/filterModal.html'
-      ($ionicModal) ->
-        $scope.filterModal = $ionicModal
-      scope: $scope
-      animation: 'slide-in-up'
-    )
-    # Creating filters options for filter modal
-    $rootScope.distanceOptions = [
-      {id: 1, title: '2 blocks', active: false}
-      {id: 2, title: '6 blocks', active: false}
-      {id: 3, title: '1 mile', active: false}
-      {id: 4, title: '5 miles', active: false}
-    ]
-    $rootScope.priceOptions = [
-      {id: 1, title: '$', active: false}
-      {id: 2, title: '$$', active: false}
-      {id: 3, title: '$$$', active: false}
-      {id: 4, title: '$$$$', active: false}
-    ]
+  ($scope, $ionicModal, Business, Geo)->
 
-    # Grab data from Yelp then load numeric ratings as stars
-    Business.get().success (data) ->
-      $scope.items = data
-      # socket.syncUpdates('Item') = $scope.items
-      # Convert rating to stars in unicode
+    makeStars = ->
       for item in $scope.items
         tempRating = item.rating
         stars = ''
@@ -44,6 +19,49 @@ angular.module('clurtch.modules.tabs.find.controllers', [])
           stars += '½'
         item.stars = stars
 
+    $ionicModal.fromTemplateUrl(
+      'js/modules/tabs/find/modals/filterModal.html'
+      scope: $scope
+      animation: 'slide-in-up'
+    ).then((modal) ->
+      $scope.filterModal = modal
+    )
+    $scope.openModal = ()->
+      $scope.filterModal.show()
+
+    $scope.closeModal = ()->
+      $scope.filterModal.hide()
+
+    $scope.searchFilter = (distance, prices)->
+      console.log distance, prices
+      Business.get()
+        .success( (data)->
+          $scope.items = data
+          makeStars()
+        )
+
+      $scope.closeModal()
+
+    # Creating filters options for filter modal
+    $scope.distanceOptions = [
+      {id: 1, title: '2 blocks', active: false}
+      {id: 2, title: '6 blocks', active: false}
+      {id: 3, title: '1 mile', active: false}
+      {id: 4, title: '5 miles', active: false}
+    ]
+    $scope.priceOptions = [
+      {id: 1, title: '$', active: false}
+      {id: 2, title: '$$', active: false}
+      {id: 3, title: '$$$', active: false}
+      {id: 4, title: '$$$$', active: false}
+    ]
+    # Grab data from Yelp then load numeric ratings as stars
+    Business.get().success (data) ->
+      $scope.items = data
+      makeStars()
+      # socket.syncUpdates('Item') = $scope.items
+      # Convert rating to stars in unicode
+
     # Get the latitude and longitude of the user when app find tab loads
     Geo.getLocation().then(
       (position) ->
@@ -53,5 +71,6 @@ angular.module('clurtch.modules.tabs.find.controllers', [])
       (error) ->
         console.log 'Unable to get current location: ' + error
     )
+
 
 ])
