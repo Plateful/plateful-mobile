@@ -75,7 +75,13 @@ exports.show = function(req, res) {
   Item.findById(req.params.id, function (err, item) {
     if(err) { return handleError(res, err); }
     if(!item) { return res.send(404); }
-    return res.json(item);
+      Review.find({item_id: req.params.id}, function(err, reviews){
+        if(err) { return handleError(res, err); }
+        if(reviews.length){
+          item.reviews = reviews
+        }
+        return res.json(item);
+      })
   });
 };
 
