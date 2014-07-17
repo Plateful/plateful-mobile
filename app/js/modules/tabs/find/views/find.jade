@@ -6,6 +6,8 @@
 //-   button.button.button-clear Map
 
 ion-view(title="Find")
+  ion-nav-buttons(side="left")
+    button.button.button-clear(ng-click="filterModal.show()") Filter
   ion-content.bg-grey
 
     ng-single-select(options="options")

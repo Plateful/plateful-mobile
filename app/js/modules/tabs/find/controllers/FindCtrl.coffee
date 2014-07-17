@@ -8,7 +8,13 @@ angular.module('clurtch.modules.tabs.find.controllers', [])
   'Business'
   'Geo'
   ($scope, $rootScope, $ionicModal, Business, Geo)->
-
+    $ionicModal.fromTemplateUrl(
+      'js/modules/tabs/find/modals/filterModal.html'
+      ($ionicModal) ->
+        $scope.filterModal = $ionicModal
+      scope: $scope
+      animation: 'slide-in-up'
+    )
     # Creating filters options for filter modal
     $rootScope.distanceOptions = [
       {id: 1, title: '2 blocks', active: false}
