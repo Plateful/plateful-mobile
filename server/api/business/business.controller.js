@@ -2,6 +2,8 @@
 
 var _ = require('lodash');
 var Business = require('./business.model');
+var Review = require('../review/review.model')
+var Item = require('../item/item.model')
 var yelp = require("yelp").createClient({
   consumer_key: "hq_KSPooNh3W8tq4royv5w",
   consumer_secret: "5Vhff5nu84H1pNMCQ_52INZuSfA",
@@ -32,7 +34,58 @@ var yelp = require("yelp").createClient({
 //   // });
 // };
 
+//
+// var ItemSchema = new Schema({
+//   name: String,
+//   business_id: { type: Schema.Types.ObjectId, ref: 'Business'},
+//   user_id: { type: Schema.Types.ObjectId, ref: 'User'},
+//   reviews: [{ type: Schema.Types.ObjectId, ref: 'Review'}],
+//   rating: Number,
+//   rating_count: Number,
+//   created_at: Date
+// });
+//
+// var ReviewSchema = new Schema({
+//   title: String,
+//   business_id: { type: Schema.Types.ObjectId, ref: 'Business'},
+//   user_id: { type: Schema.Types.ObjectId, ref: 'User'},
+//   item_id: { type: Schema.Types.ObjectId, ref: 'Item'},
+//   comment: String,
+//   agreed: Number,
+//   disagreed: Number,
+//   images: [ImageSchema],
+//   agreed_users: [{ type: Schema.Types.ObjectId, ref: 'User'}],
+//   disagreed_users: [{ type: Schema.Types.ObjectId, ref: 'User'}],
+//   created_at: Date,
+// });
+
 exports.index = function(req, res){
+  // yelp.search({term: "food", location: "yelp-san-francisco"}, function(error, data) {
+  // Business.find(function(error, businesses){
+  //   if(error) return handleError(res, error)
+  //   _(businesses).forEach(function(bus){
+  //     Item.create({
+  //       name: bus.name,
+  //       business_id: bus._id,
+  //       user_id: '53c5cf5c80a3c64a2669c8da',
+  //       rating: bus.rating,
+  //       review_count: bus.review_count,
+  //       created_at: new Date()
+  //     }, function(err, newItem){
+  //       Review.create({
+  //         comment: 'this is a new review comment',
+  //         business_id: bus._id,
+  //         user_id: '53c5cf5c80a3c64a2669c8da',
+  //         item_id: newItem._id,
+  //         images: [bus.image_url],
+  //         created_at: new Date()
+  //       }, function(err, rev){
+  //         res.json(200, rev)
+  //       })
+  //     })
+  //   })
+  //
+  // })
   Business.find(function(error, businesses){
     if(error) return handleError(res, error)
     res.json(200, businesses)
