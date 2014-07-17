@@ -25,7 +25,6 @@ angular.module('clurtch.modules.states.menu')
     # socket.on('thing:save', (data)->
     #   $scope.items.push(data)
     # )
-
     $rootScope.addNewItem = (review)->
       # $rootScope.addNewItem(review)
       review.business_id = $scope.businessId
@@ -39,7 +38,6 @@ angular.module('clurtch.modules.states.menu')
         .error (data)->
           console.log(data)
           throw data
-
 ])
 .controller('addItemCtrl', ($rootScope, $scope, MenuItem)->
   # console.log $rootScope.viewingBusinessId

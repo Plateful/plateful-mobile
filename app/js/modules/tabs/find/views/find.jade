@@ -9,10 +9,7 @@ ion-view(title="Find")
   ion-nav-buttons(side="left")
     button.button.button-clear(ng-click="filterModal.show()") Filter
   ion-content.bg-grey
-
     ng-single-select(options="options")
-
-
     a.menu-card(ng-repeat="item in items | filter:search" href="#/tab/find/item/{{item._id}}")
       div.menu-card-content
         div.item.item-divider {{item.name}}

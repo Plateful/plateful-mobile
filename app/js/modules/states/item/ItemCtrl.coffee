@@ -5,10 +5,8 @@ angular.module('clurtch.modules.states.item')
   '$stateParams'
   '$http'
   ($scope, $stateParams, $http, MenuItem) ->
-    # $scope.businessId = $stateParams.businessId
     $scope.itemId = $stateParams.itemId
     MenuItem.find($scope.itemId)
       .success (data)->
         $scope.item = data
-
 ])
