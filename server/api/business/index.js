@@ -4,7 +4,7 @@ var express = require('express');
 var controller = require('./business.controller');
 
 var router = express.Router();
-
+// api/businesses
 router.get('/', controller.index);
 router.get('/:id', controller.show);
 router.post('/', controller.create);

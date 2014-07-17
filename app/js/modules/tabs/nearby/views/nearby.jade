@@ -1,0 +1,12 @@
+//- div.list
+//-   a.item.item-thumbnail-left(ng-repeat="business in businesses")
+//-     img(src='{{business.image_url}}')
+//-     h2 {{business.name}}}
+ion-header-bar.bar-positive.item-input-inset
+  h1.title Restaurant Nearby
+ion-content
+  div.list
+    a.item.item-thumbnail-left(ng-repeat="business in businesses" href="#/tab/business/{{business._id}}")
+      img(src='{{business.image_url}}')
+      h2 {{business.name}}
+      h4 {{business.location.address[0] + " " + business.location.city }}
