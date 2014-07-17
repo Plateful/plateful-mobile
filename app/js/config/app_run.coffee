@@ -1,6 +1,7 @@
 app = angular.module("clurtch")
 
-app.constant('ServerUrl', 'http://10.8.29.210:9000/')
+# app.constant('ServerUrl', 'http://10.8.29.210:9000/')
+app.constant('ServerUrl', 'http://localhost:9000/')
 
 ionic.Platform.ready ->
   app.config ($provide, $httpProvider) ->

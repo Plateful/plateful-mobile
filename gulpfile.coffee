@@ -122,13 +122,13 @@ paths =
       # (f.e. bower components)
     ]
     bootstrap: [
-      'app/js/bootstrap.coffee'
+      'app/js/config/bootstrap.coffee'
     ]
     app: [
       'app/js/App.coffee' # define application's angular module; add some native/global js variables
       'app/js/*/**/*.coffee'  # include all angular submodules (like controllers, directives, services)
-      'app/js/routes.coffee'  # app.config - routes
-      'app/js/app_run.coffee' # app.config; app.run
+      # 'app/js/routes.coffee'  # app.config - routes
+      'app/js/config/app_run.coffee' # app.config; app.run
     ]
     tests: [
       'tests/**/*.coffee'
