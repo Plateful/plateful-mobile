@@ -3,14 +3,49 @@
 var _ = require('lodash');
 var Item = require('./item.model');
 // var Business = require('')
-
+var Review = require('../review/review.model')
+var Business = require('../business/business.model')
 // Get list of items
+// exports.index = function(req, res) {
+//   Item.find(function (err, items) {
+//     if(err) { return handleError(res, err); }
+//     _(items).forEach(function(item){
+//       // return res.json(200, item)
+//       Business.findById(item.business_id, function(err, bus){
+//         if(bus){
+//           item.top_image_url = bus.image_url
+//           item.save(function(err, newItem){
+//
+//           })
+//         }
+//         var rev = new Review({
+//           comment: 'this is a new review comment',
+//           business_id: item.business_id,
+//           user_id: '53c5cf5c80a3c64a2669c8da',
+//           item_id: item._id,
+//           // images: [bus.image_url],
+//           created_at: new Date()
+//         })
+//         if(bus){
+//           rev.images.push({image_url: bus.image_url})
+//           console.log(rev)
+//         }
+//
+//         rev.save(function(err, newRev){
+//           // res.json(200, newRev)
+//         })
+//
+//       })
+//     })
+//     return res.json(200, 'items');
+//   });
+// };
 exports.index = function(req, res) {
-  Item.find(function (err, items) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, items);
-  });
-};
+  Item.find(function(err, items){
+    if(err) return handleError(res, err)
+    res.json(200, items)
+  })
+}
 exports.getByBusiness = function(req, res) {
   var business_id = req.params.business_id;
   Item.find({business_id: business_id}, function (err, items) {
