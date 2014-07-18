@@ -2,9 +2,9 @@ angular.module('clurtch.modules.tabs', [
   'clurtch.modules.tabs.find'
   'clurtch.modules.tabs.review'
   'clurtch.modules.tabs.nearby'
+  'clurtch.modules.tabs.settings'
   # 'clurtch.components.tabs.share'
   # 'clurtch.components.tabs.notify'
-  # 'clurtch.components.tabs.settings'
   ])
 .config ($stateProvider, $urlRouterProvider) ->
   $stateProvider
