@@ -35,7 +35,7 @@ ENV_GLOBALS =
     ENV: "development"
 
     BUNDLE_ID: "com.jtomaszewski.ionicstarter.development"
-    BUNDLE_NAME: "IonicStarterApp (dev)"
+    BUNDLE_NAME: "[clurtch]"
     BUNDLE_VERSION: "1.0.0"
 
     BACKEND_URL: "http://#{LOCAL_IP}:3000"
@@ -112,6 +112,8 @@ paths =
     vendor: [
       "assets/components/ionic/release/js/ionic.js"
       "assets/components/angular/angular.js"
+      "assets/components/lodash/dist/lodash.js"
+      "assets/components/angular-google-maps/dist/angular-google-maps.min.js"
       "assets/components/angular-animate/angular-animate.js"
       "assets/components/angular-sanitize/angular-sanitize.js"
       "assets/components/gsap/src/minified/TweenMax.min.js"

@@ -4,6 +4,7 @@ app = angular.module("clurtch", [
   # "ngCordova"
   "ngAnimate"
   "fx.animations"
+  "google-maps"
   "clurtch.modules"
   "clurtch.factories"
   "clurtch.directives"

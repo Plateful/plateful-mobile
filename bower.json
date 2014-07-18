@@ -14,7 +14,9 @@
   ],
   "dependencies": {
     "ionic": "v1.0.0-beta.8",
-    "ng-Fx": "~1.0.1"
+    "ng-Fx": "~1.0.1",
+    "angular-google-maps": "~1.1.8",
+    "lodash": "~2.4.1"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.17"
