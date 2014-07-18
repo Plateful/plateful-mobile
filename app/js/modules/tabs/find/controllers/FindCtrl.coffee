@@ -4,9 +4,9 @@ angular.module('clurtch.modules.tabs.find.controllers', [])
 .controller('FindCtrl', [
   '$scope'
   '$ionicModal'
-  'Business'
+  'MenuItem'
   'Geo'
-  ($scope, $ionicModal, Business, Geo)->
+  ($scope, $ionicModal, MenuItem, Geo)->
 
     makeStars = ->
       for item in $scope.items
@@ -34,7 +34,7 @@ angular.module('clurtch.modules.tabs.find.controllers', [])
 
     $scope.searchFilter = (distance, prices)->
       console.log distance, prices
-      Business.get()
+      MenuItem.get()
         .success( (data)->
           $scope.items = data
           makeStars()
@@ -56,8 +56,9 @@ angular.module('clurtch.modules.tabs.find.controllers', [])
       {id: 4, title: '$$$$', active: false}
     ]
     # Grab data from Yelp then load numeric ratings as stars
-    Business.get().success (data) ->
+    MenuItem.get().success (data) ->
       $scope.items = data
+      console.log 'this is the business data', data
       makeStars()
       # socket.syncUpdates('Item') = $scope.items
       # Convert rating to stars in unicode
