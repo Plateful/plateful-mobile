@@ -9,6 +9,8 @@ angular.module('clurtch.factory.business', [])
     getWith: (id)->
       args = Array.prototype.slice.call(arguments)
       $http.post(ServerUrl + '/api/business/#{id}/', {args: args})
+    find: (id)->
+      $http.get ServerUrl + 'api/businesses/' + id
     post: (data)->
     update: (id, data)->
     destroy: (id)->

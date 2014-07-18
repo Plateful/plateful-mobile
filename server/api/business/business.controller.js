@@ -88,6 +88,23 @@ exports.index = function(req, res){
   // })
   Business.find(function(error, businesses){
     if(error) return handleError(res, error)
+    // _(businesses).forEach(function(bus){
+    //   if(bus){
+    //     Item.find({business_id: bus._id}, function(err, items){
+    //       // if(items.length){
+    //         _(items).forEach(function(item){
+    //           // item.business = bus.id
+    //           console.log(item)
+    //           // item.save(function(err, result){
+    //
+    //           // })
+    //         })
+    //       // }
+    //       // item.business_id = bus.id
+    //       // item.
+    //     })
+    //   }
+    // })
     res.json(200, businesses)
   })
 };

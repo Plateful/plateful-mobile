@@ -5,19 +5,32 @@ angular.module('clurtch.modules.tabs.review', [
   # 'clurtch.components.tabs.share.directives'
 
 
-# .config ($stateProvider, $urlRouterProvider) ->
+.config ($stateProvider, $urlRouterProvider) ->
+  $stateProvider
+    .state "tab.review",
+      url: "/review"
+      views:
+        "tab-review":
+          templateUrl: "js/modules/tabs/review/views/review.html"
+          controller: 'ReviewCtrl'
 
+    .state "tab.review-choose-item",
+      url: '/review/choose-item/:businessId'
+      views:
+        "tab-review":
+          templateUrl: 'js/modules/tabs/review/views/chooseItem.html'
+          controller: 'ReviewItemCtrl'
 
-    # ########
-    #
-    # All States within tabs.share go in here
-    #
-    # #######
-  #
-  # $stateProvider
-  #   .state 'comment',
-  #     url: '/comment'
-  #     tempateUrl: 'js/components/tabs/review/views/comment.html'
-  #     # views:
-        # 'tab-review':
-      # controler: 'CommentCtrl'
+    .state "tab.review-create-item",
+      url: '/review/create-item'
+      views:
+        "tab-review":
+          templateUrl: 'js/modules/tabs/review/views/create-item.html'
+          controller: 'createItemCtrl'
+
+    .state "tab.review-create",
+      url: '/review/create/:itemId'
+      views:
+        "tab-review":
+          templateUrl: 'js/modules/tabs/review/views/create.html'
+          controller: 'createReviewCtrl'

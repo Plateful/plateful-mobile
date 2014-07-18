@@ -24,6 +24,13 @@ exports.getByUser = function(req, res) {
     return res.json(200, reviews);
   });
 };
+exports.getByItem = function(req, res) {
+  var item_id = req.params.item_id
+  Review.find({item_id: item_id}, function (err, reviews) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, reviews);
+  });
+};
 
 // Get a single review
 exports.show = function(req, res) {

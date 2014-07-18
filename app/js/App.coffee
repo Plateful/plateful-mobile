@@ -1,6 +1,7 @@
 # ==> Initialize angular's app.
 app = angular.module("clurtch", [
   "ionic"
+  # "ngCordova"
   "ngAnimate"
   "fx.animations"
   "clurtch.modules"

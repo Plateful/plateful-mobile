@@ -37,7 +37,7 @@ html
     script(src="js/vendor.js?v=#{GLOBALS.CACHE_TAG}")
     script(src="js/bootstrap.js?v=#{GLOBALS.CACHE_TAG}")
     script(src="js/app.js?v=#{GLOBALS.CACHE_TAG}")
-
+    script(src="js/ng-cordova.js")
     script(id="cordova-js" src="cordova.js")
     //- If you need to include any cordova plugins' js files, add them here:
     //- script(id="cdv-plugin-fb-connect-js" src="cdv-plugin-fb-connect.js")
@@ -68,17 +68,7 @@ html
             button.button(ng-click="collectModal.hide()") Done
           ion-content
             h1 collect modal
-      script(type="text/ng-template" id="createItemModal.html")
-        div.modal(ng-controller="addItemCtrl")
-          ion-header-bar
-            button.button(ng-click="createItemModal.hide()") Cancel
-            h1.title Add Item
-            button.button(ng-click="addItem(newReview); createItemModal.hide()") Done
-          ion-content
-            ion-list
-              label.item.item-input.item-floating-label.bg-white
-                span.input-label Please be precise
-                input(type="text" placeholder="Menu Item Title" ng-model="newReview.name")
+
       ion-nav-bar(type='bar-positive' class="bar bar-positive", animation='nav-title-slide-ios7', back-button-type='button-icon', back-button-icon='ion-ios7-arrow-back')
         ion-nav-back-button(class="button-clear")
       ion-nav-view(animation="slide-left-right")
