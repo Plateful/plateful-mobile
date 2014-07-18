@@ -13,5 +13,5 @@ ion-view(title="Find")
     a.menu-card(ng-repeat="item in items | filter:search" href="#/tab/find/item/{{item._id}}")
       div.menu-card-content
         div.item.item-divider {{item.name}}
-        img(src='{{item.image_url}}')
+        img(src='{{item.top_image_url}}')
         div.menu-card-footer {{item.stars}}
