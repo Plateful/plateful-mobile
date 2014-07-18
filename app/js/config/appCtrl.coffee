@@ -39,14 +39,15 @@ angular.module('clurtch')
         targetHeight: 320,
         # saveToPhotoAlbum: true,
         destinationType: Camera.DestinationType.FILE_URI,
-        # sourceType : Camera.PictureSourceType.CAMERA,
-        sourceType : 0,
+        sourceType : Camera.PictureSourceType.CAMERA,
+        # sourceType : 0,
         encodingType: 0,
         allowEdit : true
 
       onSuccess = (imageData)->
           $scope.src = imageData
           $scope.$apply()
+          # $scope.submitReview(imageData)
           CreateReview.set('image_url', imageData)
       onFail = (error)->
           $scope.src = error

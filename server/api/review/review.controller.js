@@ -2,7 +2,8 @@
 
 var _ = require('lodash');
 var Review = require('./review.model');
-
+var busboy = require('connect-busboy');
+var fs = require('fs');
 // Get list of reviews
 exports.index = function(req, res) {
   Review.find(function (err, reviews) {
@@ -43,10 +44,21 @@ exports.show = function(req, res) {
 
 // Creates a new review in the DB.
 exports.create = function(req, res) {
-  console.log('req================================', req);
-  console.log('body=================================', req.body);
-  console.log('files=================================', req.files);
-  return res.json(req.body)
+  var fstream;
+  req.pipe(req.busboy);
+  req.busboy.on('file', function (fieldname, file, filename) {
+    console.log("Uploading: " + filename, fieldname, file);
+    fstream = fs.createWriteStream(__dirname + '/files/' + filename);
+    file.pipe(fstream);
+
+    fstream.on('close', function () {
+      res.json(200, req.body);
+    });
+  });
+  // console.log('req================================', req);
+  // console.log('body=================================', req.body);
+  // console.log('files=================================', req.files);
+  // return res.json(req.body)
   // Review.create(req.body, function(err, review) {
   //   if(err) { return handleError(res, err); }
   //   return res.json(201, review);

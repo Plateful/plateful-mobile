@@ -88,18 +88,61 @@ angular.module('clurtch.modules.tabs.review.controllers', [])
       options.chunkedMode = false
       # options.fileName = 'image.jpg'
       options.mimeType = "image/jpeg"
+      # options.mimeType = "text/plain"
 
       params = {}
-      # params.business = CreateReview.get('business')
-      # params.rating = CreateReview.get('rating')
+      params.business = CreateReview.get('business')
+      params.rating = CreateReview.get('rating')
       # params.value2 = "param";
 
       options.params = params
-      console.log "Options", options
+      # console.log "Options", options
 
       ft = new FileTransfer()
-      ft.upload(imgUrl, 'http://192.168.1.9:9000/api/reviews', win, fail, options)
-      dd = new FileTransfer()
-      dd.upload(imgUrl, encodeURI('http://192.168.1.9:9000/api/reviews'), win, fail, options)
+      ft.upload(imgUrl, encodeURI('http://192.168.1.9:9000/api/reviews'), win, fail, options)
+      # dd = new FileTransfer()
+      # dd.upload(imgUrl, encodeURI('http://192.168.1.9:9000/api/reviews'), win, fail, options)
       # console.log CreateReview.get()
 ]
+
+#
+# $scope.submitReview = (imgUrl)->
+#   # imgUrl = CreateReview.get('image_url')
+#   # imgUrl = imgUrl.toURL()
+#   # Review.create(CreateReview.get())
+#   win = (r)->
+#     console.log("Code = " + r.responseCode)
+#     console.log("Response = " + r.response)
+#     # console.log("Sent = " + r.bytesSent)
+#
+#
+#   fail = (error)->
+#     alert("An error has occurred: Code = " + error.code)
+#     console.log("upload error source " + error.source)
+#     console.log("upload error target " + error.target)
+#
+#
+#   options = new FileUploadOptions()
+#   options.fileKey = "image_url"
+#   options.fileName = imgUrl.substr(imgUrl.lastIndexOf('/') + 1)
+#   options.chunkedMode = false
+#   # options.fileName = 'image.jpg'
+#   # options.mimeType = "image/jpeg"
+#   options.mimeType = "text/plain"
+#
+#   params =
+#     val1: "some value"
+#     val2: "some other value"
+#
+#   options.params = params
+#   # params.business = CreateReview.get('business')
+#   # params.rating = CreateReview.get('rating')
+#   # params.value2 = "param";
+#
+#   options.params = params
+#   console.log "Options", options
+#
+#   ft = new FileTransfer()
+#   ft.upload(imgUrl, 'http://192.168.1.9:9000/api/reviews', win, fail, options)
+#   dd = new FileTransfer()
+#   dd.upload(imgUrl, encodeURI('http://192.168.1.9:9000/api/reviews'), win, fail, options)
