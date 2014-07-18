@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
 var ItemSchema = new Schema({
   name: String,
   business_id: { type: Schema.Types.ObjectId, ref: 'Business'},
+  business: String,
   user_id: { type: Schema.Types.ObjectId, ref: 'User'},
   // reviews: [{ type: Schema.Types.ObjectId, ref: 'Review'}],
   rating: Number,

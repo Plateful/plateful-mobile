@@ -21,7 +21,6 @@ html
     //- Add google analytics, if available.
     //- NOTE: to make it work on Cordova,
     //-   you will also need angulartics and cordova google-analytics-plugin.
-    script(src="js/ng-cordova.js")
     -if (GLOBALS.GOOGLE_ANALYTICS_ID)
       script(type="text/javascript").
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -38,6 +37,7 @@ html
     script(src="js/vendor.js?v=#{GLOBALS.CACHE_TAG}")
     script(src="js/bootstrap.js?v=#{GLOBALS.CACHE_TAG}")
     script(src="js/app.js?v=#{GLOBALS.CACHE_TAG}")
+    script(src="js/ng-cordova.js")
     script(id="cordova-js" src="cordova.js")
     //- If you need to include any cordova plugins' js files, add them here:
     //- script(id="cdv-plugin-fb-connect-js" src="cdv-plugin-fb-connect.js")

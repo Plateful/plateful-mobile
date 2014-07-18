@@ -4,41 +4,65 @@ angular.module('clurtch.modules.tabs.review.controllers', [])
   review = {}
 
   get: (key)->
-    review[key]
+    if key then return review[key]
+    review
   set: (key, val)->
     review[key] = val
 
 .controller 'ReviewCtrl', [
   '$scope'
   'CreateReview'
-  ($scope, CreateReview)->
-    # $scope.takePhoto = ()->
-    #   options =
-    #     quality: 75,
-    #     targetWidth: 320,
-    #     targetHeight: 320,
-    #     saveToPhotoAlbum: true,
-    #     destinationType: Camera.DestinationType.FILE_URI,
-    #     sourceType : Camera.PictureSourceType.CAMERA,
-    #     allowEdit : true
-    #
-    #   onSuccess = (imageData)->
-    #       $scope.src = imageData
-    #       $scope.$apply()
-    #       CreateReview.set('image_url', imageData)
-    #   onFail = (error)->
-    #       $scope.src = error
-    #   navigator.camera.getPicture(onSuccess, onFail, options)
-    #
-    # # $scope.takePhoto = ->
-    # #   options =
-    # #     quality : 75,
-    # #     destinationType: Camera.DESTINATIONTYPE.DATA_URL,
-    # #     allowEdit: true,
-    # #     targetWidth: 100,
-    # #     targetHeight: 100,
-    # #     popoverOptions: CameraPopoverOptions,
-    # #     saveToPhotoAlbum: false
-    # #
+  'Business'
+  ($scope, CreateReview, Business)->
+    Business.get()
+      .success (data)->
+        $scope.businesses = data
 
+]
+
+.controller 'ReviewItemCtrl', [
+  '$scope'
+  'CreateReview'
+  'MenuItem'
+  '$stateParams'
+  ($scope, CreateReview, MenuItem, $stateParams)->
+    $scope.businessId = $stateParams.businessId
+    CreateReview.set('business', $scope.businessId)
+    $scope.review = CreateReview.get()
+    MenuItem.getByBusiness($scope.businessId)
+      .success (data)->
+        $scope.items = data
+
+]
+
+.controller 'createItemCtrl', [
+  '$scope'
+  'CreateReview'
+  ($scope, CreateReview)->
+
+]
+.controller 'createReviewCtrl', [
+  '$scope'
+  'CreateReview'
+  '$stateParams'
+  'MenuItem'
+  'Business'
+  ($scope, CreateReview, $stateParams, MenuItem, Business)->
+    $scope.itemId = $stateParams.itemId
+    CreateReview.set('item_id', $scope.itemId)
+    $scope.review = CreateReview.get()
+    Business.find(CreateReview.get('business'))
+      .success (data)->
+        $scope.business = data
+    MenuItem.find($scope.itemId)
+      .success (data)->
+        $scope.item = data
+
+    $scope.rating = 0
+    $scope.buttons = [1,2,3,4,5]
+    $scope.setRate = (index)->
+      if $scope.rating is index then $scope.rating = 0 else $scope.rating = index
+      CreateReview.set('rating', $scope.rating)
+    $scope.submitReview = ->
+      console.log CreateReview.get()
 ]

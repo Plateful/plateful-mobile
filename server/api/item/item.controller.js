@@ -48,7 +48,7 @@ exports.index = function(req, res) {
 }
 exports.getByBusiness = function(req, res) {
   var business_id = req.params.business_id;
-  Item.find({business_id: business_id}, function (err, items) {
+  Item.find({business: business_id}, function (err, items) {
     if(err) { return handleError(res, err); }
     return res.json(200, items);
   });
