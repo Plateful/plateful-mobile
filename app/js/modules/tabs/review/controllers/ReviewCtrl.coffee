@@ -47,7 +47,9 @@ angular.module('clurtch.modules.tabs.review.controllers', [])
   '$stateParams'
   'MenuItem'
   'Business'
-  ($scope, CreateReview, $stateParams, MenuItem, Business)->
+  'Review'
+  'ServerUrl'
+  ($scope, CreateReview, $stateParams, MenuItem, Business, Review, ServerUrl)->
     $scope.itemId = $stateParams.itemId
     CreateReview.set('item_id', $scope.itemId)
     $scope.review = CreateReview.get()
@@ -63,6 +65,41 @@ angular.module('clurtch.modules.tabs.review.controllers', [])
     $scope.setRate = (index)->
       if $scope.rating is index then $scope.rating = 0 else $scope.rating = index
       CreateReview.set('rating', $scope.rating)
+
     $scope.submitReview = ->
-      console.log CreateReview.get()
+      imgUrl = CreateReview.get('image_url')
+      # imgUrl = imgUrl.toURL()
+      # Review.create(CreateReview.get())
+      win = (r)->
+        console.log("Code = " + r.responseCode)
+        console.log("Response = " + r.response)
+        # console.log("Sent = " + r.bytesSent)
+
+
+      fail = (error)->
+        alert("An error has occurred: Code = " + error.code)
+        console.log("upload error source " + error.source)
+        console.log("upload error target " + error.target)
+
+
+      options = new FileUploadOptions()
+      options.fileKey = "image_url"
+      options.fileName = imgUrl.substr(imgUrl.lastIndexOf('/') + 1)
+      options.chunkedMode = false
+      # options.fileName = 'image.jpg'
+      options.mimeType = "image/jpeg"
+
+      params = {}
+      # params.business = CreateReview.get('business')
+      # params.rating = CreateReview.get('rating')
+      # params.value2 = "param";
+
+      options.params = params
+      console.log "Options", options
+
+      ft = new FileTransfer()
+      ft.upload(imgUrl, 'http://192.168.1.9:9000/api/reviews', win, fail, options)
+      dd = new FileTransfer()
+      dd.upload(imgUrl, encodeURI('http://192.168.1.9:9000/api/reviews'), win, fail, options)
+      # console.log CreateReview.get()
 ]

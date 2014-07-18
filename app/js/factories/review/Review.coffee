@@ -9,7 +9,7 @@ angular.module('clurtch.factory.review', [])
   find: (id)->
     $http.get(ServerUrl + 'api/reviews/' + id)
   create: (data)->
-    $http.post(ServerUrl + 'api/reviews')
+    $http.post(ServerUrl + 'api/reviews', data)
   destroy: (id)->
     $http.delete(ServerUrl + 'api/reviews/' + id)
   getByItemId: (item_id) ->

@@ -1,7 +1,7 @@
 ion-view(title="Nearby")
   ion-content
     div.list
-      a.item.item-thumbnail-left(ng-repeat="business in businesses" href="#/tab/nearby/menu/{{business._id}}")
+      a.item.item-thumbnail-left(ng-repeat="business in businesses" href="#/tab/nearby/menu/{{business.id}}")
         img(src='{{business.image_url}}')
         h2 {{business.name}}
         h4 {{business.location.address[0] + " " + business.location.city }}

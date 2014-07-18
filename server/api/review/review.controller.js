@@ -43,10 +43,14 @@ exports.show = function(req, res) {
 
 // Creates a new review in the DB.
 exports.create = function(req, res) {
-  Review.create(req.body, function(err, review) {
-    if(err) { return handleError(res, err); }
-    return res.json(201, review);
-  });
+  console.log('req================================', req);
+  console.log('body=================================', req.body);
+  console.log('files=================================', req.files);
+  return res.json(req.body)
+  // Review.create(req.body, function(err, review) {
+  //   if(err) { return handleError(res, err); }
+  //   return res.json(201, review);
+  // });
 };
 
 // Updates an existing review in the DB.

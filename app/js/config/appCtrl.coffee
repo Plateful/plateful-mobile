@@ -37,9 +37,11 @@ angular.module('clurtch')
         quality: 75,
         targetWidth: 320,
         targetHeight: 320,
-        saveToPhotoAlbum: true,
+        # saveToPhotoAlbum: true,
         destinationType: Camera.DestinationType.FILE_URI,
-        sourceType : Camera.PictureSourceType.CAMERA,
+        # sourceType : Camera.PictureSourceType.CAMERA,
+        sourceType : 0,
+        encodingType: 0,
         allowEdit : true
 
       onSuccess = (imageData)->

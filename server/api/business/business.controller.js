@@ -60,7 +60,9 @@ var yelp = require("yelp").createClient({
 // });
 
 exports.index = function(req, res){
-  // yelp.search({term: "food", location: "yelp-san-francisco"}, function(error, data) {
+  yelp.search({term: "food", location: "yelp-san-francisco"}, function(error, data) {
+    if(error) return handleError(res, error)
+    res.json(200, data.businesses)
   // Business.find(function(error, businesses){
   //   if(error) return handleError(res, error)
   //   _(businesses).forEach(function(bus){
@@ -85,9 +87,9 @@ exports.index = function(req, res){
   //     })
   //   })
   //
-  // })
-  Business.find(function(error, businesses){
-    if(error) return handleError(res, error)
+  })
+  // Business.find(function(error, businesses){
+    // if(error) return handleError(res, error)
     // _(businesses).forEach(function(bus){
     //   if(bus){
     //     Item.find({business_id: bus._id}, function(err, items){
@@ -105,17 +107,21 @@ exports.index = function(req, res){
     //     })
     //   }
     // })
-    res.json(200, businesses)
-  })
+    // res.json(200, businesses)
+  // })
 };
 
 // Get a single Business
 exports.show = function(req, res) {
-  Business.findById(req.params.id, function (err, business) {
+  yelp.business(req.params.id, function(err, business){
     if(err) { return handleError(res, err); }
-    if(!business) { return res.send(404); }
     return res.json(business);
-  });
+  })
+  // Business.findById(req.params.id, function (err, business) {
+  //   if(err) { return handleError(res, err); }
+  //   if(!business) { return res.send(404); }
+  //   return res.json(business);
+  // });
 };
 
 // Creates a new Business in the DB.

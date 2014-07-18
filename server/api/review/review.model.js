@@ -14,6 +14,7 @@ var ReviewSchema = new Schema({
   business_id: { type: Schema.Types.ObjectId, ref: 'Business'},
   user_id: { type: Schema.Types.ObjectId, ref: 'User'},
   item_id: { type: Schema.Types.ObjectId, ref: 'Item'},
+  rating: Number,
   comment: String,
   agreed: Number,
   disagreed: Number,

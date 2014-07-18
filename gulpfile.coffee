@@ -30,16 +30,17 @@ APP_ROOT = require("execSync").exec("pwd").stdout.trim() + "/"
 LOCAL_IP = process.env.LOCAL_IP || require('execSync').exec("(ifconfig wlan 2>/dev/null || ifconfig en0) | grep inet | grep -v inet6 | awk '{print $2}' | sed 's/addr://g'").stdout.trim()
 LOCAL_IP = "127.0.0.1" unless parseInt(LOCAL_IP) > 0
 
+
 ENV_GLOBALS =
   development:
     ENV: "development"
 
     BUNDLE_ID: "com.jtomaszewski.ionicstarter.development"
-    BUNDLE_NAME: "[clurtch]"
+    BUNDLE_NAME: "clurtch"
     BUNDLE_VERSION: "1.0.0"
 
-    BACKEND_URL: "http://#{LOCAL_IP}:3000"
-    SECURE_BACKEND_URL: "http://#{LOCAL_IP}:3000"
+    BACKEND_URL: "http://#{LOCAL_IP}:9000"
+    SECURE_BACKEND_URL: "http://#{LOCAL_IP}:9000"
 
     # Automatically connect to weinre on application's startup
     # (this way you can debug your application on your PC even if it's running from mobile ;) )
