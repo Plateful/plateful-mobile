@@ -1,0 +1,5 @@
+ion-view(title="Where?")
+  ion-content
+    ion-list
+      ion-item.item-text-wrap(ng-repeat="business in businesses" href="")
+        p {{business.name}}

@@ -210,8 +210,12 @@ gulp.task 'scripts:vendor', ->
       .pipe(concat("#{scriptsName}.js"))
       .pipe(gulp.dest(destinations.scripts))
 
+gulp.task "scripts:cordova", ->
+  gulp.src("assets/components/cordova/ng-cordova.js")
+    .pipe(gulp.dest(destinations.scripts))
 
-gulp.task 'scripts', ['scripts:vendor', 'scripts:app', 'scripts:bootstrap']
+
+gulp.task 'scripts', ['scripts:vendor', 'scripts:app', 'scripts:bootstrap', 'scripts:cordova']
 
 
 gulp.task 'templates', ->
