@@ -4,6 +4,9 @@ var _ = require('lodash');
 var Business = require('./business.model');
 var Review = require('../review/review.model')
 var Item = require('../item/item.model')
+var Factual = require('factual-api');
+var factual = new Factual('5E36K4TGpjZnbYq0X4pCx8WAm97afFGNodPaJABg', 'mTGqsSOXNNlGzgNMbcgM0UOrHdeQmdqdMD03sm9i');
+
 var yelp = require("yelp").createClient({
   consumer_key: "hq_KSPooNh3W8tq4royv5w",
   consumer_secret: "5Vhff5nu84H1pNMCQ_52INZuSfA",
@@ -60,7 +63,7 @@ var yelp = require("yelp").createClient({
 // });
 
 exports.index = function(req, res){
-  yelp.search({term: "food", location: "yelp-san-francisco"}, function(error, data) {
+  yelp.search({term: "food&fish", location: "yelp-san-francisco"}, function(error, data) {
     if(error) return handleError(res, error)
     res.json(200, data.businesses)
   // Business.find(function(error, businesses){
@@ -110,6 +113,26 @@ exports.index = function(req, res){
     // res.json(200, businesses)
   // })
 };
+
+exports.getByLocation = function(req, res){
+  console.log(req.body);
+    // 34.041195
+    // -118.331518
+  // factual.get('/t/places', {q:"starbucks", geo:{"$circle":{"$center":[req.body.lat,req.body.lng],"$meters":1000}}},
+  factual.get('/t/places-us/85a2b80e-fb91-4224-bbbb-26caf113b28a',
+    function (error, result) {
+      console.log(result.data);
+      res.json(result.data)
+  });
+}
+  // var params = []
+  // var u = 'cll=' + req.body.latitude + ',' + req.body.longitude
+  // console.log({'ll': [req.body.latitude,req.body.longitude]});
+  // params.push(params)
+  // yelp.search({'ll': [req.body.latitude,req.body.longitude]}, function(error, businesses){
+  //   if(error) return handleError(res, error)
+  //     return res.json(businesses)
+  // })
 
 // Get a single Business
 exports.show = function(req, res) {

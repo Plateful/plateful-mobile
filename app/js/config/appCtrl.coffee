@@ -7,7 +7,8 @@ angular.module('clurtch')
   '$ionicModal'
   '$ionicNavBarDelegate'
   'CreateReview'
-  ($scope, $rootScope, $ionicModal, $ionicNavBarDelegate, CreateReview) ->
+  'Geo'
+  ($scope, $rootScope, $ionicModal, $ionicNavBarDelegate, CreateReview, Geo) ->
 
     $ionicModal.fromTemplateUrl(
       'imageModal.html'
@@ -52,6 +53,15 @@ angular.module('clurtch')
       onFail = (error)->
           $scope.src = error
       navigator.camera.getPicture(onSuccess, onFail, options)
+
+      Geo.getLocation().then(
+        (position) ->
+          $scope.lat = position.coords.latitude
+          $scope.lng = position.coords.longitude
+          console.log $scope.lat, $scope.lng
+        (error) ->
+          console.log 'Unable to get current location: ' + error
+      )
 
     # $scope.takePhoto = ->
     #   options =

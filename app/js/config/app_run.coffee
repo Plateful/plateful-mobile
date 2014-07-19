@@ -7,6 +7,7 @@ app.constant('ServerUrl', 'http://192.168.1.9:9000/')
 ionic.Platform.ready ->
   app.config ($provide, $httpProvider) ->
     # Add support for PATCH requests
+
     $httpProvider.defaults.headers.patch ||= {}
     $httpProvider.defaults.headers.patch['Content-Type'] = 'application/json'
 
@@ -18,14 +19,18 @@ ionic.Platform.ready ->
             Auth.setAuthToken(null)
         $q.reject(response)
 
+
+
   # Now, finally, let's run the app
   # (this is the reason why we don't include ng-app in the index.jade)
   angular.bootstrap document, ['clurtch']
 
 
-app.run ($rootScope, Auth, $window, $timeout) ->
+app.run ($rootScope, Auth, $window, $timeout, bGeo) ->
   console.log 'Ionic app has just started (app.run)!' unless GLOBALS.ENV == "test"
-
+  $rootScope.currentLocation = window.backgroundGeoLocation
+  $rootScope.$apply()
+    # bGeo.get()
   # Make GLOBALS visible in every scope.
   $rootScope.GLOBALS = GLOBALS
 

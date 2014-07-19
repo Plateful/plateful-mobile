@@ -36,10 +36,15 @@ ionic.Platform.ready ->
   console.log 'ionic.Platform is ready!' unless GLOBALS.ENV == "test"
   window._RIPPLE  = window.tinyHippos != undefined
   window._CORDOVA = window.cordova != undefined
+  window.navigator.geolocation.getCurrentPosition((location)->
+    window.currLocation = location
+    console.log('Location from Phonegap', location)
+  )
+
+  # bgGeo = window.backgroundGeoLocation
 
 # document.addEventListener "deviceready", ->
 #   # Make ripple think that a back button handler has already been attached
 #   if window.tinyHippos != undefined
 #     cordova.addDocumentEventHandler('backbutton')
 # , true
-  

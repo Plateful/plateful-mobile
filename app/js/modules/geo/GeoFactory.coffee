@@ -13,3 +13,10 @@ angular.module('clurtch.modules.geo')
       )
       q.promise
 ])
+.factory('bGeo', [
+  '$q'
+  ($q) ->
+    get: ->
+      @bgGeo = window.backgroundGeoLocation
+
+])

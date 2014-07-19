@@ -66,9 +66,9 @@ angular.module('clurtch.modules.tabs.find.controllers', [])
     # Get the latitude and longitude of the user when app find tab loads
     Geo.getLocation().then(
       (position) ->
-        lat = position.coords.latitude
-        lng = position.coords.longitude
-        console.log lat, lng
+        $scope.lat = position.coords.latitude
+        $scope.lng = position.coords.longitude
+        console.log $scope.lat, $scope.lng
       (error) ->
         console.log 'Unable to get current location: ' + error
     )
