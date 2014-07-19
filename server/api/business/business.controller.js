@@ -1,5 +1,11 @@
-// Request API access: http://www.yelp.com/developers/getting_started/api_access
 'use strict';
+
+var _ = require('lodash');
+var Business = require('./business.model');
+var Review = require('../review/review.model')
+var Item = require('../item/item.model')
+var Factual = require('factual-api');
+var factual = new Factual('5E36K4TGpjZnbYq0X4pCx8WAm97afFGNodPaJABg', 'mTGqsSOXNNlGzgNMbcgM0UOrHdeQmdqdMD03sm9i');
 
 var yelp = require("yelp").createClient({
   consumer_key: "hq_KSPooNh3W8tq4royv5w",
@@ -7,73 +13,172 @@ var yelp = require("yelp").createClient({
   token: "IlX8Uxc60fR-rVzvkDC4tUkGqkhM3PKz",
   token_secret: "ujPERqZ93OkRsIj3vtLutJ1GTUo"
 });
-// See http://www.yelp.com/developers/documentation/v2/search_api
-// yelp.search({term: "food", location: "Montreal"}, function(error, data) {
-//   console.log(error);
-//   console.log(data);
+// Get list of Business
+// exports.index = function(req, res) {
+//   yelp.search({term: "food", location: "yelp-san-francisco"}, function(error, data) {
+//   //   console.log(error);
+//     // businesses = data.businesses;
+//     _(data.businesses).forEach(function(item){
+//       console.log(item)
+//       // Business.find({id: item.id, phone: item.phone}, function(err, business){
+//       //   if(!business){
+//           // Business.create(item, function(err, bus) {
+//             // if(err) { return handleError(res, err); }
+//             // return res.json(201, business);
+//           // });
+//       //   }
+//       // })
+//     })
+//     // res.json(200, data);
+//   });
+//   // Business.find(function (err, businesses) {
+//   //   if(err) { return handleError(res, err); }
+//   //   return res.json(200, businesses);
+//   // });
+// };
+
+//
+// var ItemSchema = new Schema({
+//   name: String,
+//   business_id: { type: Schema.Types.ObjectId, ref: 'Business'},
+//   user_id: { type: Schema.Types.ObjectId, ref: 'User'},
+//   reviews: [{ type: Schema.Types.ObjectId, ref: 'Review'}],
+//   rating: Number,
+//   rating_count: Number,
+//   created_at: Date
 // });
 //
-// // See http://www.yelp.com/developers/documentation/v2/business
-// yelp.business("yelp-san-francisco", function(error, data) {
-//   console.log(error);
-//   console.log(data);
+// var ReviewSchema = new Schema({
+//   title: String,
+//   business_id: { type: Schema.Types.ObjectId, ref: 'Business'},
+//   user_id: { type: Schema.Types.ObjectId, ref: 'User'},
+//   item_id: { type: Schema.Types.ObjectId, ref: 'Item'},
+//   comment: String,
+//   agreed: Number,
+//   disagreed: Number,
+//   images: [ImageSchema],
+//   agreed_users: [{ type: Schema.Types.ObjectId, ref: 'User'}],
+//   disagreed_users: [{ type: Schema.Types.ObjectId, ref: 'User'}],
+//   created_at: Date,
 // });
-//
-//
 
-// var _ = require('lodash');
+exports.index = function(req, res){
+  yelp.search({term: "food&fish", location: "yelp-san-francisco"}, function(error, data) {
+    if(error) return handleError(res, error)
+    res.json(200, data.businesses)
+  // Business.find(function(error, businesses){
+  //   if(error) return handleError(res, error)
+  //   _(businesses).forEach(function(bus){
+  //     Item.create({
+  //       name: bus.name,
+  //       business_id: bus._id,
+  //       user_id: '53c5cf5c80a3c64a2669c8da',
+  //       rating: bus.rating,
+  //       review_count: bus.review_count,
+  //       created_at: new Date()
+  //     }, function(err, newItem){
+  //       Review.create({
+  //         comment: 'this is a new review comment',
+  //         business_id: bus._id,
+  //         user_id: '53c5cf5c80a3c64a2669c8da',
+  //         item_id: newItem._id,
+  //         images: [bus.image_url],
+  //         created_at: new Date()
+  //       }, function(err, rev){
+  //         res.json(200, rev)
+  //       })
+  //     })
+  //   })
+  //
+  })
+  // Business.find(function(error, businesses){
+    // if(error) return handleError(res, error)
+    // _(businesses).forEach(function(bus){
+    //   if(bus){
+    //     Item.find({business_id: bus._id}, function(err, items){
+    //       // if(items.length){
+    //         _(items).forEach(function(item){
+    //           // item.business = bus.id
+    //           console.log(item)
+    //           // item.save(function(err, result){
+    //
+    //           // })
+    //         })
+    //       // }
+    //       // item.business_id = bus.id
+    //       // item.
+    //     })
+    //   }
+    // })
+    // res.json(200, businesses)
+  // })
+};
 
+exports.getByLocation = function(req, res){
+  console.log(req.body);
+    // 34.041195
+    // -118.331518
+  // factual.get('/t/places', {q:"starbucks", geo:{"$circle":{"$center":[req.body.lat,req.body.lng],"$meters":1000}}},
+  factual.get('/t/places-us/85a2b80e-fb91-4224-bbbb-26caf113b28a',
+    function (error, result) {
+      console.log(result.data);
+      res.json(result.data)
+  });
+}
+  // var params = []
+  // var u = 'cll=' + req.body.latitude + ',' + req.body.longitude
+  // console.log({'ll': [req.body.latitude,req.body.longitude]});
+  // params.push(params)
+  // yelp.search({'ll': [req.body.latitude,req.body.longitude]}, function(error, businesses){
+  //   if(error) return handleError(res, error)
+  //     return res.json(businesses)
+  // })
 
-// Get list of links
-exports.index = function(req, res) {
-  http://api.yelp.com/v2/search?term=food&location=San+Francisco
-  yelp.search({term: "food", location: "yelp-san-francisco"}, function(error, data) {
-    console.log(error);
-    res.json(200, data);
+// Get a single Business
+exports.show = function(req, res) {
+  yelp.business(req.params.id, function(err, business){
+    if(err) { return handleError(res, err); }
+    return res.json(business);
+  })
+  // Business.findById(req.params.id, function (err, business) {
+  //   if(err) { return handleError(res, err); }
+  //   if(!business) { return res.send(404); }
+  //   return res.json(business);
+  // });
+};
+
+// Creates a new Business in the DB.
+exports.create = function(req, res) {
+  Business.create(req.body, function(err, business) {
+    if(err) { return handleError(res, err); }
+    return res.json(201, business);
   });
 };
 
-// Get a single link
-exports.show = function(req, res) {
-  // Link.findById(req.params.id, function (err, link) {
-  //   if(err) { return handleError(res, err); }
-  //   if(!link) { return res.send(404); }
-  //   return res.json(link);
-  // });
-};
-
-// Creates a new link in the DB.
-exports.create = function(req, res) {
-  // Link.create(req.body, function(err, link) {
-  //   if(err) { return handleError(res, err); }
-  //   return res.json(201, link);
-  // });
-};
-
-// Updates an existing link in the DB.
+// Updates an existing Business in the DB.
 exports.update = function(req, res) {
-  // if(req.body._id) { delete req.body._id; }
-  // Link.findById(req.params.id, function (err, link) {
-  //   if (err) { return handleError(err); }
-  //   if(!link) { return res.send(404); }
-  //   var updated = _.merge(link, req.body);
-  //   updated.save(function (err) {
-  //     if (err) { return handleError(err); }
-  //     return res.json(200, link);
-  //   });
-  // });
+  if(req.body._id) { delete req.body._id; }
+  Business.findById(req.params.id, function (err, business) {
+    if (err) { return handleError(err); }
+    if(!business) { return res.send(404); }
+    var updated = _.merge(business, req.body);
+    updated.save(function (err) {
+      if (err) { return handleError(err); }
+      return res.json(200, business);
+    });
+  });
 };
 
-// Deletes a link from the DB.
+// Deletes a Business from the DB.
 exports.destroy = function(req, res) {
-  // Link.findById(req.params.id, function (err, link) {
-  //   if(err) { return handleError(res, err); }
-  //   if(!link) { return res.send(404); }
-  //   link.remove(function(err) {
-  //     if(err) { return handleError(res, err); }
-  //     return res.send(204);
-  //   });
-  // });
+  Business.findById(req.params.id, function (err, business) {
+    if(err) { return handleError(res, err); }
+    if(!business) { return res.send(404); }
+    business.remove(function(err) {
+      if(err) { return handleError(res, err); }
+      return res.send(204);
+    });
+  });
 };
 
 function handleError(res, err) {

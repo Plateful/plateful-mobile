@@ -1,0 +1,16 @@
+ion-view(title="{{item.name}}")
+  ion-content
+    div.list.card
+        img.full-image(src='{{item.top_image_url}}')
+        div
+          h4.assertive {{item.stars}}
+            //- added pullright class
+            div.pullright.energized {{item.review_count}} reviews
+        h5.dark Seared Filet of Beef with Cumin Potatoes, Swiss Chard, Tomato-Corn Relish and Basil Butter
+        h4 User Reviews
+        div.list(ng-repeat="review in reviews")
+          div.item.item-avatar.borderless
+            //- added borderless class on css
+            img(src="{{review.images[0].image_url}}")
+            h4 {{review.user_id}}
+            div.item.item-text-wrap.borderless This shit is good so I clurtch it. Nom nom nom nom nom nom

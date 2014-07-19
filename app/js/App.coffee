@@ -1,7 +1,13 @@
 # ==> Initialize angular's app.
 app = angular.module("clurtch", [
   "ionic"
-  "clurtch.components"
+  # "ngCordova"
+  "ngAnimate"
+  "fx.animations"
+  "google-maps"
+  "clurtch.modules"
+  "clurtch.factories"
+  "clurtch.directives"
 ])
 
 for k, v of GLOBALS
