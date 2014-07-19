@@ -118,8 +118,8 @@ exports.getByLocation = function(req, res){
   console.log(req.body);
     // 34.041195
     // -118.331518
-  // factual.get('/t/places', {q:"starbucks", geo:{"$circle":{"$center":[req.body.lat,req.body.lng],"$meters":1000}}},
-  factual.get('/t/places-us/85a2b80e-fb91-4224-bbbb-26caf113b28a',
+  factual.get('/t/places', {q:req.body.val, geo:{"$circle":{"$center":[req.body.lat,req.body.lng],"$meters":1000}}},
+  // factual.get('/t/places-us/85a2b80e-fb91-4224-bbbb-26caf113b28a',
     function (error, result) {
       console.log(result.data);
       res.json(result.data)
