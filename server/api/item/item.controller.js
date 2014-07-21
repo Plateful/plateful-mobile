@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Item = require('./item.model');
+var db = require('../../config/neo4j').db
 // var Business = require('')
 var Review = require('../review/review.model')
 var Business = require('../business/business.model')
@@ -41,9 +42,13 @@ var Business = require('../business/business.model')
 //   });
 // };
 exports.index = function(req, res) {
-  Item.find(function(err, items){
-    if(err) return handleError(res, err)
-    res.json(200, items)
+  // Item.find(function(err, items){
+  //   if(err) return handleError(res, err)
+  //   res.json(200, items)
+  // })
+  db.cypherQuery('MATCH (i:Item) return i', function(err, result){
+    if (err) return handleError(res, err)
+    res.json(201, result.data)
   })
 }
 exports.getByBusiness = function(req, res) {
@@ -125,7 +130,7 @@ function handleError(res, err) {
   return res.send(500, err);
 }
 
-// 
+//
 // items.foreach(function(item){
 //   Item.create(item, function(err, newItem) {
 //

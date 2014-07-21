@@ -24,7 +24,7 @@ angular.module('clurtch.modules.states.menu')
       )
 
 
-    MenuItem.getByBusiness($scope.businessId)
+    MenuItem.get()
       .success (data)->
         console.log data
         $scope.items = data

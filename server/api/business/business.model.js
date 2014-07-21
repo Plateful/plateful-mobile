@@ -5,6 +5,8 @@ var mongoose = require('mongoose'),
 
 var BusinessSchema = new Schema({
   id: String,
+  factual_id: String,
+  yelp_id: String,
   image_url: String,
   location: {
     address: Array,

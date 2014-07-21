@@ -7,7 +7,11 @@
 var errors = require('./components/errors');
 var cors = require('cors');
 var busboy = require('connect-busboy');
-module.exports = function(app) {
+
+
+
+
+module.exports.applyRoutes = function(app) {
 
   app.use(cors())
   app.use(busboy({ immediate: true }));
