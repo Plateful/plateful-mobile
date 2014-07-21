@@ -77,17 +77,24 @@ exports.getByLocation = function(req, res) {
 
 // Get a single item
 exports.show = function(req, res) {
-  Item.findById(req.params.id, function (err, item) {
-    if(err) { return handleError(res, err); }
-    if(!item) { return res.send(404); }
-      Review.find({item_id: req.params.id}, function(err, reviews){
-        if(err) { return handleError(res, err); }
-        if(reviews.length){
-          item.reviews = reviews
-        }
-        return res.json(item);
-      })
-  });
+  console.log(req.params.id);
+  db.cypherQuery('MATCH (n) WHERE id(n) = '+req.params.id+' RETURN n',
+  function(err, result){
+    if(err) return handleError(res, err)
+      console.log("item", result.data);
+    res.json(200, result.data)
+  })
+  // Item.findById(req.params.id, function (err, item) {
+  //   if(err) { return handleError(res, err); }
+  //   if(!item) { return res.send(404); }
+  //     Review.find({item_id: req.params.id}, function(err, reviews){
+  //       if(err) { return handleError(res, err); }
+  //       if(reviews.length){
+  //         item.reviews = reviews
+  //       }
+  //       return res.json(item);
+  //     })
+  // });
 };
 
 // Creates a new item in the DB.

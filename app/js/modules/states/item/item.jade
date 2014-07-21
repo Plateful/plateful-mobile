@@ -11,6 +11,7 @@ ion-view(title="{{item.name}}")
         div.list(ng-repeat="review in reviews")
           div.item.item-avatar.borderless
             //- added borderless class on css
-            img(src="{{review.images[0].image_url}}")
+            //- p {{review}}
+            img(src="{{review.image_url}}")
             h4 {{review.user_id}}
             div.item.item-text-wrap.borderless This shit is good so I clurtch it. Nom nom nom nom nom nom
