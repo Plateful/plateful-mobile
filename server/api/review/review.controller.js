@@ -4,6 +4,7 @@ var _ = require('lodash');
 var Review = require('./review.model');
 var busboy = require('connect-busboy');
 var fs = require('fs');
+var db = require('../../config/neo4j').db
 // Get list of reviews
 exports.index = function(req, res) {
   Review.find(function (err, reviews) {
@@ -26,11 +27,17 @@ exports.getByUser = function(req, res) {
   });
 };
 exports.getByItem = function(req, res) {
-  var item_id = req.params.item_id
-  Review.find({item_id: item_id}, function (err, reviews) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, reviews);
-  });
+  db.cypherQuery('MATCH (n) WHERE id(n) = '+req.params.item_id+' MATCH (r:Review)-[:REVIEW_OF]->(n) MATCH (r)-[*]->(p) RETURN p',
+  function(err, result){
+    if(err) return handleError(res, err)
+      console.log("item", result.data);
+    res.json(200, result.data)
+  })
+  // var item_id = req.params.item_id
+  // Review.find({item_id: item_id}, function (err, reviews) {
+  //   if(err) { return handleError(res, err); }
+  //   return res.json(200, reviews);
+  // });
 };
 
 // Get a single review

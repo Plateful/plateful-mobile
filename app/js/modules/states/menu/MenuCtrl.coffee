@@ -9,27 +9,44 @@ angular.module('clurtch.modules.states.menu')
   'Business'
   'MenuItem'
   '$ionicModal'
-  ($rootScope, $scope, $stateParams, $http, ServerUrl, Business, MenuItem, $ionicModal) ->
+  '$ionicLoading'
+  ($rootScope, $scope, $stateParams, $http, ServerUrl, Business, MenuItem, $ionicModal, $ionicLoading) ->
     $scope.businessId = $stateParams.businessId
+    $ionicLoading.show(
+      noBackdrop: true,
+      duration: 2000,
+      template: 'Loading...'
+    )
     $scope.priceOptions = [
       {id: 1, title: '$', active: false}
       {id: 2, title: '$$', active: false}
       {id: 3, title: '$$$', active: false}
       {id: 4, title: '$$$$', active: false}
     ]
+    $scope.items = []
     $scope.newItem = {}
-    $http.get(ServerUrl + 'api/businesses/' + $scope.businessId)
+    Business.find($scope.businessId)
       .success((data) ->
-        $scope.business = data
+        console.log "neo----", data[0][1]
+        $scope.business = data[0][0]
+        if Array.isArray(data[0][1])
+          $scope.items = data[0][1]
+          console.log $scope.items
+        else
+          $scope.items.push(data[0][1])
+          # $scope.$apply()
+        $ionicLoading.hide()
       )
 
 
-    MenuItem.getByBusiness($scope.businessId)
-      .success (data)->
-        console.log data
-        $scope.items = data
-      .error (err)->
-        throw err
+
+    #
+    # MenuItem.get()
+    #   .success (data)->
+    #     # console.log data
+    #     # $scope.items = data
+    #   .error (err)->
+    #     throw err
 
     # socket.on('thing:save', (data)->
     #   $scope.items.push(data)

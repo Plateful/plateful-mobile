@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Item = require('./item.model');
+var db = require('../../config/neo4j').db
 // var Business = require('')
 var Review = require('../review/review.model')
 var Business = require('../business/business.model')
@@ -41,9 +42,13 @@ var Business = require('../business/business.model')
 //   });
 // };
 exports.index = function(req, res) {
-  Item.find(function(err, items){
-    if(err) return handleError(res, err)
-    res.json(200, items)
+  // Item.find(function(err, items){
+  //   if(err) return handleError(res, err)
+  //   res.json(200, items)
+  // })
+  db.cypherQuery('MATCH (i:Item) return i', function(err, result){
+    if (err) return handleError(res, err)
+    res.json(201, result.data)
   })
 }
 exports.getByBusiness = function(req, res) {
@@ -72,17 +77,24 @@ exports.getByLocation = function(req, res) {
 
 // Get a single item
 exports.show = function(req, res) {
-  Item.findById(req.params.id, function (err, item) {
-    if(err) { return handleError(res, err); }
-    if(!item) { return res.send(404); }
-      Review.find({item_id: req.params.id}, function(err, reviews){
-        if(err) { return handleError(res, err); }
-        if(reviews.length){
-          item.reviews = reviews
-        }
-        return res.json(item);
-      })
-  });
+  console.log(req.params.id);
+  db.cypherQuery('MATCH (n) WHERE id(n) = '+req.params.id+' RETURN n',
+  function(err, result){
+    if(err) return handleError(res, err)
+      console.log("item", result.data);
+    res.json(200, result.data)
+  })
+  // Item.findById(req.params.id, function (err, item) {
+  //   if(err) { return handleError(res, err); }
+  //   if(!item) { return res.send(404); }
+  //     Review.find({item_id: req.params.id}, function(err, reviews){
+  //       if(err) { return handleError(res, err); }
+  //       if(reviews.length){
+  //         item.reviews = reviews
+  //       }
+  //       return res.json(item);
+  //     })
+  // });
 };
 
 // Creates a new item in the DB.
@@ -125,7 +137,7 @@ function handleError(res, err) {
   return res.send(500, err);
 }
 
-// 
+//
 // items.foreach(function(item){
 //   Item.create(item, function(err, newItem) {
 //

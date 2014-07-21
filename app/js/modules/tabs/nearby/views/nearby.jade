@@ -6,7 +6,7 @@ ion-view(title="Nearby" hide-nav-bar="true")
     button.button.button-clear(ng-click="newSearch(search)") Search
   ion-content
     div.list
-      a.item(ng-repeat="business in businesses" href="#/tab/nearby/menu/{{business.id}}")
+      a.item(ng-repeat="business in businesses" href="#/tab/nearby/menu/{{business.factual_id}}")
         //- img(src='{{business.image_url}}')
         h2 {{business.name}}
         h4 {{business.address + " " + business.locality }}

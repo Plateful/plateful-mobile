@@ -12,8 +12,8 @@ ion-view(title="{{business.name}}")
       ion-item
         h4 Items go here
         i(class="ion ion-chevron-down")
-      ion-item.item-thumbnail-left(ng-repeat="item in items")
+      ion-item.item-thumbnail-left(ng-repeat="item in items" href="#/tab/nearby/item/{{item._id}}")
         img(src='{{item.top_image_url}}')
         h2 {{item.name}}
-        h4 {{business.phone}}
+        //- h4 {{business.phone}}
         //- h4 {{business.location.address[0] + " " + business.location.city }}
