@@ -17,19 +17,29 @@ angular.module('clurtch.modules.states.menu')
       {id: 3, title: '$$$', active: false}
       {id: 4, title: '$$$$', active: false}
     ]
+    $scope.items = []
     $scope.newItem = {}
-    $http.get(ServerUrl + 'api/businesses/' + $scope.businessId)
+    Business.find($scope.businessId)
       .success((data) ->
-        $scope.business = data
+        console.log "neo----", data[0][1]
+        $scope.business = data[0][0]
+        if Array.isArray(data[0][1])
+          $scope.items = data[0][1]
+          console.log $scope.items
+        else
+          $scope.items.push(data[0][1])
+          # $scope.$apply()
       )
 
 
-    MenuItem.get()
-      .success (data)->
-        console.log data
-        $scope.items = data
-      .error (err)->
-        throw err
+
+    #
+    # MenuItem.get()
+    #   .success (data)->
+    #     # console.log data
+    #     # $scope.items = data
+    #   .error (err)->
+    #     throw err
 
     # socket.on('thing:save', (data)->
     #   $scope.items.push(data)

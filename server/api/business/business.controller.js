@@ -141,12 +141,12 @@ function runFactual(body){
 }
 
 exports.getByLocation = function(req, res){
-  console.log(req.body);
+  // console.log(req.body);
 
   factual.get('/t/places/', {q:req.body.val, geo:{"$circle":{"$center":[req.body.lat,req.body.lng],"$meters":5000}}},
     function (error, result) {
       var buses = []
-      console.log(result.data);
+      // console.log(result.data);
       // _(result.data).forEach(function(item, index){
         Business.find(function(err, businesses){
           for (var i = 0; i < result.data.length; i++) {
@@ -160,7 +160,7 @@ exports.getByLocation = function(req, res){
             }
 
           }
-          console.log(result.data);
+          // console.log(result.data);
           res.json(result.data)
           // result.data[index].image_url = business[0].image_url
           // console.log(result.data[index]);
@@ -198,11 +198,36 @@ exports.getByLocation = function(req, res){
 
 // Get a single Business
 exports.show = function(req, res) {
-  factual.get('/t/places-us/' + req.params.id, function (error, business) {
-    console.log(business.data[0]);
-    console.log(error);
-    res.json(business);
-  });
+  db.cypherQuery('MATCH (m:Menu {factual_id: "'+req.params.id+'"})-[:HAS_ITEM]->(i) RETURN m,i', function(err, result){
+    if (!result.data.length){
+      factual.get('/t/places-us/' + req.params.id, function (error, business) {
+        yelp.search({term: business.data[0].name, location: business.data[0].locality}, function(err, yelpBus){
+          if(yelpBus.businesses.length){
+            console.log("FACTURL--------", business.data[0]);
+            var obj = yelpBus.businesses[0]
+            obj.factual_id = business.data[0].factual_id
+            // console.log(obj);
+            doNeoStore(obj, function(data){
+              // res.json(200, data)
+              db.cypherQuery('MATCH (m:Menu {factual_id: "'+req.params.id+'"})-[:HAS_ITEM]->(i) RETURN m,i', function(err, newResult){
+                console.log("neo----", newResult.data);
+                res.json(newResult.data)
+              })
+
+            })
+
+            // console.log("YELP--------", yelpBus.businesses[0]);
+            // res.json(yelpBus.businesses[0]);
+          }
+        })
+        // db.cypherQuery()
+        // console.log(business.data[0]);
+        // console.log(error);
+      });
+    } else {
+      res.json(result.data);
+    }
+  })
   // yelp.business(req.params.id, function(err, business){
   //   if(err) { return handleError(res, err); }
   //   return res.json(business);
@@ -250,4 +275,48 @@ exports.destroy = function(req, res) {
 
 function handleError(res, err) {
   return res.send(500, err);
+}
+
+function doNeoStore(bus, cb){
+  console.log("fomr doNeoStore", bus);
+  db.cypherQuery(
+    "CREATE (m:Menu {"+
+     "factual_id: \""+bus.factual_id+"\","+
+     "yelp_id: \""+bus.id+"\","+
+     "name: \""+bus.name+"\","+
+     "phone: \""+bus.phone+"\","+
+     "display_phone: \""+bus.display_phone+"\","+
+     "image_url: \""+bus.image_url+"\","+
+     "street: \""+bus.location.cross_streets+"\","+
+     "address: \""+bus.location.address[0]+"\","+
+     "city: \""+bus.location.city+"\","+
+     "postal_code: \""+bus.location.postal_code+"\","+
+     "country_code: \""+bus.location.country_code+"\","+
+     "state_code: \""+bus.location.state_code+"\""+
+    "})," +
+    "(i1:Item {name: \""+bus.name+"\", rating: \""+bus.rating+"\", review_count: \""+bus.review_count+"\", likes: 10, top_image_url: \""+bus.image_url+"\" }),"+
+    "(r1:Review {created_at: timestamp()}),"+
+    "(e1:Essay {review_text: \""+bus.snippet_text+"\", down: 5, up: \""+bus.review_count+"\"}),"+
+    "(p1:Photo {"+
+      "image_url: \""+bus.image_url+"\","+
+      "likes: \""+bus.review_count+"\","+
+      "is_top: true"+
+    "}),"+
+    "(rate1:Rating {value: \""+bus.rating+"\"}),"+
+    "(m)-[:HAS_ITEM]->(i1),"+
+    "(r1)-[:REVIEW_OF]->(i1),"+
+    "(r1)-[:HAS_ESSAY]->(e1),"+
+    "(r1)-[:HAS_PHOTO]->(p1),"+
+    "(r1)-[:HAS_RATE]->(rate1) RETURN m",
+    function(err, result){
+        if(err) throw err;
+        // cb(true)
+        console.log("neo----", result.data);
+        // console.log(result.data); // delivers an array of query results
+        // console.log(result.columns); // delivers an array of names of objects getting returned
+        // res.json(result.data)
+        cb(result.data)
+        // res.json(result.data)
+        // res.json(200, result)
+    });
 }
