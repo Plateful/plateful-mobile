@@ -14,9 +14,23 @@ angular.module('clurtch.modules.tabs.review.controllers', [])
   'CreateReview'
   'Business'
   ($scope, CreateReview, Business)->
-    Business.get()
-      .success (data)->
+    $scope.currL = window.currLocation
+    # $ionicLoading.show(
+    #   noBackdrop: true,
+    #   duration: 2000,
+    #   template: 'Loading...'
+    # )
+    Business.getByLocation({
+      lat: $scope.currL.coords.latitude,
+      lng: $scope.currL.coords.longitude
+      })
+      # Business.get()
+      .success (data) ->
         $scope.businesses = data
+        # $ionicLoading.hide()
+        # console.log($scope.businesses)
+      .error (msg)->
+        console.log(msg)
 
 ]
 
@@ -29,9 +43,18 @@ angular.module('clurtch.modules.tabs.review.controllers', [])
     $scope.businessId = $stateParams.businessId
     CreateReview.set('business', $scope.businessId)
     $scope.review = CreateReview.get()
-    MenuItem.getByBusiness($scope.businessId)
-      .success (data)->
-        $scope.items = data
+    Business.find($scope.businessId)
+      .success((data) ->
+        console.log "neo----", data[0][1]
+        $scope.business = data[0][0]
+        if Array.isArray(data[0][1])
+          $scope.items = data[0][1]
+          console.log $scope.items
+        else
+          $scope.items.push(data[0][1])
+          # $scope.$apply()
+        $ionicLoading.hide()
+      )
 
 ]
 
