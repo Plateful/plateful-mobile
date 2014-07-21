@@ -1,0 +1,19 @@
+ion-view(title="{{business.name}}")
+  //- ion-nav-buttons(side="right")
+    //- button.button.button-clear.button-icon.icon.ion-ios7-plus(ng-click="openModal()")
+  ion-content.bg-grey
+    ion-list
+      ion-item.item-thumbnail-left
+        img(src='{{business.image_url}}')
+        h2 {{business.name}}
+        h4 {{business.location.address[0] + " " + business.location.city }}
+        h4 {{business.phone}}
+      div.item-divider
+      ion-item
+        h4 Items go here
+        i(class="ion ion-chevron-down")
+      ion-item.item-thumbnail-left(ng-repeat="item in items" href="#/tab/nearby/item/{{item._id}}")
+        img(src='{{item.top_image_url}}')
+        h2 {{item.name}}
+        //- h4 {{business.phone}}
+        //- h4 {{business.location.address[0] + " " + business.location.city }}
