@@ -1,17 +1,13 @@
-//- ion-header-bar.bar-positive.item-input-inset
-//-   button.button.button-clear(ng-click="modal.show()") Filter&nbsp&nbsp
-//-   label.item-input-wrapper
-//-     i.icon.ion-ios7-search.placeholder-icon
-//-     input(type="search" placeholder="Search" ng-model="search")
-//-   button.button.button-clear Map
+ion-view(hide-nav-bar="true")
 
-ion-view(title="Find")
-  ion-nav-buttons(side="left")
-    button.button.button-clear(ng-click="openModal()") Filter
-  ion-nav-buttons(side="right")
+  ion-header-bar.bar-positive.item-input-inset
+    button.button.button-clear(ng-click="openModal()") Filter&nbsp&nbsp
+    label.item-input-wrapper
+      i.icon.ion-ios7-search.placeholder-icon
+      input(type="search" placeholder="Search" ng-model="search")
     a.button.button-clear(href="#/tab/map") Map
-  ion-content.bg-grey
 
+  ion-content.bg-grey
     ng-single-select(options="options")
     a.menu-card(ng-repeat="item in items | filter:search" href="#/tab/find/item/{{item._id}}")
       div.menu-card-content
