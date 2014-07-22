@@ -6,53 +6,18 @@ var db = require('../../config/neo4j').db
 // var Business = require('')
 var Review = require('../review/review.model')
 var Business = require('../business/business.model')
-// Get list of items
-// exports.index = function(req, res) {
-//   Item.find(function (err, items) {
-//     if(err) { return handleError(res, err); }
-//     _(items).forEach(function(item){
-//       // return res.json(200, item)
-//       Business.findById(item.business_id, function(err, bus){
-//         if(bus){
-//           item.top_image_url = bus.image_url
-//           item.save(function(err, newItem){
-//
-//           })
-//         }
-//         var rev = new Review({
-//           comment: 'this is a new review comment',
-//           business_id: item.business_id,
-//           user_id: '53c5cf5c80a3c64a2669c8da',
-//           item_id: item._id,
-//           // images: [bus.image_url],
-//           created_at: new Date()
-//         })
-//         if(bus){
-//           rev.images.push({image_url: bus.image_url})
-//           console.log(rev)
-//         }
-//
-//         rev.save(function(err, newRev){
-//           // res.json(200, newRev)
-//         })
-//
-//       })
-//     })
-//     return res.json(200, 'items');
-//   });
-// };
+
 exports.index = function(req, res) {
-  // Item.find(function(err, items){
-  //   if(err) return handleError(res, err)
-  //   res.json(200, items)
-  // })
-  db.cypherQuery('MATCH (i:Item) return i', function(err, result){
+  db.cypherQuery('MATCH (i:Item) return i LIMIT 25', function(err, result){
     if (err) return handleError(res, err)
     res.json(201, result.data)
   })
 }
 exports.getByBusiness = function(req, res) {
   var business_id = req.params.business_id;
+  var params = {business:req.params.business_id}
+  var query = "START b=node({business})"+
+              "MATCH (b)-[:]->(d:Dish), (b)"
   Item.find({business: business_id}, function (err, items) {
     if(err) { return handleError(res, err); }
     return res.json(200, items);
@@ -98,39 +63,34 @@ exports.show = function(req, res) {
 };
 
 // Creates a new item in the DB.
+var createQuery = "START m=node({menu_id}),"+
+                  "MATCH (m),"+
+                  "CREATE (d:Dish {dish}),"+
+                   "(r:Review {review}),"+
+                   "(p:Photo {photo}),"+
+                   "(e:Essay {essay}),"+
+                   "(star:Star {star}),"+
+                   "(d)-[:HAS_REVIEW]->(r),"+
+                   "(d)-[:HAS_PHOTO]->(p),"+
+                   "(d)-[:HAS_ESSAY]->(e),"+
+                   "(d)-[:HAS_STAR]->(star),"+
+                   "(r)-[:PHOTO]->(p),"+
+                   "(r)-[:ESSAY]->(e),"+
+                   "(r)-[:STAR]->(star),"+
+                   "(m)-[:HAS_DISH]->(d)"
 exports.create = function(req, res) {
-  console.log(req.body)
-  Item.create(req.body, function(err, item) {
-    if(err) { return handleError(res, err); }
-    console.log(item)
-    return res.json(201, item);
-  });
+  res.json(201, 'Item was created', req.body)
 };
-
+var updateQuery = "START d=node({item_id}) SET d = {params} RETURN d"
 // Updates an existing item in the DB.
 exports.update = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
-  Item.findById(req.params.id, function (err, item) {
-    if (err) { return handleError(err); }
-    if(!item) { return res.send(404); }
-    var updated = _.merge(item, req.body);
-    updated.save(function (err) {
-      if (err) { return handleError(err); }
-      return res.json(200, item);
-    });
-  });
+  res.json(201, 'Item with ID of '+req.body.id+' was Updated', req.body)
 };
 
+var destroyQuery = "START d=node({item_id}) MATCH (d) DELETE d"
 // Deletes a item from the DB.
 exports.destroy = function(req, res) {
-  Item.findById(req.params.id, function (err, item) {
-    if(err) { return handleError(res, err); }
-    if(!item) { return res.send(404); }
-    item.remove(function(err) {
-      if(err) { return handleError(res, err); }
-      return res.send(204);
-    });
-  });
+  res.json(201, 'Item with ID of '+req.body.id+' was Deleted')
 };
 
 function handleError(res, err) {

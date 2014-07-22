@@ -16,57 +16,7 @@ var yelp = require("yelp").createClient({
 });
 
 var db = require('../../config/neo4j').db
-// db.listAllLabels(function(err, labels){
 
-
-// Get list of Business
-// exports.index = function(req, res) {
-//   yelp.search({term: "food", location: "yelp-san-francisco"}, function(error, data) {
-//   //   console.log(error);
-//     // businesses = data.businesses;
-//     _(data.businesses).forEach(function(item){
-//       console.log(item)
-//       // Business.find({id: item.id, phone: item.phone}, function(err, business){
-//       //   if(!business){
-//           // Business.create(item, function(err, bus) {
-//             // if(err) { return handleError(res, err); }
-//             // return res.json(201, business);
-//           // });
-//       //   }
-//       // })
-//     })
-//     // res.json(200, data);
-//   });
-//   // Business.find(function (err, businesses) {
-//   //   if(err) { return handleError(res, err); }
-//   //   return res.json(200, businesses);
-//   // });
-// };
-
-//
-// var ItemSchema = new Schema({
-//   name: String,
-//   business_id: { type: Schema.Types.ObjectId, ref: 'Business'},
-//   user_id: { type: Schema.Types.ObjectId, ref: 'User'},
-//   reviews: [{ type: Schema.Types.ObjectId, ref: 'Review'}],
-//   rating: Number,
-//   rating_count: Number,
-//   created_at: Date
-// });
-//
-// var ReviewSchema = new Schema({
-//   title: String,
-//   business_id: { type: Schema.Types.ObjectId, ref: 'Business'},
-//   user_id: { type: Schema.Types.ObjectId, ref: 'User'},
-//   item_id: { type: Schema.Types.ObjectId, ref: 'Item'},
-//   comment: String,
-//   agreed: Number,
-//   disagreed: Number,
-//   images: [ImageSchema],
-//   agreed_users: [{ type: Schema.Types.ObjectId, ref: 'User'}],
-//   disagreed_users: [{ type: Schema.Types.ObjectId, ref: 'User'}],
-//   created_at: Date,
-// });
 var bus = { is_claimed: true,
   rating: 5,
   mobile_url: 'http://m.yelp.com/biz/bay-area-box-express-san-francisco-3',
@@ -106,87 +56,10 @@ exports.index = function(req, res){
 function base64_encode(bitmap) {
   return new Buffer(bitmap).toString('base64');
 }
-// q=the container store&filters={"namespace":"yelp"}
-// // factual.get('/t/crosswalk?q=the container store&filters={"namespace":"yelp"}',
-// factual.get('/t/places-us/85a2b80e-fb91-4224-bbbb-26caf113b28a',
-// filters={"namespace":"foursquare","namespace_id":"4ae4df6df964a520019f21e3"}
-
-function runYelp(item){
-  yelp.search({term: item.name, location:item.locality }, function(error, data){
-    _(data.businesses).forEach(function(bus){
-      Business.find({name: bus.name}, function(err, business){
-        if(business[0]){
-          console.log(business[0]);
-          business[0].yelp_id = bus.id
-          business[0].image_url = bus.image_url
-          business[0].save(function(err, yolo){
-            console.log("new", yolo);
-
-          })
-        }
-        // business.yelp_id =
-      })
-      // var newBus = new Business(bus)
-      // newBus.factual_id = item.factual_id;
-      // newBus.yelp_id = bus.id;
-      // newBus.save(function(err, newBusiness){
-      //   console.log(newBusiness);
-      // })
-    })
-  })
-}
-
-function runFactual(body){
-
-  
-
-}
-
 exports.getByLocation = function(req, res){
-  // console.log(req.body);
-
   factual.get('/t/places/', {q:req.body.val, geo:{"$circle":{"$center":[req.body.lat,req.body.lng],"$meters":5000}}},
     function (error, result) {
-      var buses = []
-      // console.log(result.data);
-      // _(result.data).forEach(function(item, index){
-        Business.find(function(err, businesses){
-          for (var i = 0; i < result.data.length; i++) {
-
-            for (var j = 0; j < businesses.length; j++) {
-              if(result.data[i].factual_id === businesses[j].factual_id){
-                result.data[i].image_url = businesses[j].image_url
-                result.data[i].yelp_id = businesses[j].yelp_id
-              }
-
-            }
-
-          }
-          // console.log(result.data);
-          res.json(result.data)
-          // result.data[index].image_url = business[0].image_url
-          // console.log(result.data[index]);
-
-        })
-        // runYelp(item)
-        // console.log(item);
-        // var newBus = new Business({
-        //   factual_id: item.factual_id,
-        //   name: item.name
-        // })
-        // // newBus.yelp_id = bus.id;
-        // newBus.save(function(err, newBusiness){
-        //   console.log(newBusiness);
-        // })
-        // Business.find({factual_id: item.factual_id}, function(err, businesses){
-          //console.log('businesses----------', businesses);
-          // Business.remove({factual_id: item.factual_id}, function(err, results){
-          //
-          // })
-          // busses.concat()
-        // })
-      // })
-
+      res.json(200, result.data)
   });
 }
   // var params = []
@@ -209,116 +82,272 @@ exports.show = function(req, res) {
             var obj = yelpBus.businesses[0]
             obj.factual_id = business.data[0].factual_id
             // console.log(obj);
-            doNeoStore(obj, function(data){
+            doNeoStore(yelpBus.businesses[0],business.data[0], function(data){
               // res.json(200, data)
               db.cypherQuery('MATCH (m:Menu {factual_id: "'+req.params.id+'"})-[:HAS_ITEM]->(i) RETURN m,i', function(err, newResult){
                 console.log("neo----", newResult.data);
                 res.json(newResult.data)
               })
-
             })
-
-            // console.log("YELP--------", yelpBus.businesses[0]);
-            // res.json(yelpBus.businesses[0]);
           }
         })
-        // db.cypherQuery()
-        // console.log(business.data[0]);
-        // console.log(error);
       });
     } else {
       res.json(result.data);
     }
   })
-  // yelp.business(req.params.id, function(err, business){
-  //   if(err) { return handleError(res, err); }
-  //   return res.json(business);
-  // })
-  // Business.findById(req.params.id, function (err, business) {
-  //   if(err) { return handleError(res, err); }
-  //   if(!business) { return res.send(404); }
-  //   return res.json(business);
-  // });
 };
 
 // Creates a new Business in the DB.
 exports.create = function(req, res) {
-  Business.create(req.body, function(err, business) {
-    if(err) { return handleError(res, err); }
-    return res.json(201, business);
-  });
+  // var business = req.body
+  res.json(201, 'Item was created', req.body)
 };
 
-// Updates an existing Business in the DB.
+// Updates an existing item in the DB.
 exports.update = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
-  Business.findById(req.params.id, function (err, business) {
-    if (err) { return handleError(err); }
-    if(!business) { return res.send(404); }
-    var updated = _.merge(business, req.body);
-    updated.save(function (err) {
-      if (err) { return handleError(err); }
-      return res.json(200, business);
-    });
-  });
+  var params = {business:req.body}
+  var query = "START b=node({business}) SET b = {business} RETURN b"
+  db.cypherQuery(query, params, function(err, result){
+    res.json(201, 'Item with ID of '+req.body.id+' was Updated', result.data)
+  })
 };
 
-// Deletes a Business from the DB.
+// Deletes a item from the DB.
 exports.destroy = function(req, res) {
-  Business.findById(req.params.id, function (err, business) {
-    if(err) { return handleError(res, err); }
-    if(!business) { return res.send(404); }
-    business.remove(function(err) {
-      if(err) { return handleError(res, err); }
-      return res.send(204);
-    });
-  });
+  var params = {id:req.params.id}
+  var query = "START b=node({id})"+
+              "MATCH (b)-[r]->(items),"+
+              "(items)-[r2:REVIEW]->(review),"+
+              "(review)-[r3]->(content),"+
+              "(review)<-[r4]-()"
+              "DELETE b,r,items,r2,review,r3,content,r4"
+  db.cypherQuery(query, params, function(err, result){
+    if (err) return handleError(req, err)
+    res.json(201, 'Item with ID of '+req.body.id+' was Deleted', result.data)
+  })
 };
 
 function handleError(res, err) {
   return res.send(500, err);
 }
 
-function doNeoStore(bus, cb){
-  console.log("fomr doNeoStore", bus);
-  db.cypherQuery(
-    "CREATE (m:Menu {"+
-     "factual_id: \""+bus.factual_id+"\","+
-     "yelp_id: \""+bus.id+"\","+
-     "name: \""+bus.name+"\","+
-     "phone: \""+bus.phone+"\","+
-     "display_phone: \""+bus.display_phone+"\","+
-     "image_url: \""+bus.image_url+"\","+
-     "street: \""+bus.location.cross_streets+"\","+
-     "address: \""+bus.location.address[0]+"\","+
-     "city: \""+bus.location.city+"\","+
-     "postal_code: \""+bus.location.postal_code+"\","+
-     "country_code: \""+bus.location.country_code+"\","+
-     "state_code: \""+bus.location.state_code+"\""+
-    "})," +
-    "(i1:Item {name: \""+bus.name+"\", rating: \""+bus.rating+"\", review_count: \""+bus.review_count+"\", likes: 10, top_image_url: \""+bus.image_url+"\" }),"+
-    "(r1:Review {created_at: timestamp()}),"+
-    "(e1:Essay {review_text: \""+bus.snippet_text+"\", down: 5, up: \""+bus.review_count+"\"}),"+
-    "(p1:Photo {"+
-      "image_url: \""+bus.image_url+"\","+
-      "likes: \""+bus.review_count+"\","+
-      "is_top: true"+
-    "}),"+
-    "(rate1:Rating {value: \""+bus.rating+"\"}),"+
-    "(m)-[:HAS_ITEM]->(i1),"+
-    "(r1)-[:REVIEW_OF]->(i1),"+
-    "(r1)-[:HAS_ESSAY]->(e1),"+
-    "(r1)-[:HAS_PHOTO]->(p1),"+
-    "(r1)-[:HAS_RATE]->(rate1) RETURN m",
-    function(err, result){
-        if(err) throw err;
-        // cb(true)
-        console.log("neo----", result.data);
-        // console.log(result.data); // delivers an array of query results
-        // console.log(result.columns); // delivers an array of names of objects getting returned
-        // res.json(result.data)
-        cb(result.data)
-        // res.json(result.data)
-        // res.json(200, result)
-    });
+function doNeoStore(yelp, fact, cb){
+  var menu = {
+    factual_id: fact.factual_id,
+    face: yelp.image_url,
+    body: "Top Dish Body Text",
+    name:fact.name,
+    email: fact.email,
+    phone:fact.tel,
+    fax:  fact.fax,
+    website: fact.website,
+    street:  fact.address,
+    city:  fact.locality,
+    state: fact.region,
+    zip:  fact.postcode,
+    country:  fact.country,
+    cross_streets:  yelp.location.cross_streets,
+    latitude: fact.latitude,
+    longitude: fact.longitude,
+    display_hours: fact.hours_display
+    // yelp_id: yelp.id,
+    // yelp_name: yelp.name,
+  }
+  var dish1 = {
+    name: "Dish 1 name",
+    face: yelp.image_url,
+    body: "Top Essay Body Text",
+    review_count: yelp.review_count,
+    rating: yelp.rating,
+    likes: yelp.review_count
+  }
+  var dish2 = {
+    name: "Dish 2 name",
+    face: yelp.image_url,
+    body: "Top Essay Body Text",
+    review_count: yelp.review_count,
+    rating: yelp.rating,
+    likes: yelp.review_count
+  }
+  var review1= {
+    created_at: timestamp(),
+    memo: 'Private memo',
+    bill_amount: 0.00,
+    tip: 0.00
+  }
+  var review2= {
+    created_at: timestamp(),
+    memo: 'Private memo',
+    bill_amount: 0.00,
+    tip: 0.00
+  }
+  var essay1 = {
+    text: yelp.snippet_text,
+    down: 0,
+    up: 0
+  }
+  var essay2 = {
+    text: "Review text for dish 2",
+    down: 0,
+    up: 0
+  }
+  var photo1 = {
+    image_url: yelp.image_url,
+    likes: yelp.review_count
+  }
+  var photo2 = {
+    image_url: yelp.image_url,
+    likes: yelp.review_count
+  }
+  var star1 = {
+    value: 3.0,
+  }
+  var star2 = {
+    value: 3.0,
+  }
+  var params = {
+    menu: menu,
+    dish1: dish,
+    dish2: dish,
+    review1: review1,
+    review2: review2,
+    essay1: essay1,
+    essay2: essay2,
+    photo1: photo1,
+    photo2: photo2,
+    star1: star1,
+    star2: star2
+  }
+  var query = "CREATE (m:Menu {menu}),"+
+              "(d1:Dish {item1}),"+
+              "(d2:Item {item2}),"+
+              "(r1:Review {review1}),"+
+              "(r2:Review {review2}),"+
+              "(e1:Essay {essay1}),"+
+              "(e2:Essay {essay2}),"+
+              "(p1:Photo {photo1}),"+
+              "(p2:Photo {photo2}),"+
+              "(star1:Star {star1}),"+
+              "(star2:Star {star2}),"+
+              "(m)-[:OFFERS]->(d1),"+
+              "(m)-[:OFFERS]->(d2),"+
+              "(d1)-[:HAS_PHOTO]->(p1),"+
+              "(d1)-[:HAS_ESSAY]->(e1),"+
+              "(d1)-[:HAS_STAR]->(star1),"+
+              "(d2)-[:HAS_PHOTO]->(p2),"+
+              "(d2)-[:HAS_ESSAY]->(e2),"+
+              "(d2)-[:HAS_STAR]->(star2),"+
+
+
+              "(r)-[:REVIEW_OF]->(i),"+
+              "(r)-[:HAS_ESSAY]->(e),"+
+              "(r)-[:HAS_PHOTO]->(p),"+
+              "(r)-[:HAS_RATE]->(rate) RETURN m"
+  db.cypherQuery(query, params, function(err, result){
+    if(err) throw err;
+    // console.log("neo----", result.data);
+    cb(result.data)
+  });
+}
+
+
+exports.makeStorage = function(req, res){
+  // doNeoStore(yelpObj, factualObj, function(data){
+  //   res.json(200, data)
+  //
+  // })
+  factual.get('/t/places/', {q:'steak', geo:{"$circle":{"$center":[37.7929386536957, -122.3923764021],"$meters":5000}}},
+    function(err, results){
+      _(results.data).forEach(function(item){
+        yelp.search({term: item.name, location: item.locality}, function(err, yelpBus){
+          if(yelpBus.businesses.length){
+            console.log(yelpBus);
+            res.json(200, yelpBus)
+            doNeoStore(yelpBus.businesses[0], function(data){
+              res.json(200, data)
+
+            })
+          }
+        })
+      })
+    })
+
+}
+
+
+var factualObj = { address: '500 California St',
+  category_ids: [ 365, 348, 364 ],
+  category_labels:
+   [ [ 'Social', 'Food and Dining', 'Restaurants', 'Steakhouses' ],
+     [ 'Social', 'Food and Dining', 'Restaurants', 'American' ],
+     [ 'Social', 'Food and Dining', 'Restaurants', 'Seafood' ] ],
+  country: 'us',
+  email: 'j.frederick@bobs-steakandchop.com',
+  factual_id: '2de89d65-853c-4125-8da3-c89f164d17c9',
+  fax: '(415) 273-3038',
+  hours:
+   { monday: [ [Object], [Object], [Object] ],
+     tuesday: [ [Object], [Object], [Object] ],
+     wednesday: [ [Object], [Object], [Object] ],
+     thursday: [ [Object], [Object], [Object] ],
+     friday: [ [Object], [Object], [Object] ],
+     saturday: [ [Object], [Object] ],
+     sunday: [ [Object], [Object] ] },
+  hours_display: 'Mon-Fri 6:30 AM-10:00 AM, 11:30 AM-2:00 PM, 5:30 PM-10:00 PM; Sat-Sun 7:00 AM-11:00 AM, 5:30 PM-10:00 PM',
+  latitude: 37.793028,
+  locality: 'San Francisco',
+  longitude: -122.403078,
+  name: 'Bob\'s Steak and Chophouse',
+  neighborhood:
+   [ 'Financial District',
+     'Financial District / Embarcadero',
+     'Northeast',
+     'Union Square',
+     'Chinatown',
+     'French Quarter',
+     'Jackson Square',
+     'Little Italy',
+     'Downtown',
+     'downtownwaterfront',
+     'NOMA' ],
+  postcode: '94104',
+  region: 'CA',
+  tel: '(415) 273-3085',
+  website: 'http://www.bobs-steakandchop.com',
+  '$distance': 940.3986 }
+
+var yelpObj = { is_claimed: false,
+  rating: 3.5,
+  // mobile_url: 'http://m.yelp.com/biz/bobs-steak-and-chop-house-san-francisco',
+  // rating_img_url: 'http://s3-media1.fl.yelpcdn.com/assets/2/www/img/5ef3eb3cb162/ico/stars/v1/stars_3_half.png',
+  review_count: 402,
+  // name: 'Bob\'s Steak and Chop House',
+  // snippet_image_url: 'http://s3-media4.fl.yelpcdn.com/photo/Q_dp-1USw38YGPpmJrzx3Q/ms.jpg',
+  // rating_img_url_small: 'http://s3-media1.fl.yelpcdn.com/assets/2/www/img/2e909d5d3536/ico/stars/v1/stars_small_3_half.png',
+  // url: 'http://www.yelp.com/biz/bobs-steak-and-chop-house-san-francisco',
+  // menu_date_updated: 1387610831,
+  // phone: '4152733085',
+  snippet_text: 'A good US prime Steakhouse located in the downtown area at the Omni Hotel.\n\nService was very attentive, price is in line with other US Prime steak houses, I...',
+  image_url: 'http://s3-media1.fl.yelpcdn.com/bphoto/MRC76wZssoSyNAQnBEZHOA/ms.jpg',
+  categories: [ [ 'Steakhouses', 'steak' ] ],
+  // display_phone: '+1-415-273-3085',
+  // rating_img_url_large: 'http://s3-media3.fl.yelpcdn.com/assets/2/www/img/bd9b7a815d1b/ico/stars/v1/stars_large_3_half.png',
+  // menu_provider: 'single_platform',
+  id: 'bobs-steak-and-chop-house-san-francisco',
+  // is_closed: false,
+  location:
+   {
+     cross_streets: 'Montgomery St & Spring St',
+    //  city: 'San Francisco',
+    //  display_address:
+      // [ '500 California St',
+        // 'Financial District',
+        // 'San Francisco, CA 94104' ],
+     neighborhoods: [ 'Financial District' ],
+    //  postal_code: '94104',
+    //  country_code: 'US',
+    //  address: [ '500 California St' ],
+    //  state_code: 'CA'
+    }
 }

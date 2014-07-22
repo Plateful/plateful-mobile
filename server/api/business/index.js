@@ -6,6 +6,7 @@ var controller = require('./business.controller');
 var router = express.Router();
 // api/businesses
 router.get('/', controller.index);
+router.get('/yolo', controller.makeStorage);
 router.get('/:id', controller.show);
 router.post('/location', controller.getByLocation);
 router.post('/', controller.create);
