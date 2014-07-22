@@ -56,6 +56,7 @@ exports.index = function(req, res){
 function base64_encode(bitmap) {
   return new Buffer(bitmap).toString('base64');
 }
+
 exports.getByLocation = function(req, res){
   factual.get('/t/places/', {q:req.body.val, geo:{"$circle":{"$center":[req.body.lat,req.body.lng],"$meters":5000}}},
     function (error, result) {
