@@ -3,4 +3,5 @@ angular.module('clurtch.factories', [
   'clurtch.factory.item'
   'clurtch.factory.review'
   'clurtch.factory.user'
+  'clurtch.factory.photo'
   ])

@@ -68,9 +68,6 @@ exports.show = function(req, res) {
   //     res.json(200, req.body);
   //   });
   // });
-
-
-
 // };
 
 
@@ -189,11 +186,17 @@ function handleError(res, err) {
 // ITEM MUST HAVE A [:GALLERY] relation to a (:Gallery) labeled node
 
 
+// RUN 1 TIME
+// CREATE
+//   (user:User)-[:ALBUM]-(album)
+//   (item:Item)-[:GALLERY]-(gallery)
+// RETURN user,album,item,gallery
 //
+// RUN 5 TIMES
 //
-// START item=node(1702)
+// START item=node(ITEMS ID GOES HERE)
 //
-// MATCH (user:User)-[:ALBUM]->(album) WHERE id(user) = 1703,
+// MATCH (user:User)-[:ALBUM]->(album) WHERE id(user) = USERSID GOES HERE,
 //       (item)-[:GALLERY]->(gallery)
 //
 // CREATE (review:Review {created_at: timestamp()}),
@@ -211,9 +214,9 @@ function handleError(res, err) {
 //
 //
 //
-
-
-
-
-
+//
+//
+//
+//
+//
 //
