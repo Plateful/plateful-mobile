@@ -3,7 +3,12 @@ angular.module('clurtch.modules.states.map.controllers', [])
 
 
 .controller('MapCtrl', ($scope, $ionicLoading, $compile)->
+
+  $scope.rand = Math.random()
+  console.log $scope.rand
   initialize = ()->
+
+
     myLatlng = new google.maps.LatLng(43.07493,-89.381388)
 
     mapOptions =
