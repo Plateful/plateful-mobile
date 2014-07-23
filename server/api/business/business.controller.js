@@ -82,9 +82,7 @@ exports.show = function(req, res) {
             console.log("FACTURL--------", business.data[0]);
             var obj = yelpBus.businesses[0]
             obj.factual_id = business.data[0].factual_id
-            // console.log(obj);
             doNeoStore(yelpBus.businesses[0],business.data[0], function(data){
-              // res.json(200, data)
               db.cypherQuery('MATCH (m:Menu {factual_id: "'+req.params.id+'"})-[:HAS_ITEM]->(i) RETURN m,i', function(err, newResult){
                 console.log("neo----", newResult.data);
                 res.json(newResult.data)
@@ -100,17 +98,39 @@ exports.show = function(req, res) {
 };
 
 // Creates a new Business in the DB.
+//working
 exports.create = function(req, res) {
-  // var business = req.body
-  res.json(201, 'Item was created', req.body)
+  var query = "CREATE (menu:Menu {menu}) RETURN menu"
+  var menu = {
+    factual_id : "0bf93772-75c7-4710-889d-9f407d612706",
+    name: "Thai Gourmet Group",
+    address: "845 Market Street",
+    locality: "San Francisco",
+    region: "CA",
+    postcode: 94103,
+    country: 'US',
+    tel: '(415)-538-0800',
+    latitude: 37.784268,
+    longitude: -122.406917,
+    website: 'http://www.leftyodouls.biz'
+  }
+  var params = {menu:menu};
+  db.cypherQuery(query, params, function(err, result){
+    if(err){
+      console.log(err);
+      handleError(res, err)
+    }
+    res.json(result.data);
+  });
 };
 
 // Updates an existing item in the DB.
+//working but NEED TO CHANGE THE QUERY TO ONLY UPDATE CERTAIN ATTRIBUTES INSTEAD OF REMOVING ALL
 exports.update = function(req, res) {
-  var params = {business:req.body}
-  var query = "START b=node({business}) SET b = {business} RETURN b"
+  var params = {changes:req.body};
+  var query = "START menu=node("+ req.params.id + ") SET menu = {changes} RETURN menu"
   db.cypherQuery(query, params, function(err, result){
-    res.json(201, 'Item with ID of '+req.body.id+' was Updated', result.data)
+    res.json(201, 'Item with ID of '+ req.body.id +' was Updated', result.data)
   })
 };
 
@@ -251,7 +271,6 @@ function doNeoStore(yelp, fact, cb){
     cb(result.data)
   });
 }
-
 
 exports.makeStorage = function(req, res){
   // doNeoStore(yelpObj, factualObj, function(data){
