@@ -9,10 +9,10 @@ angular.module('clurtch.modules.tabs.find', [
     url: "/find"
     views:
       "tab-find":
-        templateUrl: "js/modules/tabs/find/views/find.html"        
+        templateUrl: "js/modules/tabs/find/views/find.html"
         controller: "FindCtrl"
-  .state "tab.map",
-    url: "/map"
+  .state "tab.find-map",
+    url: "/find/map"
     views:
       "tab-find":
         templateUrl: "js/modules/states/map/map.html"
