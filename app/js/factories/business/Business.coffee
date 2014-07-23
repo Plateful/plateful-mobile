@@ -1,29 +1,44 @@
 angular.module('clurtch.factory.business', [])
 
+
+.service 'BusinessCache', ()->
+  _cache = {}
+  instance =
+    get: (key)->
+      result = false
+      if _cache[key] then return _cache[key]
+      result
+    set: (key, obj)->
+      _cache[key] = obj
+  instance
+
+
+
 .factory 'Business', [
   '$http'
   'ServerUrl'
-  'Geo'
-  ($http, ServerUrl, Geo)->
-    # self = @
-    lat = 0
-    lng = 0
-    Geo.getLocation().then(
-      (position) ->
-        lat = position.coords.latitude
-        lng = position.coords.longitude
-
-      (error) ->
-        console.log 'Unable to get current location: ' + error
-    )
+  'BusinessCache'
+  ($http, ServerUrl, BusinessCache)->
+    nearbyKey = ""
     get: ->
       $http.get ServerUrl + 'api/businesses'
     getWith: (id)->
       args = Array.prototype.slice.call(arguments)
       $http.post(ServerUrl + '/api/business/#{id}/', {args: args})
-    getByLocation: (data)->
 
-      $http.post ServerUrl + 'api/businesses/location', data
+
+    getByLocation: (data, key, cb)->
+
+      if key then nearbyKey = key
+      cached = BusinessCache.get(nearbyKey)
+      if cached then cb( nearbyKey, cached )
+      else
+        $http.post(ServerUrl + 'api/businesses/location', data)
+          .success (newData)->
+            BusinessCache.set(data.val, newData)
+            cb(data.val, newData )
+
+
     find: (id)->
       $http.get ServerUrl + 'api/businesses/' + id
     post: (data)->

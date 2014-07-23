@@ -1,5 +1,10 @@
 angular.module('clurtch.modules.tabs.nearby.controllers', [])
-
+#
+#
+# .controller('FindTabCtrl', ($scope, Business)->
+#   Business.get
+# )
+#
 
 .controller 'NearbyCtrl', [
   '$rootScope'
@@ -17,14 +22,18 @@ angular.module('clurtch.modules.tabs.nearby.controllers', [])
     Business.getByLocation({
       lat: $scope.currL.coords.latitude,
       lng: $scope.currL.coords.longitude
-      })
-      # Business.get()
-      .success (data) ->
-        $scope.businesses = data
+      }, null, (key, newData)->
+        $scope.search = key
+        $scope.businesses = newData
         $ionicLoading.hide()
-        # console.log($scope.businesses)
-      .error (msg)->
-        console.log(msg)
+      )
+      # Business.get()
+      # .success (data) ->
+      #   $scope.businesses = data
+      #   $ionicLoading.hide()
+      #   # console.log($scope.businesses)
+      # .error (msg)->
+      #   console.log(msg)
     # console.log lng, lat
     $scope.newSearch = (search)->
       $ionicLoading.show(
@@ -32,16 +41,21 @@ angular.module('clurtch.modules.tabs.nearby.controllers', [])
         duration: 2000,
         template: 'Loading...'
       )
+      console.log "Ylol", search
       Business.getByLocation({
         val: search,
         lat: $scope.currL.coords.latitude,
         lng: $scope.currL.coords.longitude
-        })
-        # Business.get()
-        .success (data) ->
+        }, search, (key, newData)->
+          $scope.search = key
+          $scope.businesses = newData
           $ionicLoading.hide()
-          $scope.businesses = data
-          console.log($scope.businesses)
-        .error (msg)->
-          console.log(msg)
+        )
+        # Business.get()
+        # .success (data) ->
+        #   $ionicLoading.hide()
+        #   $scope.businesses = data
+        #   console.log($scope.businesses)
+        # .error (msg)->
+        #   console.log(msg)
 ]
