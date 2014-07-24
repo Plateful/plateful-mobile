@@ -27,9 +27,11 @@ server = require('http').createServer(app)
 
 # Set config variables
 require('./config/express')(app)
-
+# app.use( require( './config/api/locu' ).testApi() )
 # Set app api routes
 require('./routes').applyRoutes(app)
+
+require( './config/api/locu' ).testApi()
 
 
 
