@@ -242,16 +242,18 @@ function doNeoStore(yelp, fact, cb){
     star2: star2
   }
   var query = "CREATE (m:Menu {menu}),"+
-              "(d1:Dish {item1}),"+
-              "(d2:Item {item2}),"+
-              "(r1:Review {review1}),"+
-              "(r2:Review {review2}),"+
-              "(e1:Essay {essay1}),"+
-              "(e2:Essay {essay2}),"+
-              "(p1:Photo {photo1}),"+
-              "(p2:Photo {photo2}),"+
-              "(star1:Star {star1}),"+
-              "(star2:Star {star2}),"+
+              // "(item1:Item {item1}),"+
+              // "(item2:Item {item2}),"+
+              // "(r1:Review {review1}),"+
+              // "(r2:Review {review2}),"+
+              // "(e1:Essay {essay1}),"+
+              // "(e2:Essay {essay2}),"+
+              // "(p1:Photo {photo1}),"+
+              // "(p2:Photo {photo2}),"+
+              // "(star1:Star {star1}),"+
+              // "(star2:Star {star2}),"+
+
+
               "(m)-[:OFFERS]->(d1),"+
               "(m)-[:OFFERS]->(d2),"+
               "(d1)-[:HAS_PHOTO]->(p1),"+
@@ -272,25 +274,25 @@ function doNeoStore(yelp, fact, cb){
 }
 
 exports.makeStorage = function(req, res){
-  // doNeoStore(yelpObj, factualObj, function(data){
-  //   res.json(200, data)
-  //
-  // })
-  factual.get('/t/places/', {q:'steak', geo:{"$circle":{"$center":[37.7929386536957, -122.3923764021],"$meters":5000}}},
-    function(err, results){
-      _(results.data).forEach(function(item){
-        yelp.search({term: item.name, location: item.locality}, function(err, yelpBus){
-          if(yelpBus.businesses.length){
-            console.log(yelpBus);
-            res.json(200, yelpBus)
-            doNeoStore(yelpBus.businesses[0], function(data){
-              res.json(200, data)
+  doNeoStore(yelpObj, factualObj, function(data){
+    res.json(200, data)
 
-            })
-          }
-        })
-      })
-    })
+  })
+  // factual.get('/t/places/', {q:'steak', geo:{"$circle":{"$center":[37.7929386536957, -122.3923764021],"$meters":5000}}},
+  //   function(err, results){
+  //     _(results.data).forEach(function(item){
+  //       yelp.search({term: item.name, location: item.locality}, function(err, yelpBus){
+  //         if(yelpBus.businesses.length){
+  //           console.log(yelpBus);
+  //           res.json(200, yelpBus)
+  //           doNeoStore(yelpBus.businesses[0], function(data){
+  //             res.json(200, data)
+  //
+  //           })
+  //         }
+  //       })
+  //     })
+  //   })
 
 }
 
