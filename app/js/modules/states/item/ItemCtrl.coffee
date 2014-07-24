@@ -7,36 +7,46 @@ angular.module('clurtch.modules.states.item')
   'MenuItem'
   'Review'
   '$ionicLoading'
-  ($scope, $stateParams, $http, MenuItem, Review, $ionicLoading) ->
+  'Restangular'
+  ($scope, $stateParams, $http, Item, Review, $ionicLoading, Rest) ->
     $scope.itemId = $stateParams.itemId
-    $ionicLoading.show(
-      noBackdrop: true,
-      duration: 2000,
-      template: 'Loading...'
-    )
-    MenuItem.find($scope.itemId)
-      .success (data)->
-        $scope.item = data[0]
-        # console.log data
-        #change Rating to Stars
-        tempRating = $scope.item.rating
-        stars = ''
-        while tempRating >= 1
-          stars += '★'
-          tempRating--
-        if tempRating % 1 > 0
-          stars += '½'
-        $scope.item.stars = stars
-      .error (data) ->
-        console.log data
 
-    Review.getByItemId($scope.itemId)
-      .success (data) ->
-        # console.log(data)
+    # Create a star rating for the item, based on the item's rating property
+    makeStars = (rating)->
+      '★★★★★½'.slice(5.75-rating, 6.25-Math.abs(rating%1-0.5))
+
+    Item.find($scope.itemId).get()
+      .then (data)->
+        $scope.item = data[0]
+        $scope.item.stars = makeStars($scope.item.rating)
+
+    Review.getByItemId($scope.itemId).get()
+      .then (data) ->
         $scope.reviews = data
         $ionicLoading.hide()
-        # console.log $scope.reviews
-      .error (err) ->
-        console.log(err)
+
+    # As a user, I want to see all the photos of this item
+    $scope.showPhotos = ()->
+      Item.getItemGallery($scope.item_id)
+        .then (photos)->
+          $scope.photos = photos
+
+    # As a user, I want to see all the reviews regarding this item
+    $scope.showReviews = ()->
+      Item.getItemReviews($scope.item_id)
+        .then (reviews)->
+          $scope.reviews = reviews
+
+    # As a user, I want to share my experience with this item
+    $scope.reviewItem = ()->
+      alert 'item reviewed'
+
+    # As a user, I want to Collect this item
+    $scope.collectItem = ()->
+      alert 'item collected'
+
+    # As a user, I want to Bookmark this item
+    $scope.bookmarkItem = ()->
+      alert 'item bookmarked'
 
 ])
