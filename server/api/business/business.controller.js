@@ -1,4 +1,5 @@
 // minjung1009
+//NEED TO IMPROVE UPDATE QUERY
 'use strict';
 
 var _ = require('lodash');
@@ -259,8 +260,6 @@ function doNeoStore(yelp, fact, cb){
               "(d2)-[:HAS_PHOTO]->(p2),"+
               "(d2)-[:HAS_ESSAY]->(e2),"+
               "(d2)-[:HAS_STAR]->(star2),"+
-
-
               "(r)-[:REVIEW_OF]->(i),"+
               "(r)-[:HAS_ESSAY]->(e),"+
               "(r)-[:HAS_PHOTO]->(p),"+
