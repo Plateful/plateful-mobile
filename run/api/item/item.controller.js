@@ -98,8 +98,10 @@
 
   exports.destroy = function(req, res) {
     var params, query;
-    query = "";
-    params = "";
+    params = {
+      id: Number(req.params.id)
+    };
+    query = "START item=node({id}) MATCH (item)-[r]-() DELETE item, r";
     return db.cypherQuery(query, params, function(err, result) {
       if (err) {
         return handleError(res, err);

@@ -227,8 +227,8 @@ gulp.task 'compile:server', ->
 
 gulp.task 'runserver', ->
   nodemon(
-    # script: 'run/app.js',
-    script: 'server/app.js',
+    script: 'run/app.js',
+    # script: 'server/app.js',
     ext: 'html js',
     ignore: ['ignored.js']
   )

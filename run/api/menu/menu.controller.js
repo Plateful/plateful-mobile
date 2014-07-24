@@ -13,10 +13,7 @@
   yelp = require('../../config/yelp').yelp;
 
   exports.index = function(req, res) {
-    var params, query;
-    query = "";
-    params = "";
-    return db.cypherQuery(query, params, function(err, result) {
+    return db.cypherQuery("MATCH (menu:Menu) RETURN menu", function(err, result) {
       if (err) {
         return handleError(res, err);
       }
@@ -39,7 +36,7 @@
       }
     }, function(err, result) {
       if (err) {
-        return handleError(req, err);
+        return handleError(res, err);
       }
       return res.json(200, result.data);
     });
@@ -47,20 +44,37 @@
 
   exports.show = function(req, res) {
     var params, query;
-    params = {};
-    query = "";
+    params = {
+      id: Number(req.params.id)
+    };
+    query = "START menu=node({id})" + "MATCH (menu)-[:HAS]->(item:Item)," + "(item)-[:REVIEW]->(review:Review)," + "(item)-[:GALLERY]->(gallery:Gallery)-[:PHOTO]->(photo:Photo)," + "(review)-[:BODY]->(body:Body)" + "RETURN item, review, body, photo";
     return db.cypherQuery(query, params, function(err, result) {
       if (err) {
-        return handleError(req, err);
+        return handleError(res, err);
       }
       return res.json(201, result.data);
     });
   };
 
   exports.create = function(req, res) {
-    var params, query;
-    params = {};
-    query = "";
+    var menu, params, query;
+    query = "CREATE (menu:Menu {menu}) RETURN menu";
+    menu = {
+      factual_id: "0bf93772-75c7-4710-889d-9f407d612706",
+      name: "Thai Gourmet Group",
+      address: "845 Market Street",
+      locality: "San Francisco",
+      region: "CA",
+      postcode: 94103,
+      country: 'US',
+      tel: '(415)-538-0800',
+      latitude: 37.784268,
+      longitude: -122.406917,
+      website: 'http://www.leftyodouls.biz'
+    };
+    params = {
+      menu: menu
+    };
     return db.cypherQuery(query, params, function(err, result) {
       if (err) {
         return handleError(req, err);
