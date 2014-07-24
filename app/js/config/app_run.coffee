@@ -11,10 +11,8 @@ app.constant('ServerUrl', 'http://localhost:9000/')
 ionic.Platform.ready ->
   app.config ($provide, $httpProvider) ->
     # Add support for PATCH requests
-
     $httpProvider.defaults.headers.patch ||= {}
     $httpProvider.defaults.headers.patch['Content-Type'] = 'application/json'
-
     $httpProvider.interceptors.push ($injector, $q) ->
       responseError: (response) ->
         console.log "httperror: ", response.status unless GLOBALS.ENV == "test"
@@ -22,9 +20,6 @@ ionic.Platform.ready ->
           $injector.invoke (Auth) ->
             Auth.setAuthToken(null)
         $q.reject(response)
-
-
-
   # Now, finally, let's run the app
   # (this is the reason why we don't include ng-app in the index.jade)
   angular.bootstrap document, ['clurtch']

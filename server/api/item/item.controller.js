@@ -3,33 +3,46 @@
 var _ = require('lodash');
 var Item = require('./item.model');
 var db = require('../../config/neo4j').db
-// var Business = require('')
 var Review = require('../review/review.model')
 var Business = require('../business/business.model')
 
+//working
+//GET http://localhost:9000/api/items
 exports.index = function(req, res) {
-  db.cypherQuery('MATCH (i:Item) return i LIMIT 25', function(err, result){
-    if (err) return handleError(res, err)
-    res.json(201, result.data)
-  })
+  db.cypherQuery('MATCH (i:Item) RETURN i LIMIT 25', function(err, result){
+    if (err) return handleError(res, err);
+    res.json(201, result.data);
+  });
 }
+
+//working
+//GET http://localhost:9000/api/items/business/30
 exports.getByBusiness = function(req, res) {
-  var business_id = req.params.business_id;
-  var params = {business:req.params.business_id}
-  var query = "START b=node({business})"+
-              "MATCH (b)-[:]->(d:Dish), (b)"
-  Item.find({business: business_id}, function (err, items) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, items);
+  var params = {menu: Number(req.params.business_id)};
+  var query = "START menu=node({menu}) "+
+              "MATCH (menu)-[:HAS_ITEM]->(item:Item)-[:GALLERY]->(gallery:Gallery)-[:PHOTO]->(photo:Photo) " +
+              "MATCH (review)-[:BODY]->(body:Body)" +
+              "RETURN item, review, body, photo"
+  db.cypherQuery(query, params, function(err, result){
+    if (err) return console.log(err)
+    res.json(201, result.data);
   });
 };
+
+//working
+//GET http://localhost:9000/api/items/user/28
 exports.getByUser = function(req, res) {
-  var user_id = req.params.user_id;
-  Item.find({user_id: user_id}, function (err, items) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, items);
+  var params = {user: Number(req.params.user_id)};
+  var query = "START user=node({user})" +
+              'MATCH (user)-[:WROTE]->(review:Review)<-[:REVIEW]-(item:Item)-[:GALLERY]->(gallery:Gallery)-[:PHOTO]->(photo:Photo)' +
+              "MATCH (review)-[:BODY]->(body:Body)" +
+              "RETURN item, review, photo"
+  db.cypherQuery(query, params, function(err, result){
+    if (err) return console.log(err)
+    res.json(201, result.data);
   });
 };
+
 exports.getByLocation = function(req, res) {
   // yelp.search({term: "food", location: "yelp-san-francisco"}, function(error, data) {
   // var user_id = req.params.user_id;
@@ -40,29 +53,52 @@ exports.getByLocation = function(req, res) {
   });
 };
 
-// Get a single item
+
+//working
+//GET single item http://localhost:9000/api/items/35
 exports.show = function(req, res) {
-  console.log(req.params.id);
-  db.cypherQuery('MATCH (n) WHERE id(n) = '+req.params.id+' RETURN n',
-  function(err, result){
+  var params = {id: Number(req.params.id)};
+  var query = "START item=node({id})" +
+              "MATCH (item)-[:REVIEW]->(review:Review)-[:BODY]->(body:Body)" +
+              "MATCH (review)-[:PHOTO]->(photo:Photo)" +
+              "RETURN item, review, photo, body";
+  db.cypherQuery(query, params, function(err, result){
     if(err) return handleError(res, err)
-      console.log("item", result.data);
     res.json(200, result.data)
   })
-  // Item.findById(req.params.id, function (err, item) {
-  //   if(err) { return handleError(res, err); }
-  //   if(!item) { return res.send(404); }
-  //     Review.find({item_id: req.params.id}, function(err, reviews){
-  //       if(err) { return handleError(res, err); }
-  //       if(reviews.length){
-  //         item.reviews = reviews
-  //       }
-  //       return res.json(item);
-  //     })
-  // });
 };
 
-// Creates a new item in the DB.
+//POST http://localhost:9000/api/items/
+//Working but needs to add changes to that its takes in data from request.
+exports.create = function(req, res) {
+  var query = "START menu=node(7)" +
+              "CREATE (menu)-[:HAS_ITEM]->(item: Item { name: 'Rice cake', description: 'Rice Cake with Chicken Stock'})" +
+              "RETURN item"
+  db.cypherQuery(query, function(err, result){
+    if(err) return handleError(res, err)
+    res.json(200, result.data)
+  })
+};
+
+//PUT http://localhost:9000/api/items/11
+exports.update = function(req, res) {
+  var params = {changes:req.body};
+  var query = "START item=node("+ req.params.id + ") SET item = {changes} RETURN item"
+  db.cypherQuery(query, params, function(err, result){
+    res.json(201, 'Item with ID of '+ req.body.id +' was Updated', result.data)
+  })
+};
+
+exports.destroy = function(req, res) {
+  var destroyQuery = "START d=node({item_id}) MATCH (d) DELETE d"
+  res.json(201, 'Item with ID of '+req.body.id+' was Deleted')
+};
+
+function handleError(res, err) {
+  return res.send(500, err);
+}
+
+
 var createQuery = "START m=node({menu_id}),"+
                   "MATCH (m),"+
                   "CREATE (d:Dish {dish}),"+
@@ -78,30 +114,3 @@ var createQuery = "START m=node({menu_id}),"+
                    "(r)-[:ESSAY]->(e),"+
                    "(r)-[:STAR]->(star),"+
                    "(m)-[:HAS_DISH]->(d)"
-exports.create = function(req, res) {
-  res.json(201, 'Item was created', req.body)
-};
-var updateQuery = "START d=node({item_id}) SET d = {params} RETURN d"
-// Updates an existing item in the DB.
-exports.update = function(req, res) {
-  res.json(201, 'Item with ID of '+req.body.id+' was Updated', req.body)
-};
-
-var destroyQuery = "START d=node({item_id}) MATCH (d) DELETE d"
-// Deletes a item from the DB.
-exports.destroy = function(req, res) {
-  res.json(201, 'Item with ID of '+req.body.id+' was Deleted')
-};
-
-function handleError(res, err) {
-  return res.send(500, err);
-}
-
-//
-// items.foreach(function(item){
-//   Item.create(item, function(err, newItem) {
-//
-//     console.log(newItem)
-//
-//   });
-// })

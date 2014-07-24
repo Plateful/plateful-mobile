@@ -1,114 +1,115 @@
 'use strict';
+//need to work on update
+
 
 var _ = require('lodash');
 var Review = require('./review.model');
 var busboy = require('connect-busboy');
 var fs = require('fs');
 var db = require('../../config/neo4j').db
-// Get list of reviews
 
+// working
+// GET all reviews http://localhost:9000/api/reviews
 exports.index = function(req, res) {
-  Review.find(function (err, reviews) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, reviews);
-  });
+  var query = "MATCH (review:Review) " +
+              "MATCH (review)-[:BODY]->(body:Body) " +
+              "MATCH (review)-[:PHOTO]->(photo:Photo) " +
+              "RETURN review, photo, body"
+  db.cypherQuery(query, function(err, result){
+    if (err) return console.log(err);
+      //handleError(res, err);
+    res.json(201, result.data);
+  })
+
 };
-var getByBusinessQuery = "START n=node({menu_id}) MATCH (n)-->(i)-->(r:Review) RETURN n"
+
+//GET http://localhost:9000/api/reviews/business/7
 exports.getByBusiness = function(req, res) {
-  var business_id = req.params.business_id;
-  Review.find({business_id: business_id}, function (err, reviews) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, reviews);
-  });
-};
-var getByUserQuery = "START n=node({user_id}) MATCH (n)-->(r:Review) return r"
-exports.getByUser = function(req, res) {
-  var user_id = req.params.user_id
-  Review.find({user_id: user_id}, function (err, reviews) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, reviews);
+  var params = {menu: Number(req.params.business_id)};
+  var query = "START menu=node({menu}) "+
+              "MATCH (menu)-[:HAS_ITEM]->(item:Item) "+
+              "MATCH (item)-[:REVIEW]->(review:Review)" +
+              "MATCH (review)-[:BODY]->(body:Body)" +
+              "MATCH (review)-[:PHOTO]->(photo:Photo)" +
+              "RETURN item, review, body, photo"
+  db.cypherQuery(query, params, function(err, result){
+    if (err) return console.log(err)
+    res.json(201, result.data);
   });
 };
 
-var getByItemQuery = "START n=node({item_id}) MATCH (n)-->(r:Review) return r"
+
+//GET http://localhost:9000/api/reviews/userId
+exports.getByUser = function(req, res) {
+  var params = {user: Number(req.params.user_id)};
+  var query = "START user=node({user})" +
+              "MATCH (user)-[:WROTE]->(review:Review)" +
+              "MATCH (review)-[:PHOTO]->(photo:Photo)" +
+              "MATCH (review)-[:BODY]->(body:Body)" +
+              "RETURN review, body, photo"
+  db.cypherQuery(query, params, function(err, result){
+    if (err) return console.log(err)
+    res.json(201, result.data);
+  });
+};
+
 exports.getByItem = function(req, res) {
-  db.cypherQuery('MATCH (n) WHERE id(n) = '+req.params.item_id+' MATCH (r:Review)-[:REVIEW_OF]->(n) MATCH (r)-[*]->(p) RETURN p',
-  function(err, result){
-    if(err) return handleError(res, err)
-      console.log("item", result.data);
-    res.json(200, result.data)
+  var params = {item: Number(req.params.item_id)};
+  var query = "START item=node({item})" +
+              "MATCH (item)-[:REVIEW]->(review:Review)" +
+              "MATCH (review)-[:BODY]->(body:Body)" +
+              "MATCH (review)-[:PHOTO]->(photo:Photo)" +
+              "RETURN review, body, photo"
+  db.cypherQuery(query, params, function(err, result){
+    if (err) return console.log(err)
+    res.json(201, result.data);res.json(200, result.data)
   })
-  // var item_id = req.params.item_id
-  // Review.find({item_id: item_id}, function (err, reviews) {
-  //   if(err) { return handleError(res, err); }
-  //   return res.json(200, reviews);
-  // });
+
 };
 
 // Get a single review
-var showQuery = "START n=node({review_id}) MATCH (n)-->(children) RETURN r,children"
 exports.show = function(req, res) {
-  Review.findById(req.params.id, function (err, review) {
-    if(err) { return handleError(res, err); }
-    if(!review) { return res.send(404); }
-    return res.json(review);
+  var params = {review: Number(req.params.review_id)};
+  var query = "START review=node({review})" +
+              "MATCH (review)-[:BODY]->(body:Body)" +
+              "MATCH (review)-[:PHOTO]->(photo:Photo)" +
+              "RETURN review, body, photo"
+  db.cypherQuery(query, params, function(err, result){
+    if (err) return console.log(err)
+    res.json(201, result.data);res.json(200, result.data)
   });
 };
 
-// Creates a new review in the DB.
-// exports.create = function(req, res) {
-  // var fstream;
-  // req.pipe(req.busboy);
-  // req.busboy.on('file', function (fieldname, file, filename) {
-  //   console.log("Uploading: " + filename, fieldname, file);
-  //   fstream = fs.createWriteStream(__dirname + '/files/' + filename);
-  //   file.pipe(fstream);
-  //
-  //   fstream.on('close', function () {
-  //     res.json(200, req.body);
-  //   });
-  // });
-// };
 
+//for create we need to pass in an item_id
+//did not add body and photo yet in this review
+exports.create = function(req, res) {
+  var params = {item_id: Number(req.params.item_id)};
+  var query = "START item=node({item_id})" +
+              "CREATE (review: Review {star: 5})" +
+              "CREATE (item)-[:REVIEW]->(review)"
+              "RETURN review"
+  db.cypherQuery(query, function(err, result){
+    if(err) return handleError(res, err)
+    res.json(200, result.data)
+  })
+};
+
+exports.update = function(req, res) {
+  res.json(201, 'Review with ID of '+req.body.id+' was Updated', req.body)
+};
+
+exports.destroy = function(req, res) {
+  res.json(201, 'Review with ID of '+req.body.id+' was Deleted')
+};
 
 exports.getWith = function(req, res){
   // var query = relations[req.params.relationship]
 }
 
-var createQuery = "START d=node({dish_id}), u=node({user_id}) MATCH (n), (u),"+
-                  "CREATE (r:Review {review}),"+
-                          "(p:Photo {photo}),"+
-                          "(e:Essay {essay}),"+
-                          "(s:Star {star}),"+
-                          "(r)-[:PHOTO]->(p),"+
-                          "(r)-[:ESSAY]->(e),"+
-                          "(r)-[:STAR]->(s),"+
-                          "(d)-[:HAS_REVIEW]->(r),"+
-                          "RETURN r"
-exports.create = function(req, res) {
-  res.json(201, 'Review was created', req.body)
-};
-
-var updateQuery = "START r=node({review_id}) MATCH (r) SET r = {review} RETURN r"
-// Updates an existing item in the DB.
-exports.update = function(req, res) {
-  res.json(201, 'Review with ID of '+req.body.id+' was Updated', req.body)
-};
-
-var destroyQuery = "START r=node({review_id}) MATCH (r) DELETE r"
-// Deletes a item from the DB.
-exports.destroy = function(req, res) {
-  res.json(201, 'Review with ID of '+req.body.id+' was Deleted')
-};
-// Updates an existing review in the DB.
-
-
 function handleError(res, err) {
   return res.send(500, err);
 }
-
-
-
 
 
 
