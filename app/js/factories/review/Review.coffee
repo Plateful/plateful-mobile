@@ -1,16 +1,17 @@
 angular.module('clurtch.factory.review', [])
 
-.factory 'Review', ($http, ServerUrl)->
-  get: (id)->
-  getByBusiness: (business_id)->
-    $http.get(ServerUrl + 'api/reviews/business/' + business_id)
-  getByUser: (user_id)->
-    $http.get(ServerUrl + 'api/reviews/user/' + user_id)
+.factory 'Review', ['Restangular', (Rest)->
+  Review = Rest.all('reviews')
   find: (id)->
-    $http.get(ServerUrl + 'api/reviews/' + id)
-  create: (data)->
-    $http.post(ServerUrl + 'api/reviews', data)
-  destroy: (id)->
-    $http.delete(ServerUrl + 'api/reviews/' + id)
+    Rest.one('reviews', id)
+  getByBusiness: (business_id)->
+    Review.one('business', business_id)
+  getByUser: (user_id)->
+    Review.one('user', user_id)
   getByItemId: (item_id) ->
-    $http.get(ServerUrl + 'api/reviews/item/' + item_id)
+    Review.one('item', item_id)
+  create: (data)->
+    Review.post( data )
+  destroy: (id)->
+    Rest.one('review', id).remove()
+]

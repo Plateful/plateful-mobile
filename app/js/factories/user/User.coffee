@@ -1,13 +1,14 @@
 angular.module('clurtch.factory.user', [])
 
-.service 'User', ($http, ServerUrl)->
+.service 'User', ['Restangular', (Rest)->
+  User = Rest.all('users')
   get: ()->
-    $http.get(ServerUrl + 'api/users')
-  post: (data)->
-    $http.post(ServerUrl +'api/users')
-  update: (id, data)->
-    $http.put(ServerUrl + 'api/users/' + id, data)
-  destroy: (id)->
-    $http.delete(ServerUrl + 'api/users/' + id)
+    User
   find: (id)->
-    $http.get(ServerUrl + 'api/users/' + id)
+    Rest.one('users', id)
+  post: (data)->
+    User.post( data )
+  update: (id, data)->
+
+  destroy: (id)->
+]

@@ -9,6 +9,13 @@ angular.module('clurtch.modules.tabs.review.controllers', [])
   set: (key, val)->
     review[key] = val
 
+
+
+
+
+
+
+
 .controller 'ReviewCtrl', [
   '$scope'
   'CreateReview'
@@ -31,7 +38,6 @@ angular.module('clurtch.modules.tabs.review.controllers', [])
         # console.log($scope.businesses)
       .error (msg)->
         console.log(msg)
-
 ]
 
 .controller 'ReviewItemCtrl', [

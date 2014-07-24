@@ -5,9 +5,14 @@ angular.module('clurtch.modules.tabs.find.controllers', [])
   '$scope'
   '$ionicModal'
   'MenuItem'
-  'Geo'
-  ($scope, $ionicModal, MenuItem, Geo)->
+  'Business'
+  ($scope, $ionicModal, MenuItem, Business)->
 
+    MenuItem.get().getList().then (items)->
+      $scope.items = items
+      makeStars()
+
+    # Convert each items rating to a star value
     makeStars = ->
       for item in $scope.items
         tempRating = item.rating
@@ -19,23 +24,29 @@ angular.module('clurtch.modules.tabs.find.controllers', [])
           stars += '½'
         item.stars = stars
 
-    $ionicModal.fromTemplateUrl(
-      'js/modules/tabs/find/modals/filterModal.html'
-      scope: $scope
-      animation: 'slide-in-up'
-    ).then((modal) ->
-      $scope.filterModal = modal
-    )
+    # Filter Modal for selecting search filter options
+
+    # $ionicModal.fromTemplateUrl(
+    # 'js/modules/tabs/find/modals/filterModal.html',
+    #   scope: $scope
+    #   animation: 'slide-in-up'
+    # ).then((modal) ->
+    #   $scope.filterModal = modal
+    # )
+
     $scope.openModal = ()->
+
       $scope.filterModal.show()
 
     $scope.closeModal = ()->
+
       $scope.filterModal.hide()
 
+
     $scope.searchFilter = (distance, prices)->
-      console.log distance, prices
+
       MenuItem.get()
-        .success( (data)->
+        .then( (data)->
           $scope.items = data
           makeStars()
         )
@@ -55,23 +66,4 @@ angular.module('clurtch.modules.tabs.find.controllers', [])
       {id: 3, title: '$$$', active: false}
       {id: 4, title: '$$$$', active: false}
     ]
-    # Grab data from Yelp then load numeric ratings as stars
-    MenuItem.get().success (data) ->
-      $scope.items = data
-      console.log 'this is the business data', data
-      makeStars()
-      # socket.syncUpdates('Item') = $scope.items
-      # Convert rating to stars in unicode
-
-    # Get the latitude and longitude of the user when app find tab loads
-    Geo.getLocation().then(
-      (position) ->
-        $scope.lat = position.coords.latitude
-        $scope.lng = position.coords.longitude
-        console.log $scope.lat, $scope.lng
-      (error) ->
-        console.log 'Unable to get current location: ' + error
-    )
-
-
 ])
