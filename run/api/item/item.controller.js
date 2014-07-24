@@ -7,10 +7,9 @@
   db = require('../../config/neo4j').db;
 
   exports.index = function(req, res) {
-    var params, query;
-    query = "";
-    params = "";
-    return db.cypherQuery(query, params, function(err, result) {
+    var query;
+    query = "MATCH (i:Menu) RETURN i";
+    return db.cypherQuery(query, function(err, result) {
       if (err) {
         return handleError(res, err);
       }
@@ -19,12 +18,11 @@
   };
 
   exports.getByBusiness = function(req, res) {
-    var business_id, params, query;
-    business_id = req.params.business_id;
+    var params, query;
     params = {
-      business: req.params.business_id
+      menu: Number(req.params.business_id)
     };
-    query = "START b=node({business}) MATCH (b)-[:]->(d:Dish), (b)";
+    query = "START menu=node({menu}) " + "MATCH (menu)-[:HAS_ITEM]->(item:Item)," + "(item)-[:REVIEW]->(review:Review)," + "(item)-[:GALLERY]->(gallery:Gallery)-[:PHOTO]->(photo:Photo)," + "(review)-[:BODY]->(body:Body)" + "RETURN item, review, body, photo";
     return db.cypherQuery(query, params, function(err, result) {
       if (err) {
         return handleError(res, err);
@@ -34,10 +32,11 @@
   };
 
   exports.getByUser = function(req, res) {
-    var params, query, user_id;
-    user_id = req.params.user_id;
-    query = "";
-    params = "";
+    var params, query;
+    params = {
+      user: Number(req.params.user_id)
+    };
+    query = "START user=node({user})" + 'MATCH (user)-[:WROTE]->(review:Review)<-[:REVIEW]-(item:Item)-[:GALLERY]->(gallery:Gallery)-[:PHOTO]->(photo:Photo),' + "(review)-[:BODY]->(body:Body)" + "RETURN item, review, photo";
     return db.cypherQuery(query, params, function(err, result) {
       if (err) {
         return handleError(res, err);
@@ -59,7 +58,11 @@
   };
 
   exports.show = function(req, res) {
-    console.log(req.params.id);
+    var params, query;
+    params = {
+      id: Number(req.params.id)
+    };
+    query = "START item=node({id})" + "MATCH (item)-[:REVIEW]->(review:Review)-[:BODY]->(body:Body), " + "(review)-[:PHOTO]->(photo:Photo)" + "RETURN item, review, photo, body";
     return db.cypherQuery('MATCH (n) WHERE id(n) = ' + req.params.id + ' RETURN n', function(err, result) {
       if (err) {
         return handleError(res, err);
@@ -69,10 +72,9 @@
   };
 
   exports.create = function(req, res) {
-    var params, query;
-    query = "";
-    params = "";
-    return db.cypherQuery(query, params, function(err, result) {
+    var query;
+    query = "START menu=node(7)" + "CREATE (menu)-[:HAS_ITEM]->(item: Item { name: 'Rice cake', description: 'Rice Cake with Chicken Stock'})" + "RETURN item";
+    return db.cypherQuery(query, function(err, result) {
       if (err) {
         return handleError(res, err);
       }
@@ -82,8 +84,10 @@
 
   exports.update = function(req, res) {
     var params, query;
-    query = "";
-    params = "";
+    params = {
+      changes: req.body
+    };
+    query = "START item=node(" + req.params.id + ") SET item = {changes} RETURN item";
     return db.cypherQuery(query, params, function(err, result) {
       if (err) {
         return handleError(res, err);

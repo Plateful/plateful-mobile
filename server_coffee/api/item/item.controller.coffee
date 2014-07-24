@@ -3,29 +3,37 @@
 _ = require('lodash')
 db = require('../../config/neo4j').db
 
-
+# complete
 exports.index = (req, res)->
-  query = ""
-  params = ""
-  db.cypherQuery( query, params, (err, result)->
+  query = "MATCH (i:Menu) RETURN i"
+  db.cypherQuery( query, (err, result)->
     if err then return handleError(res, err)
     res.json(201, result.data)
   )
 
+# GET http://localhost:9000/api/items/business/30
+# working (must change the connection from :HAS_ITEM to :HAS)
 exports.getByBusiness = (req, res)->
-  business_id = req.params.business_id
-  params = {business:req.params.business_id}
-  query = "START b=node({business}) MATCH (b)-[:]->(d:Dish), (b)"
-
+  params =  {menu: Number(req.params.business_id)}
+  query = "START menu=node({menu}) "+
+          "MATCH (menu)-[:HAS_ITEM]->(item:Item)," +
+          "(item)-[:REVIEW]->(review:Review)," +
+          "(item)-[:GALLERY]->(gallery:Gallery)-[:PHOTO]->(photo:Photo)," +
+          "(review)-[:BODY]->(body:Body)" +
+          "RETURN item, review, body, photo"
   db.cypherQuery( query, params, (err, result)->
     if err then return handleError(res, err)
     res.json(201, result.data)
   )
 
+# GET http://localhost:9000/api/items/user/28
+# working
 exports.getByUser = (req, res)->
-  user_id = req.params.user_id
-  query = ""
-  params = ""
+  params = {user: Number(req.params.user_id)}
+  query = "START user=node({user})" +
+          'MATCH (user)-[:WROTE]->(review:Review)<-[:REVIEW]-(item:Item)-[:GALLERY]->(gallery:Gallery)-[:PHOTO]->(photo:Photo),' +
+          "(review)-[:BODY]->(body:Body)" +
+          "RETURN item, review, photo"
   db.cypherQuery( query, params, (err, result)->
     if err then return handleError(res, err)
     res.json(201, result.data)
@@ -39,28 +47,36 @@ exports.getByLocation = (req, res)->
     res.json(201, result.data)
   )
 
+# GET single item http://localhost:9000/api/items/35
+# working
 exports.show = (req, res)->
-  console.log(req.params.id)
+  params = {id: Number(req.params.id)}
+  query = "START item=node({id})" +
+          "MATCH (item)-[:REVIEW]->(review:Review)-[:BODY]->(body:Body), " +
+          "(review)-[:PHOTO]->(photo:Photo)" +
+          "RETURN item, review, photo, body"
   db.cypherQuery('MATCH (n) WHERE id(n) = '+req.params.id+' RETURN n', (err, result)->
-    if err then return handleError(res, err)    
+    if err then return handleError(res, err)
     res.json(200, result.data)
   )
 
-
-
+# POST http://localhost:9000/api/items/
+# Working but need to make changes to the neo4j queries takes in data
 exports.create = (req, res)->
-  query = ""
-  params = ""
-  db.cypherQuery( query, params, (err, result)->
+  query = "START menu=node(7)" +
+          "CREATE (menu)-[:HAS_ITEM]->(item: Item { name: 'Rice cake', description: 'Rice Cake with Chicken Stock'})" +
+          "RETURN item"
+  db.cypherQuery( query, (err, result)->
     if err then return handleError(res, err)
     res.json(201, result.data)
   )
 
 
-
+# PUT http://localhost:9000/api/items/11
+#working but need changes to only added the changes to one property instead of over writing the whole thing
 exports.update = (req, res)->
-  query = ""
-  params = ""
+  params = {changes:req.body}
+  query = "START item=node("+ req.params.id + ") SET item = {changes} RETURN item"
   db.cypherQuery( query, params, (err, result)->
     if err then return handleError(res, err)
     res.json(201, result.data)
@@ -70,8 +86,8 @@ exports.update = (req, res)->
 
 
 exports.destroy = (req, res)->
-  query = ""
-  params = ""
+  params = {id: Number req.params.id}
+  query = "START item=node({id}) MATCH (item)-[r]-() DELETE item, r"
   db.cypherQuery( query, params, (err, result)->
     if err then return handleError(res, err)
     res.json(201, result.data)
