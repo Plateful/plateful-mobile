@@ -96,9 +96,6 @@
   };
 
   exports.destroy = function(req, res) {
-    var params, query;
-    params = {};
-    query = "";
     return db.cypherQuery(query, params, function(err, result) {
       if (err) {
         return handleError(req, err);
