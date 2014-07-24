@@ -109,7 +109,7 @@ paths =
   assets: ['assets/**', '!assets/**/*.ejs']
   assets_ejs: ['assets/**/*.ejs']
   styles: ['app/css/**/*.scss']
-  server: ['server/**/*.coffee']
+  server: ['server_coffee/**/*.coffee']
   scripts:
     vendor: [
       "assets/components/ionic/release/js/ionic.js"
