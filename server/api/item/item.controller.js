@@ -12,11 +12,11 @@ exports.index = function(req, res) {
   db.cypherQuery('MATCH (i:Item) RETURN i LIMIT 25', function(err, result){
     if (err) return handleError(res, err);
     res.json(201, result.data);
-  })
+  });
 }
 
 //working
-//GET http://localhost:9000/api/items/business/7
+//GET http://localhost:9000/api/items/business/30
 exports.getByBusiness = function(req, res) {
   var params = {menu: Number(req.params.business_id)};
   var query = "START menu=node({menu}) "+
