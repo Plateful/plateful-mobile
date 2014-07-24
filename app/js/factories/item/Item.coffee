@@ -1,17 +1,20 @@
 angular.module('clurtch.factory.item', [])
 
-.factory 'MenuItem', ($http, ServerUrl)->
+.factory 'MenuItem', [ 'Restangular', (Rest)->
+  Item = Rest.all('items')
   get: ()->
-    $http.get(ServerUrl + 'api/items')
+    Item
   getByLocation: (location)->
-    $http.post(ServerUrl + 'api/items/location', location)
+    Item.all('location').post(location)
   getByBusiness: (business_id)->
-    $http.get(ServerUrl + 'api/items/business/' + business_id)
+    Item.one('business', business_id)
   getByUser: (user_id)->
-    $http.get(ServerUrl + 'api/items/user/' + user_id)
+    Item.one('user', user_id)
   find: (id)->
-    $http.get(ServerUrl + 'api/items/' + id)
+    Rest.one('items', id)
   create: (data)->
-    $http.post(ServerUrl + 'api/items', data)
+    Item.post( data )
   destroy: (id)->
-    $http.delete(ServerUrl + 'api/items/' + id)
+    Rest.one('items', id).remove()
+
+]

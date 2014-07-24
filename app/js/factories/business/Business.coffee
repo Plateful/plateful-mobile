@@ -12,36 +12,23 @@ angular.module('clurtch.factory.business', [])
       _cache[key] = obj
   instance
 
-
-
 .factory 'Business', [
-  '$http'
-  'ServerUrl'
-  'BusinessCache'
-  ($http, ServerUrl, BusinessCache)->
-    nearbyKey = ""
-    get: ->
-      $http.get ServerUrl + 'api/businesses'
-    getWith: (id)->
-      args = Array.prototype.slice.call(arguments)
-      $http.post(ServerUrl + '/api/business/#{id}/', {args: args})
-
-
-    getByLocation: (data, key, cb)->
-
-      if key then nearbyKey = key
-      cached = BusinessCache.get(nearbyKey)
-      if cached then cb( nearbyKey, cached )
-      else
-        $http.post(ServerUrl + 'api/businesses/location', data)
-          .success (newData)->
-            BusinessCache.set(data.val, newData)
-            cb(data.val, newData )
-
+  'Restangular'
+  (Rest)->
+    # Global nearby filter input value
+    nearbyFilter = ""    
+    getByLocation: (data, cb, filter)->
+      # if filter then set the global filter to its value
+      if filter then nearbyFilter = filter
+      # if filter is "empty" set the global filter to ""
+      if filter is "empty" then nearbyFilter = ""
+      # set the search value on data before sending to the server
+      data.val = nearbyFilter
+      # url: POST - api/businesses/location
+      Rest.all('businesses').all('location').post(data).then (result)->
+        cb(result, nearbyFilter)
 
     find: (id)->
-      $http.get ServerUrl + 'api/businesses/' + id
-    post: (data)->
-    update: (id, data)->
-    destroy: (id)->
+      Rest.one('businesses', id)
+
 ]
