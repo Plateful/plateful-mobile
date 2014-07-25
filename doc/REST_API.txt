@@ -1,5 +1,6 @@
 Routes for user stories
 
+
 The standard placement of IDs in our REST URIs from left to right:
   user or business .. menu .. item .. review .. photo or essay
 :limit is an optional integer: max length of a collection returned by the request.
