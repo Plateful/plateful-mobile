@@ -8,10 +8,10 @@ fs = require('fs')
 db = require('../../config/neo4j').db
 
 # FACTUAL API
-factual = require('../../config/factual').factual
+factual = require('../../config/api/factual').factual
 
 # YELP API
-yelp = require('../../config/yelp').yelp
+yelp = require('../../config/api/yelp').yelp
 
 
 exports.index = (req, res)->

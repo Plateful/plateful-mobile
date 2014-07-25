@@ -10,10 +10,10 @@ db = require('../../config/neo4j').db
 Venue = require('../../config/api/locu').VenueClient
 
 # FACTUAL API
-factual = require('../../config/factual').factual
+factual = require('../../config/api/factual').factual
 
 # YELP API
-yelp = require('../../config/yelp').yelp
+yelp = require('../../config/api/yelp').yelp
 
 storeData = require('./storeData')
 
