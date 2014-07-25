@@ -63,7 +63,7 @@
       if (err) {
         return handleError(res, err);
       }
-      return res.j(son(201, result.data));
+      return res.json(201, result.data);
     });
   };
 

@@ -8,7 +8,7 @@
 
   exports.index = function(req, res) {
     var query;
-    query = "MATCH (i:Menu) RETURN i";
+    query = "MATCH (m:Item) RETURN m";
     return db.cypherQuery(query, function(err, result) {
       if (err) {
         return handleError(res, err);
@@ -63,7 +63,7 @@
       id: Number(req.params.id)
     };
     query = "START item=node({id})" + "MATCH (item)-[:REVIEW]->(review:Review)-[:BODY]->(body:Body), " + "(review)-[:PHOTO]->(photo:Photo)" + "RETURN item, review, photo, body";
-    return db.cypherQuery('MATCH (n) WHERE id(n) = ' + req.params.id + ' RETURN n', function(err, result) {
+    return db.cypherQuery('MATCH (n) WHERE id(n) = {id} RETURN n', function(err, result) {
       if (err) {
         return handleError(res, err);
       }
@@ -85,9 +85,10 @@
   exports.update = function(req, res) {
     var params, query;
     params = {
-      changes: req.body
+      changes: req.body,
+      id: req.params.id
     };
-    query = "START item=node(" + req.params.id + ") SET item = {changes} RETURN item";
+    query = "START item=node({id}) SET item = {changes} RETURN item";
     return db.cypherQuery(query, params, function(err, result) {
       if (err) {
         return handleError(res, err);

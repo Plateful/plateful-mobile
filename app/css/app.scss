@@ -121,6 +121,8 @@ a.menu-card .item.item-divider{
   float: right;
 }
 
+
+
 .text-left {
   float: left;
   text-align: left;
@@ -131,6 +133,23 @@ a.menu-card .item.item-divider{
   text-align: right;
 }
 
+
+.menu-banner {
+  position:relative;
+}
+
+.menu-banner-right {
+  width:50%;
+  height:200px;
+  float: left;
+
+}
+.menu-banner-right {
+  width:50%;
+  height:200px;
+  float: left;
+
+}
 .borderless {
   border-width: 0px;
 }
@@ -138,6 +157,10 @@ a.menu-card .item.item-divider{
 #map {
   width: 100%;
   height: 100%;
+}
+#mapper {
+  width: 50%;
+  height: 50%;
 }
 #nearbyMap {
   width: 100%;
@@ -147,7 +170,13 @@ a.menu-card .item.item-divider{
   width: 100%;
   height: 100%;
 }
+#map_canvas {
+  width: 100%;
+  height: 100%;
+}
 
 .scroll {
   height: 100%;
 }
+
+// .angular-google-map-container { height: 400px; width:50%; }
