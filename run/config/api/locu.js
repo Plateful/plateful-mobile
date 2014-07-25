@@ -7,7 +7,11 @@
 
   fs = require('fs');
 
+<<<<<<< HEAD
   module.exports.VenueClient = VenueClient = new locu.VenueClient('bc529b42f30999730cbb731ce191f536186dc1f5');
+=======
+  VenueClient = new locu.VenueClient('bc529b42f30999730cbb731ce191f536186dc1f5');
+>>>>>>> 3b19824b4d1a8f0f2f879ccb6fd06356319fa93d
 
   exports.testApi = function() {};
 
