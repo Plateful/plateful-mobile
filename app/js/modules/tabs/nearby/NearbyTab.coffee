@@ -18,7 +18,7 @@ angular.module('clurtch.modules.tabs.nearby', [
         "tab-nearby":
           templateUrl: "js/modules/states/map/views/nearbyMap.html"
           controller: "NearbyMapCtrl"
-          
+
     .state "tab.nearby-item",
       url: '/nearby/item/:itemId'
       views:

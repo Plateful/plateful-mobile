@@ -11,6 +11,11 @@ ion-view(hide-nav-bar="true")
     ng-single-select(options="options")
     a.menu-card(ng-repeat="item in items | filter:search" href="#/tab/find/item/{{item._id}}")
       div.menu-card-content
-        div.item.item-divider {{item.name}}
         img(src='{{item.top_image_url}}')
-        div.menu-card-footer {{item.stars}}
+        div.menu-card-footer
+          div {{item.name}}
+          div.text-left.assertive {{item.stars}}
+          div.text-right.energized ({{item.review_count}})
+          i.text-right.icon.ion-navigate(style="color:grey;")  0.02 mi
+          br
+          br

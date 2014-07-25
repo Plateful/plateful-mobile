@@ -10,8 +10,8 @@ ion-view(hide-nav-bar="true")
 
   ion-content.bg-grey
     div.list
-      a.item(ng-repeat="business in businesses | filter:nearbyFilter" href="#/tab/nearby/menu/{{business.factual_id}}")                
-        //- img(src='{{business.image_url}}')
+      a.item.item-thumbnail-left(ng-repeat="business in businesses | filter:nearbyFilter" href="#/tab/nearby/menu/{{business.factual_id}}")
+        img(src='http://s3-media4.fl.yelpcdn.com/bphoto/VNh_LNyBlnh8VVTMMzr1Cg/ms.jpg')
         h2 {{business.name}}
-        h4 {{business.address + " " + business.locality }}
-        p {{business.tel}}
+        p {{business.address}}
+        p.icon.ion-navigate  0.02 mi
