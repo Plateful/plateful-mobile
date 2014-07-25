@@ -4,19 +4,15 @@ angular.module('clurtch.modules.states.menu')
   '$rootScope'
   '$scope'
   '$stateParams'
-  '$http'
-  'ServerUrl'
   'Business'
   'MenuItem'
   '$ionicModal'
   '$ionicLoading'
-  ($rootScope, $scope, $stateParams, $http, ServerUrl, Business, MenuItem, $ionicModal, $ionicLoading) ->
+  '$compile'
+  ($rootScope, $scope, $stateParams, Business, MenuItem, $ionicModal, $ionicLoading, $compile) ->
     $scope.businessId = $stateParams.businessId
-    $ionicLoading.show(
-      noBackdrop: true,
-      duration: 2000,
-      template: 'Loading...'
-    )
+
+
     $scope.priceOptions = [
       {id: 1, title: '$', active: false}
       {id: 2, title: '$$', active: false}
@@ -25,32 +21,9 @@ angular.module('clurtch.modules.states.menu')
     ]
     $scope.items = []
     $scope.newItem = {}
-    Business.find($scope.businessId)
-      .success((data) ->
-        console.log "neo----", data[0][1]
-        $scope.business = data[0][0]
-        if Array.isArray(data[0][1])
-          $scope.items = data[0][1]
-          console.log $scope.items
-        else
-          $scope.items.push(data[0][1])
-          # $scope.$apply()
-        $ionicLoading.hide()
-      )
 
+    ###### Modal for creating a new Item for the Menu
 
-
-    #
-    # MenuItem.get()
-    #   .success (data)->
-    #     # console.log data
-    #     # $scope.items = data
-    #   .error (err)->
-    #     throw err
-
-    # socket.on('thing:save', (data)->
-    #   $scope.items.push(data)
-    # )
     $ionicModal.fromTemplateUrl(
       'js/modules/states/menu/modals/createItemModal.html'
       scope: $scope
@@ -58,35 +31,32 @@ angular.module('clurtch.modules.states.menu')
     ).then((modal) ->
       $scope.createModal = modal
     )
+
+    ###### Open and close the Modal
     $scope.openModal = ()->
       $scope.createModal.show()
 
     $scope.closeModal = ()->
       $scope.createModal.hide()
 
+
     $scope.addNewItem = (item)->
       # console.log distance, prices
-      item.business_id = $scope.businessId
-      item.user_id = '53c5cf5c80a3c64a2669c8da'
-      item.created_at = new Date()
-      console.log(item)
-      MenuItem.create(item)
-        .success (data)->
-          console.log(data)
-          # $rootScope.newReview = {}
-        .error (data)->
-          console.log(data)
-          throw data
 
+    ###### Initialize the Google Maps API
+    # Currently not working
+    # initialize = ()->
+    #   latlng = new google.maps.LatLng(-34.397, 150.644)
+    #   myOptions = {
+    #     zoom: 8,
+    #     center: latlng,
+    #     mapTypeId: google.maps.MapTypeId.ROADMAP
+    #   }
+    #   map = new google.maps.Map(document.getElementById("map_canvas"), myOptions)
+    #   $scope.map = map
+    #
+    # ionic.Platform.ready(initialize)
 
-      # Business.get()
-      #   .success( (data)->
-      #     $scope.items = data
-      #   )
-
-      $scope.closeModal()
-    # $rootScope.addNewItem = (review)->
-    #   # $rootScope.addNewItem(review)
 ])
 .controller('addItemCtrl', ($rootScope, $scope, MenuItem)->
   # console.log $rootScope.viewingBusinessId

@@ -1,19 +1,62 @@
-ion-view(title="{{business.name}}")
-  //- ion-nav-buttons(side="right")
-    //- button.button.button-clear.button-icon.icon.ion-ios7-plus(ng-click="openModal()")
+ion-view(title="Business Name")
   ion-content.bg-grey
+    div.button-bar
+      a.button.button-positive.icon.ion-ios7-telephone(ng-click="callBusiness()")
+      a.button.button-positive.icon.ion-ios7-camera
+      a.button.button-positive.icon.ion-ios7-checkmark(ng-click="createReview()")
+      a.button.button-positive.icon.ion-bookmark(ng-click="bookmarkItem()")
+
     ion-list
-      ion-item.item-thumbnail-left
-        img(src='{{business.image_url}}')
-        h2 {{business.name}}
-        h4 {{business.location.address[0] + " " + business.location.city }}
-        h4 {{business.phone}}
-      div.item-divider
       ion-item
-        h4 Items go here
-        i(class="ion ion-chevron-down")
-      ion-item.item-thumbnail-left(ng-repeat="item in items" href="#/tab/nearby/item/{{item._id}}")
-        img(src='{{item.top_image_url}}')
-        h2 {{item.name}}
-        //- h4 {{business.phone}}
-        //- h4 {{business.location.address[0] + " " + business.location.city }}
+        div.menu-banner
+          div.menu-banner-right
+            h2 {{business.name}} Name
+            h4 Location
+            h4 {{business.location.address[0] + " " + business.location.city }}
+            h4 (555) 555-5555
+            h4 {{business.phone}}
+          div.menu-banner-left
+            iframe(src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d6306.533204574925!2d-122.4091305!3d37.78379139999996!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1406251064525" width="50%" height="200px" frameborder="0" style="border:0")
+
+      div.item-divider
+      a.menu-card
+        div.menu-card-content
+          div.item.item-divider Name
+          img(src='http://i.mctimg.com/file/e7054f888bb32cf5c5966f77d41028079f4d7ebf.png/r430x430/5bc89e62b502abb6136310660e473e18f074be366ce023dcd431d7f741e9912a')
+          div.menu-card-footer ★★★★    (534)
+
+      a.menu-card
+        div.menu-card-content
+          div.item.item-divider Name
+          img(src='http://i.mctimg.com/file/e7054f888bb32cf5c5966f77d41028079f4d7ebf.png/r430x430/5bc89e62b502abb6136310660e473e18f074be366ce023dcd431d7f741e9912a')
+          div.menu-card-footer ★★★★    (534)
+      a.menu-card
+        div.menu-card-content
+          div.item.item-divider Name
+          img(src='http://i.mctimg.com/file/e7054f888bb32cf5c5966f77d41028079f4d7ebf.png/r430x430/5bc89e62b502abb6136310660e473e18f074be366ce023dcd431d7f741e9912a')
+          div.menu-card-footer ★★★★    (534)
+      a.menu-card
+        div.menu-card-content
+          div.item.item-divider Name
+          img(src='http://i.mctimg.com/file/e7054f888bb32cf5c5966f77d41028079f4d7ebf.png/r430x430/5bc89e62b502abb6136310660e473e18f074be366ce023dcd431d7f741e9912a')
+          div.menu-card-footer ★★★★    (534)
+      a.menu-card
+        div.menu-card-content
+          div.item.item-divider Name
+          img(src='http://i.mctimg.com/file/e7054f888bb32cf5c5966f77d41028079f4d7ebf.png/r430x430/5bc89e62b502abb6136310660e473e18f074be366ce023dcd431d7f741e9912a')
+          div.menu-card-footer ★★★★    (534)
+      a.menu-card
+        div.menu-card-content
+          div.item.item-divider Name
+          img(src='http://i.mctimg.com/file/e7054f888bb32cf5c5966f77d41028079f4d7ebf.png/r430x430/5bc89e62b502abb6136310660e473e18f074be366ce023dcd431d7f741e9912a')
+          div.menu-card-footer ★★★★    (534)
+      a.menu-card
+        div.menu-card-content
+          div.item.item-divider Name
+          img(src='http://i.mctimg.com/file/e7054f888bb32cf5c5966f77d41028079f4d7ebf.png/r430x430/5bc89e62b502abb6136310660e473e18f074be366ce023dcd431d7f741e9912a')
+          div.menu-card-footer ★★★★    (534)
+      a.menu-card
+        div.menu-card-content
+          div.item.item-divider Name
+          img(src='http://i.mctimg.com/file/e7054f888bb32cf5c5966f77d41028079f4d7ebf.png/r430x430/5bc89e62b502abb6136310660e473e18f074be366ce023dcd431d7f741e9912a')
+          div.menu-card-footer ★★★★    (534)
