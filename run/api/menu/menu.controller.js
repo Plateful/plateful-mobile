@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  var base64_encode, db, factual, handleError, http, yelp, _;
+  var Venue, base64_encode, db, factual, handleError, http, storeData, yelp, _;
 
   _ = require('lodash');
 
@@ -8,9 +8,13 @@
 
   db = require('../../config/neo4j').db;
 
+  Venue = require('../../config/api/locu').VenueClient;
+
   factual = require('../../config/factual').factual;
 
   yelp = require('../../config/yelp').yelp;
+
+  storeData = require('./storeData');
 
   exports.index = function(req, res) {
     return db.cypherQuery("MATCH (menu:Menu) RETURN menu", function(err, result) {
@@ -26,33 +30,42 @@
   };
 
   exports.getByLocation = function(req, res) {
-    return factual.get('/t/places/', {
-      q: req.body.val,
-      geo: {
-        "$circle": {
-          "$center": [req.body.lat, req.body.lng],
-          "$meters": 5000
-        }
-      }
-    }, function(err, result) {
-      if (err) {
-        return handleError(res, err);
-      }
-      return res.json(200, result.data);
+    var data;
+    data = {
+      location: [req.body.lat, req.body.lng],
+      radius: 500
+    };
+    if (req.body.val) {
+      data.name = req.body.val;
+    }
+    console.log("Fuck Yelp", data);
+    return Venue.search(data, function(response) {
+      res.json(200, response.objects);
+      return console.log(response);
     });
   };
 
   exports.show = function(req, res) {
     var params, query;
     params = {
-      id: Number(req.params.id)
+      id: req.params.id
     };
-    query = "START menu=node({id})" + "MATCH (menu)-[:HAS]->(item:Item)," + "(item)-[:REVIEW]->(review:Review)," + "(item)-[:GALLERY]->(gallery:Gallery)-[:PHOTO]->(photo:Photo)," + "(review)-[:BODY]->(body:Body)" + "RETURN item, review, body, photo";
+    query = "Match (m:Menu) WHERE m.locu_id = {id} RETURN m";
+    console.log("Fuck Yelp again");
     return db.cypherQuery(query, params, function(err, result) {
       if (err) {
-        return handleError(res, err);
+        throw err;
       }
-      return res.json(201, result.data);
+      console.log("yes", result.data);
+      if (!result.data.length) {
+        return Venue.get_details(req.params.id, function(response) {
+          return storeData.store(response.objects[0], function(data) {
+            return res.json(200, data);
+          });
+        });
+      } else {
+        return res.json(200, result.data[0]);
+      }
     });
   };
 

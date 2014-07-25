@@ -58,7 +58,7 @@ exports.getByItem = (req, res)->
           "RETURN item, review, photo, body"
   db.cypherQuery( query, params, (err, result)->
     if err then return handleError(res, err)
-    res.j son(201, result.data)
+    res.json(201, result.data)
   )
 
 # http://localhost:9000/api/reviews/128

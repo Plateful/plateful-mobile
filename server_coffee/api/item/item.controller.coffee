@@ -5,7 +5,7 @@ db = require('../../config/neo4j').db
 
 # complete
 exports.index = (req, res)->
-  query = "MATCH (i:Menu) RETURN i"
+  query = "MATCH (m:Item) RETURN m"
   db.cypherQuery( query, (err, result)->
     if err then return handleError(res, err)
     res.json(201, result.data)
@@ -55,7 +55,7 @@ exports.show = (req, res)->
           "MATCH (item)-[:REVIEW]->(review:Review)-[:BODY]->(body:Body), " +
           "(review)-[:PHOTO]->(photo:Photo)" +
           "RETURN item, review, photo, body"
-  db.cypherQuery('MATCH (n) WHERE id(n) = '+req.params.id+' RETURN n', (err, result)->
+  db.cypherQuery('MATCH (n) WHERE id(n) = {id} RETURN n', (err, result)->
     if err then return handleError(res, err)
     res.json(200, result.data)
   )
@@ -75,8 +75,8 @@ exports.create = (req, res)->
 # PUT http://localhost:9000/api/items/11
 #working but need changes to only added the changes to one property instead of over writing the whole thing
 exports.update = (req, res)->
-  params = {changes:req.body}
-  query = "START item=node("+ req.params.id + ") SET item = {changes} RETURN item"
+  params = {changes:req.body, id:req.params.id}
+  query = "START item=node({id}) SET item = {changes} RETURN item"
   db.cypherQuery( query, params, (err, result)->
     if err then return handleError(res, err)
     res.json(201, result.data)

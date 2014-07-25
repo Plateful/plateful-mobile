@@ -4,7 +4,7 @@ locu = require('locu')
 db = require('../neo4j').db
 fs = require('fs')
 # VenueClient  = new locu.VenueClient('bc529b42f30999730cbb731ce191f536186dc1f5')
-VenueClient  = new locu.VenueClient('bc529b42f30999730cbb731ce191f536186dc1f5')
+module.exports.VenueClient = VenueClient = new locu.VenueClient('bc529b42f30999730cbb731ce191f536186dc1f5')
 # MenuClient = new locu.MenuItemClient('008003c4e23690e926438790cbd3435c78af659e')
 # MenuClient.search({ country: 'USA', name: 'burger', price__gte: 5, price__lt: 7}, (r)->
 #     console.log(r)

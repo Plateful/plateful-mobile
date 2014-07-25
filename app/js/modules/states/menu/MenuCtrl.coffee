@@ -12,15 +12,10 @@ angular.module('clurtch.modules.states.menu')
   ($rootScope, $scope, $stateParams, Business, MenuItem, $ionicModal, $ionicLoading, $compile) ->
     $scope.businessId = $stateParams.businessId
 
-
-    $scope.priceOptions = [
-      {id: 1, title: '$', active: false}
-      {id: 2, title: '$$', active: false}
-      {id: 3, title: '$$$', active: false}
-      {id: 4, title: '$$$$', active: false}
-    ]
-    $scope.items = []
-    $scope.newItem = {}
+    ###### Initiate Menu call
+    Business.find($scope.businessId).then (data)->
+      console.log data
+      $scope.business = data
 
     ###### Modal for creating a new Item for the Menu
 
@@ -39,7 +34,6 @@ angular.module('clurtch.modules.states.menu')
     $scope.closeModal = ()->
       $scope.createModal.hide()
 
-
     $scope.addNewItem = (item)->
       # console.log distance, prices
 
@@ -56,6 +50,15 @@ angular.module('clurtch.modules.states.menu')
     #   $scope.map = map
     #
     # ionic.Platform.ready(initialize)
+
+    $scope.priceOptions = [
+      {id: 1, title: '$', active: false}
+      {id: 2, title: '$$', active: false}
+      {id: 3, title: '$$$', active: false}
+      {id: 4, title: '$$$$', active: false}
+    ]
+    $scope.items = []
+    $scope.newItem = {}
 
 ])
 .controller('addItemCtrl', ($rootScope, $scope, MenuItem)->

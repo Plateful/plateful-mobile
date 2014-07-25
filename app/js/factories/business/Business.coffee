@@ -31,6 +31,6 @@ angular.module('clurtch.factory.business', [])
         cb(result, nearbyFilter)
 
     find: (id)->
-      Rest.one('businesses', id)
+      Rest.one('menus', id).get()
 
 ]
