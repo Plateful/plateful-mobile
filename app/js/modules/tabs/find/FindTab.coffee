@@ -11,7 +11,7 @@ angular.module('clurtch.modules.tabs.find', [
       "tab-find":
         templateUrl: "js/modules/tabs/find/views/find.html"
         controller: "FindCtrl"
-        
+
   .state "tab.find-map",
     url: "/find/map"
     views:
