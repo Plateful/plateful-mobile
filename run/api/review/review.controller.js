@@ -83,9 +83,12 @@
 
   exports.create = function(req, res) {
     var params, query;
-    query = "";
-    params = "";
-    return db.cypherQuery(query, params, function(err, result) {
+    params = {
+      item_id: Number(req.params.id)
+    };
+    query = "START item=node({item_id})" + "CREATE (item)-[:REVIEW]->(review:Review { star: '5'})" + "CREATE (photo:Photo)<-[:PHOTO]-(review)-[:BODY]->(body:Body {text: 'I love this dish'})";
+    "RETURN review, photo, body";
+    return db.cypherQuery(query, function(err, result) {
       if (err) {
         return handleError(res, err);
       }
@@ -107,8 +110,10 @@
 
   exports.destroy = function(req, res) {
     var params, query;
-    query = "";
-    params = "";
+    params = {
+      id: Number(req.params.id)
+    };
+    query = "START review=node({id}) MATCH (review)-[r]-() DELETE review, r";
     return db.cypherQuery(query, params, function(err, result) {
       if (err) {
         return handleError(res, err);
