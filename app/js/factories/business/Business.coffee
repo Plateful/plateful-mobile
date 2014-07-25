@@ -27,7 +27,7 @@ angular.module('clurtch.factory.business', [])
       # set the search value on data before sending to the server
       data.val = nearbyFilter
       # url: POST - api/businesses/location
-      Rest.all('businesses').all('location').post(data).then (result)->
+      Rest.all('menus').all('location').post(data).then (result)->
         cb(result, nearbyFilter)
 
     find: (id)->

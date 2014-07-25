@@ -1,24 +1,23 @@
 (function() {
-  var MenuClient, VenueClient, db, getMenuItemsPerMenu, getSampleVenus, locu;
+  var VenueClient, db, fs, getMenuItemsPerMenu, getSampleVenus, locu;
 
   locu = require('locu');
 
   db = require('../neo4j').db;
 
+  fs = require('fs');
+
   VenueClient = new locu.VenueClient('bc529b42f30999730cbb731ce191f536186dc1f5');
 
-  MenuClient = new locu.MenuItemClient('bc529b42f30999730cbb731ce191f536186dc1f5');
-
-  exports.testApi = function() {
-    getSampleVenus();
-  };
+  exports.testApi = function() {};
 
   getSampleVenus = function() {
-    return MenuClient.search({
+    return VenueClient.search({
+      has_menu: true,
       category: 'restaurant',
       locality: 'San Francisco'
     }, function(response) {
-      var id, menu, obj, params, query, _i, _len, _ref, _results;
+      var id, obj, params, query, _i, _len, _ref, _results;
       _ref = response.objects;
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -26,13 +25,10 @@
         id = obj.id;
         delete obj.id;
         obj.locu_id = id;
-        menu = obj.venue;
-        delete obj.venue;
         params = {
-          item: obj,
-          menu: menu
+          menu: obj
         };
-        query = "CREATE (m:Menu {menu})-[:HAS_ITEM]->(i:Item {item}) RETURN v,i";
+        query = "CREATE (m:Menu {menu}) RETURN m";
         _results.push(db.cypherQuery(query, params, function(err, result) {
           if (err) {
             throw err;
@@ -45,16 +41,22 @@
   };
 
   getMenuItemsPerMenu = function() {
-    return db.cypherQuery('MATCH (v:Venue) RETURN v', function(err, result) {
-      var obj, params, query, _i, _len, _ref, _results;
-      _ref = result.data;
+    return db.cypherQuery('Match (m:Menu) RETURN m', function(err, neo) {
+      var ids, item, _i, _len, _ref, _results;
+      ids = [];
+      _ref = neo.data;
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        obj = _ref[_i];
-        params = {
-          venu: obj.id
-        };
-        _results.push(query = "START n=node({venu}) CREATE (m:Menu {menu})");
+        item = _ref[_i];
+        _results.push(VenueClient.get_details(item.locu_id, function(result) {
+          console.log(result.objects[0]);
+          return fs.appendFile('./menu.txt', "@$@locu_id " + result.objects[0].id + ", \n" + (JSON.stringify(result.objects[0])) + "\n\n", function(err) {
+            if (err) {
+              throw err;
+            }
+            return console.log('The "data to append" was appended to file!');
+          });
+        }));
       }
       return _results;
     });
