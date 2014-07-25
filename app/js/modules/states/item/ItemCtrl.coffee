@@ -15,15 +15,18 @@ angular.module('clurtch.modules.states.item')
     makeStars = (rating)->
       '★★★★★½'.slice(5.75-rating, 6.25-Math.abs(rating%1-0.5))
 
-    Item.find($scope.itemId).get()
-      .then (data)->
-        $scope.item = data[0]
-        $scope.item.stars = makeStars($scope.item.rating)
+    # Item.find($scope.itemId).get()
+    #   .then (data)->
+    #     $scope.item = data[0]
+    #     $scope.item.stars = makeStars($scope.item.rating)
 
-    Review.getByItemId($scope.itemId).get()
-      .then (data) ->
-        $scope.reviews = data
-        $ionicLoading.hide()
+    $scope.item = Item.getStorage($scope.itemId)
+    console.log $scope.item
+
+    # Review.getByItemId($scope.itemId).get()
+    #   .then (data) ->
+    #     $scope.reviews = data
+    #     $ionicLoading.hide()
 
     # As a user, I want to see all the photos of this item
     $scope.showPhotos = ()->

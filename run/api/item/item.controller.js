@@ -1,10 +1,30 @@
 (function() {
   'use strict';
-  var db, handleError, _;
+  var GooglePlaces, MenuClient, apiKey, db, googlePlaces, handleError, outputFormat, parameters, _;
 
   _ = require('lodash');
 
   db = require('../../config/neo4j').db;
+
+  MenuClient = require('../../config/api/locu').MenuClient;
+
+  exports.apiKey = apiKey = "AIzaSyCB0Ac877CMP3MyZ9gtw4z8Ht4i7yjGx0w";
+
+  exports.outputFormat = outputFormat = "json";
+
+  GooglePlaces = require("googleplaces");
+
+  googlePlaces = new GooglePlaces(apiKey, outputFormat);
+
+  parameters;
+
+  parameters = {
+    query: "restaurants in dublin"
+  };
+
+  googlePlaces.textSearch(parameters, function(response) {
+    return console.log("Google", response);
+  });
 
   exports.index = function(req, res) {
     var query;
@@ -46,14 +66,16 @@
   };
 
   exports.getByLocation = function(req, res) {
-    var params, query;
-    query = "";
-    params = "";
-    return db.cypherQuery(query, params, function(err, result) {
-      if (err) {
-        return handleError(res, err);
-      }
-      return res.json(201, result.data);
+    var data;
+    data = {
+      location: [req.body.lat, req.body.lng]
+    };
+    if (req.body.val) {
+      data.name = req.body.val;
+    }
+    return MenuClient.search(data, function(response) {
+      console.log(response.objects);
+      return res.json(200, response.objects);
     });
   };
 

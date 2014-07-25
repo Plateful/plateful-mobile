@@ -1,28 +1,59 @@
 angular.module('clurtch.modules.tabs.find.controllers', [])
 
-
 .controller('FindCtrl', [
   '$scope'
   '$ionicModal'
   'MenuItem'
   'Business'
-  ($scope, $ionicModal, MenuItem, Business)->
+  'ImagesService'
+  ($scope, $ionicModal, MenuItem, Business, ImagesService)->
 
-    MenuItem.get().getList().then (items)->
-      $scope.items = items
+
+    # ImagesService.get returns an array of images
+
+    $scope.images = ImagesService.get()
+
+
+
+    # window.currLocation from the background Geo Location
+    $scope.locate = window.currLocation.coords
+    # set the data to pass into the Business Service
+    #  Business service takes (data, callback, searchValue)
+    LocationData = {lat: $scope.locate.latitude,lng: $scope.locate.longitude}
+    $scope.items = MenuItem.getStorage()
+    MenuItem.getByLocation(LocationData, (newData, key)->
+      console.log newData
+      $scope.findFilter = key
+      $scope.items = newData
       makeStars()
+      findDistance()
+    )
 
+    $scope.newSearch = (findFilter)->
+      # in order to reset the cache filter
+      # set the search filter to "empty" if empty
+      findFilter = findFilter or "empty"
+      MenuItem.getByLocation(LocationData, (newData, key)->
+        $scope.findFilter = key
+        $scope.items = newData
+        makeStars()
+        findDistance()
+      , findFilter)
+
+    findDistance = ->
+      from = new google.maps.LatLng($scope.locate.latitude, $scope.locate.longitude)
+      for item in $scope.items
+        to   = new google.maps.LatLng(item.venue.lat, item.venue.long)
+        dist = google.maps.geometry.spherical.computeDistanceBetween(from, to) * 0.000621371192
+        item.dist = dist - dist % 0.001
     # Convert each items rating to a star value
     makeStars = ->
       for item in $scope.items
-        tempRating = item.rating
-        stars = ''
-        while tempRating >= 1
-          stars += '★'
-          tempRating--
-        if tempRating % 1 > 0
-          stars += '½'
-        item.stars = stars
+        item.image_url = $scope.images[Math.floor(Math.random() * $scope.images.length)]
+        console.log Math.random() * $scope.images.length
+        # MenuItem.set(item.id, item)
+        # item.image_url = $scope.images
+
 
     # Filter Modal for selecting search filter options
 
@@ -43,17 +74,19 @@ angular.module('clurtch.modules.tabs.find.controllers', [])
       $scope.filterModal.hide()
 
 
-    $scope.searchFilter = (distance, prices)->
-
-      MenuItem.get()
-        .then( (data)->
-          $scope.items = data
-          makeStars()
-        )
-
-      $scope.closeModal()
+    # $scope.searchFilter = (distance, prices)->
+    #
+    #   MenuItem.get()
+    #     .then( (data)->
+    #       $scope.items = data
+    #       makeStars()
+    #     )
+    #
+    #   $scope.closeModal()
 
     # Creating filters options for filter modal
+
+
     $scope.distanceOptions = [
       {id: 1, title: '2 blocks', active: false}
       {id: 2, title: '6 blocks', active: false}

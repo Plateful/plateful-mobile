@@ -12,51 +12,20 @@ ion-view(title="Business Name")
           div.menu-banner-right
             h2 {{business.name}} Name
             h4 Location
-            h4 {{business.location.address[0] + " " + business.location.city }}
-            h4 (555) 555-5555
+            h4 {{business.street_address + " " + business.locality }}
             h4 {{business.phone}}
+            i.icon.ion-navigate(style="color:grey;") {{business.dist}}m
           div.menu-banner-left
             iframe(src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d6306.533204574925!2d-122.4091305!3d37.78379139999996!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1406251064525" width="50%" height="200px" frameborder="0" style="border:0")
 
       div.item-divider
-      a.menu-card
+      a.menu-card(ng-repeat="item in images | filter:findFilter" href="#/tab/nearby/item/{{item.id}}")
         div.menu-card-content
-          div.item.item-divider Name
-          img(src='http://i.mctimg.com/file/e7054f888bb32cf5c5966f77d41028079f4d7ebf.png/r430x430/5bc89e62b502abb6136310660e473e18f074be366ce023dcd431d7f741e9912a')
-          div.menu-card-footer ★★★★    (534)
-
-      a.menu-card
-        div.menu-card-content
-          div.item.item-divider Name
-          img(src='http://i.mctimg.com/file/e7054f888bb32cf5c5966f77d41028079f4d7ebf.png/r430x430/5bc89e62b502abb6136310660e473e18f074be366ce023dcd431d7f741e9912a')
-          div.menu-card-footer ★★★★    (534)
-      a.menu-card
-        div.menu-card-content
-          div.item.item-divider Name
-          img(src='http://i.mctimg.com/file/e7054f888bb32cf5c5966f77d41028079f4d7ebf.png/r430x430/5bc89e62b502abb6136310660e473e18f074be366ce023dcd431d7f741e9912a')
-          div.menu-card-footer ★★★★    (534)
-      a.menu-card
-        div.menu-card-content
-          div.item.item-divider Name
-          img(src='http://i.mctimg.com/file/e7054f888bb32cf5c5966f77d41028079f4d7ebf.png/r430x430/5bc89e62b502abb6136310660e473e18f074be366ce023dcd431d7f741e9912a')
-          div.menu-card-footer ★★★★    (534)
-      a.menu-card
-        div.menu-card-content
-          div.item.item-divider Name
-          img(src='http://i.mctimg.com/file/e7054f888bb32cf5c5966f77d41028079f4d7ebf.png/r430x430/5bc89e62b502abb6136310660e473e18f074be366ce023dcd431d7f741e9912a')
-          div.menu-card-footer ★★★★    (534)
-      a.menu-card
-        div.menu-card-content
-          div.item.item-divider Name
-          img(src='http://i.mctimg.com/file/e7054f888bb32cf5c5966f77d41028079f4d7ebf.png/r430x430/5bc89e62b502abb6136310660e473e18f074be366ce023dcd431d7f741e9912a')
-          div.menu-card-footer ★★★★    (534)
-      a.menu-card
-        div.menu-card-content
-          div.item.item-divider Name
-          img(src='http://i.mctimg.com/file/e7054f888bb32cf5c5966f77d41028079f4d7ebf.png/r430x430/5bc89e62b502abb6136310660e473e18f074be366ce023dcd431d7f741e9912a')
-          div.menu-card-footer ★★★★    (534)
-      a.menu-card
-        div.menu-card-content
-          div.item.item-divider Name
-          img(src='http://i.mctimg.com/file/e7054f888bb32cf5c5966f77d41028079f4d7ebf.png/r430x430/5bc89e62b502abb6136310660e473e18f074be366ce023dcd431d7f741e9912a')
-          div.menu-card-footer ★★★★    (534)
+          img(src='{{item}}')
+          div.menu-card-footer
+            div Menu Item Name
+            div.text-left.assertive ★★★★
+            div.text-right.energized (250)
+            i.text-right.icon.ion-navigate(style="color:grey;")
+            br
+            br
