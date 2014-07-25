@@ -21,6 +21,8 @@
 
   require('./routes').applyRoutes(app);
 
+  require('./config/api/locu').testApi();
+
   server.listen(config.port, config.ip, function() {
     return console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
   });

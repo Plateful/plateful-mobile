@@ -12,11 +12,13 @@ angular.module('clurtch.factory.business', [])
       _cache[key] = obj
   instance
 
+
+
 .factory 'Business', [
   'Restangular'
   (Rest)->
     # Global nearby filter input value
-    nearbyFilter = ""    
+    nearbyFilter = ""
     getByLocation: (data, cb, filter)->
       # if filter then set the global filter to its value
       if filter then nearbyFilter = filter
