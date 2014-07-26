@@ -10,10 +10,10 @@ db = require('../../config/neo4j').db
 Venue = require('../../config/api/locu').VenueClient
 
 # FACTUAL API
-factual = require('../../config/factual').factual
+factual = require('../../config/api/factual').factual
 
 # YELP API
-yelp = require('../../config/yelp').yelp
+yelp = require('../../config/api/yelp').yelp
 
 storeData = require('./storeData')
 
@@ -47,7 +47,7 @@ exports.getByLocation = (req, res)->
 exports.show = (req, res)->
   params = {id: req.params.id}
   query = "Match (m:Menu) WHERE m.locu_id = {id} RETURN m"
-  console.log "Fuck Yelp again"
+
   db.cypherQuery query, params, (err, result)->
     if err then throw err
     console.log "yes", result.data
@@ -58,21 +58,7 @@ exports.show = (req, res)->
     else
       res.json(200, result.data[0])
       # res.json(200, response.objects[0])
-
-
-  # params = {menu:response.objects}
-  # query = "START menu=node({id})" +
-  #         "MATCH (menu)-[:HAS]->(item:Item)," +
-  #         "(item)-[:REVIEW]->(review:Review)," +
-  #         "(item)-[:GALLERY]->(gallery:Gallery)-[:PHOTO]->(photo:Photo)," +
-  #         "(review)-[:BODY]->(body:Body)" +
-  #         "RETURN item, review, body, photo"
-  # db.cypherQuery(query, params, (err, result)->
-  #   if err then return handleError(res, err)
-  #   # unless result.data.length
-  #   # console.log req.params.id
-  #   res.json(201, "")
-  # )
+  
 
 # Creates a new Business in the DB.
 # http://localhost:9000/api/menus/
