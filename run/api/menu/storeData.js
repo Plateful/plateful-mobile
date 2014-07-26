@@ -5,22 +5,22 @@
 
   _ = require('underscore');
 
-  module.exports.store = function(item, callback) {
+  module.exports.store = function(business, callback) {
     var key, locu_id, menus, params, query;
-    locu_id = item.id;
-    delete item.id;
-    item.locu_id = locu_id;
-    menus = item.menus;
-    for (key in item) {
-      if (item[key] === null) {
-        delete item[key];
+    locu_id = business.id;
+    delete business.id;
+    business.locu_id = locu_id;
+    menus = business.menus;
+    for (key in business) {
+      if (business[key] === null) {
+        delete business[key];
       }
-      if (typeof item[key] === 'object') {
-        delete item[key];
+      if (typeof business[key] === 'object') {
+        delete business[key];
       }
     }
     params = {
-      menu: item
+      menu: business
     };
     query = "CREATE (m:Menu {menu}) RETURN m";
     return db.cypherQuery(query, params, function(err, result) {

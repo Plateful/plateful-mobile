@@ -8,30 +8,30 @@ _ = require('underscore')
 
 
 
-module.exports.store = (item, callback)->
+module.exports.store = (business, callback)->
 
 
   ###### Store the id in a property call Locu_id and remove the id property
 
-  locu_id = item.id
-  delete item.id
-  item.locu_id = locu_id
+  locu_id = business.id
+  delete business.id
+  business.locu_id = locu_id
 
 
   ###### Store the menu items array for iteration on callback
 
-  menus = item.menus
+  menus = business.menus
 
 
   ###### NEO4J cannot take primitive object types or null values. Remove each
 
-  for key of item
-    if item[key] is null then delete item[key]
-    if typeof item[key] is 'object' then delete item[key]
+  for key of business
+    if business[key] is null then delete business[key]
+    if typeof business[key] is 'object' then delete business[key]
 
 
   # Set the params to pass into the cypherQuery
-  params = {menu:item}
+  params = {menu:business}
 
   # Create the query string
   query = "CREATE (m:Menu {menu}) RETURN m"
