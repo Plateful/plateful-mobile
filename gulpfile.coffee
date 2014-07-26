@@ -30,16 +30,17 @@ APP_ROOT = require("execSync").exec("pwd").stdout.trim() + "/"
 LOCAL_IP = process.env.LOCAL_IP || require('execSync').exec("(ifconfig wlan 2>/dev/null || ifconfig en0) | grep inet | grep -v inet6 | awk '{print $2}' | sed 's/addr://g'").stdout.trim()
 LOCAL_IP = "127.0.0.1" unless parseInt(LOCAL_IP) > 0
 
+
 ENV_GLOBALS =
   development:
     ENV: "development"
 
     BUNDLE_ID: "com.jtomaszewski.ionicstarter.development"
-    BUNDLE_NAME: "IonicStarterApp (dev)"
+    BUNDLE_NAME: "clurtch"
     BUNDLE_VERSION: "1.0.0"
 
-    BACKEND_URL: "http://#{LOCAL_IP}:3000"
-    SECURE_BACKEND_URL: "http://#{LOCAL_IP}:3000"
+    BACKEND_URL: "http://#{LOCAL_IP}:9000"
+    SECURE_BACKEND_URL: "http://#{LOCAL_IP}:9000"
 
     # Automatically connect to weinre on application's startup
     # (this way you can debug your application on your PC even if it's running from mobile ;) )
@@ -108,25 +109,31 @@ paths =
   assets: ['assets/**', '!assets/**/*.ejs']
   assets_ejs: ['assets/**/*.ejs']
   styles: ['app/css/**/*.scss']
+  server: ['server_coffee/**/*.coffee']
   scripts:
     vendor: [
       "assets/components/ionic/release/js/ionic.js"
       "assets/components/angular/angular.js"
+      "assets/components/lodash/dist/lodash.js"
+      "assets/components/angular-google-maps/dist/angular-google-maps.min.js"
       "assets/components/angular-animate/angular-animate.js"
       "assets/components/angular-sanitize/angular-sanitize.js"
+      "assets/components/gsap/src/minified/TweenMax.min.js"
+      "assets/components/ng-Fx/dist/ngFx.min.js"
       "assets/components/angular-ui-router/release/angular-ui-router.js"
+      "assets/components/restangular/dist/restangular.js"
       "assets/components/ionic/release/js/ionic-angular.js"
       # Here add any vendor files that should be included in vendor.js
       # (f.e. bower components)
     ]
     bootstrap: [
-      'app/js/bootstrap.coffee'
+      'app/js/config/bootstrap.coffee'
     ]
     app: [
       'app/js/App.coffee' # define application's angular module; add some native/global js variables
       'app/js/*/**/*.coffee'  # include all angular submodules (like controllers, directives, services)
-      'app/js/routes.coffee'  # app.config - routes
-      'app/js/app_run.coffee' # app.config; app.run
+      # 'app/js/routes.coffee'  # app.config - routes
+      'app/js/config/app_run.coffee' # app.config; app.run
     ]
     tests: [
       'tests/**/*.coffee'
@@ -138,7 +145,9 @@ destinations =
   styles: "#{GLOBALS.BUILD_DIR}/css"
   scripts: "#{GLOBALS.BUILD_DIR}/js"
   templates: "#{GLOBALS.BUILD_DIR}"
+  server: 'run'
   livereload: [
+    'run/**'
     "#{GLOBALS.BUILD_DIR}/assets/**"
     "#{GLOBALS.BUILD_DIR}/css/**"
     "#{GLOBALS.BUILD_DIR}/fonts/**"
@@ -156,6 +165,8 @@ options =
 
 gulp.task 'clean', ->
   gulp.src(GLOBALS.BUILD_DIR, read: false)
+    .pipe(clean(force: true))
+  gulp.src('run', read: false)
     .pipe(clean(force: true))
 
 
@@ -208,8 +219,31 @@ gulp.task 'scripts:vendor', ->
       .pipe(concat("#{scriptsName}.js"))
       .pipe(gulp.dest(destinations.scripts))
 
+gulp.task 'compile:server', ->
+  gulp.src(paths.server)
+    .pipe(coffee({sourceMap: false}))
+    .on("error", notify.onError((error)-> error.message))
+    .pipe(gulp.dest(destinations.server))
 
-gulp.task 'scripts', ['scripts:vendor', 'scripts:app', 'scripts:bootstrap']
+gulp.task 'runserver', ->
+  nodemon(
+    script: 'run/app.js',
+    # script: 'server/app.js',
+    ext: 'html js',
+    ignore: ['ignored.js']
+  )
+  .on('restart', ->
+    console.log 'restarted!'
+  )
+
+gulp.task 'build:server', ['compile:server']
+
+gulp.task "scripts:cordova", ->
+  gulp.src("assets/components/cordova/ng-cordova.js")
+    .pipe(gulp.dest(destinations.scripts))
+
+
+gulp.task 'scripts', ['scripts:vendor', 'scripts:app', 'scripts:bootstrap', 'scripts:cordova']
 
 
 gulp.task 'templates', ->
@@ -298,6 +332,7 @@ gulp.task 'watch', ->
   gulp.watch(paths.scripts.vendor, ['scripts:vendor'])
   gulp.watch(paths.styles, ['styles'])
   gulp.watch(paths.templates, ['templates'])
+  gulp.watch(paths.server, ['compile:server'])
 
   livereloadServer = livereload()
   gulp.watch(destinations.livereload).on 'change', (file) ->
@@ -311,17 +346,6 @@ gulp.task 'emulator', ->
     url = "http://localhost:#{options.ripplePort}/?enableripple=cordova-3.0.0-HVGA"
     open(url)
     gutil.log gutil.colors.blue "Opening #{url} in the browser..."
-
-gulp.task 'runserver', ->
-  nodemon(
-    script: 'server/app.js',
-    ext: 'html js',
-    ignore: ['ignored.js']
-  )
-
-  .on('restart', ->
-    console.log 'restarted!'
-  )
 
 
 gulp.task 'server', ->
@@ -459,6 +483,7 @@ gulp.task "build-debug", ["set-debug", "build"]
 gulp.task "build", (cb) ->
   runSequence ["clean", "bower:install"],
     [
+      "build:server"
       "assets"
       "styles"
       "scripts"

@@ -1,8 +1,20 @@
 # ==> Initialize angular's app.
 app = angular.module("clurtch", [
   "ionic"
-  "clurtch.components"
+  # "ngCordova"
+  "restangular"
+  "ngAnimate"
+  "fx.animations"
+  "google-maps"  
+  "clurtch.modules"
+  "clurtch.factories"
+  "clurtch.directives"
+
 ])
+app.config( (RestangularProvider)->
+  RestangularProvider.setBaseUrl('http://localhost:9000/api/')
+  RestangularProvider.setRequestSuffix('/')
+)
 
 for k, v of GLOBALS
   app.constant k, v
