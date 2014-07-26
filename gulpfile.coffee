@@ -110,6 +110,7 @@ paths =
   assets_ejs: ['assets/**/*.ejs']
   styles: ['app/css/**/*.scss']
   server: ['server_coffee/**/*.coffee']
+  import: ['import_server/**/*.coffee']
   scripts:
     vendor: [
       "assets/components/ionic/release/js/ionic.js"
@@ -146,6 +147,7 @@ destinations =
   scripts: "#{GLOBALS.BUILD_DIR}/js"
   templates: "#{GLOBALS.BUILD_DIR}"
   server: 'run'
+  import: 'import'
   livereload: [
     'run/**'
     "#{GLOBALS.BUILD_DIR}/assets/**"
@@ -219,15 +221,32 @@ gulp.task 'scripts:vendor', ->
       .pipe(concat("#{scriptsName}.js"))
       .pipe(gulp.dest(destinations.scripts))
 
+
 gulp.task 'compile:server', ->
   gulp.src(paths.server)
     .pipe(coffee({sourceMap: false}))
     .on("error", notify.onError((error)-> error.message))
     .pipe(gulp.dest(destinations.server))
+gulp.task 'compile:import', ->
+  gulp.src(paths.import)
+    .pipe(coffee({sourceMap: false}))
+    .on("error", notify.onError((error)-> error.message))
+    .pipe(gulp.dest(destinations.import))
 
-gulp.task 'runserver', ->
+
+gulp.task 'run:import', ->
   nodemon(
-    script: 'run/app.js',
+    script: "#{destinations.import}/app.js",
+    # script: 'server/app.js',
+    ext: 'html js',
+    ignore: ['ignored.js']
+  )
+  .on('restart', ->
+    console.log 'restarted!'
+  )
+gulp.task 'run:server', ->
+  nodemon(
+    script: "#{destinations.server}/app.js",
     # script: 'server/app.js',
     ext: 'html js',
     ignore: ['ignored.js']
@@ -236,7 +255,7 @@ gulp.task 'runserver', ->
     console.log 'restarted!'
   )
 
-gulp.task 'build:server', ['compile:server']
+gulp.task 'build:server', ['compile:server', 'compile:import']
 
 gulp.task "scripts:cordova", ->
   gulp.src("assets/components/cordova/ng-cordova.js")
@@ -492,7 +511,7 @@ gulp.task "build", (cb) ->
 
 
 gulp.task "default", (cb) ->
-  runSequence "build", ["watch", "server", "weinre", 'runserver'], cb
+  runSequence "build", ["watch", "server", "weinre", 'run:server', 'run:import'], cb
 
 
 ["cordova:platform-add", "cordova:emulate", "cordova:run", "cordova:run-release", "cordova:build-release", "deploy:release", "release"].forEach (task) ->

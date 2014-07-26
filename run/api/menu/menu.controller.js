@@ -10,9 +10,9 @@
 
   Venue = require('../../config/api/locu').VenueClient;
 
-  factual = require('../../config/factual').factual;
+  factual = require('../../config/api/factual').factual;
 
-  yelp = require('../../config/yelp').yelp;
+  yelp = require('../../config/api/yelp').yelp;
 
   storeData = require('./storeData');
 
@@ -51,7 +51,6 @@
       id: req.params.id
     };
     query = "Match (m:Menu) WHERE m.locu_id = {id} RETURN m";
-    console.log("Fuck Yelp again");
     return db.cypherQuery(query, params, function(err, result) {
       if (err) {
         throw err;

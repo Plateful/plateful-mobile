@@ -10,9 +10,9 @@
 
   db = require('../../config/neo4j').db;
 
-  factual = require('../../config/factual').factual;
+  factual = require('../../config/api/factual').factual;
 
-  yelp = require('../../config/yelp').yelp;
+  yelp = require('../../config/api/yelp').yelp;
 
   exports.index = function(req, res) {
     var query;

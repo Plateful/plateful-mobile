@@ -109,6 +109,10 @@ exports.getByLocation = (req, res)->
 # GET single item http://localhost:9000/api/items/35
 # working
 exports.show = (req, res)->
+  # Check NEO4J if the item exhists
+    # if not then search Locu Menu Details for menu item
+
+
   params = {id: Number(req.params.id)}
   query = "START item=node({id})" +
           "MATCH (item)-[:REVIEW]->(review:Review)-[:BODY]->(body:Body), " +
