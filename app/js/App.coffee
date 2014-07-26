@@ -5,10 +5,11 @@ app = angular.module("clurtch", [
   "restangular"
   "ngAnimate"
   "fx.animations"
-  "google-maps"  
+  "google-maps"
   "clurtch.modules"
   "clurtch.factories"
   "clurtch.directives"
+  "ion-google-place"
 
 ])
 app.config( (RestangularProvider)->

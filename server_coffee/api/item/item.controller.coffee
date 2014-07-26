@@ -94,6 +94,7 @@ exports.getByUser = (req, res)->
   )
 
 exports.getByLocation = (req, res)->
+  console.log 'yolo'
   data = {location: [req.body.lat, req.body.lng]}
   if req.body.val then data.name = req.body.val
   MenuClient.search data, (response)->

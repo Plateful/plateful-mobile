@@ -124,6 +124,7 @@ paths =
       "assets/components/angular-ui-router/release/angular-ui-router.js"
       "assets/components/restangular/dist/restangular.js"
       "assets/components/ionic/release/js/ionic-angular.js"
+      "assets/components/ion-google-place/ion-google-place.js"
       # Here add any vendor files that should be included in vendor.js
       # (f.e. bower components)
     ]
@@ -235,18 +236,18 @@ gulp.task 'compile:import', ->
 
 
 gulp.task 'run:import', ->
-  nodemon(
-    script: "#{destinations.import}/app.js",
-    # script: 'server/app.js',
-    ext: 'html js',
-    ignore: ['ignored.js']
-  )
-  .on('restart', ->
-    console.log 'restarted!'
-  )
+  # nodemon(
+  #   script: "#{destinations.import}/app.js",
+  #   # script: 'server/app.js',
+  #   ext: 'html js',
+  #   ignore: ['ignored.js']
+  # )
+  # .on('restart', ->
+  #   console.log 'restarted!'
+  # )
 gulp.task 'run:server', ->
   nodemon(
-    script: "#{destinations.server}/app.js",
+    script: "run/app.js",
     # script: 'server/app.js',
     ext: 'html js',
     ignore: ['ignored.js']

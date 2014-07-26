@@ -32,8 +32,8 @@ exports.getByLocation = (req, res)->
   if req.body.val then data.name = req.body.val
   console.log "Fuck Yelp", data
   Venue.search data, (response)->
-    res.json(200, response.objects)
     console.log response
+    res.json(200, response.objects)
 
   # factual.get('/t/places/', {q:req.body.val, geo:{"$circle":{"$center":[req.body.lat,req.body.lng],"$meters":5000}}}
   # ,(err, result)->
@@ -58,7 +58,7 @@ exports.show = (req, res)->
     else
       res.json(200, result.data[0])
       # res.json(200, response.objects[0])
-  
+
 
 # Creates a new Business in the DB.
 # http://localhost:9000/api/menus/

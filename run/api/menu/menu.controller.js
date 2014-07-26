@@ -40,8 +40,8 @@
     }
     console.log("Fuck Yelp", data);
     return Venue.search(data, function(response) {
-      res.json(200, response.objects);
-      return console.log(response);
+      console.log(response);
+      return res.json(200, response.objects);
     });
   };
 

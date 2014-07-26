@@ -67,6 +67,7 @@
 
   exports.getByLocation = function(req, res) {
     var data;
+    console.log('yolo');
     data = {
       location: [req.body.lat, req.body.lng]
     };
