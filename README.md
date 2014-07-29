@@ -32,6 +32,22 @@ brew install imagemagick # or `apt-get install imagemagick`, if you're on linux
 gulp # build www/ directory and run http server on 4440 port
 ```
 
+
+Also install the required cordova plugins
+
+```
+
+cordova plugin add <all of the following>
+
+org.apache.cordova.camera
+org.apache.cordova.device
+org.apache.cordova.file
+org.apache.cordova.file-transfer
+org.apache.cordova.geolocation
+org.transistorsoft.cordova.background-geolocation
+
+```
+
 If you get "too many files" error, try: `ulimit -n 10000`. You may want to add this line to your .bashrc / .zshrc / config.fish.
 
 
@@ -74,8 +90,8 @@ gulp test:e2e # finally, run e2e tests
 
 I recommend [tmux](http://tmux.sourceforge.net/) for handling multiple terminal tabs/windows ;)
 
-1. Copy `.envrc.android-sample` or `.envrc.ios-sample` to `.envrc` and configure it. 
-  
+1. Copy `.envrc.android-sample` or `.envrc.ios-sample` to `.envrc` and configure it.
+
   * Ofcourse, if you're a Mac user and you can compile both Android and iOS on the same machine, you can include all the variables from both of these files in only one `.envrc` .
 
   * Also, make sure you have all the keys and certificates needed stored in `keys/android/` and `keys/ios/`:
@@ -116,4 +132,3 @@ Then, generate the application and deploy it to the webserver with:
 ```
 gulp release --env=[staging|production]
 ```
-
