@@ -1,0 +1,21 @@
+ion-view(hide-nav-bar="true")
+
+  //- ion-google-place(placeholder="Enter an address, Apt# and ZIP" ng-model="location")
+  ion-header-bar.bar-positive.item-input-inset
+      button.button.button-clear(ng-click="openModal()") Filter&nbsp&nbsp
+      label.item-input-wrapper
+        i.icon.ion-ios7-search.placeholder-icon
+        form(ng-submit="newSearch(menusFilter)")
+          input(type="search" placeholder="Search" ng-model="menusFilter")
+
+      a.button.button-clear(href="#/tab/menus/map") Map
+
+  ion-content.bg-grey
+    div.list
+      a.item(ng-repeat="business in businesses | filter:menusFilter" href="#/tab/menus/menu/{{business.id}}")
+        //- img(src='{{business.image_url}}')
+        h2 {{business.name}}
+        h4(ng-if="business.address") {{business.address + " " + business.locality }}
+        h4(ng-if="business.street_address") {{business.street_address + " " + business.locality }}
+        p(ng-if="business.phone"){{business.phone}}
+        p(ng-if="business.tel") {{business.tel}}

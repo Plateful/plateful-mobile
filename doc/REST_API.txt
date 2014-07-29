@@ -1,0 +1,84 @@
+Routes for user stories
+
+The standard placement of IDs in our REST URIs from left to right:
+  user or business .. menu .. item .. review .. photo or essay
+:limit is an optional integer: max length of a collection returned by the request.
+
+As a user, I want to see the entire photo gallery of a specific dish
+  GET api/item/:item_id/photo/index/:limit
+As a user, I want to see all the written reviews of a particular dish
+  GET api/item/:item_id/essay/index/:limit
+As a user, I want to see all the detail of a review associated with a particular photo.
+  GET api/photo/:photo_id/review/show/:limit
+As a user, I want to see all the detail of a review associated with a particular essay.
+  GET api/essay/:essay_id/review/show/:limit
+As a user, I want to know the top dishes at a restaurant
+  GET api/menu/:menu_id/item/index/:limit
+As a user, I want to be able to filter for my dishes (price, distance, rating)
+  GET api/item/filter/:limit?lon=..,lat=..&price..&distance=..&rating=..
+        min_priciness        (0.0 .. 5.0)
+        max_priciness  cost  (0.0 .. 5.0)
+        longitude      lon   (float)
+        latitude       lat   (float)
+        min_rating     star  (0.0 .. 5.0)
+        max_rating           (0.0 .. 5.0)
+        min_distance         (in meters)
+        max_distance   dist  (in meters)
+        min_opentime   open  (in minutes)
+        max_opentime         (in minutes)
+As a user, I want to have a map view of the top dishes in my area
+  GET api/item/index/:limit?lon=..&lat=..
+As a user, I want to know restaurants around me
+  GET api/menu/index/:limit?lon=..&lat=..&dist=..
+As a foodie, I want to rate the dishes I've tried
+  POST api/user/:user_id/item/:item_id/review/create/
+As a foodie, I want share pictures of my delicious finds
+  POST api/user/:user_id/item/:item_id/photo/create/    (new review)
+    or  POST api/user/:user_id/review/:review_id/photo/create/  (existing review)
+As a foodie, I want to write a review of a dish I've tried
+  POST api/user/:user_id/item/:item_id/essay/create/    (new review)
+    or  POST api/user/:user_id/review/:review_id/essay/create/  (existing review)
+User reports a new menu item on a given menu
+  POST api/user/:user_id/menu/:menu_id/item/create/
+Business reports a new menu item on its own menu
+  POST api/buiness/:business_id/menu/:menu_id/item/create
+Business associates a new essay with its own dish
+  POST api/buiness/:business_id/item/:item_id/photo/create
+Business retires a dish from its own menu.
+  DELETE api/buiness/:business_id/item/:item_id/destroy
+See all reviews by a particular user.
+  GET api/user/:user_id/review/index/:limit
+See dishes nearest to me (or to some particular place)
+  GET api/item/index/:limit?lon=..,lat=..
+See recommendations for nearby dishes
+  GET api/item/suggest/:limit?lon=..,lat=..&price..&distance=..
+User bookmarks a particular dish
+  POST api/user/:user_id/item/:item_id/bookmark/create
+List of bookmarked dishes
+  GET api/user/:user_id/item/bookmark/index/:limit
+Collect achievement (tried a dish)
+  GET api/user/:user_id/item/:item_id/achievement/create
+List of dishes the user has tried
+  GET api/user/:user_id/item/achievement/index/:limit
+Good dishes on a menu
+  GET api/menu/:menu_id/item/index/:limit
+Good menus near me
+  GET api/menu/index/:limit?lon=..,lat=..
+Given a review, for a dish
+  GET api/item/:item_id/essay/show
+Like any element: picture, essay (upvote, downvote) (agree/disagree)
+  POST api/user/:user_id/photo/:photo_id/raise
+  POST api/user/:user_id/photo/:photo_id/lower
+  POST api/user/:user_id/essay/:essay_id/raise
+  POST api/user/:user_id/essay/:essay_id/lower
+Report a new dish on a menu
+  POST api/user/:user_id/menu/:menu_id/create
+Report a dish no longer present on a menu
+  DELETE api/user/:user_id/menu/:menu_id/destroy
+User adds a new menu
+  POST api/user/:user_id/menu/create
+Business adds a new menu
+  POST api/business/:business_id/menu/create
+
+Blow away entire database and populate with initial data.
+POST /__overwrite_database_with_initial_data

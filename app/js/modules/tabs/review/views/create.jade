@@ -1,0 +1,15 @@
+ion-view(title="Create Review")
+  ion-content
+    ion-list
+      ion-item.item.item-thumbnail-left
+        img(ng-src="{{review.image_url}}")
+        h4 {{business.name}}
+        p {{item.name}}
+      ion-item
+        div.button-bar
+          button.button.button-clear.button-icon.icon.ion-ios7-star(ng-repeat="btn in buttons" ng-click="setRate(btn)" ng-class="{'button-energized': rating >= btn}")
+      label.item.item-input.item-floating-label.bg-white
+        span.input-label Comment
+        textarea(placeholder="Comment" style="height:100px;")
+
+    button.button.button-block.button-positive(ng-click="submitReview()") Done

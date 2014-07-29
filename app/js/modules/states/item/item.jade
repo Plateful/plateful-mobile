@@ -1,0 +1,26 @@
+ion-view(title="{{item.name}}" has-subheader="true")
+  ion-nav-buttons(side="right" ng-hide="showReviews")
+    button.button.button-clear.icon.ion-ios7-camera(ng-click="showReviews = true")
+  ion-nav-buttons(side="right" ng-show="showReviews")
+    button.button.button-clear.icon.ion-ios7-list(ng-click="showReviews = false")
+  ion-content
+    div.button-bar
+      a.button.button-positive.icon.ion-ios7-bookmarks
+      a.button.button-positive.icon.ion-ios7-camera(ng-click="reviewItem()")
+      a.button.button-positive.icon.ion-ios7-checkmark(ng-click="collectItem()")
+      a.button.button-positive.icon.ion-bookmark(ng-click="bookmarkItem()")
+    div.list
+      img.full-image(src='{{item.image_url}}')
+      div
+        h4.assertive {{item.stars}}
+          //- added pullright class
+          div.pullright.energized {{item.review_count}} reviews
+      h5.dark {{item.description}}
+      h4 User Reviews
+      div.list
+        div.item.item-avatar(ng-repeat="review in reviews")
+          //- added borderless class on css
+          //- p {{review}}
+          img(src="{{review.image_url}}")
+          //- h4 {{review.user_id}}
+          div.item.item-text-wrap.borderless This shit is good so I clurtch it. Nom nom nom nom nom nom
