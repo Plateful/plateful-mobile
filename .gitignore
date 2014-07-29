@@ -1,3 +1,6 @@
+.DS_Store
+run
+import
 platforms/^.*
 node_modules
 assets/components
