@@ -20,11 +20,11 @@
 # How to install
 
 ```
-g clone jtomaszewski/ionicstarter-mobile
-cd ionicstarter-mobile
+git clone https://github.com/Clurtchio/clurtch.git
+cd clurtch
 
 # install dependencies
-npm install
+npm install # or sudo npm install if you need permission to make system changes
 npm install -g gulp
 bower install
 brew install imagemagick # or `apt-get install imagemagick`, if you're on linux
@@ -33,7 +33,7 @@ gulp # build www/ directory and run http server on 4440 port
 ```
 
 
-Also install the required cordova plugins
+Also install the required cordova plugins (make sure to run gulp before adding these plugins)
 
 ```
 
