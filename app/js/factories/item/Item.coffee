@@ -1,5 +1,8 @@
 angular.module('app.factory.item', [])
 
+
+
+
 .factory 'MenuItem', [ 'Restangular', (Rest)->
   Item = Rest.all('items')
   storage = {}

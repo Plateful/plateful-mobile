@@ -52,6 +52,7 @@ angular.module('app')
           CreateReview.set('image_url', imageData)
       onFail = (error)->
           $scope.src = error
+          
       navigator.camera.getPicture(onSuccess, onFail, options)
 
       Geo.getLocation().then(

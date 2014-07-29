@@ -89,7 +89,8 @@ exports.show = (req, res)->
 # Working but need to make changes to the neo4j queries takes in data
 exports.create = (req, res)->
   query = "START menu=node(7)" +
-          "CREATE (menu)-[:HAS_ITEM]->(item: Item { name: 'Rice cake', description: 'Rice Cake with Chicken Stock'})" +
+          "CREATE (item:Item { name: 'Rice cake', description: 'Rice Cake with Chicken Stock'})"
+          "(menu)-[:HAS_ITEM]->(item)" +
           "RETURN item"
   db.cypherQuery( query, (err, result)->
     if err then return handleError(res, err)

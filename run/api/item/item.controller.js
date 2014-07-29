@@ -82,7 +82,8 @@
 
   exports.create = function(req, res) {
     var query;
-    query = "START menu=node(7)" + "CREATE (menu)-[:HAS_ITEM]->(item: Item { name: 'Rice cake', description: 'Rice Cake with Chicken Stock'})" + "RETURN item";
+    query = "START menu=node(7)" + "CREATE (item:Item { name: 'Rice cake', description: 'Rice Cake with Chicken Stock'})";
+    "(menu)-[:HAS_ITEM]->(item)" + "RETURN item";
     return db.cypherQuery(query, function(err, result) {
       if (err) {
         return handleError(res, err);

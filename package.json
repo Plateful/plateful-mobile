@@ -86,6 +86,7 @@
   "version": "0.0.0",
   "main": "gulpfile.js",
   "directories": {
+    "doc": "doc",
     "test": "test"
   },
   "scripts": {
