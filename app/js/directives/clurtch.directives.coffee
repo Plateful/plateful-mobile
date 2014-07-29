@@ -1,4 +1,4 @@
-angular.module('clurtch.directives', [
+angular.module('app.directives', [
   "ngSelect"
   "ngRater"
 ])

@@ -1,3 +1,13 @@
+
+/*
+ *  * Main application file
+ *  This Server is a start up template server.
+ *  Use this for data processing logic
+ *
+ *
+ *
+ */
+
 (function() {
   var app, config, exports, express, server;
 

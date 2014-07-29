@@ -1,4 +1,4 @@
-angular.module('clurtch.modules.tabs')
+angular.module('app.modules.tabs')
 
 
 .controller 'TabsCtrl', [

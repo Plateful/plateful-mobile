@@ -1,1 +1,1 @@
-angular.module('clurtch.modules.geo', [])
+angular.module('app.modules.geo', [])

@@ -1,4 +1,4 @@
-angular.module('clurtch.factory.business', [])
+angular.module('app.factory.business', [])
 
 .service 'BusinessCache', ()->
   _cache = {}

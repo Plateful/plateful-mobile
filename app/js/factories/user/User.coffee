@@ -1,4 +1,4 @@
-angular.module('clurtch.factory.user', [])
+angular.module('app.factory.user', [])
 
 .service 'User', ['Restangular', (Rest)->
   User = Rest.all('users')

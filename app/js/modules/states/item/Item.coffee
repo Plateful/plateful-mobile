@@ -1,1 +1,1 @@
-angular.module('clurtch.modules.states.item', [])
+angular.module('app.modules.states.item', [])

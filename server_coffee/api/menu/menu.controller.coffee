@@ -35,6 +35,15 @@ exports.getByLocation = (req, res)->
     console.log response
     res.json(200, response.objects)
 
+
+  # This comment below is for an api call to the Factual api.
+  # Factual is much faster than the Venu (locu) api
+  # We are using locu for menu data
+  # Ask Joel Before changing
+  # TODO: Configure google places on the front end to eliminate the need for api calls on restful routes
+  #
+  #
+  #
   # factual.get('/t/places/', {q:req.body.val, geo:{"$circle":{"$center":[req.body.lat,req.body.lng],"$meters":5000}}}
   # ,(err, result)->
   #   if err then return handleError(res, err)

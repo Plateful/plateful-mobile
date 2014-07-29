@@ -1,5 +1,5 @@
-angular.module('clurtch.modules.tabs.settings', [
-  'clurtch.modules.tabs.settings.controllers'
+angular.module('app.modules.tabs.settings', [
+  'app.modules.tabs.settings.controllers'
 ])
 
 .config ($stateProvider)->

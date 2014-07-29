@@ -1,6 +1,11 @@
-# /**
+###
 #  * Main application file
-#  */
+#  This Server is a start up template server.
+#  Use this for data processing logic
+#
+#
+#
+###
 
 # // Set default node environment to development
 process.env.NODE_ENV = process.env.NODE_ENV || 'development'

@@ -1,6 +1,6 @@
-angular.module('clurtch')
+angular.module('app')
 
-
+# The App ctrl contains the $scope of the whole app
 .controller('AppCtrl', [
   '$scope'
   '$rootScope'

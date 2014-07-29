@@ -1,4 +1,4 @@
-angular.module('clurtch.modules.tabs.review.controllers', [])
+angular.module('app.modules.tabs.review.controllers', [])
 
 .service 'CreateReview', ()->
   review = {}

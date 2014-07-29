@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  var GooglePlaces, MenuClient, apiKey, db, googlePlaces, handleError, outputFormat, parameters, _;
+  var MenuClient, apiKey, db, handleError, outputFormat, _;
 
   _ = require('lodash');
 
@@ -11,20 +11,6 @@
   exports.apiKey = apiKey = "AIzaSyCB0Ac877CMP3MyZ9gtw4z8Ht4i7yjGx0w";
 
   exports.outputFormat = outputFormat = "json";
-
-  GooglePlaces = require("googleplaces");
-
-  googlePlaces = new GooglePlaces(apiKey, outputFormat);
-
-  parameters;
-
-  parameters = {
-    query: "restaurants in dublin"
-  };
-
-  googlePlaces.textSearch(parameters, function(response) {
-    return console.log("Google", response);
-  });
 
   exports.index = function(req, res) {
     var query;

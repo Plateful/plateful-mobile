@@ -1,4 +1,4 @@
-angular.module('clurtch.factory.photo', [])
+angular.module('app.factory.photo', [])
 
 .factory 'Photo', ['Restangular', (Rest)->
   Photo = Rest.all('photos')

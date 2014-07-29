@@ -237,9 +237,9 @@ gulp.task 'compile:import', ->
 
 gulp.task 'run:import', ->
   # nodemon(
-  #   script: "#{destinations.import}/app.js",
-  #   # script: 'server/app.js',
-  #   ext: 'html js',
+  #   script: "import/app.js",
+  #
+  #   # ext: 'html js',
   #   ignore: ['ignored.js']
   # )
   # .on('restart', ->
@@ -248,7 +248,6 @@ gulp.task 'run:import', ->
 gulp.task 'run:server', ->
   nodemon(
     script: "run/app.js",
-    # script: 'server/app.js',
     ext: 'html js',
     ignore: ['ignored.js']
   )

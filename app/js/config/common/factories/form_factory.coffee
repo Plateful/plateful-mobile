@@ -1,4 +1,4 @@
-angular.module 'clurtch'
+angular.module 'app'
 
 .factory 'FormFactory', ($q) ->
 

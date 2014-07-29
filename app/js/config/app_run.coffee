@@ -1,11 +1,12 @@
-app = angular.module("clurtch")
+app = angular.module("app")
 
-# Parks House
-# app.constant('ServerUrl', 'http://10.0.1.22:9000/')
+
+# These constants are IPs for the server when accessing it from a device
+
 # app.constant('ServerUrl', 'http://10.8.29.210:9000/')
 # app.constant('ServerUrl', 'http://10.4.13.246:9000/')
-
 # app.constant('ServerUrl', 'http://192.168.1.9:9000/')
+
 app.constant('ServerUrl', 'http://localhost:9000/')
 
 ionic.Platform.ready ->
@@ -22,7 +23,7 @@ ionic.Platform.ready ->
         $q.reject(response)
   # Now, finally, let's run the app
   # (this is the reason why we don't include ng-app in the index.jade)
-  angular.bootstrap document, ['clurtch']
+  angular.bootstrap document, ['app']
 
 
 app.run ($rootScope, Auth, $window, $timeout, bGeo) ->

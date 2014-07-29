@@ -1,7 +1,7 @@
 ###
 A simple example service that returns some data.
 ###
-angular.module("clurtch")
+angular.module("app")
 
 .factory "PetService", ->
 

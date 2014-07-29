@@ -1,4 +1,4 @@
-angular.module('clurtch.modules.states.menu')
+angular.module('app.modules.states.menu')
 
 .controller('MenuCtrl', [
   '$rootScope'

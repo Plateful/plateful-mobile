@@ -11,9 +11,9 @@ module.exports.applyRoutes = (app)->
   app.use(busboy({ immediate: true }))
 
   # Insert routes below
-  app.use('/api/reviews', require('./api/review'))
-  app.use('/api/items', require('./api/item'))
-  app.use('/api/menus', require('./api/menu'))
+  app.use('/api/v1/reviews', require('./api/review'))
+  app.use('/api/v1/items', require('./api/item'))
+  app.use('/api/v1/menus', require('./api/menu'))
 
   # All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')

@@ -1,4 +1,4 @@
-angular.module "clurtch"
+angular.module "app"
 
 # Wraps the value in Promise if it's not.
 # This allows you to call `Promise(varIDontKnow).then ->` whenever you can.

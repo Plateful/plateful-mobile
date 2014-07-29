@@ -1,0 +1,23 @@
+ion-view(hide-nav-bar="true")
+
+  ion-header-bar.bar-positive.item-input-inset
+    button.button.button-clear(ng-click="openModal()") Filter&nbsp&nbsp
+    label.item-input-wrapper
+      i.icon.ion-ios7-search.placeholder-icon
+      form(ng-submit="newSearch(itemsFilter)")
+        input(type="search" placeholder="Search" ng-model="itemsFilter")
+    a.button.button-clear(href="#/tab/items/map") Map
+
+  ion-content.bg-grey
+    ng-single-select(options="options")
+    a.menu-card(ng-repeat="item in items | filter:findFilter" href="#/tab/items/item/{{item.id}}" ng-click="storeItem(item)")
+      div.menu-card-content
+        img(src='{{item.image_url}}')
+        div.menu-card-footer
+          div
+            i.text-right.icon.ion-navigate(style="color:grey;") {{item.dist}}m
+            {{item.name | limitTo:35 }}
+          div.text-left.assertive ★★★★
+          div.text-right.energized (250)
+          br
+          br

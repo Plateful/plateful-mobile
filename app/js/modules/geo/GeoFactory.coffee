@@ -1,4 +1,4 @@
-angular.module('clurtch.modules.geo')
+angular.module('app.modules.geo')
 
 .factory('Geo', [
   '$q'

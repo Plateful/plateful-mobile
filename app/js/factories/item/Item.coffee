@@ -1,4 +1,4 @@
-angular.module('clurtch.factory.item', [])
+angular.module('app.factory.item', [])
 
 .factory 'MenuItem', [ 'Restangular', (Rest)->
   Item = Rest.all('items')
@@ -17,7 +17,7 @@ angular.module('clurtch.factory.item', [])
     data.val = findFilter
     # url: POST - api/businesses/location
     Item.all('location').post(data).then (result)->
-      cb(result, findFilter)      
+      cb(result, findFilter)
 
 
   getByBusiness: (business_id)->

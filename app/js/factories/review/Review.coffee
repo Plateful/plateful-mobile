@@ -1,4 +1,4 @@
-angular.module('clurtch.factory.review', [])
+angular.module('app.factory.review', [])
 
 .factory 'Review', ['Restangular', (Rest)->
   Review = Rest.all('reviews')

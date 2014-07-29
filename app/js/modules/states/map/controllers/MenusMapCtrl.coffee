@@ -1,13 +1,12 @@
-angular.module('app.modules.states.map.controllers', [])
+angular.module('app.modules.states.map.controllers')
 
 
+.controller('MenusMapCtrl', ($scope, $ionicLoading, $compile)->
 
-.controller('MapCtrl', ($scope, $ionicLoading, $compile)->
-
+  $scope.rand = Math.random()
+  console.log $scope.rand
   initialize = ()->
-    map
-    service
-    infowindow
+
 
     myLatlng = new google.maps.LatLng(43.07493,-89.381388)
 
@@ -16,7 +15,7 @@ angular.module('app.modules.states.map.controllers', [])
       zoom: 16,
       mapTypeId: google.maps.MapTypeId.ROADMAP
 
-    map = new google.maps.Map(document.getElementById("map"), mapOptions)
+    map = new google.maps.Map(document.getElementById("nearbyMap"), mapOptions)
 
     # //Marker + infowindow + angularjs compiled ng-click
     contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>"
@@ -36,44 +35,7 @@ angular.module('app.modules.states.map.controllers', [])
       infowindow.open(map,marker)
     )
 
-
-    # initialize = ()->
-
-
-    request = {
-      location: myLatlng,
-      radius: '500',
-      types: ['store']
-    }
-
-    service = new google.maps.places.PlacesService(map)
-    service.nearbySearch(request, callback)
-
-
-
-
-
     $scope.map = map
-
-  callback = (results, status)->
-    if status is google.maps.places.PlacesServiceStatus.OK
-      for item in results
-        place = item
-        console.log item
-        createMarker(item)
-  createMarker = (place)->
-    placeLoc = place.geometry.location;
-    marker = new google.maps.Marker({
-      map: map,
-      position: place.geometry.location
-    })
-
-    google.maps.event.addListener(marker, 'click', ()->
-      infowindow.setContent(place.name)
-      infowindow.open(map, this)
-    )
-
-
 
   ionic.Platform.ready(initialize)
 

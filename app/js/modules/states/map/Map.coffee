@@ -1,3 +1,3 @@
-angular.module('clurtch.modules.states.map', [
-  'clurtch.modules.states.map.controllers'
+angular.module('app.modules.states.map', [
+  'app.modules.states.map.controllers'
 ])

@@ -1,4 +1,4 @@
-angular.module "clurtch"
+angular.module "app"
 
 # A simple controller that fetches a list of data from a service
 .controller "PetIndexCtrl", ($scope, PetService, $http) ->

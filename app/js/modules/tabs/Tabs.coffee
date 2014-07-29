@@ -1,10 +1,10 @@
-angular.module('clurtch.modules.tabs', [
-  'clurtch.modules.tabs.find'
-  'clurtch.modules.tabs.review'
-  'clurtch.modules.tabs.nearby'
-  'clurtch.modules.tabs.settings'
-  # 'clurtch.components.tabs.share'
-  # 'clurtch.components.tabs.notify'
+angular.module('app.modules.tabs', [
+  'app.modules.tabs.items'
+  'app.modules.tabs.review'
+  'app.modules.tabs.menus'
+  'app.modules.tabs.settings'
+  # 'app.components.tabs.share'
+  # 'app.components.tabs.notify'
   ])
 .config ($stateProvider, $urlRouterProvider) ->
   $stateProvider
@@ -15,4 +15,4 @@ angular.module('clurtch.modules.tabs', [
 
 
     # if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise "/tab/find"
+    $urlRouterProvider.otherwise "/tab/items"

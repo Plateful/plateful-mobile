@@ -1,4 +1,4 @@
-angular.module "clurtch"
+angular.module "app"
 
 .service 'Auth', ($http, PromiseFactory) ->
   USER_EMAIL_CACHE_KEY = "user_email"
