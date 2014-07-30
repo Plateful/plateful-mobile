@@ -35,7 +35,8 @@ html
     script.
       GLOBALS = !{JSON.stringify(GLOBALS)};
     script(src="http://maps.google.com/maps/api/js?sensor=true&libraries=geometry")
-    script(type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false")
+    //- script(type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false")
+    script(src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false")
     script(src="js/vendor.js?v=#{GLOBALS.CACHE_TAG}")
     script(src="js/bootstrap.js?v=#{GLOBALS.CACHE_TAG}")
     script(src="js/app.js?v=#{GLOBALS.CACHE_TAG}")
@@ -44,7 +45,7 @@ html
     script(id="cordova-js" src="cordova.js")
     //- If you need to include any cordova plugins' js files, add them here:
     //- script(id="cdv-plugin-fb-connect-js" src="cdv-plugin-fb-connect.js")
-    script(src="js/ng-cordova.js")
+    //- script(src="js/ng-cordova.js")
 
   body(animation='slide-left-right-ios7')
     div(ng-controller='AppCtrl')

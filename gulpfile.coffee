@@ -124,6 +124,9 @@ paths =
       "assets/components/angular-ui-router/release/angular-ui-router.js"
       "assets/components/restangular/dist/restangular.js"
       "assets/components/ionic/release/js/ionic-angular.js"
+      "assets/components/angularjs-google-places/dist/angularjs-google-places.min.js"
+      # "assets/components/angularjs-google-places/src/angularjs-google-places.js"
+      # "assets/components/angularjs-google-places/src/google-api.js"
       "assets/components/ion-google-place/ion-google-place.js"
       # Here add any vendor files that should be included in vendor.js
       # (f.e. bower components)

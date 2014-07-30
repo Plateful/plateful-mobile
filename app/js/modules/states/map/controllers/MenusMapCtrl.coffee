@@ -1,18 +1,19 @@
 angular.module('app.modules.states.map.controllers')
 
 
-.controller('MenusMapCtrl', ($scope, $ionicLoading, $compile)->
+.controller('MenusMapCtrl', ($scope, $ionicLoading, $compile, MenusData)->
 
   $scope.rand = Math.random()
   console.log $scope.rand
+  $scope.locations = MenusData.get()
   initialize = ()->
+    $scope.locate = window.currLocation.coords
 
-
-    myLatlng = new google.maps.LatLng(43.07493,-89.381388)
+    myLatlng = new google.maps.LatLng($scope.locate.latitude,$scope.locate.longitude)
 
     mapOptions =
       center: myLatlng,
-      zoom: 16,
+      zoom: 15,
       mapTypeId: google.maps.MapTypeId.ROADMAP
 
     map = new google.maps.Map(document.getElementById("nearbyMap"), mapOptions)
@@ -25,15 +26,17 @@ angular.module('app.modules.states.map.controllers')
       content: compiled[0]
     })
 
-    marker = new google.maps.Marker({
-      position: myLatlng,
-      map: map,
-      title: 'Uluru (Ayers Rock)'
-    })
 
-    google.maps.event.addListener(marker, 'click', ()->
-      infowindow.open(map,marker)
-    )
+    for item in $scope.locations
+      loc = new google.maps.LatLng(item.geometry.location.k, item.geometry.location.B)
+      marker = new google.maps.Marker({
+        position: loc,
+        map: map,
+        title: item.name
+      })
+      google.maps.event.addListener(marker, 'click', ()->
+        infowindow.open(map,marker)
+      )
 
     $scope.map = map
 

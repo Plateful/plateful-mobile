@@ -1,21 +1,39 @@
-ion-view(hide-nav-bar="true")
+ion-view(hide-nav-bar="true" id="places")
+  div(class="bar bar-positive bar-header item-input-inset")
+    button.button.button-clear(ng-click="openModal()") Filter&nbsp&nbsp
+    label(class="item-input-wrapper")
+      i(class="icon ion-ios7-search placeholder-icon")
+      //- input(id="searchQuery" class="google-place-search" type="search" ng-model="searchQuery" placeholder="Enter an address, place or ZIP code")
+      ng-places(placeholder="Enter an address, Apt# and ZIP" ng-model="location")
 
-  //- ion-google-place(placeholder="Enter an address, Apt# and ZIP" ng-model="location")
-  ion-header-bar.bar-positive.item-input-inset
-      button.button.button-clear(ng-click="openModal()") Filter&nbsp&nbsp
-      label.item-input-wrapper
-        i.icon.ion-ios7-search.placeholder-icon
-        form(ng-submit="newSearch(menusFilter)")
-          input(type="search" placeholder="Search" ng-model="menusFilter")
+    a.button.button-clear(href="#/tab/menus/map") Map
 
-      a.button.button-clear(href="#/tab/menus/map") Map
 
-  ion-content.bg-grey
-    div.list
-      a.item(ng-repeat="business in businesses | filter:menusFilter" href="#/tab/menus/menu/{{business.id}}")
-        //- img(src='{{business.image_url}}')
-        h2 {{business.name}}
-        h4(ng-if="business.address") {{business.address + " " + business.locality }}
-        h4(ng-if="business.street_address") {{business.street_address + " " + business.locality }}
-        p(ng-if="business.phone"){{business.phone}}
-        p(ng-if="business.tel") {{business.tel}}
+  ion-content(class="has-header has-header")
+    ion-list
+      ion-item(ng-repeat="location in locations" type="item-text-wrap" ng-click="selectLocation(location)")
+
+        h2 {{location.name}}
+        //- h4 {{location.vicinity}}
+
+
+
+    //- ion-header-bar.bar-positive.item-input-inset
+    //-   button.button.button-clear(ng-click="openModal()") Filter&nbsp&nbsp
+    //-
+    //-   label.item-input-wrapper
+    //-     i.icon.ion-ios7-search.placeholder-icon
+    //-     form(ng-submit="newSearch(menusFilter)")
+    //-       input(type="search" placeholder="Search" ng-model="menusFilter")
+    //-
+    //-   a.button.button-clear(href="#/tab/menus/map") Map
+    //-
+    //- ion-content
+    //-   div.list
+    //-     a.item(ng-repeat="business in businesses | filter:menusFilter" href="#/tab/menus/menu/{{business.id}}")
+    //-       //- img(src='{{business.image_url}}')
+    //-       h2 {{business.name}}
+    //-       h4(ng-if="business.address") {{business.address + " " + business.locality }}
+    //-       h4(ng-if="business.street_address") {{business.street_address + " " + business.locality }}
+    //-       p(ng-if="business.phone"){{business.phone}}
+    //-       p(ng-if="business.tel") {{business.tel}}
