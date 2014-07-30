@@ -27,7 +27,7 @@ angular.module('app.modules.tabs.items', [
         controller: "ItemCtrl"
 
   .state "tab.items-menu",
-    url: '/items/menu/:businessId'
+    url: '/items/menu/:menu_id'
     views:
       "tab-items":
         templateUrl: "js/modules/states/menu/menu.html"

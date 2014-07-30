@@ -27,7 +27,7 @@ angular.module('app.modules.tabs.menus', [
           controller: "ItemCtrl"
 
     .state "tab.menus-menu",
-      url: '/menus/menu/:businessId'
+      url: '/menus/menu/:menu_id'
       views:
         "tab-nearby":
           templateUrl: "js/modules/states/menu/menu.html"

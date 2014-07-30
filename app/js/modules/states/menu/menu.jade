@@ -1,4 +1,4 @@
-ion-view(title="Business Name")
+ion-view(title="{{menu.name}}")
   ion-content.bg-grey
     div.button-bar
       a.button.button-positive.icon.ion-ios7-telephone(ng-click="callBusiness()")
@@ -10,11 +10,11 @@ ion-view(title="Business Name")
       ion-item
         div.menu-banner
           div.menu-banner-right
-            h2 {{business.name}} Name
+            h2 {{menu.name}} Name
             h4 Location
-            h4 {{business.street_address + " " + business.locality }}
-            h4 {{business.phone}}
-            i.icon.ion-navigate(style="color:grey;") {{business.dist}}m
+            h4 {{menu.street_address + " " + menu.locality }}
+            h4 {{menu.phone}}
+            i.icon.ion-navigate(style="color:grey;") {{menu.dist}}m
           div.menu-banner-left
             iframe(src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d6306.533204574925!2d-122.4091305!3d37.78379139999996!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1406251064525" width="50%" height="200px" frameborder="0" style="border:0")
 
