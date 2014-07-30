@@ -11,8 +11,8 @@ ion-view(hide-nav-bar="true" id="places")
 
   ion-content(class="has-header has-header")
     ion-list
-      ion-item(ng-repeat="location in locations" type="item-text-wrap" ng-click="selectLocation(location)")
-
+      ion-item.item-avatar(ng-repeat="location in locations" type="item-text-wrap" ng-click="selectLocation(location)")
+        img(ng-src="{{location.photos[0].getUrl({'maxWidth': 65, 'maxHeight': 65})}}")
         h2 {{location.name}}
         //- h4 {{location.vicinity}}
 
