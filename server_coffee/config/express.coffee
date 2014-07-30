@@ -16,7 +16,7 @@ path = require('path')
 config = require('./environment')
 passport = require('passport')
 session = require('express-session')
-mongoStore = require('connect-mongo')(session)
+
 
 module.exports = (app)->
   env = app.get('env')
@@ -37,15 +37,16 @@ module.exports = (app)->
 
   # // Persist sessions with mongoStore
   # // We need to enable sessions for passport twitter because its an oauth 1.0 strategy
-  app.use(session({
-    secret: config.secrets.session,
-    store: new mongoStore({
-      url: config.mongo.uri,
-      collection: 'sessions'
-    }, () ->
-        console.log('db connection open' )
-    )
-  }))
+  # We need to configure the session store with our auth DB
+  # app.use(session({
+  #   secret: config.secrets.session,
+  #   store: new mongoStore({
+  #     url: config.mongo.uri,
+  #     collection: 'sessions'
+  #   }, () ->
+  #       console.log('db connection open' )
+  #   )
+  # }))
 
   if 'production' is env
     app.use(favicon(path.join(config.root, 'public', 'favicon.ico')))
