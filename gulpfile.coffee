@@ -174,6 +174,8 @@ gulp.task 'clean', ->
     .pipe(clean(force: true))
   gulp.src('run', read: false)
     .pipe(clean(force: true))
+  gulp.src('import', read: false)
+    .pipe(clean(force: true))
 
 
 gulp.task 'bower:install', shell.task('bower install')
