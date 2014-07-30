@@ -12,7 +12,7 @@ angular.module('app.modules.tabs', [
       url: "/tab"
       abstract: true
       templateUrl: "js/modules/tabs/tabs.html"
-
+    
 
     # if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise "/tab/items"

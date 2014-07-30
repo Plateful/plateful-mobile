@@ -18,7 +18,8 @@
     "angular-google-maps": "~1.1.8",
     "lodash": "~2.4.1",
     "restangular": "~1.4.0",
-    "ion-google-place": "~0.0.1"
+    "ion-google-place": "~0.0.1",
+    "angularjs-google-places": "~0.1.0"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.17"

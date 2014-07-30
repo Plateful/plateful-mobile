@@ -5,6 +5,7 @@ app = angular.module("app", [
   # "ngCordova"
   "restangular"
   "ngAnimate"
+  'ngGPlaces'  
   "fx.animations"
   "google-maps"
   "ion-google-place"

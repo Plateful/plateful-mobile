@@ -16,10 +16,11 @@ module.exports.applyRoutes = (app)->
 
   # Insert routes below
 
-
   Reviews = express.Router()
   Items = express.Router()
   Menus = express.Router()
+
+
 
 
   Items.get('/', Item.index)
@@ -41,7 +42,6 @@ module.exports.applyRoutes = (app)->
   Menus.patch('/:id', Menu.update)
   Menus.delete('/:id', Menu.destroy)
 
-
   Reviews.get('/', Review.index)
   Reviews.get('/business/:menu_id', Review.getByMenu)
   Reviews.get('/user/:user_id', Review.getByUser)
@@ -51,8 +51,6 @@ module.exports.applyRoutes = (app)->
   Reviews.put('/:id', Review.update)
   Reviews.patch('/:id', Review.update)
   Reviews.delete('/:id', Review.destroy)
-
-
 
 
   app.use('/api/v1/reviews', Reviews)

@@ -1,8 +1,6 @@
 db = require('../config/neo4j').db
 _ = require('underscore')
 
-
-
 ###### HERE we will take the passed in data and store it in NEO4J
 # Format the data before passing it into NEO4J
 # This File is being used by the api/menus/show route (controller.show)

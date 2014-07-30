@@ -180,4 +180,23 @@ a.menu-card .item.item-divider{
   height: 100%;
 }
 
+.ion-google-place-container{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 20;
+    display: none;
+
+}
+
+
+input.ion-google-place[readonly]{
+    background-color: transparent;
+    padding: 5px;
+
+}
+
+
 // .angular-google-map-container { height: 400px; width:50%; }
