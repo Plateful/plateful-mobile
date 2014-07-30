@@ -2,8 +2,5 @@
 
 #  Development specific configuration
 #  ==================================
-module.exports =
-  # MongoDB connection options
-  mongo: {
-    uri: 'mongodb://localhost/tester-dev'
-  }
+module.exports = {}
+  # Dev environment config
