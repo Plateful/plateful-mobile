@@ -11,18 +11,17 @@ Review = require('./controllers/review.controller')
 
 module.exports.applyRoutes = (app)->
 
+  # Enable all CORS Requests. Needs revising later.
+  # For more configuration options: https://www.npmjs.org/package/cors
   app.use(cors())
   app.use(busboy({ immediate: true }))
 
-  # Insert routes below
-
+  # Define route names below
   Reviews = express.Router()
   Items = express.Router()
   Menus = express.Router()
 
-
-
-
+  # Item routes
   Items.get('/', Item.index)
   Items.get('/business/:menu_id', Item.getByMenu)
   Items.post('/location', Item.getByLocation)
@@ -33,7 +32,7 @@ module.exports.applyRoutes = (app)->
   Items.patch('/:id', Item.update)
   Items.delete('/:id', Item.destroy)
 
-
+  # Menu routes
   Menus.get('/', Menu.index)
   Menus.get('/:id', Menu.show)
   Menus.post('/location', Menu.getByLocation)
@@ -42,6 +41,7 @@ module.exports.applyRoutes = (app)->
   Menus.patch('/:id', Menu.update)
   Menus.delete('/:id', Menu.destroy)
 
+  # Review routes
   Reviews.get('/', Review.index)
   Reviews.get('/business/:menu_id', Review.getByMenu)
   Reviews.get('/user/:user_id', Review.getByUser)
@@ -52,7 +52,7 @@ module.exports.applyRoutes = (app)->
   Reviews.patch('/:id', Review.update)
   Reviews.delete('/:id', Review.destroy)
 
-
+  # Declare app routes
   app.use('/api/v1/reviews', Reviews)
   app.use('/api/v1/items', Items)
   app.use('/api/v1/menus', Menus)
@@ -61,7 +61,7 @@ module.exports.applyRoutes = (app)->
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')
     .get(errors[404])
 
-  #  All other routes should redirect to the index.html
+  # All other routes should redirect to the index.html
   app.route('/*')
     .get( (req, res)->
       res.sendfile(app.get('appPath') + '/index.html')
