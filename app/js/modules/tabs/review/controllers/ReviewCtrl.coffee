@@ -12,27 +12,27 @@ angular.module('app.modules.tabs.review.controllers', [])
 .controller 'ReviewCtrl', [
   '$scope'
   'CreateReview'
-  'Business'
-  ($scope, CreateReview, Business)->
+  'Menu'
+  ($scope, CreateReview, Menu)->
     # window.currLocation from the background Geo Location
     $scope.locate = window.currLocation.coords
 
-    # set the data to pass into the Business Service
-    #  Business service takes (data, callback, searchValue)
+    # set the data to pass into the Menu Service
+    #  Menu service takes (data, callback, searchValue)
     LocationData = {lat: $scope.locate.latitude,lng: $scope.locate.longitude}
-    Business.getByLocation(LocationData, (newData, key)->
+    Menu.getByLocation(LocationData, (newData, key)->
       console.log newData
       $scope.nearbyFilter = key
-      $scope.businesses = newData
+      $scope.menus = newData
     )
     $scope.newSearch = (nearbyFilter)->
       # in order to reset the cache filter
       # set the search filter to "empty" if empty
       nearbyFilter = nearbyFilter or "empty"
 
-      Business.getByLocation(LocationData, (newData, key)->
+      Menu.getByLocation(LocationData, (newData, key)->
         $scope.nearbyFilter = key
-        $scope.businesses = newData
+        $scope.menus = newData
       , nearbyFilter)
 ]
 
@@ -42,13 +42,13 @@ angular.module('app.modules.tabs.review.controllers', [])
   'MenuItem'
   '$stateParams'
   ($scope, CreateReview, MenuItem, $stateParams)->
-    $scope.businessId = $stateParams.businessId
-    CreateReview.set('business', $scope.businessId)
+    $scope.menu_id = $stateParams.menu_id
+    CreateReview.set('menu', $scope.menu_id)
     $scope.review = CreateReview.get()
-    Business.find($scope.businessId)
+    Menu.find($scope.menuId)
       .success((data) ->
         console.log "neo----", data[0][1]
-        $scope.business = data[0][0]
+        $scope.menu = data[0][0]
         if Array.isArray(data[0][1])
           $scope.items = data[0][1]
           console.log $scope.items
@@ -71,16 +71,16 @@ angular.module('app.modules.tabs.review.controllers', [])
   'CreateReview'
   '$stateParams'
   'MenuItem'
-  'Business'
+  'Menu'
   'Review'
   'ServerUrl'
-  ($scope, CreateReview, $stateParams, MenuItem, Business, Review, ServerUrl)->
+  ($scope, CreateReview, $stateParams, MenuItem, Menu, Review, ServerUrl)->
     $scope.itemId = $stateParams.itemId
     CreateReview.set('item_id', $scope.itemId)
     $scope.review = CreateReview.get()
-    Business.find(CreateReview.get('business'))
+    Menu.find(CreateReview.get('menu'))
       .success (data)->
-        $scope.business = data
+        $scope.menu = data
     MenuItem.find($scope.itemId)
       .success (data)->
         $scope.item = data
@@ -116,7 +116,7 @@ angular.module('app.modules.tabs.review.controllers', [])
       # options.mimeType = "text/plain"
 
       params = {}
-      params.business = CreateReview.get('business')
+      params.menu = CreateReview.get('menu')
       params.rating = CreateReview.get('rating')
       # params.value2 = "param";
 
@@ -160,7 +160,7 @@ angular.module('app.modules.tabs.review.controllers', [])
 #     val2: "some other value"
 #
 #   options.params = params
-#   # params.business = CreateReview.get('business')
+#   # params.menu = CreateReview.get('menu')
 #   # params.rating = CreateReview.get('rating')
 #   # params.value2 = "param";
 #

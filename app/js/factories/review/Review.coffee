@@ -4,8 +4,8 @@ angular.module('app.factory.review', [])
   Review = Rest.all('reviews')
   find: (id)->
     Rest.one('reviews', id)
-  getByBusiness: (business_id)->
-    Review.one('business', business_id)
+  getByMenu: (menu_id)->
+    Review.one('menu', menu_id)
   getByUser: (user_id)->
     Review.one('user', user_id)
   getByItemId: (item_id) ->

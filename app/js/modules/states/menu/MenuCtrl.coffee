@@ -4,13 +4,13 @@ angular.module('app.modules.states.menu')
   '$rootScope'
   '$scope'
   '$stateParams'
-  'Business'
+  'Menu'
   'MenuItem'
   '$ionicModal'
   '$ionicLoading'
   '$compile'
-  ($rootScope, $scope, $stateParams, Business, MenuItem, $ionicModal, $ionicLoading, $compile) ->
-    $scope.businessId = $stateParams.businessId
+  ($rootScope, $scope, $stateParams, Menu, MenuItem, $ionicModal, $ionicLoading, $compile) ->
+    $scope.menu_id = $stateParams.menu_id
     $scope.locate = window.currLocation.coords
     $scope.images = [
       'http://www.listing99.com/images/showcase/1400572578_Dining-512.png',
@@ -39,13 +39,13 @@ angular.module('app.modules.states.menu')
 
 
     ###### Initiate Menu call
-    Business.find($scope.businessId).then (data)->
+    Menu.find($scope.menu_id).then (data)->
       console.log data
-      $scope.business = data
+      $scope.menu = data
       from = new google.maps.LatLng($scope.locate.latitude, $scope.locate.longitude)
       to   = new google.maps.LatLng(data.lat, data.long)
       dist = google.maps.geometry.spherical.computeDistanceBetween(from, to) * 0.000621371192
-      $scope.business.dist = dist - dist % 0.001
+      $scope.menu.dist = dist - dist % 0.001
 
     ###### Modal for creating a new Item for the Menu
 

@@ -73,8 +73,11 @@ angular.module('ngPlaces', [])
 
                   MenusData.set(data)
                   console.log data
-                  scope.locations = data
-                  # )
+                  scope.$apply(()->
+                    scope.locations = data
+                    console.log data
+                  )
+
                 )
 
               # the lines below are for using the directve with google geocoder

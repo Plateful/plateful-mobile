@@ -3,15 +3,15 @@ angular.module('app.modules.tabs.menus.controllers', [])
 
 .controller( 'MenusCtrl', [
   '$scope'
-  'Business'
+  'Menu'
   '$timeout'
   '$rootScope'
   '$document'
   'ngGPlacesAPI'
-  ($scope, Business, $timeout, $rootScope, $document, ngGPlacesAPI)->
+  ($scope, Menu, $timeout, $rootScope, $document, ngGPlacesAPI)->
     # window.currLocation from the background Geo Location
     $scope.locate = window.currLocation.coords
-    $scope.locations = []
+    # $scope.locations = []
     geocoder = new google.maps.Geocoder()
     searchEventTimeout = undefined
 
@@ -29,22 +29,22 @@ angular.module('app.modules.tabs.menus.controllers', [])
       )
 
 
-    # set the data to pass into the Business Service
+    # set the data to pass into the Menu Service
 
-    #  Business service takes (data, callback, searchValue)
+    #  Menu service takes (data, callback, searchValue)
     # LocationData = {lat: $scope.locate.latitude,lng: $scope.locate.longitude}
-    # Business.getByLocation(LocationData, (newData, key)->
+    # Menu.getByLocation(LocationData, (newData, key)->
     #   console.log newData
     #   $scope.menusFilter = key
-    #   $scope.businesses = newData
+    #   $scope.Menus = newData
     # )
     # $scope.newSearch = (nearbyFilter)->
     #   # in order to reset the cache filter
     #   # set the search filter to "empty" if empty
     #   menusFilter = menusFilter or "empty"
     #
-    #   Business.getByLocation(LocationData, (newData, key)->
+    #   Menu.getByLocation(LocationData, (newData, key)->
     #     $scope.menusFilter = key
-    #     $scope.businesses = newData
+    #     $scope.Menus = newData
     #   , menusFilter)
 ])
