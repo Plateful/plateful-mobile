@@ -1,4 +1,5 @@
 # Features
+For more detailed information please visit the project [wiki page](https://github.com/Clurtchio/clurtch/wiki).
 
 * Application can be run in a local http server, or emulated/released to Android/iOS
 * A lot of useful gulp tasks, like:
@@ -28,6 +29,8 @@ npm install # or sudo npm install if you need permission to make system changes
 npm install -g gulp
 bower install
 brew install imagemagick # or `apt-get install imagemagick`, if you're on linux
+brew install neo4j # see wiki for more info on setting up Neo4j
+neo4j start
 
 gulp # build www/ directory and run http server on 4440 port
 ```
