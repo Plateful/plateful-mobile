@@ -47,8 +47,8 @@ Item.prototype.findByUser = (user_id, callback)->
 Item.prototype.findByLocation = (data, callback)->
   # The code below is a snippet for the eventual query to neo
 
-  query = ""
   params = ""
+  query = ""
   @query( query, params, (err, result)->
 
     callback(err, result.data)

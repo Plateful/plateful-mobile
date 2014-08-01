@@ -10,7 +10,7 @@ angular.module('app.modules.tabs.menus', [
       views:
         "tab-menus":
           templateUrl: "js/modules/tabs/menus/views/menus.html"
-          controller: "MenusCtrl"
+          controller: "MenusCtrl as vm"
 
     .state "tab.menus-map",
       url: "/menus/map"
@@ -27,7 +27,7 @@ angular.module('app.modules.tabs.menus', [
           controller: "ItemCtrl"
 
     .state "tab.menus-menu",
-      url: '/menus/menu/:businessId'
+      url: '/menus/menu/:menu_id'
       views:
         "tab-nearby":
           templateUrl: "js/modules/states/menu/menu.html"

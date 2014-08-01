@@ -1,17 +1,24 @@
-angular.module('app.factory.review', [])
-
-.factory 'Review', ['Restangular', (Rest)->
-  Review = Rest.all('reviews')
+###*
+ * @name  Review   Factory
+ * @param {Service} Restangular RestangularServiceProvider
+###
+Review = (Restangular)->
+  Rest = Restangular.all('reviews')
   find: (id)->
-    Rest.one('reviews', id)
-  getByBusiness: (business_id)->
-    Review.one('business', business_id)
+    Restangular.one('reviews', id)
+  getByMenu: (menu_id)->
+    Rest.one('menu', menu_id)
   getByUser: (user_id)->
-    Review.one('user', user_id)
+    Rest.one('user', user_id)
   getByItemId: (item_id) ->
-    Review.one('item', item_id)
+    Rest.one('item', item_id)
   create: (data)->
-    Review.post( data )
+    Rest.post( data )
   destroy: (id)->
-    Rest.one('review', id).remove()
-]
+    Restangular.one('review', id).remove()
+
+Review
+  .$inject = ['Restangular']
+angular
+  .module('app.factory.review', [])
+  .factory('Review', Review)

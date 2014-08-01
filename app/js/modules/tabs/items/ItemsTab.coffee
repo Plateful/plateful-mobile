@@ -1,6 +1,6 @@
-angular.module('app.modules.tabs.items', [
-  'app.modules.tabs.items.controllers'
-  ])
+angular.module('app.modules.tabs.items', [])
+  # 'app.modules.tabs.items.controllers'
+
 
 .config ($stateProvider, $urlRouterProvider) ->
   $stateProvider
@@ -10,7 +10,7 @@ angular.module('app.modules.tabs.items', [
     views:
       "tab-items":
         templateUrl: "js/modules/tabs/items/views/items.html"
-        controller: "ItemsCtrl"
+        controller: "ItemsCtrl as vm"                  
 
   .state "tab.items-map",
     url: "/items/map"
@@ -27,7 +27,7 @@ angular.module('app.modules.tabs.items', [
         controller: "ItemCtrl"
 
   .state "tab.items-menu",
-    url: '/items/menu/:businessId'
+    url: '/items/menu/:menu_id'
     views:
       "tab-items":
         templateUrl: "js/modules/states/menu/menu.html"

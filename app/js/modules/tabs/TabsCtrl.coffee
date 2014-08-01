@@ -1,6 +1,13 @@
-angular.module('app.modules.tabs')
+(->
+  TabsCtrl = ($scope)->
 
+    # Logic goes here -->
 
-.controller 'TabsCtrl', [
-  ()->
-]
+    return
+
+  TabsCtrl
+    .$inject = ['$scope']
+  angular
+    .module('app.modules.tabs')
+    .controller('TabsCtrl', TabsCtrl)
+)()

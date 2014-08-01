@@ -2,17 +2,11 @@
 #  * Main application file
 #  */
 
-
-
 # // Set default node environment to development
 process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
 express = require('express')
-mongoose = require('mongoose')
 config = require('./config/environment')
-
-# // Connect to database
-# mongoose.connect(config.mongo.uri, config.mongo.options);
 
 # // Populate DB with sample data
 if config.seedDB then require('./config/seed')
@@ -32,8 +26,6 @@ require('./config/express')(app)
 require('./routes').applyRoutes(app)
 
 require( './config/api/locu' ).testApi()
-
-
 
 # // Start server
 server.listen(config.port, config.ip, ()->

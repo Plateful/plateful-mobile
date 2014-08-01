@@ -5,21 +5,22 @@ module.exports = (config) ->
 
     # list of files / patterns to load in the browser
     files: [
+      "http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"
       "www/js/vendor.js"
       "assets/components/angular-mocks/angular-mocks.js"
 
-      "www/templates/**/*.html"
+      # "www/templates/**/*.html"
 
       "test/unit/tests-config.coffee"
 
-      # "www/js/app.js"
+
       # This is the copy from gulpfile.coffee - you need to keep it up to date.
-      'app/js/bootstrap.coffee'
-      'app/js/app_config.coffee'
+      'app/js/config/bootstrap.coffee'
+      'app/js/App.coffee'
       'app/js/*/**/*.coffee'
-      'app/js/routes.coffee'
-      'app/js/app_run.coffee'
-      
+      'app/js/config/app_run.coffee'
+      "www/js/**/*.js"
+
       "test/unit/helpers/**/*.coffee"
       "test/unit/**/*.coffee"
     ]
@@ -42,11 +43,11 @@ module.exports = (config) ->
 
     preprocessors:
       '**/*.coffee': ['coffee']
-      'www/templates/**/*.html': ['ng-html2js']
+      'www/**/*.html': ['ng-html2js']
 
     ngHtml2JsPreprocessor:
       stripPrefix: 'www/'
-      moduleName: 'ionicstarter-templates'
+      moduleName: 'app'
 
     coffeePreprocessor:
       options:

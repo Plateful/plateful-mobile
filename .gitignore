@@ -1,4 +1,5 @@
 .DS_Store
+server
 run
 import
 platforms/^.*
@@ -9,3 +10,4 @@ dist
 /keys
 .envrc
 npm-debug.log
+server
