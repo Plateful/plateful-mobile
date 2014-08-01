@@ -1,65 +1,92 @@
-angular.module('app.modules.states.map.controllers')
+(->
+  MenusMapCtrl = ($scope, $ionicLoading, $compile, MenusData)->
 
+    @rand = Math.random()
 
-.controller('MenusMapCtrl', ($scope, $ionicLoading, $compile, MenusData)->
+    @locations = MenusData.get()
+    @locate = window.currLocation.coords
 
-  $scope.rand = Math.random()
-  console.log $scope.rand
-  $scope.locations = MenusData.get()
-  initialize = ()->
-    $scope.locate = window.currLocation.coords
+    initialize = ()=>
 
-    myLatlng = new google.maps.LatLng($scope.locate.latitude,$scope.locate.longitude)
+      myLatlng = new google.maps.LatLng(@locate.latitude,@locate.longitude)
 
-    mapOptions =
-      center: myLatlng,
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      mapOptions =
+        center: myLatlng,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
 
-    map = new google.maps.Map(document.getElementById("nearbyMap"), mapOptions)
+      map = new google.maps.Map(document.getElementById("nearbyMap"), mapOptions)
 
-    # //Marker + infowindow + angularjs compiled ng-click
-    contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>"
-    compiled = $compile(contentString)($scope)
+      # //Marker + infowindow + angularjs compiled ng-click
+      #
+      contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>"
 
-    infowindow = new google.maps.InfoWindow({
-      content: compiled[0]
-    })
+      compiled = $compile(contentString)(@)
 
-
-    for item in $scope.locations
-      loc = new google.maps.LatLng(item.geometry.location.k, item.geometry.location.B)
-      marker = new google.maps.Marker({
-        position: loc,
-        map: map,
-        title: item.name
+      infowindow = new google.maps.InfoWindow({
+        content: compiled[0]
       })
-      google.maps.event.addListener(marker, 'click', ()->
-        infowindow.open(map,marker)
-      )
 
-    $scope.map = map
+      for item in @locations
 
-  ionic.Platform.ready(initialize)
+        loc = new google.maps.LatLng(item.geometry.location.k, item.geometry.location.B)
 
-  $scope.centerOnMe = ()->
-    unless $scope.map then return
+        marker = new google.maps.Marker({
 
-    $ionicLoading.show({
-      content: 'Getting current location...',
-      showBackdrop: false
-    })
+          position: loc,
+          map: map,
+          title: item.name
 
-    navigator.geolocation.getCurrentPosition( (pos)->
-      $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude))
-      $ionicLoading.hide()
-      # $scope.loading.hide()
-    , (error)->
-      alert('Unable to get location: ' + error.message)
-    )
+        })
 
 
-  $scope.clickTest = ()->
-    alert('Example of infowindow with ng-click')
+        google.maps.event.addListener(marker, 'click', ()->
 
-)
+
+          infowindow.open(map,marker)
+
+        )
+
+      @map = map
+
+
+    ionic.Platform.ready(initialize)
+
+
+    @centerOnMe = ()->
+
+
+      unless @map then return
+
+
+      $ionicLoading.show({
+
+        content: 'Getting current location...',
+        showBackdrop: false
+
+      })
+
+      navigator
+        .geolocation
+        .getCurrentPosition( (pos)=>
+
+          @map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude))
+          $ionicLoading.hide()
+        # $scope.loading.hide()
+        , (error)->
+
+          alert('Unable to get location: ' + error.message)
+
+        )
+
+    @clickTest = ()->
+      alert('Example of infowindow with ng-click')
+
+    return
+
+  MenusMapCtrl
+    .$inject = ['$scope', '$ionicLoading', '$compile', 'MenusData']
+  angular
+    .module('app.modules.states.map.controllers')
+    .controller('MenusMapCtrl', MenusMapCtrl)
+)()

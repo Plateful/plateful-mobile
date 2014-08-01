@@ -1,14 +1,20 @@
-angular.module('app.factory.photo', [])
-
-.factory 'Photo', ['Restangular', (Rest)->
-  Photo = Rest.all('photos')
+###*
+ * @name Photo Factory
+ * @param {Restangular} Restangular RestangularServiceProvider
+###
+Photo = (Restangular)->
+  Rest = Restangular.all('photos')
   find: (id)->
-    # api/photos
-    Rest.one('photos', id)
+    Restangular.one('photos', id)
   getUserAlbum: (user_id)->
-    Photo.one('user', user_id)
+    Rest.one('user', user_id)
   getItemGallery: (item_id)->
-    Photo.one('item', item_id)
+    Rest.one('item', item_id)
   getByReview: (review_id)->
-    Photo.one('review', review_id)
-]
+    Rest.one('review', review_id)
+
+Photo
+  .$inject = ['Restangular']
+angular
+  .module('app.factory.photo', [])
+  .factory('Photo', Photo)
