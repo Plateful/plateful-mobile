@@ -11,7 +11,7 @@
 
     ###################
     # functions
-    #
+
     getMenuItems = (filter) =>
 
       MenuItem.getByLocation @locationData, null
