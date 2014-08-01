@@ -10,7 +10,7 @@ angular.module('app.modules.tabs.menus', [
       views:
         "tab-menus":
           templateUrl: "js/modules/tabs/menus/views/menus.html"
-          controller: "MenusCtrl"
+          controller: "MenusCtrl as vm"
 
     .state "tab.menus-map",
       url: "/menus/map"

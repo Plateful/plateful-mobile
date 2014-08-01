@@ -1,7 +1,14 @@
-angular.module('app.modules.tabs.settings.controllers', [])
+(->
+  SettingsCtrl = ($scope)->
 
-.controller 'SettingsCtrl', [
-  '$scope'
-  ($scope)->
+    # Logic goes here -->
 
-]
+    return
+
+  SettingsCtrl
+    .$inject = ['$scope']
+  angular
+    .module('app.modules.tabs.settings.controllers', [])
+    .controller('SettingsCtrl', SettingsCtrl)
+
+)()

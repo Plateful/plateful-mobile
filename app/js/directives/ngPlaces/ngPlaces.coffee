@@ -73,10 +73,11 @@ angular.module('ngPlaces', [])
 
                   MenusData.set(data)
                   console.log data
-                  scope.$apply(()->
-                    scope.locations = data
-                    console.log data
-                  )
+                  scope.locations = data
+                  scope.vm.locations = data
+                  # scope.$apply(()->
+                  #   console.log data
+                  # )
 
                 )
 
