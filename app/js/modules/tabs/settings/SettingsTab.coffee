@@ -12,7 +12,7 @@ angular.module('app.modules.tabs.settings', [
           controller: 'SettingsCtrl'
 
     .state 'tab.account',
-      url: '/account'
+      url: '/settings/account'
       views:
         'tab-settings':
           templateUrl: 'js/modules/tabs/settings/views/account.html'
