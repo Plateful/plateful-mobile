@@ -11,14 +11,33 @@ ion-view(hide-nav-bar="true")
   ion-content.bg-grey
     ng-single-select(options="options")
     h4 {{vm.yolo}}
-    a.menu-card(ng-repeat="item in vm.items | filter:vm.itemsFilter" href="#/tab/items/item/{{item.id}}" ng-click="vm.storeItem(item)")
-      div.menu-card-content
+      //- ion-list
+      //- div.item.item-light.item-image(ng-repeat="item in vm.items | filter:vm.itemsFilter" href="#/tab/items/item/{{item.id}}" ng-click="vm.storeItem(item)")
+      //-   //- div.menu-card-content
+      //-   img(src='{{item.image_url}}')
+      //-   div.footer
+      //-     div
+      //-       {{item.name | limitTo:30 }}
+      //-     div.text-left.assertive {{item.stars}}
+      //-     div.text-right.energized (250)
+      //-     br
+      //-     br
+    div(class="list card" ng-repeat="item in vm.items | filter:vm.itemsFilter" href="#/tab/items/item/{{item.id}}" ng-click="vm.storeItem(item)")
+
+      //- div(class="item item-avatar")
+      //-   h2 Pretty Hate Machine
+      //-   p Nine Inch Nails
+
+
+      div(class="item item-image")
         img(src='{{item.image_url}}')
-        div.menu-card-footer
-          div
-            i.text-right.icon.ion-navigate(style="color:grey;") {{item.dist}}m
-            {{item.name | limitTo:30 }}
-          div.text-left.assertive {{item.stars}}
-          div.text-right.energized (250)
-          br
-          br
+
+
+
+      a(class="item" href="#")
+        div {{item.name | limitTo:30 }}
+
+        div.text-left.assertive {{item.stars}}
+        div.text-left.energized (250)
+        span.text-right {{item.dist}}
+          i.icon.ion-navigate(style="color:grey;")

@@ -33,9 +33,20 @@ window.GLOBALS  ?= {}
 window._RIPPLE  = false
 window._CORDOVA = !location.hostname # on cordova, location.hostname is empty
 ionic.Platform.ready ->
-  console.log 'ionic.Platform is ready!' unless GLOBALS.ENV == "test"
+  # console.log 'ionic.Platform is ready!' unless GLOBALS.ENV == "test"
   window._RIPPLE  = window.tinyHippos != undefined
   window._CORDOVA = window.cordova != undefined
+  window.currLocation = {
+    coords: {
+      accuracy: 30
+      altitude: null
+      altitudeAccuracy: null
+      heading: null
+      latitude: 37.783692599999995
+      longitude: -122.409235
+      speed: null
+    }
+  }
   window.navigator.geolocation.getCurrentPosition((location)->
     window.currLocation = location
     console.log('Location from Phonegap', location)

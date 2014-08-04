@@ -1,13 +1,25 @@
 (->
   ItemsCtrl = ($scope, $ionicModal, MenuItem, Menu, ImagesService) ->
-    @locate = window.currLocation.coords
 
-    @images = ImagesService.get()
+    # Initialize $scope as @
+    @initialize = =>
+      @locate = window.currLocation.coords
 
-    @locationData = {
-      lat: @locate.latitude
-      lng: @locate.longitude
-    }
+      @images = ImagesService.get()
+
+      @locationData = {
+        lat: @locate.latitude
+        lng: @locate.longitude
+      }
+
+      @querySearch = querySearch
+
+      getMenuItems(null).then (data) =>
+        @items = data
+        return
+
+      @closeModal = closeModal
+      @openModal = openModal
 
     ###################
     # functions
@@ -23,7 +35,7 @@
       MenuItem
         .getByLocation(@locationData, itemsFilter)
         .then (data) =>
-          $scope.items = newData
+          @items = newData
           return
 
     initializeModal = =>
@@ -46,20 +58,8 @@
       @filterModal.hide()
 
 
-    ##################
-    # $scope
 
-
-    @querySearch = querySearch
-
-    getMenuItems(null).then (data) =>
-      @items = data
-      return
-
-    @closeModal = closeModal
-    @openModal = openModal
-
-
+    @initialize()
     return
   ItemsCtrl.$inject = [
     "$scope"

@@ -1,6 +1,6 @@
 (->
   MapCtrl = ($scope, $ionicLoading, $compile)->
-    initialize = ()=>
+    @initialize = ()=>
       map
       service
       infowindow
@@ -65,7 +65,7 @@
     ###
      * Invoke initialize on ionic platform.ready()
     ###
-    ionic.Platform.ready(initialize)
+    ionic.Platform.ready(@initialize)
 
     # Center on my current location
     $scope.centerOnMe = ()=>

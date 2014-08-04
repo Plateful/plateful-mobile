@@ -8,6 +8,27 @@
   ###
   MenusCtrl = ($scope, Menu, $timeout, $document, ngGPlacesAPI )->
 
+    @initialize = =>
+      ##############
+      # $scope
+
+      @locate = window.currLocation.coords
+
+      # geocoder = new google.maps.Geocoder()
+
+      @searchEventTimeout = undefined
+
+      @searchInputElement = angular.element($document.find('#searchQuery'))
+
+      @searchQuery = {vicinity: 'San Francisco', latitude:@locate.latitude, longitude:@locate.longitude}
+
+      googleSearch(@searchQuery)
+        .then (data)=>
+          console.log data
+          @locations = data
+          return
+
+
     ##############
     # functions
 
@@ -15,27 +36,7 @@
       ngGPlacesAPI
         .nearbySearch(query)
 
-    ##############
-    # $scope
-
-    @locate = window.currLocation.coords
-
-    # geocoder = new google.maps.Geocoder()
-
-    @searchEventTimeout = undefined
-
-    @searchInputElement = angular.element($document.find('#searchQuery'))
-
-    @searchQuery = {vicinity: 'San Francisco', latitude:@locate.latitude, longitude:@locate.longitude}
-
-
-
-    googleSearch(@searchQuery)
-      .then (data)=>
-        console.log data
-        @locations = data
-        return
-
+    @initialize()
     return
 
   MenusCtrl.$inject = ['$scope', 'Menu','$timeout','$document','ngGPlacesAPI']

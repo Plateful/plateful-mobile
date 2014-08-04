@@ -9,7 +9,7 @@ angular.module('app.modules.tabs.settings', [
       views:
         'tab-settings':
           templateUrl: 'js/modules/tabs/settings/views/settings.html'
-          controller: 'SettingsCtrl'
+          controller: 'SettingsCtrl as vm'
 
     .state 'tab.account',
       url: '/settings/account'
