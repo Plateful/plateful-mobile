@@ -14,8 +14,8 @@
     get: ()->
       Rest.getList()
     find: (id)->
-      return 15
-      # Restangular.one('items', id).get()
+      # return 15
+      Restangular.one('items', id).get()
     getByMenu: (menu_id)->
       Rest.one('menu', menu_id).get()
     getByUser: (user_id)->

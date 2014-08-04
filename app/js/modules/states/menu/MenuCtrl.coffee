@@ -1,9 +1,16 @@
 (->
 
   MenuCtrl = ($rootScope, $scope, $stateParams, Menu, MenuItem, $ionicModal, $ionicLoading, $compile, ImagesService) ->
-    @menu_id = $stateParams.menu_id
-    @locate = window.currLocation.coords
-    @images = ImagesService.get()
+
+    # Initialize Scope as @
+
+    @initialize = =>
+
+      @locate = window.currLocation.coords
+
+      @menu_id = $stateParams.menu_id
+
+      @images = ImagesService.get()
 
     ###### Initiate Menu call
     Menu
@@ -59,7 +66,7 @@
     @newItem = {}
 
 
-
+    @initialize()
     return
 
   addItemCtrl = ($rootScope, $scope, MenuItem)->

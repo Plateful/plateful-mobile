@@ -27,7 +27,7 @@ ionic.Platform.ready ->
 
 
 app.run ($rootScope, Auth, $window, $timeout, bGeo) ->
-  console.log 'Ionic app has just started (app.run)!' unless GLOBALS.ENV == "test"
+  # console.log 'Ionic app has just started (app.run)!' unless GLOBALS.ENV == "test"
   $rootScope.currentLocation = window.backgroundGeoLocation
   $rootScope.$apply()
     # bGeo.get()
