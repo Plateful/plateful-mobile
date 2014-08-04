@@ -1,0 +1,20 @@
+ion-view(title="Settings")
+  ion-content.bg-grey
+    ion-list
+      ion-item.item-divider
+      ion-item.item-icon-right(href="#/tab/account")
+        i.icon.ion-ios7-arrow-right
+        p Account
+      ion-item
+        p Settings
+
+      ion-item
+        p Collection
+
+      ion-item.item-divider
+
+      ion-item
+        p About Clurtch
+      ion-item
+        p Contact Clurtch
+    button.button.button-block.positive(ng-click="vm.openModal()") Login

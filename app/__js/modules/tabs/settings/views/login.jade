@@ -1,0 +1,25 @@
+//- div.modal
+//-   ion-header-bar
+//-     button.button.button-clear(ng-click="closeModal()") Cancel
+//-     h1.title Filters
+//-     button.button.button-clear(ng-click="searchFilter(distanceOptions, priceOptions)") Search
+//-   ion-content
+//-     h4 Distance
+//-       ng-single-select(options='distanceOptions')
+//-     h4 Price
+//-       ng-multi-select(options='priceOptions')
+div.modal
+  ion-header-bar.bar-positive
+    h1.title Login
+  ion-content
+    form(ng-submit="login()")
+      ion-list
+        label.item.item-input
+          span.input-label Username
+          input(type="text" ng-model="vm.username")
+
+        label.item.item-input
+          span.input-label Password
+          input(type="password" ng-model="vm.password")
+
+      button.button.button-positive.button-block(ng-click="vm.login(); vm.closeModal()") Login
