@@ -133,13 +133,13 @@ paths =
       # (f.e. bower components)
     ]
     bootstrap: [
-      'app/js/config/bootstrap.coffee'
+      'app/js/config/bootstrap.js'
     ]
     app: [
-      'app/js/App.coffee' # define application's angular module; add some native/global js variables
-      'app/js/*/**/*.coffee'  # include all angular submodules (like controllers, directives, services)
+      'app/js/App.js' # define application's angular module; add some native/global js variables
+      'app/js/*/**/*.js'  # include all angular submodules (like controllers, directives, services)
       # 'app/js/routes.coffee'  # app.config - routes
-      'app/js/config/app_run.coffee' # app.config; app.run
+      'app/js/config/app_run.js' # app.config; app.run
     ]
     tests: [
       'tests/**/*.coffee'
@@ -219,11 +219,11 @@ gulp.task 'scripts:vendor', ->
     gulp.src(paths.scripts[scriptsName])
       # .pipe(changed(destinations.scripts))
       # copy .coffee to www/ also, because sourcemap links to sources with relative path
-      # .pipe(gulp.dest(destinations.scripts))
-      .pipe(coffee({
+      .pipe(gulp.dest(destinations.scripts))
+      # .pipe(coffee({
         # sourcemaps arent ready for gulp-concat yet :/ lets wait with that
-        sourceMap: false
-      }))
+        # sourceMap: false
+      # }))
       .on("error", notify.onError((error) -> error.message))
       .pipe(concat("#{scriptsName}.js"))
       .pipe(gulp.dest(destinations.scripts))
