@@ -109,7 +109,7 @@ paths =
   assets: ['assets/**', '!assets/**/*.ejs']
   assets_ejs: ['assets/**/*.ejs']
   styles: ['app/css/**/*.scss']
-  server: ['server_coffee/**/*.coffee']
+  server: ['server/**/*.js']
   import: ['import_server/**/*.coffee']
   scripts:
     vendor: [
@@ -229,11 +229,11 @@ gulp.task 'scripts:vendor', ->
       .pipe(gulp.dest(destinations.scripts))
 
 
-gulp.task 'compile:server', ->
-  gulp.src(paths.server)
-    .pipe(coffee({sourceMap: false}))
-    .on("error", notify.onError((error)-> error.message))
-    .pipe(gulp.dest(destinations.server))
+# gulp.task 'compile:server', ->
+#   gulp.src(paths.server)
+#     # .pipe(coffee({sourceMap: false}))
+#     .on("error", notify.onError((error)-> error.message))
+#     .pipe(gulp.dest(destinations.server))
 gulp.task 'compile:import', ->
   gulp.src(paths.import)
     .pipe(coffee({sourceMap: false}))
@@ -253,7 +253,7 @@ gulp.task 'run:import', ->
   # )
 gulp.task 'run:server', ->
   nodemon(
-    script: "run/app.js",
+    script: "server/app.js",
     ext: 'html js',
     ignore: ['ignored.js']
   )
@@ -261,7 +261,7 @@ gulp.task 'run:server', ->
     console.log 'restarted!'
   )
 
-gulp.task 'build:server', ['compile:server', 'compile:import']
+gulp.task 'build:server', ['compile:import']
 
 gulp.task "scripts:cordova", ->
   gulp.src("assets/components/cordova/ng-cordova.js")
@@ -357,7 +357,7 @@ gulp.task 'watch', ->
   gulp.watch(paths.scripts.vendor, ['scripts:vendor'])
   gulp.watch(paths.styles, ['styles'])
   gulp.watch(paths.templates, ['templates'])
-  gulp.watch(paths.server, ['compile:server'])
+  # gulp.watch(paths.server, ['compile:server'])
 
   livereloadServer = livereload()
   gulp.watch(destinations.livereload).on 'change', (file) ->
