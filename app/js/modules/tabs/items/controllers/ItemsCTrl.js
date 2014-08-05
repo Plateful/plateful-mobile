@@ -1,61 +1,67 @@
 (function() {
-  (function() {
-    var ItemsCtrl;
-    ItemsCtrl = function($scope, $ionicModal, MenuItem, Menu, ImagesService) {
-      var closeModal, getMenuItems, initializeModal, openModal, querySearch;
-      this.initialize = (function(_this) {
-        return function() {
-          _this.locate = window.currLocation.coords;
-          _this.images = ImagesService.get();
-          _this.locationData = {
-            lat: _this.locate.latitude,
-            lng: _this.locate.longitude
-          };
-          _this.querySearch = querySearch;
-          getMenuItems(null).then(function(data) {
-            _this.items = data;
-          });
-          _this.closeModal = closeModal;
-          return _this.openModal = openModal;
-        };
-      })(this);
-      getMenuItems = (function(_this) {
-        return function(filter) {
-          return MenuItem.getByLocation(_this.locationData, null);
-        };
-      })(this);
-      querySearch = (function(_this) {
-        return function(itemsFilter) {
-          itemsFilter = itemsFilter || "empty";
-          return MenuItem.getByLocation(_this.locationData, itemsFilter).then(function(data) {
-            _this.items = newData;
-          });
-        };
-      })(this);
-      initializeModal = (function(_this) {
-        return function() {
-          return $ionicModal.fromTemplateUrl("js/modules/tabs/find/modals/filterModal.html", {
-            scope: $scope,
-            animation: "slide-in-up"
-          }).then(function(modal) {
-            _this.filterModal = modal;
-          });
-        };
-      })(this);
-      openModal = (function(_this) {
-        return function() {
-          return _this.filterModal.show();
-        };
-      })(this);
-      closeModal = (function(_this) {
-        return function() {
-          return _this.filterModal.hide();
-        };
-      })(this);
-      this.initialize();
-    };
-    ItemsCtrl.$inject = ["$scope", "$ionicModal", "MenuItem", "Menu", "ImagesService"];
-    angular.module("app").controller("ItemsCtrl", ItemsCtrl);
-  })();
+  var ItemsCtrl = function($scope, $ionicModal, MenuItem, Menu, ImagesService) {
 
-}).call(this);
+    var vm = this
+
+    vm.locate = window.currLocation.coords;
+    vm.images = ImagesService.get();
+    vm.querySearch = querySearch;
+    vm.closeModal = closeModal;
+    vm.openModal = openModal;
+
+    vm.locationData = {lat: vm.locate.latitude, lng: vm.locate.longitude };
+
+    getMenuItems(null)
+
+      .then(function(data) {
+
+        vm.items = data;
+
+      });
+
+    //////////////////
+
+    function getMenuItems(filter){
+
+      return MenuItem.getByLocation(vm.locationData, null);
+
+    }
+    function querySearch(itemsFilter){
+
+      itemsFilter = itemsFilter || "empty";
+
+      getMenuItems(itemsFilter)
+
+        .then(function(data) {
+
+          vm.items = newData;
+
+        });
+    }
+    function initializeModal(){
+
+      $ionicModal.fromTemplateUrl("js/modules/tabs/find/modals/filterModal.html", {
+        scope: $scope,
+        animation: "slide-in-up"
+      })
+      .then(function(modal) {
+        vm.filterModal = modal;
+      });
+    }
+    function openModal(){
+
+      vm.filterModal.show();
+
+    }
+    function closeModal(){
+
+      vm.filterModal.hide();
+
+    }
+  };
+  ItemsCtrl
+    .$inject = ["$scope", "$ionicModal", "MenuItem", "Menu", "ImagesService"];
+  angular
+    .module("app")
+    .controller("ItemsCtrl", ItemsCtrl);
+})();
