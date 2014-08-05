@@ -1,5 +1,5 @@
 (function() {
-  angular.module("app").service('Auth', function($http, PromiseFactory) {
+  function Auth($http, PromiseFactory){
     var Auth, USER_EMAIL_CACHE_KEY, USER_TOKEN_CACHE_KEY;
     USER_EMAIL_CACHE_KEY = "user_email";
     USER_TOKEN_CACHE_KEY = "user_token";
@@ -42,7 +42,10 @@
 
       return Auth;
 
-    })());
-  });
-
-}).call(this);
+  }
+  Auth
+    .$inect = ['$http', 'PromiseFactory']
+  angular
+    .module("app")
+    .service('Auth', Auth)
+})()
