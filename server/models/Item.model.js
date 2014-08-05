@@ -42,6 +42,7 @@ Item.prototype.findByUser = function(user_id, callback) {
 };
 
 Item.prototype.findByLocation = function(data, callback) {
+  // The code below is a snippet for the eventual query to neo.
   var params = "";
   var query = "";
   this.query(query, params, function(err, result) {

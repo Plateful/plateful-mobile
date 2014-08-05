@@ -1,3 +1,6 @@
+/**
+ * Main application routes
+ */
 var errors = require('./components/errors');
 var cors = require('cors');
 var busboy = require('connect-busboy');
@@ -7,6 +10,9 @@ var Menu = require('./controllers/menu.controller');
 var Review = require('./controllers/review.controller');
 
 module.exports.applyRoutes = function(app) {
+
+  // Enable all CORS Requests. Needs revising later.
+  // For more configuration options: https://www.npmjs.org/package/cors
   app.use(cors());
   app.use(busboy({
     immediate: true
@@ -53,10 +59,10 @@ module.exports.applyRoutes = function(app) {
   Reviews.patch('/:id', Review.update);
   Reviews.delete('/:id', Review.destroy);
 
-  // Page not found.
+  // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets)/*').get(errors[404]);
 
-  // Catchall.
+  // All other routes should redirect to index.html
   app.route('/*').get(function(req, res) {
     res.sendfile(app.get('appPath') + '/index.html');
   });

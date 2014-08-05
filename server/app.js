@@ -1,3 +1,7 @@
+/**
+ * Main application file
+ */
+
 // Set default node environment to development.
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -12,7 +16,16 @@ if (config.seedDB) {
 // Setup server.
 var app = express();
 var server = require('http').createServer(app);
+
+// configure socket.io
+// require('./config/socketio')(socketio);
+// var socketio = require('socket.io').listen(server);
+
+// Set config variables
 require('./config/express')(app);
+// app.use( require( './config/api/locu' ).testApi() )
+
+// Set app API routes
 require('./routes').applyRoutes(app);
 require('./config/api/locu').testApi();
 
