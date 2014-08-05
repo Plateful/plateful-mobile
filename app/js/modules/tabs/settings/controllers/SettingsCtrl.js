@@ -29,7 +29,13 @@
       vm.loginModal.hide();
     }
     function login(){
-      Auth.setAuthToken( vm.username, vm.password );
+
+      Restangular.all('users').all('login').post( vm.username, vm.password )
+        .then(function(err, result){
+          if (err) throw
+            Auth.setAuthToken( result.user.username, result.sessionsToken, result.user );
+        })
+
     }
 
   };
