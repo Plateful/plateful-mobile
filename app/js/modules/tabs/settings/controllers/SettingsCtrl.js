@@ -1,5 +1,5 @@
 (function() {
-  var SettingsCtrl = function($scope, $ionicModal, Auth) {
+  var SettingsCtrl = function($scope, $ionicModal) {
     var vm = this
 
     $ionicModal
@@ -29,18 +29,12 @@
       vm.loginModal.hide();
     }
     function login(){
-
-      Restangular.all('users').all('login').post( vm.username, vm.password )
-        .then(function(err, result){
-          if (err) throw
-            Auth.setAuthToken( result.user.username, result.sessionsToken, result.user );
-        })
-
+      // Auth.setAuthToken( vm.username, vm.password );
     }
 
   };
   SettingsCtrl
-    .$inject = ['$scope', '$ionicModal', 'Auth'];
+    .$inject = ['$scope', '$ionicModal'];
   angular
     .module('app.modules.tabs.settings.controllers', [])
     .controller('SettingsCtrl', SettingsCtrl);
