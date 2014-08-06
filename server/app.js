@@ -1,30 +1,38 @@
-(function() {
-  var app, config, exports, express, server;
+/**
+ * Main application file
+ */
 
-  process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+// Set default node environment to development.
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-  express = require('express');
+var express = require('express');
+var config = require('./config/environment');
 
-  config = require('./config/environment');
+// Populate DB with sample data.
+if (config.seedDB) {
+  require('./config/seed');
+}
 
-  if (config.seedDB) {
-    require('./config/seed');
-  }
+// Setup server.
+var app = express();
+var server = require('http').createServer(app);
 
-  app = express();
+// configure socket.io
+// require('./config/socketio')(socketio);
+// var socketio = require('socket.io').listen(server);
 
-  server = require('http').createServer(app);
+// Set config variables
+require('./config/express')(app);
+// app.use( require( './config/api/locu' ).testApi() )
 
-  require('./config/express')(app);
+// Set app API routes
+require('./routes').applyRoutes(app);
+require('./config/api/locu').testApi();
 
-  require('./routes').applyRoutes(app);
+// Start server.
+server.listen(config.port, config.ip, function() {
+  console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
+});
 
-  require('./config/api/locu').testApi();
-
-  server.listen(config.port, config.ip, function() {
-    return console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
-  });
-
-  exports = module.exports = app;
-
-}).call(this);
+// Expose app.
+exports = module.exports = app;

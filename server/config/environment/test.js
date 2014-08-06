@@ -1,5 +1,7 @@
-(function() {
-  'use strict';
-  module.exports = {};
+'use strict';
 
-}).call(this);
+// Test specific configuration
+module.exports = {
+	// MongoDB connection options  
+};
+
