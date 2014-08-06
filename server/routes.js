@@ -8,6 +8,7 @@ var express = require('express');
 var Item = require('./controllers/item.controller');
 var Menu = require('./controllers/menu.controller');
 var Review = require('./controllers/review.controller');
+var User = require('./controllers/user.controller');
 
 module.exports.applyRoutes = function(app) {
 
@@ -22,11 +23,13 @@ module.exports.applyRoutes = function(app) {
   var Items = express.Router();
   var Menus = express.Router();
   var Reviews = express.Router();
+  var Users = express.Router();
 
   // Send API call to appropriate router.
   app.use('/api/v1/items', Items);
   app.use('/api/v1/menus', Menus);
   app.use('/api/v1/reviews', Reviews);
+  app.use('/api/v1/users', Users);
 
   // Item API routes.
   Items.get('/', Item.index);
@@ -58,6 +61,9 @@ module.exports.applyRoutes = function(app) {
   Reviews.put('/:id', Review.update);
   Reviews.patch('/:id', Review.update);
   Reviews.delete('/:id', Review.destroy);
+
+  // User API routes.
+  Users.post('/signup', User.create);
 
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets)/*').get(errors[404]);

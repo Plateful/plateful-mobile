@@ -76,6 +76,7 @@
     "morgan": "^1.1.1",
     "node-neo4j": "^2.0.0-RC6",
     "node-parse-api": "^0.2.8",
+    "parse": "^1.2.19",
     "passport": "^0.2.0",
     "passport-facebook": "^1.0.3",
     "passport-google-oauth": "^0.1.5",

@@ -2,8 +2,26 @@
 
 var Parse = require('../config/parse.js');
 
-// 1 Config API key from parse.
-// 2 Look at parse's node module.
+exports.create = function (req, res) {
+  var user = new Parse.User();
+  user.set('username', 'John Wang');
+  user.set('password', 'yolo');
+  user.set('email', 'yolo3@yolo.com');
+
+  user.signUp(null, {
+    success: function(result) {
+      console.log(result);
+      res.json(result);
+    },
+    error: function(result, err) {
+      console.log(err);
+      console.log(result);
+    }
+  })
+}
+
+// X1 Config API key from parse.
+// X2 Look at parse's node module.
 // 3 Read parse docs re oAuth with module
 // 4 Set up a route to handle auth
   // Don't start with login - we don't have a user yet
