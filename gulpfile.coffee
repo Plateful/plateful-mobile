@@ -126,6 +126,7 @@ paths =
       "assets/components/ionic/release/js/ionic-angular.js"
       "assets/components/angularjs-google-places/dist/angularjs-google-places.min.js"
       "assets/components/angular-classy/angular-classy.min.js"
+      "assets/components/angular-cache/dist/angular-cache.js"
       # "assets/components/angularjs-google-places/src/angularjs-google-places.js"
       # "assets/components/angularjs-google-places/src/google-api.js"
       "assets/components/ion-google-place/ion-google-place.js"

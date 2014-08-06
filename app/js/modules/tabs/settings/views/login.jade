@@ -11,6 +11,8 @@
 div.modal
   ion-header-bar.bar-positive
     h1.title Login
+    //- ion-nav-buttons(side="right")
+    button.button.button-clear(ng-click="vm.closeModal()") cancel
   ion-content
     form(ng-submit="login()")
       ion-list

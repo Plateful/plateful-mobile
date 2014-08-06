@@ -13,11 +13,7 @@ describe('MenuCtrl', function(){
 
     }));
     // tests start here
-    it('Should have an initialize function', function(){
 
-        expect(scope.vm.initialize).toBeDefined();
-
-    });
     it('Should have a locate object set on the scope', function(){
 
         expect(scope.vm.locate).toBeDefined();
@@ -28,5 +24,10 @@ describe('MenuCtrl', function(){
         // expect(scope.vm.menu_id).toBeDefined();
 
     });
+    it('Should have a login function on the scope', function(){
+
+      expect( scope.vm.login ).toBeDefined();
+
+    });  
 
 });
