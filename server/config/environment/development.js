@@ -1,5 +1,5 @@
-(function() {
-  'use strict';
-  module.exports = {};
+'use strict';
 
-}).call(this);
+// Development specific configuration
+module.exports = {};
+
