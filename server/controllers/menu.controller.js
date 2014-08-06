@@ -1,98 +1,116 @@
-(function() {
-  'use strict';
-  var Menu, Venue, base64_encode, db, factual, handleError, http, storeData, yelp, _;
+'use strict';
 
-  _ = require('lodash');
+var _ = require('lodash');
+var http = require('http');
+var storeData = require('./storeData');
 
-  http = require('http');
+// NEO4J API
+var db = require('../config/neo4j').db;
 
-  db = require('../config/neo4j').db;
+// LOCU API
+var Venue = require('../config/api/locu').VenueClient;
 
-  Venue = require('../config/api/locu').VenueClient;
+// FACTUAL API
+var factual = require('../config/api/factual').factual;
 
-  factual = require('../config/api/factual').factual;
+// YELP API
+var yelp = require('../config/api/yelp').yelp;
 
-  yelp = require('../config/api/yelp').yelp;
+// Menu Model
+var Menu = require('../models/Menu.model');
 
-  storeData = require('./storeData');
-
-  Menu = require('../models/Menu.model');
-
-  exports.index = function(req, res) {
-    return Menu.all(function(err, data) {
-      if (err) {
-        return handleError(res, err);
-      }
-      return res.json(201, data);
-    });
-  };
-
-  exports.getByLocation = function(req, res) {
-    var data;
-    data = {
-      location: [req.body.lat, req.body.lng],
-      radius: 500
-    };
-    if (req.body.val) {
-      data.name = req.body.val;
+exports.index = function(req, res) {
+  Menu.all(function(err, data) {
+    if (err) {
+      return handleError(res, err);
     }
-    console.log("Fuck Yelp", data);
-    return Venue.search(data, function(response) {
-      console.log(response);
-      return res.json(200, response.objects);
-    });
-  };
+    res.json(201, data);
+  });
+};
 
-  exports.show = function(req, res) {
-    return Menu.find(function(err, data) {
-      if (err) {
-        return handleError(res, err);
-      }
-      if (!data.length) {
-        return Venue.get_details(req.params.id, function(response) {
-          return storeData.store(response.objects[0], function(data) {
-            return res.json(200, data);
-          });
+exports.getByLocation = function(req, res) {
+  var data;
+  data = {
+    location: [req.body.lat, req.body.lng],
+    radius: 500
+  };
+  if (req.body.val) {
+    data.name = req.body.val;
+  }
+  Venue.search(data, function(response) {
+    res.json(200, response.objects);
+  });
+};
+
+// This comment below is for an api call to the Factual api.
+// Factual is much faster than the Venu (locu) api
+// We are using locu for menu data
+// Ask Joel Before changing
+// TODO: Configure google places on the front end to eliminate the need for api calls on restful routes
+// factual.get('/t/places/', {q:req.body.val, geo:{"$circle":{"$center":[req.body.lat,req.body.lng],"$meters":5000}}}
+// ,(err, result)->
+//   if err then return handleError(res, err)
+//   res.json(200, result.data)
+// )
+
+// Get a single Business
+// http://localhost:9000/api/menus/30
+// working but must change HAS_ITEM to HAS to test
+exports.show = function(req, res) {
+  Menu.find(function(err, data) {
+    if (err) {
+      return handleError(res, err);
+    }
+    if (!data.length) {
+      Venue.get_details(req.params.id, function(response) {
+        storeData.store(response.objects[0], function(data) {
+          res.json(200, data);
         });
-      } else {
-        return res.json(200, data[0]);
-      }
-    });
-  };
+      });
+    }
+    else {
+      res.json(200, data[0]);
+    }
+  });
+};
 
-  exports.create = function(req, res) {
-    return Menu.create(req.body.menu, function(err, data) {
-      if (err) {
-        return handleError(res, err);
-      }
-      return res.json(201, data);
-    });
-  };
+// Creates a new Business in the DB.
+// http://localhost:9000/api/menus/
+exports.create = function(req, res) {
+  Menu.create(req.body.menu, function(err, data) {
+    if (err) {
+      return handleError(res, err);
+    }
+    res.json(201, data);
+  });
+};
 
-  exports.update = function(req, res) {
-    return Menu.update(req.params.id, req.body, function(err, data) {
-      if (err) {
-        return handleError(res, err);
-      }
-      return res.json(201, data);
-    });
-  };
+// Updates an existing item in the DB.
+exports.update = function(req, res) {
+  Menu.update(req.params.id, req.body, function(err, data) {
+    if (err) {
+      return handleError(res, err);
+    }
+    res.json(201, data);
+  });
+};
 
-  exports.destroy = function(req, res) {
-    return Menu.destroy(req.params.id, function(err, data) {
-      if (err) {
-        return handleError(res, err);
-      }
-      return res.json(201, data);
-    });
-  };
+// Deletes a item from the DB.
+exports.destroy = function(req, res) {
+  Menu.destroy(req.params.id, function(err, data) {
+    if (err) {
+      return handleError(res, err);
+    }
+    res.json(201, data);
+  });
+};
 
-  handleError = function(res, err) {
-    return res.send(500, err);
-  };
+// Use this to handle errors
+var handleError = function(res, err) {
+  return res.send(500, err);
+};
 
-  base64_encode = function(bitmap) {
-    return new Buffer(bitmap).toString('base64');
-  };
-
-}).call(this);
+// For bitmapping images as they come in
+var base64_encode = function(bitmap) {
+  return new Buffer(bitmap).toString('base64');
+};
