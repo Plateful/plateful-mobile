@@ -1,5 +1,5 @@
 (function(){
-  var ListCtrl = function($scope, Auth){
+  var ListCtrl = function($scope, Auth, User){
 
     var vm = this
 
@@ -10,10 +10,36 @@
 
     ////////////////
 
-
-    function showPhotos(){};
-    function showCollection(){};
-    function showBookmarks(){};
+    function showPhotos(){
+      User
+        .getPhotosByUsers()
+        .then(function(data){
+          vm.photos = data;
+        })
+        .error(function(msg){
+          alert("Error on showPhotos", msg)
+        })
+    };
+    function showCollection(){
+      User
+        .getCollectionByUser()
+        .then(function(data){
+          vm.collection = data
+        })
+        .error(function(msg){
+          alert("Error on get Collection", msg)
+        })
+    };
+    function showBookmarks(){
+      User
+        .getBookmarksByUser()
+        .then(function(data){
+          vm.bookmarks = data;
+        })
+        .error(function(msg){
+          alert("Error on get bookmarks", msg)
+        })
+    };
     function login(){
       Auth.setAuthToken( vm.username, vm.password );
     };

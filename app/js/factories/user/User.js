@@ -13,13 +13,24 @@
         create: function(data) {
           return User.post(data);
         },
-        update: function(id, data) {},
-        destroy: function(id) {},
-        getPhotosByUser: function(){},
-        getBookmarksByUser: function(){},
-        getCollectionByUser: function(){},
-        getReviewsByUser: function(){},
-
+        update: function(id, data) {
+          return Restangular.one('users', id).post(data).get()
+        },
+        destroy: function(id) {
+          return Restangular.on('users', id).delete()
+        },
+        getPhotosByUser: function(id){
+          return Restangular.one('users', id).all('photos').getList()
+        },
+        getBookmarksByUser: function(id){
+          return Restangular.one('users', id).all('bookmarks').getList()
+        },
+        getCollectionByUser: function(){
+          return Restangular.one('users', id).all('collection').getList()
+        },
+        getReviewsByUser: function(id){
+          return Restangular.one('users', id).all('reviews').getList()
+        },
       };
     }
   ]);

@@ -2,12 +2,26 @@
   var app, k, v,
     __slice = [].slice;
 
-  app = angular.module("app", ["ionic", "restangular", "ngAnimate", 'ngGPlaces', 'classy', "fx.animations", "google-maps", "ion-google-place", "app.modules", "app.factories", "app.directives"]);
+  app = angular.module("app", [
+    "ionic",
+    "restangular",
+    "ngAnimate",
+    'ngGPlaces',
+    'classy',
+    "fx.animations",
+    "google-maps",
+    "ion-google-place",
+    "app.modules",
+    "app.factories",
+    "app.directives",
+    ]);
 
   app.config(function(RestangularProvider) {
     RestangularProvider.setBaseUrl('http://localhost:9000/api/v1/');
+    // RestangularProvider.setDefaultHttpFields({cache: true});
     RestangularProvider.setRequestSuffix('/');
-    return RestangularProvider.setRestangularFields({
+    RestangularProvider.setRestangularFields({
+      cache: true,
       route: "restangularRoute",
       selfLink: "self.href"
     });
