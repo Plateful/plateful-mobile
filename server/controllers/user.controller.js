@@ -4,9 +4,9 @@ var Parse = require('../config/parse.js');
 
 exports.create = function (req, res) {
   var user = new Parse.User();
-  user.set('username', 'John Wang');
-  user.set('password', 'yolo');
-  user.set('email', 'yolo3@yolo.com');
+  user.set('username', req.body.username);
+  user.set('email', req.body.email);
+  user.set('password', req.body.password);
 
   user.signUp(null, {
     success: function(result) {
@@ -18,6 +18,19 @@ exports.create = function (req, res) {
       console.log(result);
     }
   })
+}
+
+exports.login = function (req, res) {
+  Parse.User.logIn(req.body.username, req.body.password, {
+    success: function(user) {
+      console.log(user);
+      res.json(user);
+    },
+    error: function(user, error) {
+      console.log(req.body);
+      console.log(error);
+    }
+  });
 }
 
 // X1 Config API key from parse.
