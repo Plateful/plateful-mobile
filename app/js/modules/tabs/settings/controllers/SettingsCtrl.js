@@ -1,5 +1,5 @@
 (function() {
-  var SettingsCtrl = function($scope, $ionicModal) {
+  var SettingsCtrl = function($scope, $ionicModal, Auth) {
     var vm = this
 
     $ionicModal
@@ -29,12 +29,12 @@
       vm.loginModal.hide();
     }
     function login(){
-      // Auth.setAuthToken( vm.username, vm.password );
+      Auth.setAuthToken( vm.username, vm.password );
     }
 
   };
   SettingsCtrl
-    .$inject = ['$scope', '$ionicModal'];
+    .$inject = ['$scope', '$ionicModal', 'Auth'];
   angular
     .module('app.modules.tabs.settings.controllers', [])
     .controller('SettingsCtrl', SettingsCtrl);

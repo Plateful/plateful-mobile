@@ -10,11 +10,16 @@
         find: function(id) {
           return Rest.one('users', id);
         },
-        post: function(data) {
+        create: function(data) {
           return User.post(data);
         },
         update: function(id, data) {},
-        destroy: function(id) {}
+        destroy: function(id) {},
+        getPhotosByUser: function(){},
+        getBookmarksByUser: function(){},
+        getCollectionByUser: function(){},
+        getReviewsByUser: function(){},
+
       };
     }
   ]);

@@ -11,6 +11,8 @@
 
     vm.locationData = {lat: vm.locate.latitude, lng: vm.locate.longitude };
 
+
+
     getMenuItems(null)
 
       .then(function(data) {
@@ -18,6 +20,14 @@
         vm.items = data;
 
       });
+
+    $ionicModal.fromTemplateUrl("js/modules/tabs/items/modals/filterModal.html", {
+      scope: $scope,
+      animation: "slide-in-up"
+    })
+    .then(function($ionicModal) {
+      vm.filterModal = $ionicModal;
+    });
 
     //////////////////
 
@@ -38,16 +48,9 @@
 
         });
     }
-    function initializeModal(){
 
-      $ionicModal.fromTemplateUrl("js/modules/tabs/find/modals/filterModal.html", {
-        scope: $scope,
-        animation: "slide-in-up"
-      })
-      .then(function(modal) {
-        vm.filterModal = modal;
-      });
-    }
+
+
     function openModal(){
 
       vm.filterModal.show();

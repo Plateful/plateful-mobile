@@ -13,11 +13,7 @@ describe('ItemCtrl', function(){
 
     }));
     // tests start here
-    it('Should have an initialize function', function(){
 
-        expect(scope.vm.initialize).toBeDefined();
-
-    });
     it('Should a $stateParam set to item_id on the scope', function(){
 
         // expect(scope.vm.item_id).toBeDefined();
@@ -46,6 +42,11 @@ describe('ItemCtrl', function(){
     it('Should a bookmarkItem function on the scope', function(){
 
         expect(scope.vm.bookmarkItem).toBeDefined();
+
+    });
+    it( 'Should have a login function on the scope', function(){
+
+        expect(scope.vm.login).toBeDefined();
 
     });
 

@@ -18,7 +18,7 @@
         },
         find: function(id) {
           return Restangular.one('items', id).get();
-        },
+        },                    
         getByMenu: function(menu_id) {
           return Rest.one('menu', menu_id).get();
         },
