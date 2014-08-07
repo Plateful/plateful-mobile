@@ -1,13 +1,22 @@
-angular.module("app").service('Auth', function($http, PromiseFactory) {
-  var Auth, USER_EMAIL_CACHE_KEY, USER_TOKEN_CACHE_KEY;
-  USER_EMAIL_CACHE_KEY = "user_email";
-  USER_TOKEN_CACHE_KEY = "user_token";
-  return new (Auth = (function() {
-    function Auth() {
-      this.setAuthToken(localStorage.getItem(USER_EMAIL_CACHE_KEY), localStorage.getItem(USER_TOKEN_CACHE_KEY));
+(function() {
+
+  var USER_EMAIL_CACHE_KEY = "user_email";
+  var USER_TOKEN_CACHE_KEY = "user_token";
+
+  var Auth = function($http, PromiseFactory) {
+
+    setAuthToken(localStorage.getItem(USER_EMAIL_CACHE_KEY), localStorage.getItem(USER_TOKEN_CACHE_KEY));
+
+
+    return {
+      setAuthToken: setAuthToken,
+      refreshUser: refreshUser,
+      isSignedIn: isSignedIn,
+      resetSession: resetSession
     }
 
-    Auth.prototype.setAuthToken = function(email, token, user) {
+
+    function setAuthToken(email, token, user) {
       this.email = email != null ? email : null;
       this.token = token != null ? token : null;
       if (this.email && this.token) {
@@ -21,25 +30,32 @@ angular.module("app").service('Auth', function($http, PromiseFactory) {
         localStorage.removeItem(USER_EMAIL_CACHE_KEY);
         localStorage.removeItem(USER_TOKEN_CACHE_KEY);
       }
-      return this.refreshUser(user);
+      return refreshUser(user);
     };
 
-    Auth.prototype.refreshUser = function(user) {
+    function refreshUser(user) {
       if (user == null) {
         user = null;
       }
       return this.user = user ? (user.$promise = PromiseFactory(user), user.$resolved = true, user) : this.email && this.token ? void 0 : null;
     };
 
-    Auth.prototype.isSignedIn = function() {
+    function isSignedIn() {
       return !!this.token;
     };
 
-    Auth.prototype.resetSession = function() {
-      return this.setAuthToken(null, null);
+    function resetSession() {
+      return setAuthToken(null, null);
     };
+  }
 
-    return Auth;
 
-  })());
-});
+  // return Auth;
+
+  Auth.$inject = ['$http', 'PromiseFactory']
+
+  angular
+    .module("app")
+    .service('Auth', Auth)
+
+}).call(this);

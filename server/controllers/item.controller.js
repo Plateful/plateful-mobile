@@ -11,10 +11,11 @@ exports.outputFormat = outputFormat = "json";
 
 exports.index = function(req, res) {
   Item.all(function(err, data) {
-    if (err) {
-      return handleError(res, err);
-    }
-    res.json(201, data);
+    // if (err) {
+    //   return handleError(res, err);
+    // }
+    console.log("Hello");
+    res.json(201, "data");
   });
 };
 

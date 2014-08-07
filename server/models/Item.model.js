@@ -5,7 +5,7 @@ var Item = function() {
 };
 
 Item.prototype.all = function(callback) {
-  var query = "MATCH (m:Item) RETURN m";
+  var query = "MATCH (m:ITEM) RETURN m LIMIT 25";
   this.query(query, function(err, result) {
     callback(err, result.data);
   });

@@ -12,6 +12,8 @@
       abstract: true,
       templateUrl: "js/modules/tabs/tabs.html"
     });
+
+    // $urlRouterProvider.otherwise('/tab/items')
   });
 
 }).call(this);
