@@ -48,5 +48,26 @@ describe('User', function(){
     it('Should have a getReviewsByUser method', function(){
         // expect(scope.text).toBe('Hello World!');
         expect(user.getReviewsByUser).toBeDefined();
+    });    
+    it('Should have a signup method', function(){
+        expect(user.signup).toBeDefined();
+    });    
+    it('Should have a login method', function(){
+        expect(user.login).toBeDefined();
     });
+});
+
+describe("Integration/E2E Testing", function() {
+
+  // start at root before every test is run
+  beforeEach(function() {
+    browser().navigateTo('/');
+  });
+
+  // test default route
+  it('should jump to the /home path when / is accessed', function() {
+    browser().navigateTo('#/tab/settings');
+    expect(browser().location().path()).toBe("/#/tab/settings");
+  });
+
 });
