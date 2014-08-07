@@ -6,12 +6,9 @@ div.modal
     form(ng-submit="signup()")
       ion-list
         label.item.item-input
-          span.input-label Username
-          input(type="text" ng-model="vm.username")
-
-        label.item.item-input
           span.input-label Email
-          input(type="email" ng-model="vm.email")
+          //- Change to email type later
+          input(type="text" ng-model="vm.username")
 
         label.item.item-input
           span.input-label Password

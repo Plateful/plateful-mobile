@@ -31,9 +31,9 @@
         getReviewsByUser: function(id){
           return Restangular.one('users', id).all('reviews').getList();
         },
-        signup: function(username, email, password){
+        signup: function(username, password){
           return Restangular.all('users').all('signup')
-            .post({username: username, email: email, password: password})
+            .post({username: username, password: password})
             .then(function(data) {
               Auth.setAuthToken(data);
             });
@@ -42,7 +42,7 @@
           return Restangular.all('users').all('login')
             .post({username: username, password: password})
             .then(function(data) {
-              Auth.setAuthToken(data.email, data.token, data);
+              Auth.setAuthToken(data.username, data.token, data);
             });
         }
       };

@@ -5,7 +5,6 @@ var Parse = require('../config/parse.js');
 exports.create = function (req, res) {
   var user = new Parse.User();
   user.set('username', req.body.username);
-  user.set('email', req.body.email);
   user.set('password', req.body.password);
 
   user.signUp(null, {
