@@ -1,0 +1,16 @@
+div.modal
+  ion-header-bar.bar-positive
+    h1.title Login
+    button.button.button-clear(ng-click="vm.closeModal()") cancel
+  ion-content
+    form(ng-submit="login()")
+      ion-list
+        label.item.item-input
+          span.input-label Username
+          input(type="text" ng-model="vm.username")
+
+        label.item.item-input
+          span.input-label Password
+          input(type="password" ng-model="vm.password")
+
+      button.button.button-positive.button-block(ng-click="vm.login(); vm.closeModal()") Login
