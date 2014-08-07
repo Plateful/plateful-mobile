@@ -1,40 +1,48 @@
 (function() {
-  var SettingsCtrl = function($scope, $ionicModal, Auth) {
-    var vm = this
+  var SettingsCtrl = function($scope, $ionicModal, Auth, User) {
+    var vm = this;
 
     $ionicModal
-
       .fromTemplateUrl("js/modules/tabs/settings/views/login.html", {
-
         scope: $scope,
         animation: "slide-in-up"
-
       })
       .then(function(modal) {
-
           vm.loginModal = modal;
+      });
 
+    $ionicModal
+      .fromTemplateUrl("js/modules/tabs/settings/views/signup.html", {
+        scope: $scope,
+        animation: "slide-in-up"
       })
+      .then(function(modal) {
+          vm.signupModal = modal;
+      });
 
-    vm.openModal  = openModal
-    vm.closeModal = closeModal
-    vm.login      = login
+    vm.openModal  = openModal;
+    vm.closeModal = closeModal;
+    vm.signup     = signup;
+    vm.login      = login;
 
     //////////////////////
 
     function openModal() {
-        vm.loginModal.show();
+      vm.loginModal.show();
     };
     function closeModal(){
       vm.loginModal.hide();
-    }
-    function login(){
-      Auth.setAuthToken( vm.username, vm.password );
-    }
+    };
+    function signup() {
+      User.signup(vm.username, vm.email, vm.password);
+    };
+    function login() {
+      User.login(vm.username, vm.password);
+    };
 
   };
   SettingsCtrl
-    .$inject = ['$scope', '$ionicModal', 'Auth'];
+    .$inject = ['$scope', '$ionicModal', 'Auth', 'User'];
   angular
     .module('app.modules.tabs.settings.controllers', [])
     .controller('SettingsCtrl', SettingsCtrl);
