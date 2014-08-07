@@ -5,10 +5,12 @@ var Item = function() {
 };
 
 Item.prototype.all = function(callback) {
-  var query = "MATCH (m:ITEM) RETURN m LIMIT 25";
-  this.query(query, function(err, result) {
-    callback(err, result.data);
-  });
+
+  db.cypherQuery('MATCH (m:ITEM)-->()-->(p) RETURN m,p LIMIT 25', function(err, result){
+    callback(err, result.data)
+    // console.log(result);
+    // res.json(201, result.data);
+  })
 };
 
 Item.prototype.find = function(item_id, callback) {
