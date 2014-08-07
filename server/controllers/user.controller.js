@@ -22,12 +22,11 @@ exports.create = function (req, res) {
 
 exports.login = function (req, res) {
   Parse.User.logIn(req.body.username, req.body.password, {
-    success: function(user) {
-      console.log(user);
-      res.json(user);
+    success: function(data) {
+      data.attributes.token = data._sessionToken;
+      res.json(data);
     },
-    error: function(user, error) {
-      console.log(req.body);
+    error: function(data, error) {
       console.log(error);
     }
   });

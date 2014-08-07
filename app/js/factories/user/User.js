@@ -42,7 +42,7 @@
           return Restangular.all('users').all('login')
             .post({username: username, password: password})
             .then(function(data) {
-              Auth.setAuthToken(data.email, '12kj112', data);
+              Auth.setAuthToken(data.email, data.token, data);
             });
         }
       };
