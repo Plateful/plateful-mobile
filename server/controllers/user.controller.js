@@ -8,13 +8,12 @@ exports.create = function (req, res) {
   user.set('password', req.body.password);
 
   user.signUp(null, {
-    success: function(result) {
-      console.log(result);
-      res.json(result);
+    success: function(data) {
+      data.attributes.token = data._sessionToken;
+      res.json(data);
     },
-    error: function(result, err) {
+    error: function(data, err) {
       console.log(err);
-      console.log(result);
     }
   })
 }

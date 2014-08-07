@@ -35,7 +35,7 @@
           return Restangular.all('users').all('signup')
             .post({username: username, password: password})
             .then(function(data) {
-              Auth.setAuthToken(data);
+              Auth.setAuthToken(data.username, data.token, data);
             });
         },
         login: function(username, password){
