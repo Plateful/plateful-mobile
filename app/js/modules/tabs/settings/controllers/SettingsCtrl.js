@@ -34,7 +34,7 @@
       vm.loginModal.hide();
     };
     function signup() {
-      User.signup(vm.username, vm.email, vm.password);
+      User.signup(vm.username, vm.password);
     };
     function login() {
       User.login(vm.username, vm.password);
