@@ -1,4 +1,4 @@
-'use strict';
+"use restrict";
 
 var Parse = require('../config/parse.js');
 
@@ -15,8 +15,8 @@ exports.create = function (req, res) {
     error: function(data, err) {
       console.log(err);
     }
-  })
-}
+  });
+};
 
 exports.login = function (req, res) {
   Parse.User.logIn(req.body.username, req.body.password, {
@@ -28,7 +28,7 @@ exports.login = function (req, res) {
       console.log(error);
     }
   });
-}
+};
 
 // X1 Config API key from parse.
 // X2 Look at parse's node module.
@@ -39,7 +39,7 @@ exports.login = function (req, res) {
   // Go to client and make sure we can create a user
   // When we get a request from user, store the user in local storage.
 // 5 Sign up users with email/password
-// 6 Make a login route - login/logout and store info 
+// 6 Make a login route - login/logout and store info
 // 7 Integrate with FB/Google, etc.
 
 // Figure out how to use parse users with neo4j users

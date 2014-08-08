@@ -13,12 +13,12 @@
       refreshUser: refreshUser,
       isSignedIn: isSignedIn,
       resetSession: resetSession
-    }
+    };
 
 
     function setAuthToken(email, token, user) {
-      this.email = email != null ? email : null;
-      this.token = token != null ? token : null;
+      this.email = email || null;
+      this.token = token || null;
       if (this.email && this.token) {
         $http.defaults.headers.common["X-User-Email"] = this.email;
         $http.defaults.headers.common["X-User-Token"] = this.token;
@@ -31,31 +31,31 @@
         localStorage.removeItem(USER_TOKEN_CACHE_KEY);
       }
       return refreshUser(user);
-    };
+    }
 
     function refreshUser(user) {
-      if (user == null) {
+      if (user === null) {
         user = null;
       }
       return this.user = user ? (user.$promise = PromiseFactory(user), user.$resolved = true, user) : this.email && this.token ? void 0 : null;
-    };
+    }
 
     function isSignedIn() {
       return !!this.token;
-    };
+    }
 
     function resetSession() {
       return setAuthToken(null, null);
-    };
-  }
+    }
+  };
 
 
   // return Auth;
 
-  Auth.$inject = ['$http', 'PromiseFactory']
+  Auth.$inject = ['$http', 'PromiseFactory'];
 
   angular
     .module("app")
-    .service('Auth', Auth)
+    .service('Auth', Auth);
 
 }).call(this);
