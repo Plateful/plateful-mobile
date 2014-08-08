@@ -1,11 +1,13 @@
 (function() {
-  angular.module('app.modules.tabs.settings', ['app.modules.tabs.settings.controllers']).config(function($stateProvider) {
+  angular.module('app.modules.tabs.settings', ['app.modules.tabs.settings.fblogin.controllers']).config(function($stateProvider) {
     return $stateProvider.state('tab.settings', {
       url: '/settings',
       views: {
         'tab-settings': {
-          templateUrl: 'js/modules/tabs/settings/views/settings.html',
-          controller: 'SettingsCtrl as vm'
+          // templateUrl: 'js/modules/tabs/settings/views/settings.html',
+          templateUrl: 'js/modules/tabs/settings/views/fb-login.html',
+          // controller: 'SettingsCtrl as vm'
+          controller: 'FbLoginCtrl as fb'
         }
       }
     }).state('tab.account', {
