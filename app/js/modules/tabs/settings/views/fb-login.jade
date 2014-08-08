@@ -1,6 +1,11 @@
 ion-view(title="FB Login")
   ion-content
     .row
+      .col-6#userPic
+      .col-6#userName
+    .row
       button.button.button-positive(onclick="login()") Login with Facebook
     .row
       button.button.button-positive(onclick="logout()") Logout from Facebook
+    .row
+      button.button.button-positive(onclick="getInfo()") GetInfo from Facebook
