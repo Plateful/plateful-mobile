@@ -50,6 +50,74 @@ html
     //- script(src="js/ng-cordova.js")
 
   body(animation='slide-left-right-ios7')
+    script.
+      // Defaults to sessionStorage for storing the Facebook token
+      openFB.init({appId: '1495225764050843'});
+      console.log("i'm in")
+
+      //  Uncomment the line below to store the Facebook token in localStorage instead of sessionStorage
+      //  openFB.init({appId: 'YOUR_FB_APP_ID', tokenStore: window.localStorage});
+
+      function login() {
+        openFB.login(
+          function(response) {
+            if(response.status === 'connected') {
+              alert('Facebook login succeeded, got access token: ' + response.authResponse.token);
+            } 
+            else {
+              alert('Facebook login failed: ' + response.error);
+            }
+          }, {scope: 'email,read_stream,publish_stream'}
+        );
+      }
+
+      function getInfo() {
+        openFB.api({
+          path: '/me',
+          success: function(data) {
+            console.log(JSON.stringify(data));
+            document.getElementById("userName").innerHTML = data.name;
+            document.getElementById("userPic").src = 'http://graph.facebook.com/' + data.id + '/picture?type=small';
+          },
+          error: errorHandler
+        });
+      }
+
+      function share() {
+        openFB.api({
+          method: 'POST',
+          path: '/me/feed',
+          params: {
+            message: document.getElementById('Message').value || 'Testing Facebook APIs'
+          },
+          success: function() {
+            alert('the item was posted on Facebook');
+          },
+          error: errorHandler
+        });
+      }
+
+      function revoke() {
+        openFB.revokePermissions(
+          function() {
+            alert('Permissions revoked');
+          },
+          errorHandler);
+      }
+
+      function logout() {
+        openFB.logout(
+          function() {
+            alert('Logout successful');
+          },
+          errorHandler);
+      }
+
+      function errorHandler(error) {
+        alert(error.message);
+      }
+
+    button(class="btn btn-block" onclick="login()" style="z-index:4000;") Login with Facebook
     div(ng-controller='AppCtrl')
       script(type="text/ng-template" id="rateModal.html")
         div.modal
