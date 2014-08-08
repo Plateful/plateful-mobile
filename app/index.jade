@@ -61,6 +61,7 @@ html
       function login() {
         openFB.login(
           function(response) {
+          console.log(response);
             if(response.status === 'connected') {
               alert('Facebook login succeeded, got access token: ' + response.authResponse.token);
             } 
