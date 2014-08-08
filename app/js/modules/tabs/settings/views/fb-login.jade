@@ -1,3 +1,6 @@
 ion-view(title="FB Login")
   ion-content
-    button(class="btn btn-block" onclick="login()" style="z-index:4000;") Login with Facebook
+    .row
+      button.button.button-positive(onclick="login()") Login with Facebook
+    .row
+      button.button.button-positive(onclick="logout()") Logout from Facebook
