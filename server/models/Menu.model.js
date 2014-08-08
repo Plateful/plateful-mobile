@@ -36,8 +36,10 @@ Menu.prototype.update = function(menu_id, menu, callback) {
     menu_id: menu_id,
     changes: menu
   };
-  var q = "";
-  this.query(q, params, function(err, result) {
+  var q = ["START menu=node({menu_id})",
+            "SET menu = {changes}",
+            "RETURN menu"].join("");
+  db.cypherQuery(q, params, function(err, result) {
     callback(err, result.data);
   });
 };
