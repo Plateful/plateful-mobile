@@ -1,0 +1,13 @@
+ion-view(title="Login")
+  ion-content
+    .row
+      .col-6#userPic
+      .col-6#userName
+    .row
+      button.button.button-block.positive(ng-click="login.nativeLogin()") Login with Clurtch
+    .row
+      button.button.button-block.positive(ng-click="login.fbLogin()" ng-show="login.fbStatus!=='connected'") Login with Facebook
+    .row
+      button.button.button-block.positive(onclick="logout()" ng-show="login.fbStatus==='connected'") Logout from Facebook
+    .row
+      button.button.button-block.positive(onclick="getInfo()") GetInfo from Facebook
