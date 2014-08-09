@@ -7,11 +7,9 @@
    * @test2  test to see if @locate is equal to our current longitude and latitude
    */
   var MenusCtrl = function($scope, Menu, $timeout, $document, ngGPlacesAPI) {
-    var vm = this
+    var vm = this;
 
     vm.locate = window.currLocation.coords;
-
-  
 
     vm.searchEventTimeout = void 0;
 
@@ -24,20 +22,14 @@
     };
 
     googleSearch(vm.searchQuery)
-
       .then(function(data) {
-
         console.log(data);
-
         vm.locations = data;
-
       });
-
-    /////////////////////
 
     function googleSearch(query){
       return ngGPlacesAPI.nearbySearch(query);
-    };
+    }
 
   };
 

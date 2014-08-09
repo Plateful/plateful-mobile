@@ -13,7 +13,7 @@
       views: {
         "tab-menus": {
           templateUrl: "js/modules/states/map/views/menusMap.html",
-          controller: "MenusMapCtrl"
+          controller: "MenusMapCtrl as vm"
         }
       }
     }).state("tab.menus-item", {
@@ -21,15 +21,15 @@
       views: {
         "tab-menus": {
           templateUrl: "js/modules/states/item/item.html",
-          controller: "ItemCtrl"
+          controller: "ItemCtrl as vm"
         }
       }
     }).state("tab.menus-menu", {
       url: '/menus/menu/:menu_id',
       views: {
-        "tab-nearby": {
+        "tab-menus": {
           templateUrl: "js/modules/states/menu/menu.html",
-          controller: "MenuCtrl"
+          controller: "MenuCtrl as vm"
         }
       }
     });
