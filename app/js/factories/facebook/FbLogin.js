@@ -5,6 +5,7 @@
     // Defaults to sessionStorage for storing the Facebook token
     openFB.init({appId: '1495225764050843'});
     console.log("i'm in");
+    FbUser = Restangular.all('users');
 
     //  Uncomment the line below to store the Facebook token in localStorage instead of sessionStorage
     //  openFB.init({appId: 'YOUR_FB_APP_ID', tokenStore: window.localStorage});
@@ -32,10 +33,11 @@
       getInfo: function() {
         openFB.api({
           path: '/me',
+          // params: {fields: 'id, name, email'},
           success: function(data) {
             console.log("yo ",JSON.stringify(data));
             document.getElementById("userName").innerHTML = data.name;
-            document.getElementById("userPic").src = 'http://graph.facebook.com/' + data.id + '/picture?type=small';
+            document.getElementById("userPic").src = 'http://graph.facebook.com/' + data.id + '/picture?width=150&height=150';
           },
           error: this.errorHandler
         });
@@ -65,10 +67,23 @@
 
       errorHandler: function(error) {
         alert(error.message);
+      },
+
+      getFbToken: function() {
+        return Restangular.all('users').all('fb-login')
+          .post({token: window.sessionStorage.fbtoken})
+          .then(function (response) {
+            console.log("YEEE");
+            console.log(response);
+          })
+          .catch(function(error) {
+            console.log('uh oh');
+          })
       }
+
 
     };
   };
   FbLogin.$inject = ['Restangular'];
-  return angular.module('app.factory.fbLogin', []).factory('FbLogin', FbLogin);
+  angular.module('app.factory.fbLogin', []).factory('FbLogin', FbLogin);
 })();

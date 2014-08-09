@@ -1,7 +1,8 @@
 ion-view(title="Login")
   ion-content
     .row
-      .col-6#userPic
+      .col-6
+        img#userPic
       .col-6#userName
     .row
       button.button.button-block.positive(ng-click="login.nativeLogin()") Login with Clurtch
@@ -13,3 +14,5 @@ ion-view(title="Login")
       button.button.button-block.positive(ng-click="login.fbGetInfo()") GetInfo from Facebook
     .row
       button.button.button-block.positive(ng-click="login.fbShare()") Share on Facebook
+    .row
+      button.button.button-block.positive(ng-click="login.fbGetToken()") Get that Token!

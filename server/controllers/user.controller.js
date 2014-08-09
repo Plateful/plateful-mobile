@@ -1,6 +1,9 @@
 "use restrict";
 
 var Parse = require('../config/parse.js');
+var Facebook = require('../config/api/facebook.js');
+var request = require('request');
+var url = require('url')
 
 exports.create = function (req, res) {
   var user = new Parse.User();
@@ -29,6 +32,22 @@ exports.login = function (req, res) {
     }
   });
 };
+
+exports.fbLogin = function (req, res) {
+  var fbTempToken = req.body.token;
+  request.get(
+    'https://graph.facebook.com/oauth/access_token?' +
+    'grant_type=fb_exchange_token&' +
+    'client_id=' + Facebook.appId + '&' +
+    'client_secret=' + Facebook.appSecret + '&' +
+    'fb_exchange_token=' + fbTempToken,
+    function(error, response, body) {
+      var fbLongToken = body.split('&')[0].split('=')[1];
+      res.json(fbLongToken);
+    }
+  )
+}
+
 
 // X1 Config API key from parse.
 // X2 Look at parse's node module.

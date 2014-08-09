@@ -9,6 +9,7 @@
     vm.fbLogout       = fbLogout;
     vm.fbGetInfo      = fbGetInfo;
     vm.fbShare        = fbShare;
+    vm.fbGetToken     = fbGetToken;
 
     //////////////////////
 
@@ -32,6 +33,9 @@
     }
     function fbShare() {
       FbLogin.share();
+    }
+    function fbGetToken() {
+      FbLogin.getFbToken();
     }
   };
 
