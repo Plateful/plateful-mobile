@@ -5,9 +5,7 @@
       views: {
         'tab-settings': {
           templateUrl: 'js/modules/tabs/settings/views/settings.html',
-          // templateUrl: 'js/modules/tabs/settings/views/fb-login.html',
           controller: 'SettingsCtrl as vm'
-          // controller: 'FbLoginCtrl as fb'
         }
       }
     }).state('tab.account', {
