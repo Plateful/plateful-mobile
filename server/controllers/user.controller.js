@@ -50,11 +50,16 @@ exports.fbLogin = function (req, res) {
         fbLongToken = body.split('&')[0].split('=')[1];
         return findUserByFbId(req.body.fbId);
       })
-      .then(function(data) {
-        if (data.length > 0) {
+      .then(function(foundFbUser) {
+        console.log("EEEE")
+        if (foundFbUser.length > 0) {
           // Update fb info and return.
-          console.log('found fb user: ', data)
-          return data[0];
+          console.log('found fb user: ', foundFbUser[0].id);
+          return updateFbUser(foundFbUser[0].id, req.body.fbId, req.body.email, fbLongToken, req.body.photo)
+            .then(function(data) {
+              console.log('UPDATED FB DATA:',data)
+              return data;
+            })
           // return new Promise( function(resolve, reject) { resolve(data) })
         }
         return findUserByNativeId(req.body.username)
@@ -125,15 +130,39 @@ var createFbUser = function(fbId, email, fbLongToken, photoUrl) {
   user.set({
     username:     fbId,
     password:     Date.now().toString(),
-    email:        email,
+    fbEmail:      email,
     fbId:         fbId,
     fbSessionId:  fbLongToken,
-    profilePic:   photoUrl
+    fbPic:        photoUrl
   });
-  return user.signUp(null)
+  return user.signUp(null);
 }
 
+var updateFbUser = function(fbId, email, fbLongToken, photoUrl) {
+  var user = new Parse.User();
+  console.log("update fb user")
+  // console.log("work?");
+  return user.save({
+    fbEmail:      email,
+    fbId:         fbId,
+    fbSessionId:  fbLongToken,
+    fbPic:        photoUrl
+  });
+  // Parse.Cloud.useMasterKey();
+  // return user.save(null);
+}
 
+var fbUserInfo = function(fbId, email, fbLongToken, photoUrl) {
+  var user = new Parse.User();
+  console.log("update fb user")
+  user.set({
+    fbEmail:      email,
+    fbId:         fbId,
+    fbSessionId:  fbLongToken,
+    fbPic:        photoUrl
+  });
+  return user;
+}
 
 // X1 Config API key from parse.
 // X2 Look at parse's node module.
