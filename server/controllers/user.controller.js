@@ -3,7 +3,9 @@
 var Parse = require('../config/parse.js');
 var Facebook = require('../config/api/facebook.js');
 var request = require('request');
-var url = require('url')
+var url = require('url');
+var Promise = require("bluebird");
+Promise.promisifyAll(request);
 
 exports.create = function (req, res) {
   var user = new Parse.User();
@@ -35,35 +37,40 @@ exports.login = function (req, res) {
 
 exports.fbLogin = function (req, res) {
   var fbTempToken = req.body.token;
-  request.get(
+  request.getAsync(
     'https://graph.facebook.com/oauth/access_token?' +
     'grant_type=fb_exchange_token&' +
     'client_id=' + Facebook.appId + '&' +
     'client_secret=' + Facebook.appSecret + '&' +
-    'fb_exchange_token=' + fbTempToken,
-    function(error, response, body) {
-      var fbLongToken = body.split('&')[0].split('=')[1];
+    'fb_exchange_token=' + fbTempToken)
+      .get(1)
+      .then(function(body) {
+        console.log('hey');
+        var fbLongToken = body.split('&')[0].split('=')[1];
 
-      var user = new Parse.User();
-      user.set('username', req.body.fbId);
-      user.set('password', Date.now().toString());
-      user.set('email', req.body.email);
-      user.set('fbId', req.body.fbId);
-      user.set('fbSessionId', fbLongToken);
-      user.set('profilePic', req.body.photo);
-
-      user.signUp(null, {
-        success: function(data) {
-          data.attributes.token = data._sessionToken;
-          res.json(data);
-        },
-        error: function(data, err) {
-          console.log(err);
-        }
+        var user = new Parse.User();
+        user.set('username', req.body.fbId);
+        user.set('password', Date.now().toString());
+        user.set('email', req.body.email);
+        user.set('fbId', req.body.fbId);
+        user.set('fbSessionId', fbLongToken);
+        user.set('profilePic', req.body.photo);
+        return user.signUp(null)
       })
-    }
-  )
+      .then(function(data) {
+        console.log('Data:',data);
+        data.attributes.token = data._sessionToken;
+        res.json(data);
+      })
+      .catch(function(error) {
+        console.log('fbLogin ERROR: ', error);
+        res.status(401).send(error);
+      });
 }
+
+// exports.findUser = function(req, res) {
+//   var query = new Parse.Query(user);
+// }
 
 
 // X1 Config API key from parse.

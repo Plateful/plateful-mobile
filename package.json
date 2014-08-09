@@ -47,6 +47,7 @@
     "weinre": "^2.0.0-pre-HH0SN197"
   },
   "dependencies": {
+    "bluebird": "^2.2.2",
     "body-parser": "^1.4.3",
     "busboy": "^0.2.8",
     "composable-middleware": "^0.3.0",
