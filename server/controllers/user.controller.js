@@ -43,7 +43,24 @@ exports.fbLogin = function (req, res) {
     'fb_exchange_token=' + fbTempToken,
     function(error, response, body) {
       var fbLongToken = body.split('&')[0].split('=')[1];
-      res.json(fbLongToken);
+
+      var user = new Parse.User();
+      user.set('username', req.body.fbId);
+      user.set('password', Date.now().toString());
+      user.set('email', req.body.email);
+      user.set('fbId', req.body.fbId);
+      user.set('fbSessionId', fbLongToken);
+      user.set('profilePic', req.body.photo);
+
+      user.signUp(null, {
+        success: function(data) {
+          data.attributes.token = data._sessionToken;
+          res.json(data);
+        },
+        error: function(data, err) {
+          console.log(err);
+        }
+      })
     }
   )
 }

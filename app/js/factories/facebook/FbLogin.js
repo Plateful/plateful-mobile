@@ -1,7 +1,7 @@
 (function() {
 
   var FbLogin;
-  FbLogin = function(Restangular) {
+  FbLogin = function(Restangular, $q) {
     // Defaults to sessionStorage for storing the Facebook token
     openFB.init({appId: '1495225764050843'});
     console.log("i'm in");
@@ -12,14 +12,18 @@
 
     return {
       login: function() {
+        var deferred = $q.defer()
         openFB.login(function(response) {
             if(response.status === 'connected') {
               alert('Facebook login succeeded, got access token: ' + response.authResponse.token);
+              return deferred.resolve();
             } 
             else {
               alert('Facebook login failed: ' + response.error);
+              return deferred.reject();
             }
           }, {scope: 'email,read_stream,publish_stream'});
+        return deferred.promise;
       }, 
 
       logout: function() {
@@ -69,9 +73,11 @@
         alert(error.message);
       },
 
-      getFbToken: function() {
+      getFbToken: function(dataToStore) {
+        var dataToStore = dataToStore || {}
+        dataToStore.token = window.sessionStorage.fbtoken
         return Restangular.all('users').all('fb-login')
-          .post({token: window.sessionStorage.fbtoken})
+          .post(dataToStore)
           .then(function (response) {
             console.log("YEEE");
             console.log(response);
@@ -79,11 +85,46 @@
           .catch(function(error) {
             console.log('uh oh');
           })
+
+      },
+
+      getFbUserCreationData: function() {
+        var deferred = $q.defer();
+        openFB.api({
+          path: '/me',
+          params: {fields: 'id, name, email'},
+          success: function(data) {
+            return deferred.resolve(data);
+          },
+          error: this.errorHandler
+        });
+        return deferred.promise;
+      },
+
+      loginFlow: function () {
+        var fbUser = this;
+        this.login()
+          .then(function(){
+            return fbUser.getFbUserCreationData()
+          })
+          .then(function(data){
+            var paramsToStore = {};
+            paramsToStore.fbId = data.id;
+            paramsToStore.email = data.email;
+            paramsToStore.photo = 'http://graph.facebook.com/' + data.id + '/picture?width=150&height=150';
+            return fbUser.getFbToken(paramsToStore)
+          })
+          .then(function(){
+            fbUser.getInfo();
+          })
+          .catch(function(error) {
+            console.log('Error: ', error);
+          })
       }
 
 
     };
   };
-  FbLogin.$inject = ['Restangular'];
+  FbLogin.$inject = ['Restangular', '$q'];
   angular.module('app.factory.fbLogin', []).factory('FbLogin', FbLogin);
 })();

@@ -6,6 +6,7 @@
     vm.nativeSignup   = nativeSignup;
     vm.nativeLogin    = nativeLogin;
     vm.fbLogin        = fbLogin;
+    vm.fbLoginFlow    = fbLoginFlow;
     vm.fbLogout       = fbLogout;
     vm.fbGetInfo      = fbGetInfo;
     vm.fbShare        = fbShare;
@@ -21,6 +22,9 @@
     };
     function fbLogin() {
       FbLogin.login();
+    };
+    function fbLoginFlow() {
+      FbLogin.loginFlow();
     };
     function fbLogout() {
       FbLogin.logout();
