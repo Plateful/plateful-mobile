@@ -1,5 +1,5 @@
 (function() {
-  var SettingsCtrl = function($scope, $ionicModal, Auth, User, FbLogin) {
+  var SettingsCtrl = function($scope, $ionicModal, Auth, User) {
     var vm = this;
 
     $ionicModal
@@ -42,7 +42,7 @@
 
   };
   SettingsCtrl
-    .$inject = ['$scope', '$ionicModal', 'Auth', 'User', 'FbLogin'];
+    .$inject = ['$scope', '$ionicModal', 'Auth', 'User'];
   angular
     .module('app.modules.tabs.settings.controllers', [])
     .controller('SettingsCtrl', SettingsCtrl);
