@@ -14,11 +14,11 @@
       findFilter = "";
       return {
         get: function() {
-          return Rest.getList();
+          return Restangular.all('items').getList();
         },
         find: function(id) {
           return Restangular.one('items', id).get();
-        },                    
+        },
         getByMenu: function(menu_id) {
           return Rest.one('menu', menu_id).get();
         },

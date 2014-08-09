@@ -14,9 +14,9 @@
 
 
     getMenuItems(null)
-
+    // MenuItem.get()
       .then(function(data) {
-
+        // console.log(data);
         vm.items = data;
 
       });

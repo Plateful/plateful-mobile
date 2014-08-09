@@ -87,10 +87,9 @@ exports.create = function(req, res) {
 
 // Updates an existing item in the DB.
 exports.update = function(req, res) {
-  Menu.update(req.params.id, req.body, function(err, data) {
-    if (err) {
-      return handleError(res, err);
-    }
+  console.log(req.body);
+  // res.json("hello");
+  Menu.update(res, req.params.id, req.body, function(err, data) {  
     res.json(201, data);
   });
 };

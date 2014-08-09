@@ -28,7 +28,7 @@
       return Restangular.all('menus').post(data);
     }
     function update(id, data){
-      return Restangular.one('menus', id).post(data);
+      return Restangular.one('menus', id).put(data);
     }
     function destroy(id){
       return Restangular.one('menus', id).delete();
@@ -50,26 +50,26 @@
    * Cache for recently searched Menus
    * @return {Object}  returns a newable instance for a Cache with get post update and delete
    */
-  MenuCache = function() {
-    MenuCache = function() {
-      var _cache;
-      _cache = {};
-      return {
-        get: function(key) {
-          var result;
-          result = false;
-          if (_cache[key]) {
-            return _cache[key];
-          }
-          return result;
-        },
-        set: function(key, obj) {
-          return _cache[key] = obj;
+
+  var MenuCache = function() {
+    var _cache;
+    _cache = {};
+    return {
+      get: function(key) {
+        var result;
+        result = false;
+        if (_cache[key]) {
+          return _cache[key];
         }
-      };
+        return result;
+      },
+      set: function(key, obj) {
+        return _cache[key] = obj;
+      }
     };
-    return MenuCache;
   };
+
+
   Menu.$inject = ['Restangular'];
   return angular.module('app.factory.menu', []).factory('Menu', Menu).service('MenuCache', MenuCache);
 })();

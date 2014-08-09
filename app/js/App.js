@@ -25,6 +25,7 @@
     RestangularProvider.setRequestSuffix('/');
     RestangularProvider.setRestangularFields({
       cache: true,
+      id: '_id',
       route: "restangularRoute",
       selfLink: "self.href"
     });

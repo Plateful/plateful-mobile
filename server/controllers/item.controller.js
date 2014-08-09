@@ -10,17 +10,13 @@ exports.apiKey = apiKey = "AIzaSyCB0Ac877CMP3MyZ9gtw4z8Ht4i7yjGx0w";
 exports.outputFormat = outputFormat = "json";
 
 exports.index = function(req, res) {
-  // db.cypherQuery('MATCH (m:MENU) RETURN m LIMIT 25', function(err, result){
-  //   console.log(result);
-  //   res.json(201, result.data);
-  // })
   Item.all(function(err, data) {
-    // if (err) {
-    //   return handleError(res, err);
-    // }
+    if (err) {
+      return handleError(res, err);
+    }
     console.log(data);
     console.log("Hello");
-    res.json(201, data);
+    res.json(data);
   });
 };
 
@@ -31,7 +27,7 @@ exports.getByMenu = function(req, res) {
     if (err) {
       return handleError(res, err);
     }
-    res.json(200, data);
+    res.json(data);
   });
 };
 
