@@ -36,29 +36,49 @@ exports.login = function (req, res) {
 };
 
 exports.fbLogin = function (req, res) {
-  var fbTempToken = req.body.token;
+  var fbLongToken;
   request.getAsync(
     'https://graph.facebook.com/oauth/access_token?' +
     'grant_type=fb_exchange_token&' +
     'client_id=' + Facebook.appId + '&' +
     'client_secret=' + Facebook.appSecret + '&' +
-    'fb_exchange_token=' + fbTempToken)
+    'fb_exchange_token=' + req.body.token)
       .get(1)
       .then(function(body) {
         console.log('hey');
-        var fbLongToken = body.split('&')[0].split('=')[1];
-
-        var user = new Parse.User();
-        user.set('username', req.body.fbId);
-        user.set('password', Date.now().toString());
-        user.set('email', req.body.email);
-        user.set('fbId', req.body.fbId);
-        user.set('fbSessionId', fbLongToken);
-        user.set('profilePic', req.body.photo);
-        return user.signUp(null)
+        console.log(req.body.username);
+        fbLongToken = body.split('&')[0].split('=')[1];
+        return findUserByFbId(req.body.fbId);
       })
       .then(function(data) {
+        if (data.length > 0) {
+          // Update fb info and return.
+          console.log('found fb user: ', data)
+          return data[0];
+          // return new Promise( function(resolve, reject) { resolve(data) })
+        }
+        return findUserByNativeId(req.body.username)
+          .then(function(data) {
+            if (data.length > 0) {
+              // Update fb info and return.
+              console.log('found NATIVE user: ', data)
+              return data[0];
+            }
+            return createFbUser(
+              req.body.fbId, 
+              req.body.email, 
+              fbLongToken, 
+              req.body.photo
+            );
+          });
+        // console.log('here you go',data)
+        // return res.status(200).send('yolo');
+        // return createFbUser(req.body.fbId, req.body.email, fbLongToken, req.body.photo);
+      })
+      .then(function(data) {
+        // Remember update session token for FB.
         console.log('Data:',data);
+        console.log('attributes:',data.attributes);
         data.attributes.token = data._sessionToken;
         res.json(data);
       })
@@ -68,9 +88,51 @@ exports.fbLogin = function (req, res) {
       });
 }
 
-// exports.findUser = function(req, res) {
-//   var query = new Parse.Query(user);
-// }
+
+// Search for user by Facebook ID. Then search local storage if not found.
+var findUserByNativeId = function(username) {
+  console.log('finding by native username')
+  var query = new Parse.Query(Parse.User);
+  query.equalTo('username', username);
+  return query.find()
+}
+
+// Search for user by Facebook ID.
+var findUserByFbId = function(fbId) {
+  console.log('finding by FB ID')
+  var query = new Parse.Query(Parse.User);
+  query.equalTo('fbId', fbId);
+  return query.find()
+    // .then(function(results) {
+    //   console.log("Successfully retrieved " + results.length + " users.");
+    //   console.log(results);
+    //   // query.equalTo('username', localStorage.username);
+    //   // return query.find()
+    //   return results;
+    // })
+    // // .then(function(results) {
+    // //   return createFbUser();
+    // // })
+    // .catch(function(error) {
+    //   console.log("Error: " + error.code + " " + error.message);
+    // });
+}
+
+// Create new user from Facebook connect info.
+var createFbUser = function(fbId, email, fbLongToken, photoUrl) {
+  var user = new Parse.User();
+  console.log("new user signup")
+  user.set({
+    username:     fbId,
+    password:     Date.now().toString(),
+    email:        email,
+    fbId:         fbId,
+    fbSessionId:  fbLongToken,
+    profilePic:   photoUrl
+  });
+  return user.signUp(null)
+}
+
 
 
 // X1 Config API key from parse.

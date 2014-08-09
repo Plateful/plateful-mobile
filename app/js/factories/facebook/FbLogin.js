@@ -75,7 +75,8 @@
 
       getFbToken: function(dataToStore) {
         var dataToStore = dataToStore || {}
-        dataToStore.token = window.sessionStorage.fbtoken
+        dataToStore.token = window.sessionStorage.fbtoken;
+        dataToStore.username = window.localStorage.username;
         return Restangular.all('users').all('fb-login')
           .post(dataToStore)
           .then(function (response) {
