@@ -1,7 +1,7 @@
 (function() {
 
   var FbLogin;
-  FbLogin = function(Restangular, $q) {
+  FbLogin = function(Restangular, $q, Auth) {
     // Defaults to sessionStorage for storing the Facebook token
     openFB.init({appId: '1495225764050843'});
     console.log("i'm in");
@@ -128,6 +128,6 @@
 
     };
   };
-  FbLogin.$inject = ['Restangular', '$q'];
+  FbLogin.$inject = ['Restangular', '$q', 'Auth'];
   angular.module('app.factory.fbLogin', []).factory('FbLogin', FbLogin);
 })();
