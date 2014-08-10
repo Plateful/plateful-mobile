@@ -24,13 +24,15 @@ exports.create = function (req, res) {
 };
 
 exports.login = function (req, res) {
+  console.log(req.body)
   Parse.User.logIn(req.body.username, req.body.password, {
     success: function(data) {
       data.attributes.token = data._sessionToken;
       res.json(data);
     },
     error: function(data, error) {
-      res.status(500).send(error);
+      error.error = true;
+      res.send(error);
     }
   });
 };

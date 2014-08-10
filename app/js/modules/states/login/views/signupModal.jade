@@ -1,9 +1,9 @@
 div.modal
   ion-header-bar.bar-positive
-    h1.title Sign-Upp
+    h1.title Sign-Up
     button.button.button-clear(ng-click="login.signupModal.hide()") cancel
   ion-content
-    form(ng-submit="signup()")
+    form(ng-submit="login.nativeSignup()")
       ion-list
         label.item.item-input
           span.input-label Email
@@ -14,6 +14,6 @@ div.modal
           span.input-label Password
           input(type="password" ng-model="login.password")
 
-      button.button.button-positive.button-block(ng-click="login.nativeSignup(); login.signupModal.hide()") Sign-Up
+      button.button.button-positive.button-block(ng-click="login.signupModal.hide()") Sign-Up
 
-      button.button.button-positive.button-block(ng-click="login.fbLogin(); login.signupModal.hide()") Facebook Connect
+    button.button.button-positive.button-block(ng-click="login.fbLogin(); login.signupModal.hide()") Facebook Connect

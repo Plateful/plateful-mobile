@@ -1,9 +1,9 @@
 div.modal
   ion-header-bar.bar-positive
-    h1.title Loginnn
-    button.button.button-clear(ng-click="login.closeModal()") cancel
+    h1.title Login
+    button.button.button-clear(ng-click="login.loginModal.hide()") cancel
   ion-content
-    form(ng-submit="login()")
+    form(ng-submit="login.nativeLogin()")
       ion-list
         label.item.item-input
           span.input-label Email
@@ -14,4 +14,4 @@ div.modal
           span.input-label Password
           input(type="password" ng-model="login.password")
 
-      button.button.button-positive.button-block(ng-click="login.nativeLogin(); login.closeModal()") Login
+      button.button.button-positive.button-block(ng-click="login.loginModal.hide()") Login

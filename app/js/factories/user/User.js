@@ -42,6 +42,9 @@
           return Restangular.all('users').all('login')
             .post({username: username, password: password})
             .then(function(data) {
+              if (data.error) {
+                return;
+              }
               Auth.setAuthToken(data.username, data.token, data.fbSessionId, data);
             });
         }
