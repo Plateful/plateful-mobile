@@ -2,6 +2,7 @@
   var LoginCtrl = function($scope, $ionicModal, Auth, User, FbLogin) {
     var vm = this;
     vm.fbStatus = fbStatus();
+    vm.status = User.status;
 
     $ionicModal
       .fromTemplateUrl("js/modules/states/login/views/loginModal.html", {
@@ -21,6 +22,17 @@
           vm.signupModal = modal;
       });
 
+    // Watch for changes on the User status property and update the view.
+    $scope.$watch(function () { 
+        return User.status; 
+      }, 
+      function (newVal, oldVal) {
+        if (typeof newVal !== 'undefined') {
+          vm.status = User.status;
+        }
+      }
+    );
+
     vm.nativeSignup   = nativeSignup;
     vm.nativeLogin    = nativeLogin;
     vm.fbLogin        = fbLogin;
@@ -33,10 +45,10 @@
     //////////////////////
 
     function nativeSignup() {
-      User.signup(vm.username, vm.password);
+      User.signup(vm.username.toLowerCase(), vm.password);
     };
     function nativeLogin() {
-      User.login(vm.username, vm.password);
+      User.login(vm.username.toLowerCase(), vm.password);
     };
     function fbLogin() {
       FbLogin.login();

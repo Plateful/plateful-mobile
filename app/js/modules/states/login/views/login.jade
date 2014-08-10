@@ -5,6 +5,8 @@ ion-view(title="Login")
         img#userPic
       .col-6#userName
     .row
+      {{ login.status }}
+    .row
       button.button.button-block.positive(ng-click="login.signupModal.show()") Signup with Clurtch
     .row
       button.button.button-block.positive(ng-click="login.loginModal.show()") Login with Clurtch

@@ -1,7 +1,7 @@
 (function() {
 
   var FbLogin;
-  FbLogin = function(Restangular, $q, Auth) {
+  FbLogin = function(Restangular, $q, Auth, User) {
     // Defaults to sessionStorage for storing the Facebook token
     openFB.init({appId: '1495225764050843'});
     console.log("i'm in");
@@ -11,6 +11,7 @@
     //  openFB.init({appId: 'YOUR_FB_APP_ID', tokenStore: window.localStorage});
 
     return {
+      // Submits log-in request to facebook.
       login: function() {
         var deferred = $q.defer()
         openFB.login(function(response) {
@@ -26,6 +27,7 @@
         return deferred.promise;
       }, 
 
+      // Logs out a facebook connected user.
       logout: function() {
         openFB.logout(
           function() {
@@ -34,6 +36,7 @@
           this.errorHandler);
       },
 
+      // Gets Facebook user information and sets items on view.
       getInfo: function() {
         openFB.api({
           path: '/me',
@@ -47,6 +50,7 @@
         });
       },
 
+      // Gets Facebook connection status of the user.
       getStatus: function() {
         var status;
         openFB.getLoginStatus(function(foundStatus) {
@@ -55,6 +59,7 @@
         return status;
       },
 
+      // Posts an item to Facebook. Currently not working due to admin accoun restrictions.
       share: function() {
         openFB.api({
           method: 'POST',
@@ -91,6 +96,7 @@
 
       },
 
+      // Gets Facebook user data to store in database.
       getFbUserCreationData: function() {
         var deferred = $q.defer();
         openFB.api({
@@ -104,6 +110,8 @@
         return deferred.promise;
       },
 
+      // Starts Facebook login, requests long term token from Facebook and stores
+      // Facebook token and data in database.
       loginFlow: function () {
         var fbUser = this;
         this.login()
@@ -118,9 +126,11 @@
             return fbUser.getFbToken(paramsToStore)
           })
           .then(function(){
+            User.status = "Facebook connected!";
             fbUser.getInfo();
           })
           .catch(function(error) {
+            User.status = "An error occurred logging in with Facebook. Please try again.";
             console.log('Error: ', error);
           })
       }
@@ -128,6 +138,6 @@
 
     };
   };
-  FbLogin.$inject = ['Restangular', '$q', 'Auth'];
+  FbLogin.$inject = ['Restangular', '$q', 'Auth', 'User'];
   angular.module('app.factory.fbLogin', []).factory('FbLogin', FbLogin);
 })();

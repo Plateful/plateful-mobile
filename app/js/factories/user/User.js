@@ -1,9 +1,10 @@
 (function() {
   angular.module('app.factory.user', []).service('User', [
     'Restangular', 'Auth', function(Restangular, Auth) {
-      var User;
-      User = Restangular.all('users');
+      var User = Restangular.all('users');
+
       return {
+        status: undefined,
         get: function() {
           return User;
         },
@@ -36,17 +37,19 @@
             .post({username: username, password: password})
             .then(function(data) {
               Auth.setAuthToken(data.username, data.token, data.fbSessionId, data);
-            });
+              this.status = 'Account created!'
+            }.bind(this));
         },
         login: function(username, password){
           return Restangular.all('users').all('login')
             .post({username: username, password: password})
             .then(function(data) {
               if (data.error) {
-                return;
+                return this.status = data.message;
               }
               Auth.setAuthToken(data.username, data.token, data.fbSessionId, data);
-            });
+              this.status = 'Logged In!'
+            }.bind(this))
         }
       };
     }
