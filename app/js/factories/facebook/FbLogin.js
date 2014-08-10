@@ -73,6 +73,8 @@
         alert(error.message);
       },
 
+      // Sends request to server for long term Facebook token.
+      // Returns user with updated info or new user.
       getFbToken: function(dataToStore) {
         var dataToStore = dataToStore || {}
         dataToStore.token = window.sessionStorage.fbtoken;
@@ -80,9 +82,8 @@
         return Restangular.all('users').all('fb-login')
           .post(dataToStore)
           .then(function (response) {
-            // Set sessionStorage token and local Storage info.
-            console.log("YEEE");
             console.log(response);
+            Auth.setAuthToken(data.username, data.token, data.fbSessionId, data);
           })
           .catch(function(error) {
             console.log('uh oh');

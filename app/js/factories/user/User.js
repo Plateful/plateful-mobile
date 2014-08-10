@@ -35,14 +35,14 @@
           return Restangular.all('users').all('signup')
             .post({username: username, password: password})
             .then(function(data) {
-              Auth.setAuthToken(data.username, data.token, data);
+              Auth.setAuthToken(data.username, data.token, data.fbSessionId, data);
             });
         },
         login: function(username, password){
           return Restangular.all('users').all('login')
             .post({username: username, password: password})
             .then(function(data) {
-              Auth.setAuthToken(data.username, data.token, data);
+              Auth.setAuthToken(data.username, data.token, data.fbSessionId, data);
             });
         }
       };
