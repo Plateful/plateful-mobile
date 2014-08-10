@@ -80,6 +80,7 @@
         return Restangular.all('users').all('fb-login')
           .post(dataToStore)
           .then(function (response) {
+            // Set sessionStorage token and local Storage info.
             console.log("YEEE");
             console.log(response);
           })
