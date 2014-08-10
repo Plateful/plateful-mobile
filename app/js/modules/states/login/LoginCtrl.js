@@ -1,8 +1,8 @@
 (function() {
   var LoginCtrl = function($scope, $ionicModal, Auth, User, FbLogin) {
     var vm = this;
-    vm.fbStatus = fbStatus();
     vm.status = User.status;
+    FbLogin.getStatus();
 
     $ionicModal
       .fromTemplateUrl("js/modules/states/login/views/loginModal.html", {
@@ -29,6 +29,16 @@
       function (newVal, oldVal) {
         if (typeof newVal !== 'undefined') {
           vm.status = User.status;
+        }
+      }
+    );
+
+    $scope.$watch(function () { 
+        return FbLogin.status; 
+      }, 
+      function (newVal, oldVal) {
+        if (typeof newVal !== 'undefined') {
+          vm.fbStatus = FbLogin.status;
         }
       }
     );
@@ -62,15 +72,12 @@
     function fbGetInfo() {
       FbLogin.getInfo();
     };
-    function fbStatus() {
-      return FbLogin.getStatus();
-    }
     function fbShare() {
       FbLogin.share();
-    }
+    };
     function fbGetToken() {
       FbLogin.getFbToken();
-    }
+    };
   };
 
   LoginCtrl

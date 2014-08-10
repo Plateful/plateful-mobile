@@ -11,6 +11,8 @@
     //  openFB.init({appId: 'YOUR_FB_APP_ID', tokenStore: window.localStorage});
 
     return {
+      status: undefined,
+      
       // Submits log-in request to facebook.
       login: function() {
         var deferred = $q.defer()
@@ -31,8 +33,9 @@
       logout: function() {
         openFB.logout(
           function() {
-            alert('Logout successful');
-          },
+            User.status = "Logged out from Facebook.";
+            this.getStatus();
+          }.bind(this),
           this.errorHandler);
       },
 
@@ -52,11 +55,9 @@
 
       // Gets Facebook connection status of the user.
       getStatus: function() {
-        var status;
         openFB.getLoginStatus(function(foundStatus) {
-          status = foundStatus.status;
-        });
-        return status;
+          this.status = foundStatus.status;
+        }.bind(this));
       },
 
       // Posts an item to Facebook. Currently not working due to admin accoun restrictions.
@@ -128,6 +129,7 @@
           .then(function(){
             User.status = "Facebook connected!";
             fbUser.getInfo();
+            fbUser.getStatus();
           })
           .catch(function(error) {
             User.status = "An error occurred logging in with Facebook. Please try again.";
