@@ -5,7 +5,9 @@ ion-view(title="Login")
         img#userPic
       .col-6#userName
     .row
-      button.button.button-block.positive(ng-click="login.nativeLogin()") Login with Clurtch
+      button.button.button-block.positive(ng-click="login.signupModal.show()") Signup with Clurtch
+    .row
+      button.button.button-block.positive(ng-click="login.loginModal.show()") Login with Clurtch
     .row
       button.button.button-block.positive(ng-click="login.fbLoginFlow()" ng-show="login.fbStatus!=='connected'") Login with Facebook
     .row

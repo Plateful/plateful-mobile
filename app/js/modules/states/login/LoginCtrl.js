@@ -3,6 +3,24 @@
     var vm = this;
     vm.fbStatus = fbStatus();
 
+    $ionicModal
+      .fromTemplateUrl("js/modules/states/login/views/loginModal.html", {
+        scope: $scope,
+        animation: "slide-in-up"
+      })
+      .then(function(modal) {
+          vm.loginModal = modal;
+      });
+
+    $ionicModal
+      .fromTemplateUrl("js/modules/states/login/views/signupModal.html", {
+        scope: $scope,
+        animation: "slide-in-up"
+      })
+      .then(function(modal) {
+          vm.signupModal = modal;
+      });
+
     vm.nativeSignup   = nativeSignup;
     vm.nativeLogin    = nativeLogin;
     vm.fbLogin        = fbLogin;

@@ -3,7 +3,7 @@
     var vm = this;
 
     $ionicModal
-      .fromTemplateUrl("js/modules/tabs/settings/views/login.html", {
+      .fromTemplateUrl("js/modules/tabs/settings/views/loginModal.html", {
         scope: $scope,
         animation: "slide-in-up"
       })
@@ -12,7 +12,7 @@
       });
 
     $ionicModal
-      .fromTemplateUrl("js/modules/tabs/settings/views/signup.html", {
+      .fromTemplateUrl("js/modules/tabs/settings/views/signupModal.html", {
         scope: $scope,
         animation: "slide-in-up"
       })
