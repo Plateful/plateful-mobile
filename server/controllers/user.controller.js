@@ -45,29 +45,20 @@ exports.fbLogin = function (req, res) {
     'fb_exchange_token=' + req.body.token)
       .get(1)
       .then(function(body) {
-        console.log('hey');
-        console.log(req.body.username);
         fbLongToken = body.split('&')[0].split('=')[1];
         return findUserByFbId(req.body.fbId);
       })
       .then(function(foundFbUser) {
-        console.log("EEEE")
         if (foundFbUser.length > 0) {
-          // Update fb info and return.
           console.log('found fb user: ', foundFbUser[0].id);
-          return updateFbUser(foundFbUser[0].id, req.body.fbId, req.body.email, fbLongToken, req.body.photo)
-            .then(function(data) {
-              console.log('UPDATED FB DATA:',data)
-              return data;
-            })
+          return updateFbUser(foundFbUser[0].id, req.body.fbId, req.body.email, fbLongToken, req.body.photo);
           // return new Promise( function(resolve, reject) { resolve(data) })
         }
         return findUserByNativeId(req.body.username)
-          .then(function(data) {
-            if (data.length > 0) {
-              // Update fb info and return.
-              console.log('found NATIVE user: ', data)
-              return data[0];
+          .then(function(foundNativeId) {
+            if (foundNativeId.length > 0) {
+              console.log('found NATIVE user: ', foundNativeId)
+              return updateFbUser(foundNativeId[0].id, req.body.fbId, req.body.email, fbLongToken, req.body.photo);
             }
             return createFbUser(
               req.body.fbId, 
@@ -82,7 +73,7 @@ exports.fbLogin = function (req, res) {
       })
       .then(function(data) {
         // Remember update session token for FB.
-        console.log('Data:',data);
+        // console.log('Data:',data);
         console.log('attributes:',data.attributes);
         data.attributes.token = data._sessionToken;
         res.json(data);
@@ -94,33 +85,20 @@ exports.fbLogin = function (req, res) {
 }
 
 
-// Search for user by Facebook ID. Then search local storage if not found.
+// Search for existing native user by username.
 var findUserByNativeId = function(username) {
   console.log('finding by native username')
   var query = new Parse.Query(Parse.User);
   query.equalTo('username', username);
-  return query.find()
+  return query.find();
 }
 
-// Search for user by Facebook ID.
+// Search for existing user by Facebook ID.
 var findUserByFbId = function(fbId) {
   console.log('finding by FB ID')
   var query = new Parse.Query(Parse.User);
   query.equalTo('fbId', fbId);
-  return query.find()
-    // .then(function(results) {
-    //   console.log("Successfully retrieved " + results.length + " users.");
-    //   console.log(results);
-    //   // query.equalTo('username', localStorage.username);
-    //   // return query.find()
-    //   return results;
-    // })
-    // // .then(function(results) {
-    // //   return createFbUser();
-    // // })
-    // .catch(function(error) {
-    //   console.log("Error: " + error.code + " " + error.message);
-    // });
+  return query.find();
 }
 
 // Create new user from Facebook connect info.
@@ -138,30 +116,23 @@ var createFbUser = function(fbId, email, fbLongToken, photoUrl) {
   return user.signUp(null);
 }
 
-var updateFbUser = function(fbId, email, fbLongToken, photoUrl) {
-  var user = new Parse.User();
-  console.log("update fb user")
-  // console.log("work?");
-  return user.save({
-    fbEmail:      email,
-    fbId:         fbId,
-    fbSessionId:  fbLongToken,
-    fbPic:        photoUrl
-  });
-  // Parse.Cloud.useMasterKey();
-  // return user.save(null);
-}
-
-var fbUserInfo = function(fbId, email, fbLongToken, photoUrl) {
-  var user = new Parse.User();
-  console.log("update fb user")
-  user.set({
-    fbEmail:      email,
-    fbId:         fbId,
-    fbSessionId:  fbLongToken,
-    fbPic:        photoUrl
-  });
-  return user;
+// Update user from Facebook connect info.
+var updateFbUser = function(parseId, fbId, email, fbLongToken, photoUrl) {
+  Parse.Cloud.useMasterKey();
+  var query = new Parse.Query(Parse.User);
+  return query.get(parseId)
+    .then(function(user) {
+      user.set({
+        fbEmail:      email,
+        fbId:         fbId,
+        fbSessionId:  fbLongToken,
+        fbPic:        photoUrl
+      });
+      return user.save();
+    })
+    .then(function(data) {
+      return data;
+    });
 }
 
 // X1 Config API key from parse.
