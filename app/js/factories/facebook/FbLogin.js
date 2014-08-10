@@ -12,7 +12,7 @@
 
     return {
       status: undefined,
-      
+
       // Submits log-in request to facebook.
       login: function() {
         var deferred = $q.defer()
@@ -33,6 +33,7 @@
       logout: function() {
         openFB.logout(
           function() {
+            User.logout();
             User.status = "Logged out from Facebook.";
             this.getStatus();
           }.bind(this),

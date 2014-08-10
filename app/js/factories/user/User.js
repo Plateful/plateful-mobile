@@ -50,6 +50,9 @@
               Auth.setAuthToken(data.username, data.token, data.fbSessionId, data);
               this.status = 'Logged In!'
             }.bind(this))
+        },
+        logout: function() {
+          Auth.resetSession();
         }
       };
     }
