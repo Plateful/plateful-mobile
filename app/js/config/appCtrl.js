@@ -1,6 +1,6 @@
 (function() {
   angular.module('app').controller('AppCtrl', [
-    '$scope', '$rootScope', '$ionicModal', '$ionicNavBarDelegate', 'CreateReview', 'Geo', function($scope, $rootScope, $ionicModal, $ionicNavBarDelegate, CreateReview, Geo) {
+    '$scope', '$rootScope', '$ionicModal', '$ionicNavBarDelegate', 'CreateReview', 'BackgroundGeo', function($scope, $rootScope, $ionicModal, $ionicNavBarDelegate, CreateReview, BackgroundGeo) {
       $ionicModal.fromTemplateUrl('imageModal.html', function($ionicModal) {
         return $rootScope.imageModal = $ionicModal;
       }, {
@@ -42,9 +42,9 @@
           return $scope.src = error;
         };
         navigator.camera.getPicture(onSuccess, onFail, options);
-        return Geo.getLocation().then(function(position) {
-          $scope.lat = position.coords.latitude;
-          $scope.lng = position.coords.longitude;
+        return BackgroundGeo.current().then(function(position) {
+          $scope.lat = position.latitude;
+          $scope.lng = position.longitude;
           return console.log($scope.lat, $scope.lng);
         }, function(error) {
           return console.log('Unable to get current location: ' + error);

@@ -17,13 +17,15 @@
     ]);
 
   app.config(function(RestangularProvider) {
+    // RestangularProvider.setBaseUrl('http://server4dave.cloudapp.net:9000/api/v1/');
     RestangularProvider.setBaseUrl('http://localhost:9000/api/v1/');
-    // RestangularProvider.setBaseUrl('http://10.7.24.253:9000/api/v1/');
-    // RestangularProvider.setBaseUrl('http://23.99.64.56:9000/api/v1/');
+
+
     // RestangularProvider.setDefaultHttpFields({cache: true});
     RestangularProvider.setRequestSuffix('/');
     RestangularProvider.setRestangularFields({
       cache: true,
+      id: '_id',
       route: "restangularRoute",
       selfLink: "self.href"
     });

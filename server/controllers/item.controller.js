@@ -11,11 +11,12 @@ exports.outputFormat = outputFormat = "json";
 
 exports.index = function(req, res) {
   Item.all(function(err, data) {
-    // if (err) {
-    //   return handleError(res, err);
-    // }
-    console.log("Hello");
-    res.json(201, "data");
+    if (err) {
+      return handleError(res, err);
+    }
+    // console.log(data);
+    // console.log("Hello");
+    res.json(data);
   });
 };
 
@@ -26,7 +27,7 @@ exports.getByMenu = function(req, res) {
     if (err) {
       return handleError(res, err);
     }
-    res.json(200, data);
+    res.json(data);
   });
 };
 

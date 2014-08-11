@@ -21,21 +21,21 @@ describe('Auth', function(){
 
       expect(auth.isSignedIn).toBeDefined();
 
-    })
+    });
     it('Should have a refreshSession method', function(){
 
       expect(auth.resetSession).toBeDefined();
 
-    })
+    });
     it('Should Is SignedIn Should return true if user is signed in', function(){
       expect(auth.isSignedIn()).toBe(true);
-    })
+    });
     it('Resest Session should remove any user properties from local storage', function(){
       auth.resetSession()
       var email = localStorage.getItem('user_email');
       var token = localStorage.getItem('user_token');
       expect(email).toBe(null);
       expect(token).toBe(null);
-    })
+    });
 
 });

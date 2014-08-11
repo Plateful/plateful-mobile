@@ -5,8 +5,8 @@ var Menu = function() {
 };
 
 Menu.prototype.all = function(callback) {
-  var q = "MATCH (menu:Menu) RETURN menu";
-  this.query(q, function(err, result) {
+  var q = "MATCH (menu:MENU) WHERE menu.place_id IS NULL RETURN menu";
+  db.cypherQuery(q, function(err, result) {
     callback(err, result.data);
   });
 };
@@ -31,13 +31,28 @@ Menu.prototype.create = function(menu, callback) {
   });
 };
 
-Menu.prototype.update = function(menu_id, menu, callback) {
+Menu.prototype.update = function(res, menu_id, menu, callback) {
+  console.log(menu_id);
+  delete menu.menu_id;
+  var menu_id = Number(menu_id)
   var params = {
     menu_id: menu_id,
-    changes: menu
+    place_id: menu.place_id,
+    address : menu.address,
+    lat: menu.lat,
+    lng: menu.lng
   };
-  var q = "";
-  this.query(q, params, function(err, result) {
+  var q = ["START menu=node({menu_id})",
+            "SET menu.place_id = {place_id}",
+            "SET menu.address = {address}",
+            "SET menu.latitude = {lat}",
+            "SET menu.longitude = {lng}",
+            "RETURN menu"].join("");
+  db.cypherQuery(q, params, function(err, result) {
+    console.log(err);
+    if (err) {
+      return handleError(res, err);
+    }
     callback(err, result.data);
   });
 };
@@ -50,6 +65,12 @@ Menu.prototype.destroy = function(menu_id, callback) {
   db.cypherQuery(q, params, function(err, result) {
     callback(err, result.data);
   });
+};
+
+
+var handleError = function(res, err) {
+  res.status(500)
+  return res.send(err);
 };
 
 module.exports = new Menu();

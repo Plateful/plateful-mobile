@@ -48,10 +48,10 @@ describe('User', function(){
     it('Should have a getReviewsByUser method', function(){
         // expect(scope.text).toBe('Hello World!');
         expect(user.getReviewsByUser).toBeDefined();
-    });    
+    });
     it('Should have a signup method', function(){
         expect(user.signup).toBeDefined();
-    });    
+    });
     it('Should have a login method', function(){
         expect(user.login).toBeDefined();
     });

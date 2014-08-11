@@ -17,7 +17,8 @@ app = angular.module("app", [
 ])
 # Set restangular's base URL
 app.config( (RestangularProvider)->
-  RestangularProvider.setBaseUrl('http://localhost:9000/api/v1/')
+  # RestangularProvider.setBaseUrl('http://server4dave.cloudapp.net:9000/api/v1/')
+  # RestangularProvider.setBaseUrl('http://localhost:9000/api/v1/')
   RestangularProvider.setRequestSuffix('/')
   RestangularProvider.setRestangularFields({
     route: "restangularRoute",

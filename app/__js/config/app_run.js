@@ -2,7 +2,7 @@ var app;
 
 app = angular.module("app");
 
-app.constant('ServerUrl', 'http://localhost:9000/');
+// app.constant('ServerUrl', 'http://localhost:9000/');
 
 ionic.Platform.ready(function() {
   app.config(function($provide, $httpProvider) {
