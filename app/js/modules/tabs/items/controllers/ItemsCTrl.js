@@ -1,5 +1,5 @@
 (function() {
-  var ItemsCtrl = function($scope, $ionicModal, MenuItem, Menu, ImagesService, $q, bGeo, findDistance, makeStars) {
+  var ItemsCtrl = function($scope, $ionicModal, MenuItem, Menu, ImagesService, $q, BackgroundGeo, findDistance, makeStars) {
 
     // var locater = $q.defer()
 
@@ -11,7 +11,7 @@
     // locator.resolve(window.currLocation.coords);
 
     // console.log(bGeo.get())
-    bGeo.window()
+    BackgroundGeo.current()
       .then(function(data){
         console.log("bGeo", data);
         vm.pyrmont = new google.maps.LatLng(data.latitude,data.longitude);
@@ -137,7 +137,7 @@
     }
   };
   ItemsCtrl
-    .$inject = ["$scope", "$ionicModal", "MenuItem", "Menu", "ImagesService", "$q", "bGeo", "findDistance", "makeStars"];
+    .$inject = ["$scope", "$ionicModal", "MenuItem", "Menu", "ImagesService", "$q", "BackgroundGeo", "findDistance", "makeStars"];
   angular
     .module("app")
     .controller("ItemsCtrl", ItemsCtrl);

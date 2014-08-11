@@ -29,7 +29,7 @@
     return angular.bootstrap(document, ['app']);
   });
 
-  app.run(function($rootScope, Auth, $window, $timeout, bGeo) {
+  app.run(function($rootScope, Auth, $window, $timeout, BackgroundGeo) {
     $rootScope.currentLocation = window.backgroundGeoLocation;
     $rootScope.$apply();
     $rootScope.GLOBALS = GLOBALS;

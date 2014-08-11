@@ -44,11 +44,11 @@ module.exports = function(config) {
 
     // web server port
     port: 9876,
-    
+
     coverageReporter: {
       type : 'html',
       dir : 'coverage/'
-    }
+    },
 
 
     // enable / disable colors in the output (reporters and logs)
