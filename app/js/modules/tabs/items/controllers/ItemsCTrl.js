@@ -9,7 +9,7 @@
         ,infowindow;
 
     // locator.resolve(window.currLocation.coords);
-
+    
     // console.log(bGeo.get())
     BackgroundGeo.current()
       .then(function(data){
