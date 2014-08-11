@@ -4,15 +4,15 @@ ion-view(title="Login")
       .col-6
         img#userPic
       .col-6#userName
-    .row
+    .row 
       {{ login.status }}
     .row
-      button.button.button-block.positive(ng-click="login.signupModal.show()") Signup with Clurtch
+      button.button.button-block.positive(ng-click="login.signupModal.show()") Sign-Up with Clurtch
     .row
       button.button.button-block.positive(ng-click="login.loginModal.show()") Login with Clurtch
     .row
-      button.button.button-block.positive(ng-click="login.fbLoginFlow()" ng-show="login.fbStatus!=='connected'") Login with Facebook
+      button.button.button-block.button-facebook-style(ng-click="login.fbLoginFlow()" ng-show="login.fbStatus!=='connected'") Login with Facebook
     .row
-      button.button.button-block.positive(ng-click="login.fbLogout()" ng-show="login.fbStatus==='connected'") Logout from Facebook
-    .row
-      button.button.button-block.positive(ng-click="login.fbGetInfo()") GetInfo from Facebook
+      button.button.button-block.button-facebook-style(ng-click="login.fbLogout()" ng-show="login.fbStatus==='connected'") Logout from Facebook
+    //- .row
+      //- button.button.button-block.positive(ng-click="login.fbGetInfo()") GetInfo from Facebook

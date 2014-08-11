@@ -13,7 +13,8 @@ div.modal
         label.item.item-input
           span.input-label Password
           input(type="password" ng-model="login.password")
-
-      button.button.button-positive.button-block(ng-click="login.signupModal.hide()") Sign-Up
-
-    button.button.button-positive.button-block(ng-click="login.fbLogin(); login.signupModal.hide()") Facebook Connect
+      button.button.button-block.button-positive(ng-click="login.signupModal.hide()") Sign-Up
+    .row
+      .col.col-center(style="text-align: center") - or -
+    .row
+      button.button.button-block.button-facebook-style(ng-click="login.fbLogin(); login.signupModal.hide()") Facebook Connect
