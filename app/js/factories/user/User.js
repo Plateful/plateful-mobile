@@ -1,5 +1,5 @@
 (function() {
-  angular.module('app.factory.user', []).service('User', [
+  angular.module('app.factory.user', []).factory('User', [
     'Restangular', 'Auth', function(Restangular, Auth) {
       var User = Restangular.all('users');
 
