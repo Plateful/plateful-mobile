@@ -13,25 +13,27 @@
     BackgroundGeo
       .current()
       .then(function(data){
+
         vm.locate = data;
+
+        vm.searchQuery = {
+          vicinity: 'San Francisco',
+          // reference: "Cliffs house",
+          latitude: vm.locate.latitude,
+          longitude: vm.locate.longitude
+        };
+
+        googleSearch(vm.searchQuery)
+          .then(function(data) {
+            console.log(data);
+            vm.locations = data;
+          });
       })
 
     vm.searchEventTimeout = void 0;
 
     vm.searchInputElement = angular.element($document.find('#searchQuery'));
 
-    vm.searchQuery = {
-      vicinity: 'San Francisco',
-      // reference: "Cliffs house",
-      latitude: vm.locate.latitude,
-      longitude: vm.locate.longitude
-    };
-
-    googleSearch(vm.searchQuery)
-      .then(function(data) {
-        console.log(data);
-        vm.locations = data;
-      });
 
     /////////////////////
 
