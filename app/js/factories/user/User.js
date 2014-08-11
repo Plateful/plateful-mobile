@@ -36,6 +36,9 @@
           return Restangular.all('users').all('signup')
             .post({username: username, password: password})
             .then(function(data) {
+              if (data.error) {
+                return this.status = data.message;
+              }
               Auth.setAuthToken(data.username, data.token, data.fbSessionId, data);
               this.status = 'Account created!'
             }.bind(this));

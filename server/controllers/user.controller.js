@@ -17,8 +17,9 @@ exports.create = function (req, res) {
       data.attributes.token = data._sessionToken;
       res.json(data);
     },
-    error: function(data, err) {
-      res.status(500).send(error);
+    error: function(data, error) {
+      error.error = true;
+      res.send(error);
     }
   });
 };
