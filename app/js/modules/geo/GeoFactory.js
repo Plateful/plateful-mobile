@@ -17,6 +17,13 @@
   ]).factory('bGeo', [
     '$q', function($q) {
       return {
+        window: function(){
+          var locator = $q.defer()
+          locator.resolve(window.currLocation.coords)
+          return locator.promise
+
+
+        },
         get: function() {
           return this.bgGeo = window.backgroundGeoLocation;
         }

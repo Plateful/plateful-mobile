@@ -14,8 +14,8 @@ exports.index = function(req, res) {
     if (err) {
       return handleError(res, err);
     }
-    console.log(data);
-    console.log("Hello");
+    // console.log(data);
+    // console.log("Hello");
     res.json(data);
   });
 };
