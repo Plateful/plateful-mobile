@@ -56,18 +56,3 @@ describe('User', function(){
         expect(user.login).toBeDefined();
     });
 });
-
-describe("Integration/E2E Testing", function() {
-
-  // start at root before every test is run
-  beforeEach(function() {
-    browser().navigateTo('/');
-  });
-
-  // test default route
-  it('should jump to the /home path when / is accessed', function() {
-    browser().navigateTo('#/tab/settings');
-    expect(browser().location().path()).toBe("/#/tab/settings");
-  });
-
-});
