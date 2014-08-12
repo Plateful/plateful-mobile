@@ -1,5 +1,5 @@
 'use strict';
-describe('Menu', function(){
+xdescribe('Menu', function(){
     var scope;//we'll use this scope in our tests
     var menu;
     //mock Application to allow us to inject our own dependencies

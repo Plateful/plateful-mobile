@@ -220,7 +220,7 @@ gulp.task 'scripts:vendor', ->
     gulp.src(paths.scripts[scriptsName])
       # .pipe(changed(destinations.scripts))
       # copy .coffee to www/ also, because sourcemap links to sources with relative path
-      .pipe(gulp.dest(destinations.scripts))
+      # .pipe(gulp.dest(destinations.scripts))
       # .pipe(coffee({
         # sourcemaps arent ready for gulp-concat yet :/ lets wait with that
         # sourceMap: false

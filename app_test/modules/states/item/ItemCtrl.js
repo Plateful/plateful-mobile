@@ -1,5 +1,5 @@
 'use strict';
-describe('ItemCtrl', function(){
+xdescribe('ItemCtrl', function(){
     var scope;//we'll use this scope in our tests
     var controller;
     //mock Application to allow us to inject our own dependencies
