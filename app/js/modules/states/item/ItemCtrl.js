@@ -21,11 +21,10 @@
     Item
       .find(vm.item_id)
       .then(function(data) {
-        vm.item = data[0];
-        vm.item.stars = makeStars(vm.item.rating);
+        vm.item = data
       });
 
-    vm.item = Item.getStorage(vm.item_id);
+    // vm.item = Item.getStorage(vm.item_id);
 
     vm.showPhotos   = showPhotos;
     vm.showReviews  = showReviews;

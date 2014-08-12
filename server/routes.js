@@ -1,6 +1,7 @@
 /**
  * Main application routes
  */
+<<<<<<< HEAD
 var errors = require('./components/errors');
 var cors = require('cors');
 var busboy = require('connect-busboy');
@@ -10,6 +11,18 @@ var Menu = require('./controllers/menu.controller');
 var Review = require('./controllers/review.controller');
 var User = require('./controllers/user.controller');
 var List = require('./controllers/list.controller');
+=======
+var errors = require('./components/errors')
+    ,cors = require('cors')
+    ,busboy = require('connect-busboy')
+    ,express = require('express')
+    ,Item = require('./controllers/item.controller')
+    ,Menu = require('./controllers/menu.controller')
+    ,Review = require('./controllers/review.controller')
+    ,User = require('./controllers/user.controller')
+    ,request = require('supertest')
+    ,should = require('should')
+>>>>>>> Update: Items View | add link to shared item sate.
 
 module.exports.applyRoutes = function(app) {
 
@@ -81,4 +94,5 @@ module.exports.applyRoutes = function(app) {
   app.route('/*').get(function(req, res) {
     res.sendfile(app.get('appPath') + '/index.html');
   });
+
 };

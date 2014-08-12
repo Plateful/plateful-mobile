@@ -23,7 +23,7 @@ ion-view(hide-nav-bar="true")
       //-     br
       //-     br
     div#map(style="width:100px; height:100px; display:none;")
-    div(class="list card" ng-repeat="item in vm.items | orderBy: 'dist' | filter:vm.itemsFilter" href="#/tab/items/item/{{item.id}}" ng-click="vm.storeItem(item)")
+    div(class="list card" ng-repeat="item in vm.items | orderBy: 'dist' | filter:vm.itemsFilter" ng-click="vm.storeItem(item)")
 
       //- div(class="item item-avatar")
       //-   h2 Pretty Hate Machine
@@ -31,16 +31,14 @@ ion-view(hide-nav-bar="true")
 
 
       div(class="item item-image")
-        //- img(src='{{item.photos.url}}')
-        img(ng-src="{{item.photos[0].getUrl({'maxWidth': 640, 'maxHeight': 640})}}")
+        img(src='{{item.photos.url}}')
+        //- img(ng-src="{{item.photos[0].getUrl({'maxWidth': 640, 'maxHeight': 640})}}")
 
 
 
-      a(class="item" href="#")
+      a(class="item" href="#/tab/items/item/{{item._id}}")
         div {{item.name | limitTo:30 }}
-
         div.text-left.assertive {{item.stars}}
-        //- div.text-left.assertive ★★★★★
         div.text-left.energized.pull-right (250)
 
         span.text-right

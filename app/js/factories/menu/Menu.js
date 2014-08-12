@@ -75,5 +75,5 @@
 
 
   Menu.$inject = ['Restangular'];
-  return angular.module('app.factory.menu', []).factory('Menu', Menu).service('MenuCache', MenuCache);
+  return angular.module('app.model.menu', []).factory('Menu', Menu).service('MenuCache', MenuCache);
 })();

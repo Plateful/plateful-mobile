@@ -140,5 +140,5 @@
     };
   };
   FbLogin.$inject = ['Restangular', '$q', 'Auth', 'User'];
-  angular.module('app.factory.fbLogin', []).factory('FbLogin', FbLogin);
+  angular.module('app.model.fbLogin', []).factory('FbLogin', FbLogin);
 })();
