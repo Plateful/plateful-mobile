@@ -9,7 +9,7 @@
         ,infowindow;
 
     // locator.resolve(window.currLocation.coords);
-    
+
     // console.log(bGeo.get())
     BackgroundGeo.current()
       .then(function(data){
@@ -81,7 +81,7 @@
           vm.items = results;
           for (var i = 0; i < vm.items.length; i++) {
 
-            vm.items[i].dist = findDistance.get( vm.items[i].geometry.location.k, vm.items[i].geometry.location.B )
+            vm.items[i].dist = BackgroundGeo.distance( vm.items[i].geometry.location.k, vm.items[i].geometry.location.B )
             vm.items[i].stars = makeStars.get(vm.items[i].rating)
             // createMarker(results[i]);
             // console.log(place);
