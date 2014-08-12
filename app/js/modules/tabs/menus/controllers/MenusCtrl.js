@@ -28,7 +28,7 @@
             console.log(data);
             vm.locations = data;
           });
-      })
+      });
 
     vm.searchEventTimeout = void 0;
 

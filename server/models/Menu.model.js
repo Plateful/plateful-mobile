@@ -21,6 +21,20 @@ Menu.prototype.find = function(menu_id, callback) {
   });
 };
 
+Menu.prototype.getMenuItems = function(req, res) {
+  var params = {
+    place_id: req.params.id
+  };
+  var q = "MATCH (m:MENU)-[:HAS_ITEMS]->(i) WHERE m.place_id = {place_id} RETURN i";
+  db.cypherQuery(q, params, function(err, result) {
+    if(err){
+      return handleError(res, err);
+    }
+    res.status(200);
+    res.json(result.data);
+  });
+};
+
 Menu.prototype.create = function(menu, callback) {
   var params = {
     menu: menu
@@ -34,7 +48,7 @@ Menu.prototype.create = function(menu, callback) {
 Menu.prototype.update = function(res, menu_id, menu, callback) {
   console.log(menu_id);
   delete menu.menu_id;
-  var menu_id = Number(menu_id)
+  var menu_id = Number(menu_id);
   var params = {
     menu_id: menu_id,
     place_id: menu.place_id,
@@ -69,7 +83,7 @@ Menu.prototype.destroy = function(menu_id, callback) {
 
 
 var handleError = function(res, err) {
-  res.status(500)
+  res.status(500);
   return res.send(err);
 };
 

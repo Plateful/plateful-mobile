@@ -13,8 +13,9 @@
       create: create,
       update: update,
       destroy: destroy,
-      getByLocation: getByLocation
-    }
+      getByLocation: getByLocation,
+      getMenuItems: getMenuItems
+    };
 
     return instance;
 
@@ -42,6 +43,9 @@
       }
       data.val = nearbyFilter;
       return Restangular.all('menus').all('location').post(data);
+    }
+    function getMenuItems(id){
+      return Restangular.one('menus', id).all('items').getList();
     }
 
   };
