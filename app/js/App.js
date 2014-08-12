@@ -12,14 +12,11 @@
     "google-maps",
     "ion-google-place",
     "app.modules",
-<<<<<<< HEAD
     "app.factories",
     "app.directives",
     "app.filters"
-=======
     "app.models",
     "app.directives"
->>>>>>> Architecture Update: Convert all modules | app.factories - to - app.models
     ]);
 
   app.config(function(RestangularProvider) {
