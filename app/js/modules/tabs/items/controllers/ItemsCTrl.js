@@ -1,27 +1,30 @@
 (function() {
-  var ItemsCtrl = function($scope, $ionicModal, MenuItem, Menu, ImagesService, $q, BackgroundGeo, findDistance, makeStars, ItemMapService, MakeMap) {
+  var ItemsCtrl = function($scope, $ionicModal, MenuItem, Menu, ImagesService, $q, BackgroundGeo, findDistance, makeStars, ItemMapService) {
+
 
     var vm,map,service,infowindow;
 
     vm = this
 
-    BackgroundGeo.current()
+    BackgroundGeo
+      .current()
       .then(function(data){
         // vm.pyrmont = new google.maps.LatLng(data.latitude,data.longitude);
         // initialize(data.latitude, data.longitude)
         vm.lat = data.latitude
         vm.long = data.longitude
-      })
-      getMenuItems(null)
-        // MenuItem.get()
-        .then(function(data) {
-          console.log(data);
-          vm.items = data;
-          _.each(vm.items, function ( item, index ){
-            item.dist = BackgroundGeo.distance(item.menu.latitude, item.menu.longitude)
-          });
+        getMenuItems(null)
+          // MenuItem.get()
+          .then(function(data) {
+            console.log(data);
+            vm.items = data;
+            _.each(vm.items, function ( item, index ){
+              item.dist = BackgroundGeo.distance(item.menu.latitude, item.menu.longitude)
+            });
 
-        });
+          });
+      })
+
 
 
     // vm.locate = window.currLocation.coords
@@ -31,11 +34,6 @@
     vm.openModal = openModal;
     vm.storeItemForMap = storeItemForMap
 
-<<<<<<< HEAD
-    // vm.locationData = {lat: vm.locate.latitude, lng: vm.locate.longitude };
-=======
-    vm.locationData = {lat: vm.locate.latitude, lng: vm.locate.longitude };
->>>>>>> Update: Items View | add link to shared item sate.
 
 
     $ionicModal.fromTemplateUrl("js/modules/tabs/items/modals/filterModal.html", {
@@ -48,7 +46,6 @@
 
     //////////////////
 
-<<<<<<< HEAD
 
     function getMenuItems(filter){
 
@@ -85,117 +82,17 @@
     }
   };
 
-  var MakeMap = function($compile){
-    var vm = null
-
-    instance = {
-      initialize: initialize
-    }
-
-    return instance;
-
-    function initialize(scope, lat, lng) {
-
-      vm = null;
-      vm = scope;
-      vm.pyrmont = new google.maps.LatLng(lat,lng);
-
-      var map = new google.maps.Map(document.getElementById('map'), {
-          center: vm.pyrmont,
-          zoom: 15
-        });
-      var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
-      var compiled = $compile(contentString)(vm);
-      var infowindow = new google.maps.InfoWindow({
-        content: compiled[0]
-      });
-
-      var marker = new google.maps.Marker({
-        position: vm.pyrmont,
-        map: map,
-        title: vm.item.name
-      });
-      google.maps.event.addListener(marker, 'click', function() {
-        return infowindow.open(map, marker);
-      });
-      // var request = {
-      //   query: "burgers",
-      //   location: vm.pyrmont,
-      //   radius: '500',
-      //   types: ['food']
-      // };
-      //
-      // service = new google.maps.places.PlacesService(map);
-      // service.textSearch(request, callback);
-      //
-      // querySearch(request)
-      vm.map = map
-    }
-
-    function callback(results, status) {
-      console.log(results, status);
-      if (status == google.maps.places.PlacesServiceStatus.OK) {
-        $scope.$apply(function(){
-          vm.items = results;
-          for (var i = 0; i < vm.items.length; i++) {
-
-            vm.items[i].dist = BackgroundGeo.distance( vm.items[i].geometry.location.k, vm.items[i].geometry.location.B )
-            vm.items[i].stars = makeStars.get(vm.items[i].rating)
-            // createMarker(results[i]);
-            // console.log(place);
-          }
-        })
-      }
-    }
-    function querySearch(query){
-      var request = {
-        query: query,
-        location: vm.pyrmont,
-        radius: '500',
-        types: ['food']
-      };
-      // initialize(vm.lat, vm.long, query)
-      // service = new google.maps.places.PlacesService(map);
-      service.textSearch(request, callback);
-    }
-  }
 
 
 
-=======
 
-    function getMenuItems(filter){
 
-      // return MenuItem.getByLocation(vm.locationData, null);
-      return MenuItem.get()
 
-    }
 
-    function querySearch(itemsFilter){
-
-      itemsFilter = itemsFilter || "empty";
-
-      getMenuItems(itemsFilter)
-
-        .then(function(data) {
-
-          vm.items = newData;
-
-        });
-    }
-
-    function openModal(){
-
-      vm.filterModal.show();
-
-    }
-    function closeModal(){
->>>>>>> Update: Items View | add link to shared item sate.
 
   ItemsCtrl
-    .$inject = ["$scope", "$ionicModal", "MenuItem", "Menu", "ImagesService", "$q", "BackgroundGeo", "findDistance", "makeStars", "ItemMapService", "MakeMap"];
-  MakeMap
-    .$inject = ['$compile'];
+    .$inject = ["$scope", "$ionicModal", "MenuItem", "Menu", "ImagesService", "$q", "BackgroundGeo", "findDistance", "makeStars", "ItemMapService"];
+
   angular
     .module("app")
     .controller("ItemsCtrl", ItemsCtrl)
