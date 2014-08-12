@@ -26,7 +26,7 @@
         getByMenu: getByMenu,
         getByUser: getByUser,
         getItemReviews: getItemReviews,
-        getItemPhotos: getItemPhotos,
+        getItemGallery: getItemGallery,
         getByLocation: getByLocation,
         set: set,
         getStorage: getStorage,
@@ -62,12 +62,12 @@
         // return Restangular.all('items').getList();
       };
       function find(id) {
-        // var item = nearbyItems[ nearbyKeys[id] ];
-        // if (item){
-        //   var q = $q.defer()
-        //   q.resolve(item)
-        //   return q.promise;
-        // }
+        var item = nearbyItems[ nearbyKeys[id] ];
+        if (item){
+          var q = $q.defer()
+          q.resolve(item)
+          return q.promise;
+        }
         return Restangular.one('items', id).get();
       };
       function getByMenu(menu_id) {
@@ -77,10 +77,10 @@
         return Rest.one('user', user_id).get();
       };
       function getItemReviews(item_id, cb) {
-        return Restangular.one('items', item_id).all('essay').getList();
+        return Restangular.one('item', item_id).all('essay').get();
       };
-      function getItemPhotos(item_id, cb) {
-        return Restangular.one('items', item_id).all('photos').getList();
+      function getItemGallery(item_id, cb) {
+        return Restangular.one('item', item_id).all('gallery').get();
       };
       function getByLocation(data, filter) {
         var newPromise;

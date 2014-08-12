@@ -13,9 +13,8 @@
     "ion-google-place",
     "app.modules",
     "app.directives",
-    "app.filters"
-    "app.models",
-    "app.directives"
+    "app.filters",
+    "app.models"
     ]);
 
   app.config(function(RestangularProvider) {
