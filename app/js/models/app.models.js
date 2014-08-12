@@ -5,10 +5,15 @@
  *   Restful calls to the server
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  *   SOURCE OF TRUTH
  *
 =======
 >>>>>>> Architecture Update: Convert all modules | app.factories - to - app.models
+=======
+ *   SOURCE OF TRUTH
+ *
+>>>>>>> mend
  */
 
 (function() {
@@ -21,8 +26,4 @@
       'app.model.photo',
       'app.model.fbLogin'
     ]);
-<<<<<<< HEAD
-=======
-
->>>>>>> Architecture Update: Convert all modules | app.factories - to - app.models
 }).call(this);
