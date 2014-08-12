@@ -74,6 +74,10 @@ exports.show = function(req, res) {
   });
 };
 
+exports.getMenuItems = function(req, res){
+  Menu.getMenuItems(req, res);
+};
+
 // Creates a new Business in the DB.
 // http://localhost:9000/api/menus/
 exports.create = function(req, res) {
@@ -89,7 +93,7 @@ exports.create = function(req, res) {
 exports.update = function(req, res) {
   console.log(req.body);
   // res.json("hello");
-  Menu.update(res, req.params.id, req.body, function(err, data) {  
+  Menu.update(res, req.params.id, req.body, function(err, data) {
     res.json(201, data);
   });
 };

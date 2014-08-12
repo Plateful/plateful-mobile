@@ -45,6 +45,7 @@ module.exports.applyRoutes = function(app) {
   // Menu API routes.
   Menus.get('/', Menu.index);
   Menus.get('/:id', Menu.show);
+  Menus.get('/:id/items', Menu.getMenuItems);
   Menus.post('/location', Menu.getByLocation);
   Menus.post('/', Menu.create);
   Menus.put('/:id', Menu.update);
