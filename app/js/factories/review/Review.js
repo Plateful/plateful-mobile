@@ -34,6 +34,6 @@
 
   Review.$inject = ['Restangular'];
 
-  angular.module('app.factory.review', []).factory('Review', Review);
+  angular.module('app.model.review', []).factory('Review', Review);
 
 }).call(this);

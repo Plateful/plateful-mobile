@@ -28,6 +28,6 @@
 
   Photo.$inject = ['Restangular'];
 
-  angular.module('app.factory.photo', []).factory('Photo', Photo);
+  angular.module('app.model.photo', []).factory('Photo', Photo);
 
 }).call(this);
