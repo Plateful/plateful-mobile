@@ -1,5 +1,5 @@
 'use strict';
-describe('User', function(){
+xdescribe('User', function(){
   var User, Auth, $httpBackend
   //mock Application to allow us to inject our own dependencies
   beforeEach(angular.mock.module('app'));
@@ -43,10 +43,10 @@ describe('User', function(){
   });
   it('Should have a getReviewsByUser method', function(){
       expect(User.getReviewsByUser).toBeDefined();
-  });    
+  });
   it('Should have a signup method', function(){
       expect(User.signup).toBeDefined();
-  });    
+  });
   it('Should have a login method', function(){
       expect(User.login).toBeDefined();
   });
