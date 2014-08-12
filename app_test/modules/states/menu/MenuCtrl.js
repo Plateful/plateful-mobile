@@ -13,7 +13,7 @@ describe('MenuCtrl', function(){
 
     }));
     // tests start here
-    
+
     it('Should have a $stateParam set to item_id on the scope', function(){
 
         // expect(scope.vm.menu_id).toBeDefined();
