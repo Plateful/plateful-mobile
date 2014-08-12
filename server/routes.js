@@ -2,6 +2,7 @@
  * Main application routes
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 var errors = require('./components/errors');
 var cors = require('cors');
 var busboy = require('connect-busboy');
@@ -12,6 +13,8 @@ var Review = require('./controllers/review.controller');
 var User = require('./controllers/user.controller');
 var List = require('./controllers/list.controller');
 =======
+=======
+>>>>>>> Update: Items View | add link to shared item sate.
 var errors = require('./components/errors')
     ,cors = require('cors')
     ,busboy = require('connect-busboy')
@@ -22,6 +25,9 @@ var errors = require('./components/errors')
     ,User = require('./controllers/user.controller')
     ,request = require('supertest')
     ,should = require('should')
+<<<<<<< HEAD
+>>>>>>> Update: Items View | add link to shared item sate.
+=======
 >>>>>>> Update: Items View | add link to shared item sate.
 
 module.exports.applyRoutes = function(app) {

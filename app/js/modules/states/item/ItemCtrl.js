@@ -64,8 +64,17 @@
     //       })
     //   });
 
+<<<<<<< HEAD
 
 
+=======
+    Item
+      .find(vm.item_id)
+      .then(function(data) {
+        vm.item = data
+      });
+
+>>>>>>> Update: Items View | add link to shared item sate.
     // vm.item = Item.getStorage(vm.item_id);
 
     vm.showPhotos   = showPhotos;
