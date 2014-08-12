@@ -20,14 +20,14 @@
             if(response.status === 'connected') {
               alert('Facebook login succeeded, got access token: ' + response.authResponse.token);
               return deferred.resolve();
-            } 
+            }
             else {
               alert('Facebook login failed: ' + response.error);
               return deferred.reject();
             }
           }, {scope: 'email,read_stream,publish_stream'});
         return deferred.promise;
-      }, 
+      },
 
       // Logs out a facebook connected user.
       logout: function() {

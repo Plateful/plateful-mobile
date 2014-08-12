@@ -9,10 +9,10 @@
 (function() {
   angular
     .module('app.factories', [
-      'app.factory.menu', 
-      'app.factory.item', 
-      'app.factory.review', 
-      'app.factory.user', 
+      'app.factory.menu',
+      'app.factory.item',
+      'app.factory.review',
+      'app.factory.user',
       'app.factory.photo',
       'app.factory.fbLogin'
     ]);
