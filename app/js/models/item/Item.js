@@ -62,12 +62,12 @@
         // return Restangular.all('items').getList();
       };
       function find(id) {
-        var item = nearbyItems[ nearbyKeys[id] ];
-        if (item){
-          var q = $q.defer()
-          q.resolve(item)
-          return q.promise;
-        }
+        // var item = nearbyItems[ nearbyKeys[id] ];
+        // if (item){
+        //   var q = $q.defer()
+        //   q.resolve(item)
+        //   return q.promise;
+        // }
         return Restangular.one('items', id).get();
       };
       function getByMenu(menu_id) {

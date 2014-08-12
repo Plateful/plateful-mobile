@@ -11,17 +11,15 @@
    */
   var ItemCtrl = function($scope, $stateParams, $http, Item, Review, $ionicLoading, Rest, makeStars, Auth) {
     var makeStars;
-
     var vm = this
 
     vm.item_id = $stateParams.itemId;
 
-
-
     Item
       .find(vm.item_id)
       .then(function(data) {
-        vm.item = data
+        console.log("item", data);
+        vm.item = data[0]
       });
 
     // vm.item = Item.getStorage(vm.item_id);
@@ -30,12 +28,9 @@
     vm.showReviews  = showReviews;
     vm.reviewItem   = reviewItem;
     vm.collectItem  = collectItem;
-    vm.bookmarkItem = bookmarkItem;
-    vm.login        = login
-
+    vm.bookmarkItem = bookmarkItem;  
 
     //////////////////////
-
 
     function showPhotos() {
       Item
@@ -62,9 +57,6 @@
     function bookmarkItem() {
 
       alert('item bookmarked');
-    };
-    function login(){
-      Auth.setAuthToken( vm.username, vm.password );
     };
   };
 
