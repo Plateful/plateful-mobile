@@ -19,15 +19,39 @@
 
     return instance;
 
+    /**
+     * @name    get
+     * @return  Restangular promise to retrieve all menus
+     * @GET:    /menus
+     */
     function get() {
       return Restangular.all('menus').getList();
     }
+    /**
+     * @name    find
+     * @param   {Number} id  menu._id
+     * @return  Restangular promise to retrieve a single menu by id
+     * @GET:    /menus/:_id
+     */
     function find(id) {
       return Restangular.one('menus', id).get();
     }
+    /**
+     * @name    create
+     * @param   {Object} data   new menu data
+     * @return  Restangular promise to retrieve create a menu
+     * @POST:    /menus
+     */
     function create(data){
       return Restangular.all('menus').post(data);
     }
+    /**
+     * @name    update
+     * @param   {Number} id    menu._id of updated menu
+     * @param   {Object} data  changes made to the updated menu
+     * @return  Restangular promise to update all menus
+     * @GET:    /menus
+     */
     function update(id, data){
       return Restangular.one('menus', id).put(data);
     }

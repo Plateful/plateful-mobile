@@ -1,5 +1,5 @@
 (function() {
-  var ItemsCtrl = function($scope, $ionicModal, MenuItem, Menu, ImagesService, $q, BackgroundGeo, findDistance, makeStars) {
+  var ItemsCtrl = function($scope, $ionicModal, MenuItem, Menu, ImagesService, $q, BackgroundGeo, findDistance, makeStars, ItemMapService) {
 
     var vm,map,service,infowindow;
 
@@ -29,6 +29,7 @@
     vm.querySearch = querySearch;
     vm.closeModal = closeModal;
     vm.openModal = openModal;
+    vm.storeItemForMap = storeItemForMap
 
     vm.locationData = {lat: vm.locate.latitude, lng: vm.locate.longitude };
 
@@ -74,9 +75,12 @@
       vm.filterModal.hide();
 
     }
+    function storeItemForMap(item){
+      ItemMapService.set(item._id, item)
+    }
   };
   ItemsCtrl
-    .$inject = ["$scope", "$ionicModal", "MenuItem", "Menu", "ImagesService", "$q", "BackgroundGeo", "findDistance", "makeStars"];
+    .$inject = ["$scope", "$ionicModal", "MenuItem", "Menu", "ImagesService", "$q", "BackgroundGeo", "findDistance", "makeStars", "ItemMapService"];
   angular
     .module("app")
     .controller("ItemsCtrl", ItemsCtrl);

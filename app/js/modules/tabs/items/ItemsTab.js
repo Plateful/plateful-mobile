@@ -32,6 +32,14 @@
           controller: "MenuCtrl as vm"
         }
       }
+    }).state("tab.item-map", {
+      url: '/items/map/:item_id',
+      views: {
+        "tab-items": {
+          templateUrl: "js/modules/states/map/views/menusMap.html",
+          controller: "ItemMapCtrl as vm"
+        }
+      }
     });
   });
 
