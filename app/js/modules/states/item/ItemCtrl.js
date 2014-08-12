@@ -53,37 +53,22 @@
 
 
 
-    //     BackgroundGeo
-    //       .current()
-    //       .then(function (data){
-    //         // vm.map = {center: {latitude: 51.219053, longitude: 4.404418}, zoom: 14 };
-    //         vm.lat = data.latitude
-    //         vm.lng = data.longitude
-    //         // vm.map.setCenter(vm.center);
-    //         // MakeMap.initialize(vm, vm.lat, vm.lng)
-    //       })
-    //   });
-
-<<<<<<< HEAD
 
 
-=======
-    Item
-      .find(vm.item_id)
-      .then(function(data) {
-        vm.item = data
-      });
 
->>>>>>> Update: Items View | add link to shared item sate.
     // vm.item = Item.getStorage(vm.item_id);
 
     vm.showPhotos   = showPhotos;
     vm.showReviews  = showReviews;
     vm.reviewItem   = reviewItem;
     vm.collectItem  = collectItem;
+
     vm.bookmarkItem = bookmarkItem;
 
     vm.showPhotos()
+
+
+
 
     //////////////////////
 

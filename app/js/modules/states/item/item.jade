@@ -12,6 +12,7 @@ ion-view(title="{{vm.item.name}}" has-subheader="true")
       a.button.button-energized.icon.ion-bookmark(ng-click="vm.bookmarkItem()")
     div.list
 
+
       img.full-image(src='{{vm.item.photos.url}}')
       div(id="map_canvas")
         google-map(center="vm.map.center" zoom="vm.map.zoom" draggable="true" options="vm.options")
@@ -25,4 +26,3 @@ ion-view(title="{{vm.item.name}}" has-subheader="true")
     div(class="list card" ng-repeat="photo in vm.photos" style="width:50%;")
       div(class="item item-image")
         img(src='{{photo.url}}')
-
