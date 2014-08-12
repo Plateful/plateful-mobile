@@ -217,3 +217,29 @@ input.ion-google-place[readonly]{
   box-shadow: 0px 2px 4px rgba(0,0,0,.3);
   -webkit-box-shadow: 0px 2px 4px rgba(0,0,0,.3);
 }
+
+
+// Facebook Style
+$facebook:                       #3B5998 !default;
+$button-facebook-bg:             $facebook !default;
+$button-facebook-text:           #fff !default;
+$button-facebook-border:         darken($facebook, 15%) !default;
+$button-facebook-active-bg:      darken($facebook, 15%) !default;
+$button-facebook-active-border:  darken($facebook, 15%) !default;
+
+.button-facebook-style {
+  @include button-style($button-facebook-bg, $button-facebook-border, $button-facebook-active-bg, $button-facebook-active-border, $button-facebook-text);
+  @include button-clear($button-facebook-bg);
+  @include button-outline($button-facebook-bg);
+}
+
+.facebook-style, a.facebook-style {
+  color: $facebook;
+}
+.facebook-style-bg {
+  background-color: $facebook;
+}
+.facebook-style-border {
+  border-color: $button-facebook-border;
+}
+

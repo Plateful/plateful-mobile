@@ -1,0 +1,17 @@
+div.modal
+  ion-header-bar.bar-positive
+    h1.title Login
+    button.button.button-clear(ng-click="login.loginModal.hide()") cancel
+  ion-content
+    form(ng-submit="login.nativeLogin()")
+      ion-list
+        label.item.item-input
+          span.input-label Email
+          //- Change to email type later
+          input(type="text" ng-model="login.username")
+
+        label.item.item-input
+          span.input-label Password
+          input(type="password" ng-model="login.password")
+
+      button.button.button-positive.button-block(ng-click="login.loginModal.hide()") Login

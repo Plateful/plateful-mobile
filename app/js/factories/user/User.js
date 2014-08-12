@@ -1,9 +1,10 @@
 (function() {
-  angular.module('app.factory.user', []).service('User', [
+  angular.module('app.factory.user', []).factory('User', [
     'Restangular', 'Auth', function(Restangular, Auth) {
-      var User;
-      User = Restangular.all('users');
+      var User = Restangular.all('users');
+
       return {
+        status: undefined,
         get: function() {
           return User;
         },
@@ -35,15 +36,26 @@
           return Restangular.all('users').all('signup')
             .post({username: username, password: password})
             .then(function(data) {
-              Auth.setAuthToken(data.username, data.token, data);
-            });
+              if (data.error) {
+                return this.status = data.message;
+              }
+              Auth.setAuthToken(data.username, data.token, data.fbSessionId, data);
+              this.status = 'Account created!'
+            }.bind(this));
         },
         login: function(username, password){
           return Restangular.all('users').all('login')
             .post({username: username, password: password})
             .then(function(data) {
-              Auth.setAuthToken(data.username, data.token, data);
-            });
+              if (data.error) {
+                return this.status = data.message;
+              }
+              Auth.setAuthToken(data.username, data.token, data.fbSessionId, data);
+              this.status = 'Logged In!'
+            }.bind(this))
+        },
+        logout: function() {
+          Auth.resetSession();
         }
       };
     }

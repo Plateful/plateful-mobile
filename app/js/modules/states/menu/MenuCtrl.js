@@ -111,5 +111,8 @@
   // };
   MenuCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'Menu', 'MenuItem', '$ionicModal', '$ionicLoading', '$compile', 'ImagesService', 'Auth', 'ngGPlacesAPI', 'BackgroundGeo'];
   // addItemCtrl.$inject = ['$rootScope', '$scope', 'MenuItem'];
-  return angular.module('app.modules.states.menu').controller('MenuCtrl', MenuCtrl).controller('addItemCtrl', addItemCtrl);
+  angular
+    .module('app.modules.states.menu')
+    .controller('MenuCtrl', MenuCtrl)
+    .controller('addItemCtrl', addItemCtrl);
 })();

@@ -80,7 +80,7 @@
       'Restangular',
       'makeStars',
       'Auth'
-      ];
+    ];
   angular
     .module('app.modules.states.item')
     .controller('ItemCtrl', ItemCtrl);

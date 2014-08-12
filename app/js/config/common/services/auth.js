@@ -15,10 +15,13 @@
       resetSession: resetSession
     };
 
-
-    function setAuthToken(email, token, user) {
-      this.email = email || null;
-      this.token = token || null;
+    function setAuthToken(email, token, fbtoken, user) {
+      this.email = email != null ? email : null;
+      this.token = token != null ? token : null;
+      // Update fbtoken if there is a token value.
+      if (fbtoken) {
+        sessionStorage.setItem('fbtoken', fbtoken);
+      }
       if (this.email && this.token) {
         $http.defaults.headers.common["X-User-Email"] = this.email;
         $http.defaults.headers.common["X-User-Token"] = this.token;
