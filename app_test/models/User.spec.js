@@ -1,76 +1,113 @@
 'use strict';
 describe('User', function(){
-  var scope;//we'll use this scope in our tests
-  var user;
-  var auth;
-  var userData = {
-    username: 'Joel',
-    password: 'yolo'
-  };
+  var User, Auth, $httpBackend
   //mock Application to allow us to inject our own dependencies
   beforeEach(angular.mock.module('app'));
   //mock the controller for the same reason and include $rootScope and $controller
-  beforeEach(angular.mock.inject(function(User, Auth){
-    user = User;
-
-    auth = Auth;
-    // auth.setAuthToken('Joel', 'kljasflkjsafl')
-
+  beforeEach(angular.mock.inject(function(_User_, _Auth_, _$httpBackend_) {
+    User = _User_;
+    Auth = _Auth_;
+    $httpBackend = _$httpBackend_;
   }));
+
+  afterEach(function() {
+    localStorage.clear();
+    $httpBackend.verifyNoOutstandingExpectation();
+    $httpBackend.verifyNoOutstandingRequest();
+  });
+
   // tests start here
   it('Should have a get method', function(){
-      // expect(scope.text).toBe('Hello World!');
-      expect(user.get).toBeDefined();
+      expect(User.get).toBeDefined();
   });
   it('Should have a find method', function(){
-      // expect(scope.text).toBe('Hello World!');
-      expect(user.find).toBeDefined();
+      expect(User.find).toBeDefined();
   });
   it('Should have a create method', function(){
-      // expect(scope.text).toBe('Hello World!');
-      expect(user.create).toBeDefined();
+      expect(User.create).toBeDefined();
   });
   it('Should have an update method', function(){
-      // expect(scope.text).toBe('Hello World!');
-      expect(user.update).toBeDefined();
+      expect(User.update).toBeDefined();
   });
   it('Should have a destroy method', function(){
-      // expect(scope.text).toBe('Hello World!');
-      expect(user.destroy).toBeDefined();
+      expect(User.destroy).toBeDefined();
   });
   it('Should have a getPhotosByUser method', function(){
-      // expect(scope.text).toBe('Hello World!');
-      expect(user.getPhotosByUser).toBeDefined();
+      expect(User.getPhotosByUser).toBeDefined();
   });
   it('Should have a getBookmarksByUser method', function(){
-      // expect(scope.text).toBe('Hello World!');
-      expect(user.getBookmarksByUser).toBeDefined();
+      expect(User.getBookmarksByUser).toBeDefined();
   });
   it('Should have a getCollectionByUser method', function(){
-      // expect(scope.text).toBe('Hello World!');
-      expect(user.getCollectionByUser).toBeDefined();
+      expect(User.getCollectionByUser).toBeDefined();
   });
   it('Should have a getReviewsByUser method', function(){
-      // expect(scope.text).toBe('Hello World!');
-      expect(user.getReviewsByUser).toBeDefined();
+      expect(User.getReviewsByUser).toBeDefined();
   });    
   it('Should have a signup method', function(){
-      expect(user.signup).toBeDefined();
+      expect(User.signup).toBeDefined();
   });    
   it('Should have a login method', function(){
-      expect(user.login).toBeDefined();
+      expect(User.login).toBeDefined();
   });
-  it('Should store a logged in user in local storage', function(){
-    // localStorage.setItem('user_email', 'Joel');
-    // console.log('YOLO', localStorage);
-    // user.login(userData.username, userData.password)
-    //   .then(function(data) {
-    //     var currentUser = localStorage.getItem('user_email');
-    //     console.log('Success:',data);
-    //     expect(currentUser).toBe(userData.username);
-    //   })
-    //   .catch(function(msg) {
-    //     console.log('ERROR', msg)
-    //   })
+  it('Should signup and return new user', function(){
+    var responseData = { username : 'newuser@newb.com', token : 'sometoken123' };
+    $httpBackend.expect('POST', 'http://localhost:9000/api/v1/users/signup/')
+      .respond(200, responseData);
+
+    User.signup('newuser@newb.com', 'yolo')
+    $httpBackend.flush();
+
+    expect(User.status).toBe('Account created!');
+    expect(localStorage.user_email).toBe('newuser@newb.com');
+    expect(localStorage.user_token).toBe('sometoken123');
+  });
+  it('Should not sign up user with same username', function(){
+    var responseData = { error: true, message: 'Username is taken' };
+    $httpBackend.expect('POST', 'http://localhost:9000/api/v1/users/signup/')
+      .respond(200, responseData);
+
+    User.signup('newuser@newb.com', 'yolo2')
+    $httpBackend.flush();
+
+    expect(User.status).toBe('Username is taken');
+    expect(localStorage.user_email).toBe(undefined);
+    expect(localStorage.user_token).toBe(undefined);
+  });
+  it('Should not sign up user with missing information', function(){
+    var responseData = { error: true, message: 'No password entered' };
+    $httpBackend.expect('POST', 'http://localhost:9000/api/v1/users/signup/')
+      .respond(200, responseData);
+
+    User.signup('newuser@newb.com', '')
+    $httpBackend.flush();
+
+    expect(User.status).toBe('No password entered');
+    expect(localStorage.user_email).toBe(undefined);
+    expect(localStorage.user_token).toBe(undefined);
+  });
+  it('Should login and return registered user', function(){
+    var responseData = { username : 'joel', token : 123 };
+    $httpBackend.expect('POST', 'http://localhost:9000/api/v1/users/login/')
+      .respond(200, responseData);
+
+    User.login('joel', 'yolo')
+    $httpBackend.flush();
+
+    expect(User.status).toBe('Logged In!');
+    expect(localStorage.user_email).toBe('joel');
+    expect(localStorage.user_token).toBe('123');
+  });
+  it('Should not log in a user with a bad login request', function(){
+    var responseData = { error : true, message : 'Bad login request' };
+    $httpBackend.expect('POST', 'http://localhost:9000/api/v1/users/login/')
+      .respond(200, responseData);
+
+    User.login('joel', 'yoloyolo')
+    $httpBackend.flush();
+
+    expect(User.status).toBe('Bad login request');
+    expect(localStorage.user_email).toBe(undefined);
+    expect(localStorage.user_token).toBe(undefined);
   });
 });
