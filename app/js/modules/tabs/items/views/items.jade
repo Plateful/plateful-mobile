@@ -10,7 +10,7 @@ ion-view(hide-nav-bar="true")
 
   ion-content.bg-grey
 <<<<<<< HEAD
-    ng-single-select(options="options")    
+    ng-single-select(options="options")
     div(class="list card" ng-repeat="item in vm.items | orderBy: 'dist' | filter:vm.itemsFilter" ng-click="vm.storeItem(item)")
 =======
     ng-single-select(options="options")
@@ -33,16 +33,14 @@ ion-view(hide-nav-bar="true")
       //-   h2 Pretty Hate Machine
       //-   p Nine Inch Nails
 
->>>>>>> Update: Items View | add link to shared item sate.
+
 
       div(class="item item-image")
         img(src='{{item.photos.url}}')
         //- img(ng-src="{{item.photos[0].getUrl({'maxWidth': 640, 'maxHeight': 640})}}")
-<<<<<<< HEAD
-=======
 
 
->>>>>>> Update: Items View | add link to shared item sate.
+
 
       a(class="item" href="#/tab/items/item/{{item._id}}")
         div {{item.name | limitTo:30 }}

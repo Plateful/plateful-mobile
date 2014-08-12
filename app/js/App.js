@@ -12,7 +12,6 @@
     "google-maps",
     "ion-google-place",
     "app.modules",
-    "app.factories",
     "app.directives",
     "app.filters"
     "app.models",
