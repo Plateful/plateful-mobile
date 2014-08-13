@@ -1,14 +1,13 @@
-(function() {
-  angular
-    .module('app.modules.tabs.list', [])
-    .config(function($stateProvider, $urlRouterProvider) {
-      $stateProvider.state("tab.list", {
-        url: "/list",
-        views: {
-          'tabs-list': {
-            templateUrl: "js/modules/tabs/list/views/list.html"
-          }
+angular
+  .module('app.modules.tabs.list', [])
+  .config(function($stateProvider) {
+    $stateProvider.state('tab.list', {
+      url: '/list',
+      views: {
+        'tab-list': {
+          templateUrl: 'js/modules/tabs/list/views/list.html',
+          controller: 'ListCtrl'
         }
-      });
+      }
     });
-}).call(this);
+  });

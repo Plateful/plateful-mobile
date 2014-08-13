@@ -45,7 +45,7 @@
     };
   }
 
-  ListCtrl.$inject = ['$scope', 'Auth']
+  ListCtrl.$inject = ['$scope', 'Auth', 'User']
   angular
     .module('app.modules.tabs.list')
     .controller('ListCtrl', ListCtrl)
