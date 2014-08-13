@@ -36,7 +36,10 @@ html
       GLOBALS = !{JSON.stringify(GLOBALS)};
     //- script(src="http://maps.google.com/maps/api/js?libraries=geometry")
     //- script(type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false")
-    script(src="http://maps.googleapis.com/maps/api/js?libraries=places,weather,geometry,visualization&sensor=false")
+
+
+    script(src="http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization&sensor=false&language=en")
+
 
 
     script(src="js/vendor.js?v=#{GLOBALS.CACHE_TAG}")

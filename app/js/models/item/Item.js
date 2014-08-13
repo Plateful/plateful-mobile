@@ -26,7 +26,7 @@
         getByMenu: getByMenu,
         getByUser: getByUser,
         getItemReviews: getItemReviews,
-        getItemGallery: getItemGallery,
+        getItemPhotos: getItemPhotos,
         getByLocation: getByLocation,
         set: set,
         getStorage: getStorage,
@@ -77,10 +77,10 @@
         return Rest.one('user', user_id).get();
       };
       function getItemReviews(item_id, cb) {
-        return Restangular.one('item', item_id).all('essay').get();
+        return Restangular.one('items', item_id).all('essay').getList();
       };
-      function getItemGallery(item_id, cb) {
-        return Restangular.one('item', item_id).all('gallery').get();
+      function getItemPhotos(item_id, cb) {
+        return Restangular.one('items', item_id).all('photos').getList();
       };
       function getByLocation(data, filter) {
         var newPromise;

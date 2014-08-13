@@ -55,7 +55,6 @@
 
 
 
-
     // vm.item = Item.getStorage(vm.item_id);
 
     vm.showPhotos   = showPhotos;
@@ -63,12 +62,10 @@
     vm.reviewItem   = reviewItem;
     vm.collectItem  = collectItem;
 
+
     vm.bookmarkItem = bookmarkItem;
 
     vm.showPhotos()
-
-
-
 
     //////////////////////
 
