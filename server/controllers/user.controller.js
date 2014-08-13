@@ -14,7 +14,7 @@ exports.create = function (req, res) {
     username: req.body.username,
     password: req.body.password
   };
-  
+
   return createParseUser(newParseUserData)
     .then(function(completeUser) {
       console.log(completeUser);
@@ -96,10 +96,9 @@ exports.fbLogin = function (req, res) {
             );
           });
       })
-      .then(function(data) {
-        // Needs to be fixed.
-        data.attributes.token = data._sessionToken;
-        res.json(data);
+      .then(function(fbUser) {
+        fbUser.attributes.token = fbUser._sessionToken;
+        res.json(fbUser);
       })
       .catch(function(error) {
         console.log('fbLogin ERROR: ', error);
@@ -123,11 +122,14 @@ var findUserByFbId = function(fbId) {
   return query.find();
 };
 
-// Creates a Parse user and Neo4j user. Returns the new parse user as a promise.
+// Creates a new Parse and Neo4j user each with references to each other's ID. 
+// Returns the new Parse user as a promise.
 var createParseUser = function(newUserData, res) {
   var user = new Parse.User();
   var newParseUser;
   user.set(newUserData);
+
+  // Creates a new Parse user.
   return user.signUp()
     .then(function(createdParseUser) {
       console.log('newParseUser', newParseUser);
@@ -136,15 +138,20 @@ var createParseUser = function(newUserData, res) {
         username: newParseUser.attributes.username,
         parseId: newParseUser.id
       };
+
+      // Create a new neo4j user.
       return createNeo4jUser(neoParams)
     })
     .then(function(newNeoUser) {
+      // Stores the neo4j id with the new Parse user and saves the user.
       console.log('neoresult', newNeoUser);
       console.log('neoData', newNeoUser)
       var neoId = newNeoUser.data[0]._id;
       newParseUser.set('neoId', neoId);
+
       return newParseUser.save()
     })
+
 }
 
 var createNeo4jUser = function(data, callback) {
@@ -163,16 +170,16 @@ var createNeo4jUser = function(data, callback) {
 // Create new user from Facebook connect info.
 // Returns the new user object as a promise.
 var createFbUser = function(fbId, email, fbLongToken, photoUrl) {
-  var user = new Parse.User();
-  user.set({
+  // var user = new Parse.User();
+  var newParseUserData = {
     username:     fbId,
     password:     Date.now().toString(),
     fbEmail:      email,
     fbId:         fbId,
     fbSessionId:  fbLongToken,
     fbPic:        photoUrl
-  });
-  return user.signUp(null);
+  };
+  return createParseUser(newParseUserData);
 };
 
 // Update user from Facebook connect info.
@@ -183,7 +190,6 @@ var updateFbUser = function(parseId, fbId, email, fbLongToken, photoUrl) {
 
   // Find user.
   var query = new Parse.Query(Parse.User);
-
   // Update user's Facebook related fields and return the updated user.
   return query.get(parseId)
     .then(function(user) {
