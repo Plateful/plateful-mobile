@@ -52,6 +52,8 @@ module.exports.applyRoutes = function(app) {
   Items.get('/business/:menu_id', Item.getByMenu);
   Items.post('/location', Item.getByLocation);
   Items.get('/user/:user_id', Item.getByUser);
+  Items.get('/:id/photos', Item.getItemPhotos);
+  Items.get('/:id/reviews', Item.getItemReviews);
   Items.get('/:id', Item.show);
   Items.post('/', Item.create);
   Items.put('/:id', Item.update);

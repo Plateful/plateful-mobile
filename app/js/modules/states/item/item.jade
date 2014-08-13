@@ -4,6 +4,7 @@ ion-view(title="{{vm.item.name}}" has-subheader="true")
   ion-nav-buttons(side="right" ng-show="vm.showReviews")
     button.button.button-clear.icon.ion-ios7-list(ng-click="vm.showReviews = false")
   ion-content
+
     div.button-bar
       a.button.button-energized.icon.ion-ios7-bookmarks
       a.button.button-energized.icon.ion-ios7-camera(ng-click="vm.reviewItem()")
@@ -11,16 +12,19 @@ ion-view(title="{{vm.item.name}}" has-subheader="true")
       a.button.button-energized.icon.ion-bookmark(ng-click="vm.bookmarkItem()")
     div.list
       img.full-image(src='{{vm.item.photos.url}}')
-      div
-        h4.assertive {{vm.item.stars}}
-          //- added pullright class
-          div.pullright.energized {{vm.item.review_count}} reviews
-      h5.dark {{vm.item.description}}
-      h4 User Reviews
-      div.list
-        div.item.item-avatar(ng-repeat="review in vm.reviews")
-          //- added borderless class on css
-          //- p {{review}}
-          img(src="{{review.image_url}}")
-          //- h4 {{review.user_id}}
-          div.item.item-text-wrap.borderless This shit is good so I clurtch it. Nom nom nom nom nom nom
+      div(id="map_canvas")
+        google-map(center="vm.map.center" zoom="vm.map.zoom" draggable="true" options="vm.options")
+          marker(coords="vm.marker.coords" options="vm.marker.options" events="vm.marker.events" idkey="vm.marker.id")
+
+
+
+
+
+
+      div.button-bar.button-bar-small
+        button.button.button-light.button-small Photos
+        button.button.button-light.button-small Reviews
+
+    div(class="list card" ng-repeat="photo in vm.photos" style="width:50%;")
+      div(class="item item-image")
+        img(src='{{photo.url}}')

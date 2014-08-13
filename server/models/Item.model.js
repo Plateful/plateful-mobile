@@ -30,8 +30,7 @@ var Item = function() {
 };
 
 Item.prototype.all = function(callback) {
-
-  db.cypherQuery('MATCH (i:ITEM)-[:HAS_PHOTOS]->(:ITEM_PHOTOS)-->(p), (i)<-[:HAS_ITEMS]-(m:MENU) RETURN m,i,p LIMIT 25', function(err, result){
+  db.cypherQuery('MATCH (i:ITEM)-[:HAS_PHOTOS]->(:ITEM_PHOTOS)-->(p), (i)<-[:HAS_ITEMS]-(m:MENU) RETURN m,i,p LIMIT 100', function(err, result){
     console.log(result.data);
     var obj = _.map(result.data, function(i, p){
       // console.log("m", m);
@@ -77,6 +76,19 @@ Item.prototype.find = function(item_id, callback) {
     callback(err, obj);
   });
 };
+
+
+Item.prototype.getItemPhotos = function(item_id, callback){
+  var params = {item_id:Number(item_id)}
+  var query = "START item=node({item_id}) MATCH item-[:HAS_PHOTOS]->()-->(p) RETURN p";
+  db.cypherQuery(query, params, function(err, result){
+    console.log("photos", result.data);
+    if(err) return callback(err, result)
+
+    callback(err, result.data)
+  })
+
+}
 
 Item.prototype.findByMenu = function(menu_id, callback) {
   var params = {

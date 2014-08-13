@@ -63,9 +63,26 @@ exports.show = function(req, res) {
     if (err) {
       return handleError(res, err);
     }
-    res.json(200, data);
+    res.status(200)
+    res.json(data);
   });
 };
+
+exports.getItemPhotos = function(req, res){
+  Item.getItemPhotos(req.params.id, function(err, result){
+    if(err) return handleError(res, err)
+    res.status(200)
+    res.json(result)
+  })
+
+}
+exports.getItemReviews = function(req, res){
+  Item.getItemPhotos(req.params.id, function(err, result){
+    if(err) return handleError(res, err)
+    res.status(200)
+    res.json(result)
+  })
+}
 
 // POST http://localhost:9000/api/items/
 // Working but need to make changes to the neo4j queries takes in data
