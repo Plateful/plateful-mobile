@@ -17,7 +17,6 @@ exports.create = function (req, res) {
 
   return createParseUser(newParseUserData)
     .then(function(completeUser) {
-      console.log(completeUser);
       // Check for Facebook session ID and use for local storage token.
       if (completeUser.attributes.fbSessionId) {
         completeUser.attributes.token = completeUser.attributes.fbSessionId;
@@ -34,16 +33,14 @@ exports.create = function (req, res) {
 };
 
 exports.login = function (req, res) {
-  Parse.User.logIn(req.body.username, req.body.password, {
-    success: function(data) {
+  Parse.User.logIn(req.body.username, req.body.password)
+    .then(function(data) {
       data.attributes.token = data._sessionToken;
       res.json(data);
-    },
-    error: function(data, error) {
+    }, function(error) {
       error.error = true;
       res.send(error);
-    }
-  });
+    });
 };
 
 // Retrieves a long term token for Facebook.
@@ -132,7 +129,6 @@ var createParseUser = function(newUserData, res) {
   // Creates a new Parse user.
   return user.signUp()
     .then(function(createdParseUser) {
-      console.log('newParseUser', newParseUser);
       newParseUser = createdParseUser
       var neoParams = {
         username: newParseUser.attributes.username,
@@ -144,25 +140,21 @@ var createParseUser = function(newUserData, res) {
     })
     .then(function(newNeoUser) {
       // Stores the neo4j id with the new Parse user and saves the user.
-      console.log('neoresult', newNeoUser);
-      console.log('neoData', newNeoUser)
       var neoId = newNeoUser.data[0]._id;
       newParseUser.set('neoId', neoId);
 
       return newParseUser.save()
-    })
-
+    });
 }
 
+// Creates new neo4j user from Parse username and ID. Returns the new neo4j user as a promise.
 var createNeo4jUser = function(data, callback) {
-  console.log("hey")
   var params = {
     dataToCreateUser: {
       username: data.username,
       parse_id: data.parseId
     }
   };
-  console.log(data);
   var q = "CREATE (u:USER {dataToCreateUser}) RETURN u";
   return db.cypherQueryAsync(q, params);
 }
@@ -170,7 +162,6 @@ var createNeo4jUser = function(data, callback) {
 // Create new user from Facebook connect info.
 // Returns the new user object as a promise.
 var createFbUser = function(fbId, email, fbLongToken, photoUrl) {
-  // var user = new Parse.User();
   var newParseUserData = {
     username:     fbId,
     password:     Date.now().toString(),
@@ -205,17 +196,3 @@ var updateFbUser = function(parseId, fbId, email, fbLongToken, photoUrl) {
       return updatedUser;
     });
 };
-
-// X1 Config API key from parse.
-// X2 Look at parse's node module.
-// X3 Read parse docs re oAuth with module
-// X4 Set up a route to handle auth
-  // XDon't start with login - we don't have a user yet
-  // XFirst set up route to create user on our end / non-auth related.
-  // XGo to client and make sure we can create a user
-  // When we get a request from user, store the user in local storage.
-// X5 Sign up users with email/password
-// X6 Make a login route - login/logout and store info 
-// X7 Integrate with FB/Google, etc.
-
-// Figure out how to use parse users with neo4j users
