@@ -39,7 +39,7 @@
               if (data.error) {
                 return this.status = data.message;
               }
-              Auth.setAuthToken(data.username, data.token, data.fbSessionId, data);
+              Auth.setAuthToken(data.neoId, data.username, data.token, data.fbSessionId, data);
               this.status = 'Account created!'
             }.bind(this));
         },
@@ -50,7 +50,7 @@
               if (data.error) {
                 return this.status = data.message;
               }
-              Auth.setAuthToken(data.username, data.token, data.fbSessionId, data);
+              Auth.setAuthToken(data.neoId, data.username, data.token, data.fbSessionId, data);
               this.status = 'Logged In!'
             }.bind(this))
         },

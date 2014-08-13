@@ -85,12 +85,12 @@
       getFbToken: function(dataToStore) {
         var dataToStore = dataToStore || {}
         dataToStore.token = window.sessionStorage.fbtoken;
-        dataToStore.username = window.localStorage.username;
+        dataToStore.username = window.localStorage.user_email;
         return Restangular.all('users').all('fb-login')
           .post(dataToStore)
           .then(function (response) {
             console.log(response);
-            Auth.setAuthToken(data.username, data.token, data.fbSessionId, data);
+            Auth.setAuthToken(data.neoId, data.username, data.token, data.fbSessionId, data);
           })
           .catch(function(error) {
             console.log('uh oh');
@@ -137,8 +137,6 @@
             console.log('Error: ', error);
           })
       }
-
-
     };
   };
   FbLogin.$inject = ['Restangular', '$q', 'Auth', 'User'];

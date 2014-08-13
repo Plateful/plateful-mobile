@@ -1,5 +1,5 @@
 'use strict';
-xdescribe('User', function(){
+describe('User', function(){
   var User, Auth, $httpBackend
   //mock Application to allow us to inject our own dependencies
   beforeEach(angular.mock.module('app'));
