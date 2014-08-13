@@ -1,10 +1,10 @@
-"use restrict";
+'use strict';
 
 var Parse = require('../config/parse.js');
 var Facebook = require('../config/api/facebook.js');
 var request = require('request');
-var url = require('url');
 var Promise = require("bluebird");
+var db = require('../config/neo4j').db;
 Promise.promisifyAll(request);
 
 exports.create = function (req, res) {
@@ -13,9 +13,25 @@ exports.create = function (req, res) {
   user.set('password', req.body.password);
 
   user.signUp(null, {
-    success: function(data) {
-      data.attributes.token = data._sessionToken;
-      res.json(data);
+    success: function(newParseUser) {
+      var neoParams = {
+        username: newParseUser.attributes.username,
+        parseId: newParseUser.id
+      };
+      createNeo4jUser(neoParams, function(err, neoData) {
+        var neoId = neoData._id;
+        newParseUser.set('neoId', neoId);
+        return newParseUser.save()
+          .then(function(completeUser) {
+            if (completeUser.attributes.fbSessionId) {
+              completeUser.attributes.token = completeUser.attributes.fbSessionId;
+            }
+            else {
+              completeUser.attributes.token = completeUser._sessionToken;
+            }
+            res.json(completeUser);
+          });
+      });
     },
     error: function(data, error) {
       error.error = true;
@@ -25,7 +41,6 @@ exports.create = function (req, res) {
 };
 
 exports.login = function (req, res) {
-  console.log(req.body)
   Parse.User.logIn(req.body.username, req.body.password, {
     success: function(data) {
       data.attributes.token = data._sessionToken;
@@ -113,6 +128,22 @@ var findUserByFbId = function(fbId) {
   query.equalTo('fbId', fbId);
   return query.find();
 };
+
+var createNeo4jUser = function(data, callback) {
+  console.log("hey")
+  var params = {
+    dataToCreateUser: {
+      username: data.username,
+      parse_id: data.parseId
+    }
+  };
+  console.log(data);
+  var q = "CREATE (u:USER {dataToCreateUser}) RETURN u";
+  db.cypherQuery(q, params, function(err, result) {
+    console.log('neotime',result);
+    callback(err, result.data[0]);
+  });
+}
 
 // Create new user from Facebook connect info.
 // Returns the new user object as a promise.
