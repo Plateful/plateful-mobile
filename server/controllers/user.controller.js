@@ -6,38 +6,31 @@ var request = require('request');
 var Promise = require("bluebird");
 var db = require('../config/neo4j').db;
 Promise.promisifyAll(request);
+Promise.promisifyAll(db);
 
+// Creates a new native Parse user.
 exports.create = function (req, res) {
-  var user = new Parse.User();
-  user.set('username', req.body.username);
-  user.set('password', req.body.password);
-
-  user.signUp(null, {
-    success: function(newParseUser) {
-      var neoParams = {
-        username: newParseUser.attributes.username,
-        parseId: newParseUser.id
-      };
-      createNeo4jUser(neoParams, function(err, neoData) {
-        var neoId = neoData._id;
-        newParseUser.set('neoId', neoId);
-        return newParseUser.save()
-          .then(function(completeUser) {
-            if (completeUser.attributes.fbSessionId) {
-              completeUser.attributes.token = completeUser.attributes.fbSessionId;
-            }
-            else {
-              completeUser.attributes.token = completeUser._sessionToken;
-            }
-            res.json(completeUser);
-          });
-      });
-    },
-    error: function(data, error) {
+  var newParseUserData = {
+    username: req.body.username,
+    password: req.body.password
+  };
+  
+  return createParseUser(newParseUserData)
+    .then(function(completeUser) {
+      console.log(completeUser);
+      // Check for Facebook session ID and use for local storage token.
+      if (completeUser.attributes.fbSessionId) {
+        completeUser.attributes.token = completeUser.attributes.fbSessionId;
+      }
+      else {
+        completeUser.attributes.token = completeUser._sessionToken;
+      }
+      res.status(201).json(completeUser);
+    }, function(error) {
+      // Any errors upstream will be caught and handled here.
       error.error = true;
       res.send(error);
-    }
-  });
+    });
 };
 
 exports.login = function (req, res) {
@@ -104,6 +97,7 @@ exports.fbLogin = function (req, res) {
           });
       })
       .then(function(data) {
+        // Needs to be fixed.
         data.attributes.token = data._sessionToken;
         res.json(data);
       })
@@ -129,6 +123,30 @@ var findUserByFbId = function(fbId) {
   return query.find();
 };
 
+// Creates a Parse user and Neo4j user. Returns the new parse user as a promise.
+var createParseUser = function(newUserData, res) {
+  var user = new Parse.User();
+  var newParseUser;
+  user.set(newUserData);
+  return user.signUp()
+    .then(function(createdParseUser) {
+      console.log('newParseUser', newParseUser);
+      newParseUser = createdParseUser
+      var neoParams = {
+        username: newParseUser.attributes.username,
+        parseId: newParseUser.id
+      };
+      return createNeo4jUser(neoParams)
+    })
+    .then(function(newNeoUser) {
+      console.log('neoresult', newNeoUser);
+      console.log('neoData', newNeoUser)
+      var neoId = newNeoUser.data[0]._id;
+      newParseUser.set('neoId', neoId);
+      return newParseUser.save()
+    })
+}
+
 var createNeo4jUser = function(data, callback) {
   console.log("hey")
   var params = {
@@ -139,10 +157,7 @@ var createNeo4jUser = function(data, callback) {
   };
   console.log(data);
   var q = "CREATE (u:USER {dataToCreateUser}) RETURN u";
-  db.cypherQuery(q, params, function(err, result) {
-    console.log('neotime',result);
-    callback(err, result.data[0]);
-  });
+  return db.cypherQueryAsync(q, params);
 }
 
 // Create new user from Facebook connect info.
