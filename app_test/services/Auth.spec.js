@@ -7,12 +7,14 @@ describe('Auth', function(){
     beforeEach(angular.mock.inject(function(Auth){
 
         auth = Auth;
-        Auth.setAuthToken('joelcox@hisimagination.com', '111222333444555', 'joelcoxokc');
+        Auth.setAuthToken(3333, 'joelcox@hisimagination.com', '111222333444555', 'joelcoxokc');
     }));
     it('Should Store a session token and email of the user on login', function(){
 
+        var id = localStorage.getItem('user_id');
         var email = localStorage.getItem('user_email');
         var token = localStorage.getItem('user_token');
+        expect(id).toBe('3333');
         expect(email).toBe('joelcox@hisimagination.com');
         expect(token).toBe('111222333444555');
 
