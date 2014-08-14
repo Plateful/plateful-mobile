@@ -8,7 +8,7 @@ exports.show = function(req, res) {
     if (err) {
       return handleError(res, err);
     }
-    res.status(200).json(data);
+    res.status(200).json({itemArray: data});
   })
 }
 
