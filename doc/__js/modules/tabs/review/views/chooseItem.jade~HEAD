@@ -1,0 +1,6 @@
+ion-view(title="What?")
+  ion-content
+    a.button.button-block(href="#/tab/review/create-item") New Menu Item
+    ion-list
+      ion-item.item-text-wrap(ng-repeat="item in items" href="#/tab/review/create/{{item._id}}")
+        p {{item.name}}

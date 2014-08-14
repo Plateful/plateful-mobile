@@ -1,0 +1,21 @@
+div.modal
+  ion-header-bar.bar-positive
+    button.button.button-clear(ng-click="closeModal()") Cancel
+    h1.title Add Item
+    button.button.button-clear(ng-click="addItem(newItem)") Done
+  ion-content
+    ion-list
+      label.item.item-input.item-floating-label.bg-white
+        span.input-label Please be precise
+        input(type="text" placeholder="Menu Item Title" ng-model="newItem.name")
+      label.item.item-input.item-floating-label.bg-white
+        span.input-label Description
+        textarea(ng-model="newItem.description" placeholder="Description")
+      label(class="checkbox")
+       input(type="checkbox")
+
+      //- label.item.item-radio
+      //-   input(type="radio" name="group")
+      //-   div(class="item-content")
+      //-   i(class="radio-icon ion-checkmark")
+      //- ng-single-select(options='priceOptions')
