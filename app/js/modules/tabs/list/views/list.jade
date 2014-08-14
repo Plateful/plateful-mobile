@@ -6,7 +6,7 @@ ion-view(title="List")
 
     .row(ng-repeat="row in list.items | partition:2")
       .col(ng-repeat="item in row")
-        .row {{item}}
-          div {{item.name}} - {{item.menu_name}}
-        .row item
-          img(ng-src="{{item.image}}")
+        .row
+          div(ng-back-img="{{item.image}}")
+        .row
+          div{{item.name}}<br/>{{item.menu_name}}
