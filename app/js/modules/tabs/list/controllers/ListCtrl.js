@@ -1,9 +1,15 @@
 (function(){
-  var ListCtrl = function($scope, Auth, User, List, listInit){
+  var ListCtrl = function($scope, Auth, User, List, listInit, $state){
 
     var list = this;
     list.items = listInit;
-
+    
+    if (!localStorage.getItem('user_id')) {
+      $state.go('tab.login');
+    }
+    else if (!list.items) {
+      $state.go('tab.empty-list');
+    }
 
     // list.showPhotos     = showPhotos;
     // list.showCollection = showCollection;
@@ -47,7 +53,7 @@
     // };
   }
 
-  ListCtrl.$inject = ['$scope', 'Auth', 'User', 'List', 'listInit']
+  ListCtrl.$inject = ['$scope', 'Auth', 'User', 'List', 'listInit', '$state']
   angular
     .module('app.modules.tabs.list')
     .controller('ListCtrl', ListCtrl)

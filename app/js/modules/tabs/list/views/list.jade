@@ -1,8 +1,8 @@
 ion-view(title="List")
   ion-content.bg-grey
     .row(style="padding:0;")
-      button.col.button.button-facebook-style Bookmarks
-      button.col.button.button-facebook-style Collections
+      button.col.button.button-facebook-style(ui-sref="tab.bookmarks") Bookmarks
+      button.col.button.button-facebook-style(ui-sref="tab.collections") Collections
 
     .row(ng-repeat="row in list.items | partition:2")
       .col(ng-repeat="item in row")
