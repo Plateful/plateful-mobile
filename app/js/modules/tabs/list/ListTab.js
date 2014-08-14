@@ -34,5 +34,13 @@ angular
           templateUrl: 'js/modules/tabs/list/views/empty-list.html'
         }
       }
+    }).state('tab.logins', {
+      url: '/list',
+      views: {
+        'tab-list': {
+          templateUrl: 'js/modules/states/login/views/login.html',
+          controller: 'LoginCtrl as login'
+        }
+      }
     })
   });

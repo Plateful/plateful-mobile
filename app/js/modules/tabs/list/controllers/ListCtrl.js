@@ -3,9 +3,10 @@
 
     var list = this;
     list.items = listInit;
-    
+
     if (!localStorage.getItem('user_id')) {
-      $state.go('tab.login');
+      console.log('y')
+      $state.go('tab.logins');
     }
     else if (!list.items) {
       $state.go('tab.empty-list');
