@@ -9,7 +9,7 @@
    * @param {[type]} $ionicLoading [description]
    * @param {[type]} Rest          [description]
    */
-  var ItemCtrl = function(resolvedItem, $scope, $stateParams, $http, Item, Review, $ionicLoading, Rest, makeStars, Auth, MakeMap, BackgroundGeo, $log) {
+  var ItemCtrl = function(resolvedItem, $scope, $stateParams, $http, Item, Review, $ionicLoading, Rest, makeStars, Auth, BackgroundGeo, $log) {
     var makeStars;
     var vm = this
     console.log(resolvedItem)
@@ -110,7 +110,6 @@
       'Restangular',
       'makeStars',
       'Auth',
-      'MakeMap',
       'BackgroundGeo',
       '$log'
     ];

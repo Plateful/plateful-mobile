@@ -3,8 +3,8 @@ ion-view(hide-nav-bar="true" id="places")
     button.button.button-clear.ion-funnel(ng-click="openModal()") &nbsp&nbsp
     label(class="item-input-wrapper")
       i(class="icon ion-ios7-search placeholder-icon")
-      //- input(id="searchQuery" class="google-place-search" type="search" ng-model="searchQuery" placeholder="Enter an address, place or ZIP code")
-      ng-places(placeholder="Enter an address, Apt# and ZIP" ng-model="location")
+      input(id="searchQuery" class="google-place-search" type="search" ng-model="searchQuery" placeholder="Enter an address, place or ZIP code")
+      //- ng-places(placeholder="Enter an address, Apt# and ZIP" ng-model="location")
 
     a.button.button-clear.ion-map(href="#/tab/menus/map")
 
