@@ -6,7 +6,15 @@ angular
       views: {
         'tab-list': {
           templateUrl: 'js/modules/tabs/list/views/list.html',
-          controller: 'ListCtrl'
+          controller: 'ListCtrl as list'
+        }
+      },
+      resolve: {
+        listInit: function(List, $q) {
+          return List.getList()
+            .then(function(data) {
+              return data.itemArray;
+            });
         }
       }
     });
