@@ -117,10 +117,16 @@ Item.prototype.findByUser = function(user_id, callback) {
 
 Item.prototype.findByLocation = function(data, callback) {
   // The code below is a snippet for the eventual query to neo.
-  var params = "";
-  var query = "";
-  this.query(query, params, function(err, result) {
-    callback(err, result.data);
+  var data = JSON.parse(data)
+  var params = {
+    dist: "withinDistance:["+data.lat+","+data.lng+","+data.dist+".0]"
+  }
+  console.log("model params", params)
+
+  var query = 'START node=node:geom({dist}) RETURN node'
+  db.cypherQuery(query, params, function(err, result) {
+    console.log(err)
+    callback(err, result);
   });
 };
 

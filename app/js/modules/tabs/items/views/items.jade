@@ -11,6 +11,9 @@ ion-view(hide-nav-bar="true")
   ion-content.bg-grey
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Complete: COnfigure NEO4J for spatial queries, retrieve items based on nearby location from neo
     ng-single-select(options="options")
     div(class="list card" ng-repeat="item in vm.items | orderBy: 'dist' | filter:vm.itemsFilter" ng-click="vm.storeItem(item)")
 =======
@@ -42,7 +45,7 @@ ion-view(hide-nav-bar="true")
 
 
       div(class="item item-image")
-        img(src='{{item.photos.url}}')
+        img(src='{{item.image}}')
         //- img(ng-src="{{item.photos[0].getUrl({'maxWidth': 640, 'maxHeight': 640})}}")
 
 
@@ -59,6 +62,7 @@ ion-view(hide-nav-bar="true")
         span.text-right
 
           i.icon.ion-navigate(style="color:grey;")&nbsp
+
 
           span {{item.dist}} mi
           //- span

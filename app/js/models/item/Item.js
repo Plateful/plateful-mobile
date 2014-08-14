@@ -91,8 +91,8 @@
         if (filter === "empty") {
           findFilter = "";
         }
-        data.val = findFilter;
-        Rest.all('location').post(data).then(function(data) {
+        // data.val = findFilter;
+        Rest.all('location').all(JSON.stringify(data)).getList().then(function(data) {
           var item, _i, _len;
           for (_i = 0, _len = data.length; _i < _len; _i++) {
             item = data[_i];

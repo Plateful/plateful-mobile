@@ -55,6 +55,7 @@
         speed: null
       }
     };
+
     return window.navigator.geolocation.getCurrentPosition(function(location) {
       window.currLocation = location;
       return console.log('Location from Phonegap', location);

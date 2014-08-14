@@ -1,8 +1,8 @@
 /**
  * Main application routes
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
+
+
 var errors = require('./components/errors');
 var cors = require('cors');
 var busboy = require('connect-busboy');
@@ -12,9 +12,7 @@ var Menu = require('./controllers/menu.controller');
 var Review = require('./controllers/review.controller');
 var User = require('./controllers/user.controller');
 var List = require('./controllers/list.controller');
-=======
-=======
->>>>>>> Update: Items View | add link to shared item sate.
+
 var errors = require('./components/errors')
     ,cors = require('cors')
     ,busboy = require('connect-busboy')
@@ -25,10 +23,10 @@ var errors = require('./components/errors')
     ,User = require('./controllers/user.controller')
     ,request = require('supertest')
     ,should = require('should')
-<<<<<<< HEAD
->>>>>>> Update: Items View | add link to shared item sate.
-=======
->>>>>>> Update: Items View | add link to shared item sate.
+
+
+
+
 
 module.exports.applyRoutes = function(app) {
 
@@ -56,7 +54,7 @@ module.exports.applyRoutes = function(app) {
   // Item API routes.
   Items.get('/', Item.index);
   Items.get('/business/:menu_id', Item.getByMenu);
-  Items.post('/location', Item.getByLocation);
+  Items.get('/location/:filter', Item.getByLocation);
   Items.get('/user/:user_id', Item.getByUser);
   Items.get('/:id/photos', Item.getItemPhotos);
   Items.get('/:id/reviews', Item.getItemReviews);
@@ -91,7 +89,7 @@ module.exports.applyRoutes = function(app) {
   Users.post('/signup', User.create);
   Users.post('/login', User.login);
   Users.post('/fb-login', User.fbLogin);
-  
+
   // List tab API routes.
   Lists.get('/:id', List.show);
 

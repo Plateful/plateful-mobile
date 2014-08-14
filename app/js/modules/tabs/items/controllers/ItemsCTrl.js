@@ -13,6 +13,7 @@
         // initialize(data.latitude, data.longitude)
         vm.lat = data.latitude
         vm.long = data.longitude
+
         getMenuItems(null)
           // MenuItem.get()
           .then(function(data) {
@@ -24,6 +25,8 @@
 
           });
       })
+
+
 
 
 
@@ -46,10 +49,15 @@
     //////////////////
 
 
-    function getMenuItems(filter){
 
-      // return MenuItem.getByLocation(vm.locationData, null);
-      return MenuItem.get()
+    function getMenuItems(filter){
+      console.log("from controller", vm.lat)
+      return MenuItem.getByLocation({
+        lat:vm.lat,
+        lng:vm.long,
+        dist: 1.0
+      }, null);
+      // return MenuItem.get()
 
     }
 
