@@ -56,6 +56,7 @@ ion-view(hide-nav-bar="true")
 
       a(class="item" href="#/tab/items/item/{{item._id}}")
         div {{item.name | limitTo:30 }}
+        div @{{item.menu_name | limitTo:30 }}
         div.text-left.assertive {{item.stars}}
         div.text-left.energized.pull-right (250)
 

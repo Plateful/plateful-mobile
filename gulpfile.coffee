@@ -225,8 +225,11 @@ gulp.task 'scripts:vendor', ->
         # sourcemaps arent ready for gulp-concat yet :/ lets wait with that
         # sourceMap: false
       # }))
+      # .pipe(exclude())
+
       .on("error", notify.onError((error) -> error.message))
       .pipe(concat("#{scriptsName}.js"))
+
       .pipe(gulp.dest(destinations.scripts))
 
 
