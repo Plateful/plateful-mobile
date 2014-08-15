@@ -44,7 +44,9 @@ exports.getByUser = function(req, res) {
 
 // GET http://localhost:9000/api/items/location
 exports.getByLocation = function(req, res) {
+  console.log('yollyo')
   console.log(req.params.filter)
+
   Item.findByLocation(req.params.filter, function(err, result) {
     if (err) {
       console.log(err)

@@ -97,5 +97,5 @@
   angular
     .module("app")
     .controller("ItemsCtrl", ItemsCtrl)
-    .factory("MakeMap", MakeMap);
+
 })();

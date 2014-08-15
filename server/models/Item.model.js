@@ -30,12 +30,9 @@ var Item = function() {
 };
 
 Item.prototype.all = function(callback) {
-<<<<<<< HEAD
+
   db.cypherQuery('MATCH (i:ITEM)-[:HAS_PHOTOS]->(:ITEM_PHOTOS)-->(p), (i)<-[:HAS_ITEMS]-(m:MENU) RETURN m,i,p LIMIT 25', function(err, result){
 
-=======
-  db.cypherQuery('MATCH (i:ITEM)-[:HAS_PHOTOS]->(:ITEM_PHOTOS)-->(p), (i)<-[:HAS_ITEMS]-(m:MENU) RETURN m,i,p LIMIT 100', function(err, result){
->>>>>>> Commit for changing local directorires
     console.log(result.data);
     var obj = _.map(result.data, function(i, p){
       // console.log("m", m);
