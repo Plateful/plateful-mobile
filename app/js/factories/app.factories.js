@@ -12,6 +12,7 @@
       'app.factory.menu',
       'app.factory.item',
       'app.factory.review',
+      'app.factory.list',
       'app.factory.user',
       'app.factory.photo',
       'app.factory.fbLogin'

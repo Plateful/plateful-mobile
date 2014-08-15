@@ -1,3 +1,12 @@
-//- ion-view(name="{{user.name}}")
-//-   ion-content.bg-grey
-//-
+ion-view(title="List")
+  ion-content.bg-grey
+    .row(style="padding:0;")
+      button.col.button.button-facebook-style(ui-sref="tab.bookmarks") Bookmarks
+      button.col.button.button-facebook-style(ui-sref="tab.collections") Collections
+
+    .row(ng-repeat="row in list.items | partition:2")
+      .col(ng-repeat="item in row")
+        .row
+          div(ng-back-img="{{item.image}}")
+        .row
+          div {{item.name}}<br/>{{item.menu_name}}
