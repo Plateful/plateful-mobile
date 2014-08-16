@@ -65,13 +65,13 @@
 
       itemsFilter = itemsFilter || "empty";
 
-      getMenuItems(itemsFilter)
+      // getMenuItems(itemsFilter)
 
-        .then(function(data) {
+      //   .then(function(data) {
 
-          vm.items = newData;
+      //     vm.items = newData;
 
-        });
+      //   });
     }
 
     function openModal(){

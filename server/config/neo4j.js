@@ -5,7 +5,6 @@ module.exports.db = db = new neo4j('http://neo4john.cloudapp.net:7474');
 // module.exports.db = db = new neo4j('http://localhost:7474');
 module.exports.serif = require("seraph")('http://neo4john.cloudapp.net:7474');
 
-
 // RUN A FEW TIMES TO INDEX ALL ITEMS INTO THE SPATIAL RTREE
 db.cypherQuery("MATCH (n:ITEM) WHERE n.lon IS NOT NULL RETURN n LIMIT 1", function(err, result){
   if(err){
@@ -17,6 +16,7 @@ db.cypherQuery("MATCH (n:ITEM) WHERE n.lon IS NOT NULL RETURN n LIMIT 1", functi
   }
 });
 
+
 function createSpatialIndex(node){
   request.post(
     'http://neo4john.cloudapp.net:7474/db/data/index/node/geom',
@@ -25,7 +25,6 @@ function createSpatialIndex(node){
       if(err){
         console.log("---------------------------err", error)
           // console.log("response", response)
-        console.log("body", body)
         if (!error && response.statusCode == 200) {
             console.log("BODY",  body)
         }
