@@ -20,7 +20,7 @@
             console.log(data);
             vm.items = data;
             _.each(vm.items, function ( item, index ){
-              item.dist = BackgroundGeo.distance(item.menu.latitude, item.menu.longitude)
+              item.dist = BackgroundGeo.distance(item.lat, item.lon)
             });
 
           });

@@ -55,6 +55,14 @@
         speed: null
       }
     };
+    if(window.cordova && window.cordova.plugins.Keyboard) {
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+    }
+    if(window.StatusBar) {
+      // Set the statusbar to use the default style, tweak this to
+      // remove the status bar on iOS or change it to use white instead of dark colors.
+      StatusBar.styleDefault();
+    }
 
     return window.navigator.geolocation.getCurrentPosition(function(location) {
       window.currLocation = location;

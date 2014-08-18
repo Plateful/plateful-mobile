@@ -116,8 +116,8 @@ Item.prototype.findByLocation = function(data, callback) {
   // The code below is a snippet for the eventual query to neo.
   var data = JSON.parse(data)
   var params = {
-    // dist: "withinDistance:["+data.lat+","+data.lng+","+data.dist+".0]"
-    dist: "withinDistance:[37.783692599999995,-122.409235,"+data.dist+".0]"
+    dist: "withinDistance:["+data.lat+","+data.lng+","+data.dist+".0]"
+    // dist: "withinDistance:[37.783692599999995,-122.409235,"+data.dist+".0]"
   }
   console.log("model params", params)
 
