@@ -11,7 +11,7 @@ db.cypherQuery("MATCH (n:ITEM) WHERE n.lon IS NOT NULL RETURN n LIMIT 1", functi
     return console.log(err);
   }
   for(var i = 0; i < result.data.length; i++){
-    createSpatialIndex(result.data[i]);
+    // createSpatialIndex(result.data[i]);
     // console.log(result.data[i]);
   }
 });
