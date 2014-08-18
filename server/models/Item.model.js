@@ -1,6 +1,6 @@
 var db = require('../config/neo4j').db;
 var serif = require('../config/neo4j').serif;
-var _ = require('lodash')
+var _ = require('lodash');
 
 
 // serif.query('START n = node(24233) RETURN n', function(err, result){
