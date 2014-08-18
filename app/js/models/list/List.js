@@ -28,6 +28,6 @@
 
 
   List.$inject = ['Restangular'];
-  angular.module('app.factory.list', [])
+  angular.module('app.model.list', [])
     .factory('List', List);
 }).call(this);
