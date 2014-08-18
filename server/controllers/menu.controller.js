@@ -29,17 +29,12 @@ exports.index = function(req, res) {
 };
 
 exports.getByLocation = function(req, res) {
-  var data;
-  data = {
-    location: [req.body.lat, req.body.lng],
-    radius: 500
-  };
-  if (req.body.val) {
-    data.name = req.body.val;
-  }
-  Venue.search(data, function(response) {
-    res.json(200, response.objects);
-  });
+  Menu.getByLocation(req.body, function(err, results) {
+    if (err) {
+      return handleError(res, err);
+    }
+    res.json(200, results);
+  })
 };
 
 // This comment below is for an api call to the Factual api.

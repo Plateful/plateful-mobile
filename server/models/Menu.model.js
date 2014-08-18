@@ -35,6 +35,23 @@ Menu.prototype.getMenuItems = function(req, res) {
   });
 };
 
+Menu.prototype.getByLocation = function(data, callback) {
+  var params = {
+    dist: "withinDistance:["+data.lat+","+data.lng+","+data.dist+".0]"
+  }
+  var q = [
+    "START i=node:geom({dist}) ",
+    "MATCH (i)<-[:HAS_ITEMS]-(m:MENU) ",
+    "RETURN DISTINCT m"
+  ].join('');
+  db.cypherQuery(q, params, function(err, result) {
+    if (err) {
+      return callback(err);
+    }
+    return callback(err, result.data);
+  })
+}
+
 Menu.prototype.create = function(menu, callback) {
   var params = {
     menu: menu
