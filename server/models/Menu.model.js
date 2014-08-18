@@ -36,14 +36,21 @@ Menu.prototype.getMenuItems = function(req, res) {
 };
 
 Menu.prototype.getByLocation = function(data, callback) {
-  var params = {
-    dist: "withinDistance:["+data.lat+","+data.lng+","+data.dist+".0]"
+  // Handle whole number distance numbers. Numbers without decimals will throw errors.
+  var distString = (data.dist).toString();
+  if (distString.indexOf('.') === -1) {
+    data.dist = distString + '.0';
   }
+
+  var params = {
+    dist: "withinDistance:["+data.lat+","+data.lng+","+data.dist+"]"
+  };
   var q = [
     "START i=node:geom({dist}) ",
     "MATCH (i)<-[:HAS_ITEMS]-(m:MENU) ",
     "RETURN DISTINCT m"
   ].join('');
+  
   db.cypherQuery(q, params, function(err, result) {
     if (err) {
       return callback(err);

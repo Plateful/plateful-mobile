@@ -8,6 +8,26 @@
             templateUrl: "js/modules/tabs/review/views/review.html",
             controller: 'ReviewMenuCtrl as reviewMenu'
           }
+        },
+        resolve: {
+          locationData: function() {
+            return {
+              lat: window.currLocation.coords.latitude,
+              lng: window.currLocation.coords.longitude,
+              dist: 0.6
+            };
+          },
+          reviewMenuInit: function(Menu, BackgroundGeo) {
+            var coords = this.resolve.locationData();
+            return Menu.getByLocation(coords, null)
+              .then(function(menus) {
+                // Add distance from user to each menu.
+                _.each(menus, function(menu) {
+                  menu.dist = BackgroundGeo.distance(menu.latitude, menu.longitude);
+                })
+                return menus;
+              });
+          }
         }
       }).state("tab.review-choose-item", {
         url: '/review/choose-item/:businessId',

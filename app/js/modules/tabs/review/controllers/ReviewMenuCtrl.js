@@ -1,27 +1,10 @@
 (function() {
-  var ReviewMenuCtrl = function($scope, Menu, BackgroundGeo) {
+  var ReviewMenuCtrl = function($scope, Menu, BackgroundGeo, reviewMenuInit, locationData) {
     var reviewMenu = this
+    var LocationData = locationData;
+    reviewMenu.menus = reviewMenuInit;
 
-    reviewMenu.locate = window.currLocation.coords;
-
-    var LocationData = {
-      lat: reviewMenu.locate.latitude,
-      lng: reviewMenu.locate.longitude,
-      dist: 1.0
-    };
-
-    Menu.getByLocation(LocationData, null)
-      .then(function(data) {
-        console.log(data)
-        // item.dist = BackgroundGeo.distance(item.lat, item.lon)
-        reviewMenu.menus = data;
-        _.each(reviewMenu.menus, function(item) {
-          item.dist = BackgroundGeo.distance(item.latitude, item.longitude);
-          console.log(item.dist);
-        })
-        console.log('u',reviewMenu.menus);
-      });
-
+    /*** CONTROLLER METHODS ***/
     reviewMenu.newSearch = newSearch;
 
     function newSearch(nearbyFilter) {
@@ -36,7 +19,7 @@
   };
 
   ReviewMenuCtrl
-    .$inject = ['$scope', 'Menu', 'BackgroundGeo'];
+    .$inject = ['$scope', 'Menu', 'BackgroundGeo', 'reviewMenuInit', 'locationData'];
   angular
     .module('app.modules.tabs.review.controllers', [])
     .controller('ReviewMenuCtrl', ReviewMenuCtrl);
