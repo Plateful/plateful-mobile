@@ -19,7 +19,7 @@ module.exports = function(config) {
       'www/js/vendor.js',
       'assets/components/angular-mocks/angular-mocks.js',
       'www/js/bootstrap.js',
-      'www/js/app.js',
+      'www/js/app.js',      
       'app_test/**/*.js'
     ],
 

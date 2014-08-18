@@ -1,6 +1,8 @@
 /**
  * Main application routes
  */
+
+
 var errors = require('./components/errors');
 var cors = require('cors');
 var busboy = require('connect-busboy');
@@ -10,6 +12,21 @@ var Menu = require('./controllers/menu.controller');
 var Review = require('./controllers/review.controller');
 var User = require('./controllers/user.controller');
 var List = require('./controllers/list.controller');
+
+var errors = require('./components/errors')
+    ,cors = require('cors')
+    ,busboy = require('connect-busboy')
+    ,express = require('express')
+    ,Item = require('./controllers/item.controller')
+    ,Menu = require('./controllers/menu.controller')
+    ,Review = require('./controllers/review.controller')
+    ,User = require('./controllers/user.controller')
+    ,request = require('supertest')
+    ,should = require('should')
+
+
+
+
 
 module.exports.applyRoutes = function(app) {
 
@@ -37,8 +54,10 @@ module.exports.applyRoutes = function(app) {
   // Item API routes.
   Items.get('/', Item.index);
   Items.get('/business/:menu_id', Item.getByMenu);
-  Items.post('/location', Item.getByLocation);
+  Items.get('/location/:filter', Item.getByLocation);
   Items.get('/user/:user_id', Item.getByUser);
+  Items.get('/:id/photos', Item.getItemPhotos);
+  Items.get('/:id/reviews', Item.getItemReviews);
   Items.get('/:id', Item.show);
   Items.post('/', Item.create);
   Items.put('/:id', Item.update);
@@ -70,7 +89,7 @@ module.exports.applyRoutes = function(app) {
   Users.post('/signup', User.create);
   Users.post('/login', User.login);
   Users.post('/fb-login', User.fbLogin);
-  
+
   // List tab API routes.
   Lists.get('/:id', List.show);
 
@@ -81,4 +100,5 @@ module.exports.applyRoutes = function(app) {
   app.route('/*').get(function(req, res) {
     res.sendfile(app.get('appPath') + '/index.html');
   });
+
 };

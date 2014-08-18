@@ -44,15 +44,16 @@ exports.getByUser = function(req, res) {
 
 // GET http://localhost:9000/api/items/location
 exports.getByLocation = function(req, res) {
-  var data = {
-    location: [req.body.lat, req.body.lng]
-  };
-  if (req.body.val) {
-    data.name = req.body.val;
-  }
-  MenuClient.search(data, function(response) {
-    console.log(response.objects);
-    res.json(200, response.objects);
+  console.log('yollyo')
+  console.log(req.params.filter)
+
+  Item.findByLocation(req.params.filter, function(err, result) {
+    if (err) {
+      console.log(err)
+      return handleError(res, err);
+    }
+    res.status(200)
+    res.json(result.data);
   });
 };
 
@@ -63,9 +64,26 @@ exports.show = function(req, res) {
     if (err) {
       return handleError(res, err);
     }
-    res.json(200, data);
+    res.status(200)
+    res.json(data);
   });
 };
+
+exports.getItemPhotos = function(req, res){
+  Item.getItemPhotos(req.params.id, function(err, result){
+    if(err) return handleError(res, err)
+    res.status(200)
+    res.json(result)
+  })
+
+}
+exports.getItemReviews = function(req, res){
+  Item.getItemPhotos(req.params.id, function(err, result){
+    if(err) return handleError(res, err)
+    res.status(200)
+    res.json(result)
+  })
+}
 
 // POST http://localhost:9000/api/items/
 // Working but need to make changes to the neo4j queries takes in data

@@ -1,0 +1,11 @@
+//- script(type='text/ng-template' id='filterModal.html')
+div.modal
+  ion-header-bar
+    button.button.button-clear(ng-click="closeModal()") Cancel
+    h1.title Filters
+    button.button.button-clear(ng-click="searchFilter(distanceOptions, priceOptions)") Search
+  ion-content
+    h4 Distance
+      ng-single-select(options='distanceOptions')
+    h4 Price
+      ng-multi-select(options='priceOptions')

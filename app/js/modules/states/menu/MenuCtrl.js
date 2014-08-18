@@ -11,6 +11,7 @@
     //   });
 
     vm.menu_id = $stateParams.menu_id;
+
     vm.images = ImagesService.get();
 
     Menu.getMenuItems(vm.menu_id)
@@ -75,8 +76,8 @@
       Auth.setAuthToken( vm.username, vm.password );
     }
     function placeDetails(){
-      return ngGPlacesAPI.placeDetails({ placeDetailsKeys: ['formatted_address', 'formatted_phone_number',
-        'reference', 'website', 'name', 'geometry', 'opening_hours'], placeId: vm.menu_id});
+      log("id", vm.menu_id)
+      return ngGPlacesAPI.placeDetails({placeId: vm.menu_id});
     }
 
     vm.priceOptions = [

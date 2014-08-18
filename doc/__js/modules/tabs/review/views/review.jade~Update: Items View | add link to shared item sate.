@@ -1,0 +1,17 @@
+ion-view(hide-nav-bar="true")
+
+  ion-header-bar.bar-positive.item-input-inset
+      //- button.button.button-clear(ng-click="openModal()") Filter&nbsp&nbsp
+      label.item-input-wrapper
+        i.icon.ion-ios7-search.placeholder-icon
+        form(ng-submit="vm.newSearch(vm.nearbyFilter)")
+          input(type="search" placeholder="Search" ng-model="vm.nearbyFilter")
+      //- a.button.button-clear(href="#/tab/nearby/map") Map
+
+  ion-content.bg-grey
+    div.list
+      a.item(ng-repeat="menu in vm.menus | filter:vm.nearbyFilter" href="#/tab/review/choose-item/{{menu.id}}")
+        //- img(src='{{business.image_url}}')
+        h2 {{menu.name}}
+        h4 {{menu.address + " " + menu.locality }}
+        p {{menu.tel}}
