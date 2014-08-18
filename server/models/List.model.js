@@ -17,7 +17,7 @@ List.prototype.show = function(username, callback) {
 
   db.cypherQuery(q, params, function(err, result) {
     var returnData = [];
-    if (result.data.length){ 
+    if (result.data.length){
       returnData = _.map(result.data[0][0].concat(result.data[0][1]), function(item, index){
         return item.data;
       });
