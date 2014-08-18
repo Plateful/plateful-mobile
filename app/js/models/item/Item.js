@@ -97,7 +97,7 @@
           for (_i = 0, _len = data.length; _i < _len; _i++) {
             item = data[_i];
             item.dist = findDistance.get(item);
-            item.stars = makeStars.set(item);
+            item.stars = makeStars.get(item.rating);
             item.image_url = ImagesService.get();
           }
           return newPromise.resolve(data);
