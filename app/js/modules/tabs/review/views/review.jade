@@ -13,5 +13,7 @@ ion-view(hide-nav-bar="true")
       a.item(ng-repeat="menu in reviewMenu.menus | filter:reviewMenu.nearbyFilter" href="#/tab/review/choose-item/{{menu.id}}")
         //- img(src='{{business.image_url}}')
         h2 {{menu.name}}
-        h4 {{menu.address + " " + menu.locality }}
-        p {{menu.tel}}
+        h4.text-left {{menu.address + " - " + menu.city}}
+        span.text-right
+          i.icon.ion-navigate(style="color:grey;")&nbsp
+          span {{menu.dist}} mi
