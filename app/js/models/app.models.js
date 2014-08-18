@@ -22,6 +22,7 @@
       'app.model.menu',
       'app.model.item',
       'app.model.review',
+      'app.model.list',
       'app.model.user',
       'app.model.photo',
       'app.model.fbLogin'
