@@ -52,20 +52,12 @@ exports.getByLocation = function(req, res) {
 // http://localhost:9000/api/menus/30
 // working but must change HAS_ITEM to HAS to test
 exports.show = function(req, res) {
-  Menu.find(function(err, data) {
+  Menu.find(req.params.id, function(err, data) {
     if (err) {
       return handleError(res, err);
     }
-    if (!data.length) {
-      Venue.get_details(req.params.id, function(response) {
-        storeData.store(response.objects[0], function(data) {
-          res.json(200, data);
-        });
-      });
-    }
-    else {
-      res.json(200, data[0]);
-    }
+    console.log(data)
+    res.json(200, data);
   });
 };
 

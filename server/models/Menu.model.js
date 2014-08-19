@@ -13,25 +13,29 @@ Menu.prototype.all = function(callback) {
 
 Menu.prototype.find = function(menu_id, callback) {
   var params = {
-    menu_id: menu_id
+    id: Number(menu_id)
   };
-  var q = "Match (m:Menu) WHERE m.locu_id = {menu_id} RETURN m";
-  this.query(q, params, function(err, result) {
-    callback(err, result.data);
+  var q = "START menu=node({id}) RETURN menu";
+  db.cypherQuery(q, params, function(err, result) {
+    if(err){
+      return callback(err, result);
+    }
+    callback(err, result.data[0]);
   });
-};
+}
 
-Menu.prototype.getMenuItems = function(menuId, callback) {
+// Takes a menu_id parameter. Returns all its items.
+Menu.prototype.getMenuItems = function(menu_id, callback) {
   // Cypher requires a number for the start value.
   var params = {
-    id: Number(menuId)
+    id: Number(menu_id)
   };
   var q = "START menu=node({id}) MATCH menu-[:HAS_ITEMS]->(i:ITEM) RETURN i";
   db.cypherQuery(q, params, function(err, result) {
     if(err){
       return callback(err, result);
     }
-    callback(err, result.data)
+    callback(err, result.data);
   });
 };
 
