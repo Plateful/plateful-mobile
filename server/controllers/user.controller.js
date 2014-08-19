@@ -28,6 +28,20 @@ exports.collectItem = function(req, res){
 
 }
 
+exports.bookmarkItem = function(req, res){
+  // console.log(req.body)
+  User
+    .bookmarkItem(req.params.id, req.body.item_id)
+    .then(function (data){
+      res.status(200)
+      res.json(data)
+    })
+    .catch(function (msg){
+      res.status(404)
+      res.send(msg)
+    })
+};
+
 exports.getUserData = function(req, res){
   // console.log("from controller",)
   User.getUserData(req.params.id, req.params.data)

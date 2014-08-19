@@ -54,7 +54,30 @@ User.prototype.collectItem = function(user_id, item_id){
   var deferred = Q.defer()
   var query = ["START u=node({user_id}), i=node({item_id})",
               "MATCH u-[:HAS_COLLECTIONS]->(c)",
-              "CREATE (c)-[:COLLECTED]->(i)",
+              "MERGE (c)-[:COLLECTED]->(i)",
+              "RETURN i"].join("");//CREATE u-[:COLLECTED]->(i)
+  db.cypherQuery(query, params, function (err, result){
+
+    if(err){
+      console.log(err)
+      return deferred.reject(new Error(err))
+    }
+    deferred.resolve(result.data[0])
+    console.log(result.data)
+  })
+  return deferred.promise
+
+}
+User.prototype.bookmarkItem = function(user_id, item_id){
+  var params = {
+    user_id: Number(user_id),
+    item_id: Number(item_id)
+  }
+  console.log(params)
+  var deferred = Q.defer()
+  var query = ["START u=node({user_id}), i=node({item_id})",
+              "MATCH u-[:HAS_BOOKMARKS]->(c)",
+              "MERGE (c)-[:BOOKMARKED]->(i)",
               "RETURN i"].join("");//CREATE u-[:COLLECTED]->(i)
   db.cypherQuery(query, params, function (err, result){
 
@@ -83,7 +106,7 @@ var userQuery = {
               "RETURN photo"].join(""),
 
   bookmarks:  ["START user=node({user_id})",
-              "MATCH user-[:HAS_BOOKMARKS]->(c)-[:HAS_BOOKMARK]->(bookmark)",
+              "MATCH user-[:HAS_BOOKMARKS]->(c)-[:BOOKMARKED]->(bookmark)",
               "RETURN bookmark"].join("")
 };
 

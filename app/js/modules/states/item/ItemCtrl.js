@@ -12,19 +12,30 @@
   var ItemCtrl = function(resolvedItem, $scope, $stateParams, $http, Item, Review, $ionicLoading, Rest, makeStars, Auth, BackgroundGeo, $log, User, UserStorage) {
     var makeStars;
     var vm = this
-    console.log(resolvedItem)
-    // resolvedItem.then(function(data){
-
-    UserStorage.get('collection')
-      .then(function(data){
-        console.log("storage", data)
-      })
 
     vm.item = resolvedItem.item
     vm.map = resolvedItem.map
     vm.marker = resolvedItem.marker
     vm.options = resolvedItem.options
     vm.item_id = resolvedItem.item_id
+
+
+    UserStorage
+      .collection(vm.item_id)
+      .then( function (data) {
+        if(data.length){
+          vm.has_collected = true;
+        }
+      });
+    UserStorage
+      .bookmarks(vm.item_id)
+      .then( function (data) {
+        if(data.length){
+          vm.has_bookmarked = true;
+        }
+      });
+
+
     // })
     // vm.item_id = $stateParams.itemId;
     // vm.map = {center: {latitude: 40.1451, longitude: -99.6680 }, zoom: 15 }
@@ -95,13 +106,40 @@
       alert('item reviewed');
     };
     function collectItem() {
-      User.collectItem(vm.item)
+      User
+        .collectItem(vm.item)
+        .then( function( data ){
+          vm.has_collected = true
+        })
 
       // alert('item collected');
     };
-    function bookmarkItem() {
+    function unCollectItem(){
 
-      alert('item bookmarked');
+      User
+        .unCollectItem(vm.item)
+        .then( function ( data ){
+          vm.has_collected = false
+        })
+
+    };
+    function bookmarkItem(){
+
+      User
+        .bookmarkItem(vm.item)
+        .then( function ( data ){
+          vm.has_bookmarked = true
+        })
+
+    };
+    function unBookmarkItem(){
+
+      User
+        .unBookmarkItem(vm.item)
+        .then( function ( data ){
+          vm.has_bookmarked = false
+        })
+
     };
   };
 

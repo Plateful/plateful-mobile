@@ -50,6 +50,20 @@
               log(data);
             })
         },
+        bookmarkItem: function(item){
+          var user_id = localStorage.getItem('user_id')
+          if(user_id){
+            console.log(user_id)
+          }
+          // console.log(item)
+          Restangular
+            .one('users', user_id)
+            .all('bookmark')
+            .post({item_id:item._id})
+            .then(function (data){
+              log(data);
+            })
+        },
         signup: function(username, password){
           return Restangular.all('users').all('signup')
             .post({username: username, password: password})

@@ -20,6 +20,12 @@
   this.log = function() {
     return console.log(arguments);
   };
+  this.info = function() {
+    return console.info(arguments);
+  };
+  this.Err = function() {
+    return console.error(arguments);
+  };
 
   Storage.prototype.setObject = function(key, value) {
     return this.setItem(key, JSON.stringify(value));
