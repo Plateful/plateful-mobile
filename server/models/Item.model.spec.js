@@ -34,5 +34,5 @@ describe('List API', function() {
   //     (data.itemArray[0].name).should.be.exactly('Duck Confit');
   //     (data.itemArray[4].name).should.be.exactly('Goat Cheese Cake and Beet Ice Cream');
   //   });
-  // });
+  });
 });
