@@ -10,7 +10,7 @@ ion-view(hide-nav-bar="true")
 
   ion-content.bg-grey
     div.list
-      a.item(ng-repeat="menu in reviewMenu.menus | filter:reviewMenu.nearbyFilter" href="#/tab/review/choose-item/{{menu.id}}")
+      a.item(ng-repeat="menu in reviewMenu.menus | filter:reviewMenu.nearbyFilter" href="#/tab/review/choose-item/{{menu._id}}")
         //- img(src='{{business.image_url}}')
         h2 {{menu.name}}
         h4.text-left {{menu.address + " - " + menu.city}}
