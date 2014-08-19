@@ -1,11 +1,14 @@
 (function() {
-  var ReviewMenuCtrl = function($scope, Menu, BackgroundGeo, reviewMenuInit, locationData) {
+  var ReviewMenuCtrl = function($scope, Menu, reviewMenuInit, locationData) {
     var reviewMenu = this
     var LocationData = locationData;
     reviewMenu.menus = reviewMenuInit;
 
     /*** CONTROLLER METHODS ***/
+
     reviewMenu.newSearch = newSearch;
+
+    /**************************/
 
     function newSearch(nearbyFilter) {
 
@@ -19,7 +22,7 @@
   };
 
   ReviewMenuCtrl
-    .$inject = ['$scope', 'Menu', 'BackgroundGeo', 'reviewMenuInit', 'locationData'];
+    .$inject = ['$scope', 'Menu', 'reviewMenuInit', 'locationData'];
   angular
     .module('app.modules.tabs.review.controllers', [])
     .controller('ReviewMenuCtrl', ReviewMenuCtrl);

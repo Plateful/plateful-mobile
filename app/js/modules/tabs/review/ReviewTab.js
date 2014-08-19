@@ -17,14 +17,16 @@
               dist: 0.6
             };
           },
-          reviewMenuInit: function(Menu, BackgroundGeo) {
+          reviewMenuInit: function(Menu, BackgroundGeo, $ionicLoading) {
             var coords = this.resolve.locationData();
+            $ionicLoading.show({template:'Loading Menus...'});
             return Menu.getByLocation(coords, null)
               .then(function(menus) {
                 // Add distance from user to each menu.
                 _.each(menus, function(menu) {
                   menu.dist = BackgroundGeo.distance(menu.latitude, menu.longitude);
                 })
+                $ionicLoading.hide();
                 return menus;
               });
           }
@@ -35,6 +37,17 @@
           "tab-review": {
             templateUrl: 'js/modules/tabs/review/views/chooseItem.html',
             controller: 'ReviewItemCtrl as vm'
+          }
+        },
+        resolve: {
+          menuItemsInit: function($stateParams, Menu, $ionicLoading) {
+            $ionicLoading.show({template:'Loading Menu Items...'});
+            var menuId = $stateParams.businessId;
+            return Menu.getMenuItems(menuId).
+              then(function(items) {
+                $ionicLoading.hide();
+                return items;
+              });
           }
         }
       }).state("tab.review-create-item", {
