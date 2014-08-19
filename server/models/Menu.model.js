@@ -21,17 +21,17 @@ Menu.prototype.find = function(menu_id, callback) {
   });
 };
 
-Menu.prototype.getMenuItems = function(req, res) {
+Menu.prototype.getMenuItems = function(menuId, callback) {
+  // Cypher requires a number for the start value.
   var params = {
-    place_id: req.params.id
+    id: Number(menuId)
   };
-  var q = "MATCH (m:MENU)-[:HAS_ITEMS]->(i) WHERE m.place_id = {place_id} RETURN i";
+  var q = "START menu=node({id}) MATCH menu-[:HAS_ITEMS]->(i:ITEM) RETURN i";
   db.cypherQuery(q, params, function(err, result) {
     if(err){
-      return handleError(res, err);
+      return callback(err, result);
     }
-    res.status(200);
-    res.json(result.data);
+    callback(err, result.data)
   });
 };
 

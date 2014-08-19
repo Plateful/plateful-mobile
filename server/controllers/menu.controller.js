@@ -70,7 +70,12 @@ exports.show = function(req, res) {
 };
 
 exports.getMenuItems = function(req, res){
-  Menu.getMenuItems(req, res);
+  Menu.getMenuItems(req.params.id, function(err, data) {
+    if (err) {
+      return handleError(res, err);
+    }
+    res.json(200, data);
+  });
 };
 
 // Creates a new Business in the DB.
