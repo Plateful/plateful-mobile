@@ -95,9 +95,18 @@ Item.prototype.findByMenu = function(menu_id, callback) {
   var params = {
     menu: Number(menu_id)
   };
-  var query = "START menu=node({menu}) " + "MATCH (menu)-[:HAS_ITEM]->(item:Item)," + "(item)-[:REVIEW]->(review:Review)," + "(item)-[:GALLERY]->(gallery:Gallery)-[:PHOTO]->(photo:Photo)," + "(review)-[:BODY]->(body:Body)" + "RETURN item, review, body, photo";
-  this.query(query, params, function(err, result) {
-    callback(err, result.data);
+  var query = [
+    "START menu=node({menu}) ",
+    "MATCH (menu)-[:HAS_ITEMS]->(item:ITEM), ",
+    "(item)-[:HAS_REVIEWS]->(reviews:ITEM_REVIEWS)-[:HAS_REVIEW]->(review:ITEM_REVIEW), ", 
+    "(item)-[:HAS_PHOTOS]->(photos:ITEM_PHOTOS)-[:HAS_PHOTO]->(photo:ITEM_PHOTO) ",
+    "RETURN item, review, photo"
+  ].join('');
+  db.cypherQuery(query, params, function(err, result) {
+    if (err) {
+      return callback(err, result)
+    }
+    return callback(err, result.data);
   });
 };
 
