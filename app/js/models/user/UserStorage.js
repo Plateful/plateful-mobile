@@ -24,7 +24,6 @@
       var q = $q.defer()
       checkStorage(key)
         .then(function (data){
-          console.log("from get", data)
           q.resolve(data)
         })
       return q.promise

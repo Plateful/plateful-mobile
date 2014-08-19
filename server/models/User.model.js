@@ -80,7 +80,11 @@ var userQuery = {
 
   photos:     ["START user=node({user_id})",
               "MATCH user-[:HAS_PHOTOS]->(c)-[:HAS_PHOTO]->(photo)",
-              "RETURN photo"].join("")
+              "RETURN photo"].join(""),
+
+  bookmarks:  ["START user=node({user_id})",
+              "MATCH user-[:HAS_BOOKMARKS]->(c)-[:HAS_BOOKMARK]->(bookmark)",
+              "RETURN bookmark"].join("")
 };
 
 
