@@ -2,10 +2,12 @@ var neo4j = require('node-neo4j');
 var request = require('request');
 
 module.exports.db = db = new neo4j('http://neo4john.cloudapp.net:7474');
+
 // module.exports.db = db = new neo4j('http://localhost:7474');
 module.exports.spatial = spatial = 'http://neo4john.cloudapp.net:7474/db/data/index/node/geom';
 module.exports.spatialURI = spatialURI = 'http://neo4john.cloudapp.net:7474/db/data/node/';
 module.exports.serif = require("seraph")('http://neo4john.cloudapp.net:7474');
+
 
 // // RUN A FEW TIMES TO INDEX ALL ITEMS INTO THE SPATIAL RTREE
 // db.cypherQuery("MATCH (n:ITEM) WHERE n.lon IS NOT NULL RETURN n LIMIT 1", function(err, result){

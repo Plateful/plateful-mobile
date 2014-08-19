@@ -89,6 +89,10 @@ module.exports.applyRoutes = function(app) {
   Users.post('/signup', User.create);
   Users.post('/login', User.login);
   Users.post('/fb-login', User.fbLogin);
+  Users.post('/:id/collect', User.collectItem);
+  Users.get('/:id/:data', User.getUserData);
+
+
 
   // List tab API routes.
   Lists.get('/:id', List.show);

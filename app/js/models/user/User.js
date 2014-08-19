@@ -1,6 +1,6 @@
 (function() {
   angular.module('app.model.user', []).factory('User', [
-    'Restangular', 'Auth', function(Restangular, Auth) {
+    'Restangular', 'Auth','$q', function(Restangular, Auth, $q) {
       var User = Restangular.all('users');
 
       return {
@@ -27,10 +27,28 @@
           return Restangular.one('users', id).all('bookmarks').getList()
         },
         getCollectionByUser: function(){
-          return Restangular.one('users', id).all('collection').getList()
+          var q = $q.defer()
+          Restangular.one('users', id).all('collection').getList().then(function (data){
+            q.resolve(data);
+          })
+          return q.promise;
         },
         getReviewsByUser: function(id){
           return Restangular.one('users', id).all('reviews').getList();
+        },
+        collectItem: function(item){
+          var user_id = localStorage.getItem('user_id')
+          if(user_id){
+            console.log(user_id)
+          }
+          // console.log(item)
+          Restangular
+            .one('users', user_id)
+            .all('collect')
+            .post({item_id:item._id})
+            .then(function (data){
+              log(data);
+            })
         },
         signup: function(username, password){
           return Restangular.all('users').all('signup')

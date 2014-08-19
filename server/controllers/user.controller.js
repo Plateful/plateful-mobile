@@ -4,9 +4,43 @@ var Parse = require('../config/parse.js');
 var Facebook = require('../config/api/facebook.js');
 var request = require('request');
 var Promise = require("bluebird");
+var User = require('../models/User.model.js')
+
 var db = require('../config/neo4j').db;
 Promise.promisifyAll(request);
 Promise.promisifyAll(db);
+
+
+exports.collectItem = function(req, res){
+  // console.log(req.body)
+  User
+    .collectItem(req.params.id, req.body.item_id)
+    .then(function (data){
+      // console.log()
+      res.status(200)
+      res.json(data)
+    })
+    .catch(function (msg){
+
+      res.status(404)
+      res.send(msg)
+    })
+
+}
+
+exports.getUserData = function(req, res){
+  // console.log("from controller",)
+  User.getUserData(req.params.id, req.params.data)
+    .then( function ( data ){
+      res.status( 200 )
+      res.json( data )
+    })
+    .catch( function ( error ){
+      res.status(404)
+      res.send(error)
+    })
+}
+
 
 // Creates a new native Parse user.
 exports.create = function (req, res) {
@@ -64,10 +98,10 @@ exports.fbLogin = function (req, res) {
         // Update user info for an existing Facebook connected user.
         if (foundFbUser.length > 0) {
           return updateFbUser(
-            foundFbUser[0].id, 
-            req.body.fbId, 
-            req.body.email, 
-            fbLongToken, 
+            foundFbUser[0].id,
+            req.body.fbId,
+            req.body.email,
+            fbLongToken,
             req.body.photo
           );
         }
@@ -77,18 +111,18 @@ exports.fbLogin = function (req, res) {
             // Update user info for an existing native user.
             if (foundNativeId.length > 0) {
               return updateFbUser(
-                foundNativeId[0].id, 
-                req.body.fbId, 
-                req.body.email, 
-                fbLongToken, 
+                foundNativeId[0].id,
+                req.body.fbId,
+                req.body.email,
+                fbLongToken,
                 req.body.photo
               );
             }
             // Else create a new user from the Facebook data.
             return createFbUser(
-              req.body.fbId, 
-              req.body.email, 
-              fbLongToken, 
+              req.body.fbId,
+              req.body.email,
+              fbLongToken,
               req.body.photo
             );
           });
@@ -119,7 +153,7 @@ var findUserByFbId = function(fbId) {
   return query.find();
 };
 
-// Creates a new Parse and Neo4j user each with references to each other's ID. 
+// Creates a new Parse and Neo4j user each with references to each other's ID.
 // Returns the new Parse user as a promise.
 var createParseUser = function(newUserData, res) {
   var user = new Parse.User();
@@ -155,7 +189,12 @@ var createNeo4jUser = function(data, callback) {
       parse_id: data.parseId
     }
   };
-  var q = "CREATE (u:USER {dataToCreateUser}) RETURN u";
+  var q = ["CREATE (u:USER {dataToCreateUser})",
+          "CREATE (u)-[:HAS_BOOKMARKS]->(:USER_BOOKMARKS)",
+          "CREATE (u)-[:HAS_COLLECTIONS]->(:USER_COLLECTIONS)",
+          "CREATE (u)-[:HAS_PHOTOS]->(:USER_PHOTOS)",
+          "CREATE (u)-[:HAS_REVIEWS]->(:USER_REVIEWS)",
+          "RETURN u"].join("");
   return db.cypherQueryAsync(q, params);
 }
 
@@ -196,3 +235,7 @@ var updateFbUser = function(parseId, fbId, email, fbLongToken, photoUrl) {
       return updatedUser;
     });
 };
+
+
+
+

@@ -108,7 +108,7 @@ PUBLIC_GLOBALS_KEYS = [
 paths =
   assets: ['assets/**', '!assets/**/*.ejs']
   assets_ejs: ['assets/**/*.ejs']
-  styles: ['app/css/**/*.scss']
+  styles: ['app/css/**/*.scss', 'assets/components/fontawesome/scss/font-awesome.scss']
   server: ['server/**/*.js']
   import: ['import_server/**/*.coffee']
   scripts:

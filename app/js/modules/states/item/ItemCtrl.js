@@ -9,11 +9,17 @@
    * @param {[type]} $ionicLoading [description]
    * @param {[type]} Rest          [description]
    */
-  var ItemCtrl = function(resolvedItem, $scope, $stateParams, $http, Item, Review, $ionicLoading, Rest, makeStars, Auth, BackgroundGeo, $log) {
+  var ItemCtrl = function(resolvedItem, $scope, $stateParams, $http, Item, Review, $ionicLoading, Rest, makeStars, Auth, BackgroundGeo, $log, User, UserStorage) {
     var makeStars;
     var vm = this
     console.log(resolvedItem)
     // resolvedItem.then(function(data){
+
+    UserStorage.get('collection')
+      .then(function(data){
+        console.log("storage", data)
+      })
+
     vm.item = resolvedItem.item
     vm.map = resolvedItem.map
     vm.marker = resolvedItem.marker
@@ -89,8 +95,9 @@
       alert('item reviewed');
     };
     function collectItem() {
+      User.collectItem(vm.item)
 
-      alert('item collected');
+      // alert('item collected');
     };
     function bookmarkItem() {
 
@@ -111,7 +118,9 @@
       'makeStars',
       'Auth',
       'BackgroundGeo',
-      '$log'
+      '$log',
+      'User',
+      'UserStorage'
     ];
   angular
     .module('app.modules.states.item')
