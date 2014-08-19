@@ -36,15 +36,22 @@
         views: {
           "tab-review": {
             templateUrl: 'js/modules/tabs/review/views/chooseItem.html',
-            controller: 'ReviewItemCtrl as vm'
+            controller: 'ReviewItemCtrl as reviewItem'
           }
         },
         resolve: {
+          menuInit: function($stateParams, Menu) {
+            var menuId = $stateParams.businessId;
+            return Menu.find(menuId)
+              .then(function(menu) {
+                return menu;
+              });
+          },
           menuItemsInit: function($stateParams, Menu, $ionicLoading) {
             $ionicLoading.show({template:'Loading Menu Items...'});
             var menuId = $stateParams.businessId;
-            return Menu.getMenuItems(menuId).
-              then(function(items) {
+            return Menu.getMenuItems(menuId)
+              .then(function(items) {
                 $ionicLoading.hide();
                 return items;
               });
