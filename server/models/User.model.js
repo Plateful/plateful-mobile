@@ -45,17 +45,37 @@ User.prototype.update = function(user_id, user, callback) {
   });
 };
 
-User.prototype.collectItem = function(user_id, item_id){
+var collectQueries = {
+  true:  ["START u=node({user_id}), i=node({item_id})",
+          "MATCH u-[:HAS_COLLECTIONS]->(c)",
+          "MERGE (c)-[:COLLECTED]->(i)",
+          "RETURN i"].join(""),
+
+  false: ["START u=node({user_id}), i=node({item_id})",
+          "MATCH u-[:HAS_COLLECTIONS]->(c)-[r:COLLECTED]->(i)",
+          "DELETE r",
+          "RETURN i"].join(" ")
+}
+var bookmarkQueries = {
+  true:  ["START u=node({user_id}), i=node({item_id})",
+          "MATCH u-[:HAS_BOOKMARKS]->(c)",
+          "MERGE (c)-[:BOOKMARKED]->(i)",
+          "RETURN i"].join(""),
+
+  false: ["START u=node({user_id}), i=node({item_id})",
+          "MATCH u-[:HAS_BOOKMARKS]->(c)-[r:BOOKMARKED]->(i)",
+          "DELETE r",
+          "RETURN i"].join(" ")
+}
+
+User.prototype.collectItem = function(user_id, item_id, method){
   var params = {
     user_id: Number(user_id),
     item_id: Number(item_id)
   }
   console.log(params)
   var deferred = Q.defer()
-  var query = ["START u=node({user_id}), i=node({item_id})",
-              "MATCH u-[:HAS_COLLECTIONS]->(c)",
-              "MERGE (c)-[:COLLECTED]->(i)",
-              "RETURN i"].join("");//CREATE u-[:COLLECTED]->(i)
+  var query = collectQueries[ method ]
   db.cypherQuery(query, params, function (err, result){
 
     if(err){
@@ -68,17 +88,14 @@ User.prototype.collectItem = function(user_id, item_id){
   return deferred.promise
 
 }
-User.prototype.bookmarkItem = function(user_id, item_id){
+User.prototype.bookmarkItem = function(user_id, item_id, method){
   var params = {
     user_id: Number(user_id),
     item_id: Number(item_id)
   }
   console.log(params)
   var deferred = Q.defer()
-  var query = ["START u=node({user_id}), i=node({item_id})",
-              "MATCH u-[:HAS_BOOKMARKS]->(c)",
-              "MERGE (c)-[:BOOKMARKED]->(i)",
-              "RETURN i"].join("");//CREATE u-[:COLLECTED]->(i)
+  var query = bookmarkQueries[ method ]
   db.cypherQuery(query, params, function (err, result){
 
     if(err){

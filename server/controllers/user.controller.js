@@ -14,7 +14,7 @@ Promise.promisifyAll(db);
 exports.collectItem = function(req, res){
   // console.log(req.body)
   User
-    .collectItem(req.params.id, req.body.item_id)
+    .collectItem(req.params.id, req.body.item_id, req.params.method)
     .then(function (data){
       // console.log()
       res.status(200)
@@ -31,12 +31,14 @@ exports.collectItem = function(req, res){
 exports.bookmarkItem = function(req, res){
   // console.log(req.body)
   User
-    .bookmarkItem(req.params.id, req.body.item_id)
+    .bookmarkItem(req.params.id, req.body.item_id, req.params.method)
     .then(function (data){
+      // console.log()
       res.status(200)
       res.json(data)
     })
     .catch(function (msg){
+
       res.status(404)
       res.send(msg)
     })

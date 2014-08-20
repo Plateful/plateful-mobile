@@ -19,21 +19,32 @@
     vm.options = resolvedItem.options
     vm.item_id = resolvedItem.item_id
 
-
     UserStorage
-      .collection(vm.item_id)
-      .then( function (data) {
-        if(data.length){
-          vm.has_collected = true;
-        }
-      });
+      .checkData('collection', vm.item_id)
+      .then(function (data){
+        console.log(data)
+        if(data) vm.has_collected = true
+      })
     UserStorage
-      .bookmarks(vm.item_id)
-      .then( function (data) {
-        if(data.length){
-          vm.has_bookmarked = true;
-        }
-      });
+      .checkData('bookmarks', vm.item_id)
+      .then(function (data){
+        console.log(data)
+        if(data) vm.has_bookmarked = true
+      })
+    // UserStorage
+    //   .collection(vm.item_id)
+    //   .then( function (data) {
+    //     if(data.length){
+    //       vm.has_collected = true;
+    //     }
+    //   });
+    // UserStorage
+    //   .bookmarks(vm.item_id)
+    //   .then( function (data) {
+    //     if(data.length){
+    //       vm.has_bookmarked = true;
+    //     }
+    //   });
 
 
     // })
@@ -74,10 +85,13 @@
 
     // vm.item = Item.getStorage(vm.item_id);
 
-    vm.showPhotos   = showPhotos;
-    vm.showReviews  = showReviews;
-    vm.reviewItem   = reviewItem;
-    vm.collectItem  = collectItem;
+    vm.showPhotos     = showPhotos;
+    vm.showReviews    = showReviews;
+    vm.reviewItem     = reviewItem;
+    vm.collectItem    = collectItem;
+    vm.unCollectItem  = unCollectItem;
+    vm.bookmarkItem   = bookmarkItem;
+    vm.unBookmarkItem = unBookmarkItem;
 
 
     vm.bookmarkItem = bookmarkItem;
@@ -90,7 +104,7 @@
       Item
         .getItemPhotos(vm.item_id)
         .then(function(data){
-          console.log("photos", data);
+          // console.log("photos", data);
           vm.photos = data
         })
     };
@@ -107,8 +121,9 @@
     };
     function collectItem() {
       User
-        .collectItem(vm.item)
-        .then( function( data ){
+        .collectItem( vm.item )
+        .then(function (data){
+          console.log("collected",data)
           vm.has_collected = true
         })
 
@@ -117,8 +132,9 @@
     function unCollectItem(){
 
       User
-        .unCollectItem(vm.item)
-        .then( function ( data ){
+        .unCollectItem( vm.item )
+        .then(function (data){
+          console.log("unCollected",data)
           vm.has_collected = false
         })
 

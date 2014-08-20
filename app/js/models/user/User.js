@@ -1,6 +1,6 @@
 (function() {
   angular.module('app.model.user', []).factory('User', [
-    'Restangular', 'Auth','$q', function(Restangular, Auth, $q) {
+    'Restangular', 'Auth','$q','UserStorage', function(Restangular, Auth, $q, UserStorage) {
       var User = Restangular.all('users');
 
       return {
@@ -37,32 +37,40 @@
           return Restangular.one('users', id).all('reviews').getList();
         },
         collectItem: function(item){
-          var user_id = localStorage.getItem('user_id')
-          if(user_id){
-            console.log(user_id)
-          }
-          // console.log(item)
-          Restangular
-            .one('users', user_id)
-            .all('collect')
-            .post({item_id:item._id})
-            .then(function (data){
-              log(data);
+          var q = $q.defer()
+          UserStorage
+            .addItemToKeyInStorage('collection', item)
+            .then(function(data){
+              q.resolve(data)
             })
+          return q.promise;
+        },
+        unCollectItem: function(item, callback){
+          var q = $q.defer()
+          UserStorage
+            .removeItemFromKeyInStorage('collection', item)
+            .then(function(data){
+              q.resolve(data)
+            })
+          return q.promise;
         },
         bookmarkItem: function(item){
-          var user_id = localStorage.getItem('user_id')
-          if(user_id){
-            console.log(user_id)
-          }
-          // console.log(item)
-          Restangular
-            .one('users', user_id)
-            .all('bookmark')
-            .post({item_id:item._id})
-            .then(function (data){
-              log(data);
+          var q = $q.defer()
+          UserStorage
+            .addItemToKeyInStorage('bookmarks', item)
+            .then(function(data){
+              q.resolve(data)
             })
+          return q.promise;
+        },
+        unBookmarkItem: function(item){
+          var q = $q.defer()
+          UserStorage
+            .removeItemFromKeyInStorage('bookmarks', item)
+            .then(function(data){
+              q.resolve(data)
+            })
+          return q.promise;
         },
         signup: function(username, password){
           return Restangular.all('users').all('signup')

@@ -89,8 +89,8 @@ module.exports.applyRoutes = function(app) {
   Users.post('/signup', User.create);
   Users.post('/login', User.login);
   Users.post('/fb-login', User.fbLogin);
-  Users.post('/:id/collect', User.collectItem);
-  Users.post('/:id/bookmark', User.bookmarkItem);
+  Users.post('/:id/collection/:method', User.collectItem);
+  Users.post('/:id/bookmarks/:method', User.bookmarkItem);
   Users.get('/:id/:data', User.getUserData);
 
 
