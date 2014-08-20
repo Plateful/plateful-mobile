@@ -32,7 +32,7 @@
           }
         }
       }).state("tab.review-choose-item", {
-        url: '/review/choose-item/:businessId',
+        url: '/review/choose-item/:menuId',
         views: {
           "tab-review": {
             templateUrl: 'js/modules/tabs/review/views/chooseItem.html',
@@ -41,7 +41,7 @@
         },
         resolve: {
           menuInit: function($stateParams, Menu) {
-            var menuId = $stateParams.businessId;
+            var menuId = $stateParams.menuId;
             return Menu.find(menuId)
               .then(function(menu) {
                 return menu;
@@ -49,7 +49,7 @@
           },
           menuItemsInit: function($stateParams, Menu, $ionicLoading) {
             $ionicLoading.show({template:'Loading Menu Items...'});
-            var menuId = $stateParams.businessId;
+            var menuId = $stateParams.menuId;
             return Menu.getMenuItems(menuId)
               .then(function(items) {
                 $ionicLoading.hide();
@@ -70,7 +70,18 @@
         views: {
           "tab-review": {
             templateUrl: 'js/modules/tabs/review/views/create.html',
-            controller: 'createReviewCtrl as vm'
+            controller: 'createReviewCtrl as createReviewView'
+          }
+        },
+        resolve: {
+          createReviewInit: function($stateParams, MenuItem, $ionicLoading, $q) {
+            $ionicLoading.show({template: "Loading Item..."});
+            var itemId = $stateParams.itemId;
+            return MenuItem.find(itemId)
+              .then(function(item) {
+                $ionicLoading.hide();
+                return item[0];
+              })
           }
         }
       });
