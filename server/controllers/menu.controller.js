@@ -29,17 +29,12 @@ exports.index = function(req, res) {
 };
 
 exports.getByLocation = function(req, res) {
-  var data;
-  data = {
-    location: [req.body.lat, req.body.lng],
-    radius: 500
-  };
-  if (req.body.val) {
-    data.name = req.body.val;
-  }
-  Venue.search(data, function(response) {
-    res.json(200, response.objects);
-  });
+  Menu.getByLocation(req.body, function(err, results) {
+    if (err) {
+      return handleError(res, err);
+    }
+    res.json(200, results);
+  })
 };
 
 // This comment below is for an api call to the Factual api.
@@ -57,25 +52,22 @@ exports.getByLocation = function(req, res) {
 // http://localhost:9000/api/menus/30
 // working but must change HAS_ITEM to HAS to test
 exports.show = function(req, res) {
-  Menu.find(function(err, data) {
+  Menu.find(req.params.id, function(err, data) {
     if (err) {
       return handleError(res, err);
     }
-    if (!data.length) {
-      Venue.get_details(req.params.id, function(response) {
-        storeData.store(response.objects[0], function(data) {
-          res.json(200, data);
-        });
-      });
-    }
-    else {
-      res.json(200, data[0]);
-    }
+    console.log(data)
+    res.json(200, data);
   });
 };
 
 exports.getMenuItems = function(req, res){
-  Menu.getMenuItems(req, res);
+  Menu.getMenuItems(req.params.id, function(err, data) {
+    if (err) {
+      return handleError(res, err);
+    }
+    res.json(200, data);
+  });
 };
 
 // Creates a new Business in the DB.

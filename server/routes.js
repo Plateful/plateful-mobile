@@ -53,7 +53,7 @@ module.exports.applyRoutes = function(app) {
 
   // Item API routes.
   Items.get('/', Item.index);
-  Items.get('/business/:menu_id', Item.getByMenu);
+  Items.get('/menu/:menu_id', Item.getByMenu);
   Items.get('/location/:filter', Item.getByLocation);
   Items.get('/user/:user_id', Item.getByUser);
   Items.get('/:id/photos', Item.getItemPhotos);

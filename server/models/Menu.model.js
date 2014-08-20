@@ -13,27 +13,55 @@ Menu.prototype.all = function(callback) {
 
 Menu.prototype.find = function(menu_id, callback) {
   var params = {
-    menu_id: menu_id
+    id: Number(menu_id)
   };
-  var q = "Match (m:Menu) WHERE m.locu_id = {menu_id} RETURN m";
-  this.query(q, params, function(err, result) {
+  var q = "START menu=node({id}) RETURN menu";
+  db.cypherQuery(q, params, function(err, result) {
+    if(err){
+      return callback(err, result);
+    }
+    callback(err, result.data[0]);
+  });
+}
+
+// Takes a menu_id parameter. Returns all its items.
+Menu.prototype.getMenuItems = function(menu_id, callback) {
+  // Cypher requires a number for the start value.
+  var params = {
+    id: Number(menu_id)
+  };
+  var q = "START menu=node({id}) MATCH menu-[:HAS_ITEMS]->(i:ITEM) RETURN i";
+  db.cypherQuery(q, params, function(err, result) {
+    if(err){
+      return callback(err, result);
+    }
     callback(err, result.data);
   });
 };
 
-Menu.prototype.getMenuItems = function(req, res) {
+Menu.prototype.getByLocation = function(data, callback) {
+  // Handle whole number distance numbers. Numbers without decimals will throw errors.
+  var distString = (data.dist).toString();
+  if (distString.indexOf('.') === -1) {
+    data.dist = distString + '.0';
+  }
+
   var params = {
-    place_id: req.params.id
+    dist: "withinDistance:["+data.lat+","+data.lng+","+data.dist+"]"
   };
-  var q = "MATCH (m:MENU)-[:HAS_ITEMS]->(i) WHERE m.place_id = {place_id} RETURN i";
+  var q = [
+    "START i=node:geom({dist}) ",
+    "MATCH (i)<-[:HAS_ITEMS]-(m:MENU) ",
+    "RETURN DISTINCT m"
+  ].join('');
+  
   db.cypherQuery(q, params, function(err, result) {
-    if(err){
-      return handleError(res, err);
+    if (err) {
+      return callback(err);
     }
-    res.status(200);
-    res.json(result.data);
-  });
-};
+    return callback(err, result.data);
+  })
+}
 
 Menu.prototype.create = function(menu, callback) {
   var params = {
