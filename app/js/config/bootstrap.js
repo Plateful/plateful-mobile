@@ -17,26 +17,7 @@
     return tag;
   };
 
-  this.log = function() {
-    var array = Array.prototype.slice.call(arguments)
 
-    return console.log(array.join(" "));
-  };
-  this.info = function() {
-    var array = Array.prototype.slice.call(arguments)
-
-    return console.info(array.join(" "));
-  };
-  this.Err = function(parn) {
-    var array = Array.prototype.slice.call(arguments)
-
-    return console.error(array.join(" "));
-  };
-  this.warn = function(parn) {
-    var array = Array.prototype.slice.call(arguments)
-
-    return console.warn(array.join(" "));
-  };
 
 
   Storage.prototype.setObject = function(key, value) {

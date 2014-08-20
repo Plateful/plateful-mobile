@@ -21,6 +21,7 @@ var errors = require('./components/errors')
     ,Menu = require('./controllers/menu.controller')
     ,Review = require('./controllers/review.controller')
     ,User = require('./controllers/user.controller')
+    ,Logger = require('./controllers/logger')
     ,request = require('supertest')
     ,should = require('should')
 
@@ -43,6 +44,7 @@ module.exports.applyRoutes = function(app) {
   var Reviews = express.Router();
   var Users = express.Router();
   var Lists = express.Router();
+  var Logs = express.Router();
 
   // Send API call to appropriate router.
   app.use('/api/v1/items', Items);
@@ -93,6 +95,11 @@ module.exports.applyRoutes = function(app) {
   Users.post('/:id/bookmarks/:method', User.bookmarkItem);
   Users.get('/:id/:data', User.getUserData);
 
+
+  Logs.post('/log', Logger.log)
+  Logs.post('/info', Logger.info)
+  Logs.post('/warn', Logger.warn)
+  Logs.post('/error', Logger.error)
 
 
   // List tab API routes.

@@ -13,11 +13,5 @@ xdescribe('SettingsCtrl', function(){
 
   }));
   // tests start here
-  it('Should have a login function', function(){
-    expect(scope.vm.login).toBeDefined();
-  });
 
-  it('Should have a signup function', function(){
-    expect(scope.vm.signup).toBeDefined();
-  });
 });

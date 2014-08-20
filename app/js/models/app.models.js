@@ -4,16 +4,10 @@
  *   app.factories all are all the factories that primarily deal with
  *   Restful calls to the server
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
+ *
+ *   Architecture Update: Convert all modules | app.factories - to - app.models
  *   SOURCE OF TRUTH
  *
-=======
->>>>>>> Architecture Update: Convert all modules | app.factories - to - app.models
-=======
- *   SOURCE OF TRUTH
- *
->>>>>>> mend
  */
 
 (function() {

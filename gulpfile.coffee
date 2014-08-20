@@ -22,6 +22,9 @@ shell         = require 'gulp-shell'
 protractor    = require 'gulp-protractor'
 runSequence   = require 'run-sequence'
 nodemon       = require 'gulp-nodemon'
+browserSync   = require('browser-sync')
+reload        = browserSync.reload
+# config        = require('./gulp/config')
 
 APP_ROOT = require("execSync").exec("pwd").stdout.trim() + "/"
 
@@ -170,6 +173,40 @@ options =
   httpPort: 4400
   riddlePort: 4400
 
+gulp.task 'compile:import', ->
+  gulp.src(paths.import)
+    .pipe(coffee({sourceMap: false}))
+    .on("error", notify.onError((error)-> error.message))
+    .pipe(gulp.dest(destinations.import))
+
+
+gulp.task 'run:server', ->
+  nodemon(
+    script: "server/app.js",
+    ext: 'html js',
+    ignore: ['ignored.js']
+  )
+  .on('restart', ->
+    console.log 'restarted!'
+  )
+
+gulp.task 'browser-sync', ->
+  browserSync({
+      server: {
+          baseDir: "./www"
+      }
+  })
+
+
+gulp.task 'server', ->
+  http.createServer(ecstatic(root: GLOBALS.BUILD_DIR)).listen(options.httpPort)
+  gutil.log gutil.colors.blue "HTTP server listening on #{options.httpPort}"
+  if options.open
+    url = "http://localhost:#{options.httpPort}/"
+    open(url)
+    gutil.log gutil.colors.blue "Opening #{url} in the browser..."
+
+
 
 gulp.task 'clean', ->
   gulp.src(GLOBALS.BUILD_DIR, read: false)
@@ -231,6 +268,7 @@ gulp.task 'scripts:vendor', ->
       .pipe(concat("#{scriptsName}.js"))
 
       .pipe(gulp.dest(destinations.scripts))
+      # .pipe(reload({stream:true}))
 
 
 # gulp.task 'compile:server', ->
@@ -238,34 +276,7 @@ gulp.task 'scripts:vendor', ->
 #     # .pipe(coffee({sourceMap: false}))
 #     .on("error", notify.onError((error)-> error.message))
 #     .pipe(gulp.dest(destinations.server))
-gulp.task 'compile:import', ->
-  gulp.src(paths.import)
-    .pipe(coffee({sourceMap: false}))
-    .on("error", notify.onError((error)-> error.message))
-    .pipe(gulp.dest(destinations.import))
 
-
-gulp.task 'run:import', ->
-  # nodemon(
-  #   script: "import/app.js",
-  #
-  #   # ext: 'html js',
-  #   ignore: ['ignored.js']
-  # )
-  # .on('restart', ->
-  #   console.log 'restarted!'
-  # )
-gulp.task 'run:server', ->
-  nodemon(
-    script: "server/app.js",
-    ext: 'html js',
-    ignore: ['ignored.js']
-  )
-  .on('restart', ->
-    console.log 'restarted!'
-  )
-
-gulp.task 'build:server', ['compile:import']
 
 gulp.task "scripts:cordova", ->
   gulp.src("assets/components/cordova/ng-cordova.js")
@@ -356,8 +367,8 @@ gulp.task 'watch', ->
   if process.env.GULP_WATCH_ASSETS # this makes some bug with descriptors on mac, so let's enable it only when specified ENV is defined
     gulp.watch(paths.assets, ['assets'])
   gulp.watch(paths.assets_ejs, ['assets_ejs'])
-  gulp.watch(paths.scripts.app, ['scripts:app'])
-  gulp.watch(paths.scripts.bootstrap, ['scripts:bootstrap'])
+  # gulp.watch(paths.scripts.app, ['scripts:app'])
+  # gulp.watch(paths.scripts.bootstrap, ['scripts:bootstrap'])
   gulp.watch(paths.scripts.vendor, ['scripts:vendor'])
   gulp.watch(paths.styles, ['styles'])
   gulp.watch(paths.templates, ['templates'])
@@ -373,15 +384,6 @@ gulp.task 'emulator', ->
   gutil.log gutil.colors.blue "Ripple-Emulator listening on #{options.ripplePort}"
   if options.open
     url = "http://localhost:#{options.ripplePort}/?enableripple=cordova-3.0.0-HVGA"
-    open(url)
-    gutil.log gutil.colors.blue "Opening #{url} in the browser..."
-
-
-gulp.task 'server', ->
-  http.createServer(ecstatic(root: GLOBALS.BUILD_DIR)).listen(options.httpPort)
-  gutil.log gutil.colors.blue "HTTP server listening on #{options.httpPort}"
-  if options.open
-    url = "http://localhost:#{options.httpPort}/"
     open(url)
     gutil.log gutil.colors.blue "Opening #{url} in the browser..."
 
@@ -512,7 +514,6 @@ gulp.task "build-debug", ["set-debug", "build"]
 gulp.task "build", (cb) ->
   runSequence ["clean", "bower:install"],
     [
-      "build:server"
       "assets"
       "styles"
       "scripts"
@@ -521,7 +522,9 @@ gulp.task "build", (cb) ->
 
 
 gulp.task "default", (cb) ->
-  runSequence "build", ["watch", "server", "weinre", 'run:server', 'run:import'], cb
+  runSequence "build", ["watch", "server", "weinre", 'run:server'], ->
+
+     # gulp.watch("../app/**/*.js", ['app', browserSync.reload]);
 
 
 ["cordova:platform-add", "cordova:emulate", "cordova:run", "cordova:run-release", "cordova:build-release", "deploy:release", "release"].forEach (task) ->

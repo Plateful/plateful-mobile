@@ -8,18 +8,21 @@
   var UserStorage;
 
   UserStorage = function(Restangular, $q) {
+
     var user_id = localStorage.getItem('user_id');
-    var User = Restangular.one('users', user_id)
+    var User = Restangular.one('users', user_id);
+    checkUser()
     syncAll()
 
+    // User Storage Object
     var storage = {
       collection: {},
       bookmarks: {},
       reviews: {},
       photos: {}
-
     }
 
+    // Methods to return from UserStorage
     var store = {
       get: get,
       sync: sync,
@@ -27,17 +30,37 @@
       checkData: checkData,
       getData: getData,
       addItemToKeyInStorage: addItemToKeyInStorage,
-      removeItemFromKeyInStorage: removeItemFromKeyInStorage,
-
+      removeItemFromKeyInStorage: removeItemFromKeyInStorage
     }
 
+    // Return the Store
     return store;
+
+    /**
+     * @name CheckUser
+     * @desc Reset user variable from local storage;
+     */
+    function checkUser(){
+      user_id = localStorage.getItem('user_id');
+      User = Restangular.one('users', user_id);
+    };
+
+    /**
+     * @name   chackData
+     * @desc   Check to see if a given item exists in storage[key]
+     * @paran  key  {String}  storage key, (collection, reviews, photos, bookmarks)
+     * @paran  item_id  {String}  the id of the given item
+     * @return  A promise that resolves a Boolean
+     */
     function checkData(key, item_id){
       console.log(storage)
       var q = $q.defer()
       var result = false
+
+      // retrieve the collection of items from local storage;
       get( key )
         .then(function (data){
+          // if item_id exists as a key in data then result = true
           if(item_id in data){
             result = true
           } else {
@@ -47,9 +70,19 @@
         })
       return q.promise;
     };
+
+    /**
+     * @name   getData
+     * @desc   Retrieve data from local Storage,
+     * @desc   if the item_id is passed in, then retrieve the given item from the key collection
+     * @paran  key  {String}  storage key, (collection, reviews, photos, bookmarks)
+     * @paran  item_id  {String}  the id of the given item
+     * @return  A promise that resolves an array of items
+     */
     function getData(key, item_id){
       var q = $q.defer()
       var resultData = []
+      // retrieve the collection of items from local storage
       get(key)
         .then( function (data){
           if(item_id){
@@ -137,12 +170,12 @@
 
     };
     function addRelationshipInNeo4j(key, item_id){
-
+      checkUser()
       return User.all(key).all('true').post({item_id: item_id})
 
     }
     function removeRelationshipInNeo4j(key, item_id){
-
+      checkUser()
       return User.all(key).all('false').post({item_id: item_id})
 
     }
