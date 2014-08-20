@@ -18,14 +18,26 @@
   };
 
   this.log = function() {
-    return console.log(arguments);
+    var array = Array.prototype.slice.call(arguments)
+
+    return console.log(array.join(" "));
   };
   this.info = function() {
-    return console.info(arguments);
+    var array = Array.prototype.slice.call(arguments)
+
+    return console.info(array.join(" "));
   };
-  this.Err = function() {
-    return console.error(arguments);
+  this.Err = function(parn) {
+    var array = Array.prototype.slice.call(arguments)
+
+    return console.error(array.join(" "));
   };
+  this.warn = function(parn) {
+    var array = Array.prototype.slice.call(arguments)
+
+    return console.warn(array.join(" "));
+  };
+
 
   Storage.prototype.setObject = function(key, value) {
     return this.setItem(key, JSON.stringify(value));
