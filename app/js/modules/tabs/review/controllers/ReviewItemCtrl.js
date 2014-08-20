@@ -9,7 +9,7 @@
 
     reviewItem.menu_id = $stateParams.menu_id;
 
-    CreateReview.set('menu', $scope.menu_id);
+    CreateReview.set('menu_id', reviewItem.menu._id);
 
     this.review = CreateReview.get();
 
