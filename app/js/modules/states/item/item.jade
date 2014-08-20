@@ -15,7 +15,7 @@ ion-view(title="{{vm.item.name}}" has-subheader="true")
     div.list
 
 
-      img.full-image(src='{{vm.item.photos.url}}')
+      img.full-image(src='{{vm.item.image}}')
       div(id="map_canvas")
         google-map(center="vm.map.center" zoom="vm.map.zoom" draggable="true" options="vm.options")
           marker(coords="vm.marker.coords" options="vm.marker.options" events="vm.marker.events" idkey="vm.marker.id")
