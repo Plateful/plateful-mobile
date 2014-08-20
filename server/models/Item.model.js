@@ -1,7 +1,8 @@
 var db = require('../config/neo4j').db;
+var spatial = require('../config/neo4j').spatial;
+var spatialURI = require('../config/neo4j').spatialURI;
 var serif = require('../config/neo4j').serif;
 var _ = require('lodash');
-
 
 // serif.query('START n = node(24233) RETURN n', function(err, result){
 //   console.log(result);
@@ -25,6 +26,7 @@ var _ = require('lodash');
 //
 //         console.log(relationships); // delivers an array of relationship objects.
 // });
+//
 var Item = function() {
   this.query = db.cypherQuery;
 };
@@ -43,8 +45,8 @@ Item.prototype.all = function(callback) {
         name: i[1].name,
         _id: i[1]._id,
         photos: i[2]
-      }
-    })
+      };
+    });
     // console.log(obj);
     // for(var i=0; i < result.data.length; i++){
     //   var obj = {
@@ -53,10 +55,10 @@ Item.prototype.all = function(callback) {
     //   }
     //   result.data[i] = obj
     // }
-    callback(err, obj)
+    callback(err, obj);
     // console.log(result);
     // res.json(201, result.data);
-  })
+  });
 };
 
 Item.prototype.find = function(item_id, callback) {
@@ -73,24 +75,21 @@ Item.prototype.find = function(item_id, callback) {
         image: i[1].image,
         _id: i[1]._id,
         photos: i[2]
-      }
-    })
+      };
+    });
     callback(err, obj);
   });
 };
 
-
 Item.prototype.getItemPhotos = function(item_id, callback){
-  var params = {item_id:Number(item_id)}
+  var params = {item_id:Number(item_id)};
   var query = "START item=node({item_id}) MATCH item-[:HAS_PHOTOS]->()-->(p) RETURN p";
   db.cypherQuery(query, params, function(err, result){
     console.log("photos", result.data);
-    if(err) return callback(err, result)
-
-    callback(err, result.data)
-  })
-
-}
+    if(err) return callback(err, result);
+    callback(err, result.data);
+  });
+};
 
 Item.prototype.findByMenu = function(menu_id, callback) {
   var params = {
@@ -114,14 +113,14 @@ Item.prototype.findByUser = function(user_id, callback) {
 
 Item.prototype.findByLocation = function(data, callback) {
   // The code below is a snippet for the eventual query to neo.
-  var data = JSON.parse(data)
+  var data = JSON.parse(data);
   var params = {
     dist: "withinDistance:["+data.lat+","+data.lng+","+data.dist+".0]"
     // dist: "withinDistance:[37.783692599999995,-122.409235,"+data.dist+".0]"
-  }
-  console.log("model params", params)
+  };
+  console.log("model params", params);
 
-  var query = 'START n=node:geom({dist}) RETURN n'
+  var query = 'START n=node:geom({dist}) RETURN n';
   db.cypherQuery(query, params, function(err, result) {
     // console.log(result.data)
     callback(err, result);
@@ -132,16 +131,39 @@ Item.prototype.findWhere = function() {};
 
 Item.prototype.findWith = function() {};
 
-Item.prototype.create = function(menu_id, item, callback) {
+Item.prototype.create = function(menu_id, item_name, callback) {
   var params = {
     menu_id: menu_id,
-    item: item
+    item_name: item_name
   };
-  var query = "START menu=node({menu_id})" + "CREATE (item:Item {item})";
-  "(menu)-[:HAS_ITEM]->(item)" + "RETURN item";
+  var query = ["START menu=node({menu_id}) ",
+              "CREATE menu-[:HAS_ITEM]->(item:ITEM {name:{item_name}}), ",
+              "item.menu_name = menu.name, ",
+              "item.lat = menu.latitude, ",
+              "item.lon = menu.longitude, ",
+              "RETURN item;"].join("");
   this.query(query, params, function(err, result) {
+    var item = result.data[0];
+    Item.createSpatialIndex(item._id);
     callback(err, result.data);
   });
+};
+
+Item.prototype.createSpatialIndex = function(id){
+  request.post(
+    spatial,
+    {json:{'key':'dummy', 'value':'dummy', 'uri':spatialURI+id}},
+    function(err, res, body){
+      if(err){
+        console.log("---------------------------err", error);
+        if (!error && response.statusCode == 200) {
+            console.log("BODY",  body);
+        }
+      }
+      console.log('!!!!!!!!!!!!!!!!!!!!!!!!', err);
+      console.log("body", body);
+    }
+  );
 };
 
 Item.prototype.update = function(item_id, item, callback) {
