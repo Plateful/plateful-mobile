@@ -91,6 +91,7 @@
                 return this.status = data.message;
               }
               Auth.setAuthToken(data.neoId, data.username, data.token, data.fbSessionId, data);
+              UserStorage.syncAll()
               this.status = 'Logged In!'
             }.bind(this))
         },
