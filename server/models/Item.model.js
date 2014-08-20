@@ -65,19 +65,9 @@ Item.prototype.find = function(item_id, callback) {
   var params = {
     id: Number(item_id)
   };
-  var query = "START item=node({id}) MATCH item-[:HAS_PHOTOS]->(:ITEM_PHOTOS)-->(p), (item)<-[:HAS_ITEMS]-(m:MENU) RETURN m,item,p";
+  var query = "START item=node({id}) RETURN item";
   db.cypherQuery(query, params, function(err, result) {
-    var obj = _.map(result.data, function(i, p){
-      console.log(i);
-      return {
-        menu: i[0],
-        name: i[1].name,
-        image: i[1].image,
-        _id: i[1]._id,
-        photos: i[2]
-      };
-    });
-    callback(err, obj);
+    callback(err, result.data);
   });
 };
 
