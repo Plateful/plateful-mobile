@@ -1,14 +1,10 @@
-ion-view(hide-nav-bar="true")
-
-  ion-header-bar.bar-positive.item-input-inset
-      //- button.button.button-clear(ng-click="openModal()") Filter&nbsp&nbsp
-      label.item-input-wrapper
-        i.icon.ion-ios7-search.placeholder-icon
-        form(ng-submit="reviewMenu.newSearch(reviewMenu.nearbyFilter)")
-          input(type="search" placeholder="Search" ng-model="reviewMenu.nearbyFilter")
-      //- a.button.button-clear(href="#/tab/nearby/map") Map
-
-  ion-content.bg-grey
+ion-view(title="Select Your Menu")
+  .bar.bar-subheader.bar-positive.item-input-inset
+    label.item-input-wrapper
+      i.icon.ion-ios7-search.placeholder-icon
+      form(ng-submit="reviewMenu.newSearch(reviewMenu.nearbyFilter)")
+        input(type="search" placeholder="Search" ng-model="reviewMenu.nearbyFilter")
+  ion-content.bg-grey.has-subheader
     div.list
       a.item(ng-repeat="menu in reviewMenu.menus | filter:reviewMenu.nearbyFilter" href="#/tab/review/choose-item/{{menu._id}}")
         //- img(src='{{business.image_url}}')
