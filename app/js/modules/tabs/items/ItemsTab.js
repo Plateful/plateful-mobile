@@ -32,20 +32,20 @@
               MenuItem
                 .find(scope.item_id)
                 .then(function(data) {
-                  console.log("item", data);
+                  console.log("item", data[0]);
                   scope.item = data[0]
                   // vm.options = {scrollwheel: false};
 
                   scope.options = {scrollwheel: false};
-                  scope.map = {center: {latitude: scope.item.menu.latitude, longitude: scope.item.menu.longitude }, zoom: 15 }
+                  scope.map = {center: {latitude: scope.item.lat, longitude: scope.item.lon }, zoom: 15 }
                   scope.marker = {
                       id: scope.item._id,
                       coords: {
                           // latitude: 40.1451,
                           // longitude: -99.6680
 
-                        latitude: scope.item.menu.latitude,
-                        longitude: scope.item.menu.longitude
+                        latitude: scope.item.lat,
+                        longitude: scope.item.lon
                       },
                       options: { draggable: true },
                       events: {

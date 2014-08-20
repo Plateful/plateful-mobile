@@ -1,41 +1,32 @@
 (function() {
   var ItemsCtrl = function($scope, $ionicModal, MenuItem, Menu, ImagesService, $q, BackgroundGeo, findDistance, makeStars, ItemMapService, MakeMap) {
 
-
     var vm,map,service,infowindow;
 
     vm = this
+    vm.images = ImagesService.get();
+    vm.querySearch = querySearch;
+    vm.closeModal = closeModal;
+    vm.openModal = openModal;
+    vm.storeItemForMap = storeItemForMap
 
     BackgroundGeo
       .current()
       .then(function(data){
-        // vm.pyrmont = new google.maps.LatLng(data.latitude,data.longitude);
-        // initialize(data.latitude, data.longitude)
+
         vm.lat = data.latitude
         vm.long = data.longitude
 
         getMenuItems(null)
-          // MenuItem.get()
           .then(function(data) {
             console.log(data);
             vm.items = data;
             _.each(vm.items, function ( item, index ){
               item.dist = BackgroundGeo.distance(item.lat, item.lon)
             });
-
           });
       })
 
-
-
-
-
-    // vm.locate = window.currLocation.coords
-    vm.images = ImagesService.get();
-    vm.querySearch = querySearch;
-    vm.closeModal = closeModal;
-    vm.openModal = openModal;
-    vm.storeItemForMap = storeItemForMap
 
 
     $ionicModal.fromTemplateUrl("js/modules/tabs/items/modals/filterModal.html", {

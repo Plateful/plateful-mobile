@@ -199,16 +199,16 @@
     <h1>Code coverage report for <span class="entity">js/bootstrap.js</span></h1>
     <h2>
         
-        Statements: <span class="metric">41.18% <small>(14 / 34)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">39.58% <small>(19 / 48)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Branches: <span class="metric">10% <small>(1 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">25% <small>(4 / 16)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Functions: <span class="metric">28.57% <small>(2 / 7)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">20% <small>(2 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Lines: <span class="metric">41.18% <small>(14 / 34)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">39.58% <small>(19 / 48)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
@@ -281,7 +281,33 @@
 63
 64
 65
-66</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -303,6 +329,24 @@
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -337,6 +381,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
@@ -366,8 +418,26 @@
   };
 &nbsp;
   this.log = <span class="fstat-no" title="function not covered" >function() {</span>
-<span class="cstat-no" title="statement not covered" >    return console.log(arguments);</span>
+<span class="cstat-no" title="statement not covered" >    var array = Array.prototype.slice.call(arguments)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return console.log(array.join(" "));</span>
   };
+  this.info = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    var array = Array.prototype.slice.call(arguments)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return console.info(array.join(" "));</span>
+  };
+  this.Err = <span class="fstat-no" title="function not covered" >function(parn) {</span>
+<span class="cstat-no" title="statement not covered" >    var array = Array.prototype.slice.call(arguments)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return console.error(array.join(" "));</span>
+  };
+  this.warn = <span class="fstat-no" title="function not covered" >function(parn) {</span>
+<span class="cstat-no" title="statement not covered" >    var array = Array.prototype.slice.call(arguments)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return console.warn(array.join(" "));</span>
+  };
+&nbsp;
 &nbsp;
   Storage.prototype.setObject = <span class="fstat-no" title="function not covered" >function(key, value) {</span>
 <span class="cstat-no" title="statement not covered" >    return this.setItem(key, JSON.stringify(value));</span>
@@ -403,6 +473,14 @@
         speed: null
       }
     };
+    <span class="missing-if-branch" title="if path not taken" >I</span>if(window.cordova &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >window.cordova.plugins.Keyboard)</span> {
+<span class="cstat-no" title="statement not covered" >      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);</span>
+    }
+    <span class="missing-if-branch" title="if path not taken" >I</span>if(window.StatusBar) {
+      // Set the statusbar to use the default style, tweak this to
+      // remove the status bar on iOS or change it to use white instead of dark colors.
+<span class="cstat-no" title="statement not covered" >      StatusBar.styleDefault();</span>
+    }
 &nbsp;
     return window.navigator.geolocation.getCurrentPosition(<span class="fstat-no" title="function not covered" >function(location) {</span>
 <span class="cstat-no" title="statement not covered" >      window.currLocation = location;</span>
@@ -416,31 +494,7 @@
 
 </div>
 <div class="footer">
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Aug 12 2014 21:31:22 GMT-0700 (PDT)</div>
-=======
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Aug 12 2014 00:20:32 GMT-0700 (PDT)</div>
->>>>>>> Update: Items View | add link to shared item sate.
-=======
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Aug 12 2014 14:06:06 GMT-0700 (PDT)</div>
->>>>>>> Update ItemsView pulls down items from neo, Begin single item map configuration
-=======
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Aug 12 2014 14:55:06 GMT-0700 (PDT)</div>
->>>>>>> Configure single item view from itemsTab
-=======
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Aug 12 2014 21:31:22 GMT-0700 (PDT)</div>
->>>>>>> Commit for changing local directorires
-=======
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Aug 14 2014 16:00:44 GMT-0700 (PDT)</div>
->>>>>>> Update: Fix bug issues
-=======
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Aug 14 2014 19:11:57 GMT-0700 (PDT)</div>
->>>>>>> Update Minor bug fixes
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Aug 19 2014 23:34:02 GMT-0700 (PDT)</div>
 </div>
 
 <script src="../prettify.js"></script>

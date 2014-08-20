@@ -8,12 +8,14 @@ ion-view(title="{{vm.item.name}}" has-subheader="true")
     div.button-bar
       a.button.button-energized.icon.ion-ios7-bookmarks
       a.button.button-energized.icon.ion-ios7-camera(ng-click="vm.reviewItem()")
-      a.button.button-energized.icon.ion-ios7-checkmark(ng-click="vm.collectItem()")
-      a.button.button-energized.icon.ion-bookmark(ng-click="vm.bookmarkItem()")
+      a.button.button-energized.icon.ion-ios7-checkmark(ng-click="vm.collectItem()", ng-hide="vm.has_collected")
+      a.button.button-energized.icon.ion-ios7-checkmark.active(ng-click="vm.unCollectItem()", ng-show="vm.has_collected")
+      a.button.button-energized.icon.ion-bookmark(ng-click="vm.bookmarkItem()", ng-hide="vm.has_bookmarked")
+      a.button.button-energized.icon.ion-bookmark.active(ng-click="vm.unBookmarkItem()", ng-show="vm.has_bookmarked")
     div.list
 
 
-      img.full-image(src='{{vm.item.photos.url}}')
+      img.full-image(src='{{vm.item.image}}')
       div(id="map_canvas")
         google-map(center="vm.map.center" zoom="vm.map.zoom" draggable="true" options="vm.options")
           marker(coords="vm.marker.coords" options="vm.marker.options" events="vm.marker.events" idkey="vm.marker.id")

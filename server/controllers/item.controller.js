@@ -5,6 +5,7 @@ var MenuClient = require('../config/api/locu').MenuClient;
 var Item = require('../models/Item.model');
 var apiKey, outputFormat
 
+
 // TODO: Google api information. Joel will remove this soon
 exports.apiKey = apiKey = "AIzaSyCB0Ac877CMP3MyZ9gtw4z8Ht4i7yjGx0w";
 exports.outputFormat = outputFormat = "json";

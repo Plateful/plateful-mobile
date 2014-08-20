@@ -13,10 +13,6 @@ describe('ItemsCtrl', function(){
 
     }));
     // tests start here
-    it('Should have current geo location', function(){
 
-        expect(scope.vm.locate).not.toBeUndefined();
-
-    });
 
 });

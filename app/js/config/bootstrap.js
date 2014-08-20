@@ -17,9 +17,8 @@
     return tag;
   };
 
-  this.log = function() {
-    return console.log(arguments);
-  };
+
+
 
   Storage.prototype.setObject = function(key, value) {
     return this.setItem(key, JSON.stringify(value));

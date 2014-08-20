@@ -1,5 +1,5 @@
 (function(){
-  var ListCtrl = function($scope, Auth, User, List, listInit, $state){
+  var ListCtrl = function($scope, Auth, User, List, listInit, $state, UserStorage){
 
     var list = this;
     list.items = listInit;
@@ -12,49 +12,47 @@
       $state.go('tab.empty-list');
     }
 
-    // list.showPhotos     = showPhotos;
-    // list.showCollection = showCollection;
-    // list.showBookmarks  = showBookmarks;
+    list.showCollection = showCollection;
+    list.showBookmarks  = showBookmarks;
     // list.login          = login;
+
 
     // ////////////////
 
-    // function showPhotos(){
-    //   User
-    //     .getPhotosByUsers()
-    //     .then(function(data){
-    //       list.photos = data;
-    //     })
-    //     .error(function(msg){
-    //       alert("Error on showPhotos", msg)
-    //     })
-    // };
-    // function showCollection(){
-    //   User
-    //     .getCollectionByUser()
-    //     .then(function(data){
-    //       list.collection = data
-    //     })
-    //     .error(function(msg){
-    //       alert("Error on get Collection", msg)
-    //     })
-    // };
-    // function showBookmarks(){
-    //   User
-    //     .getBookmarksByUser()
-    //     .then(function(data){
-    //       list.bookmarks = data;
-    //     })
-    //     .error(function(msg){
-    //       alert("Error on get bookmarks", msg)
-    //     })
-    // };
+    getCollection()
+    getBookmarks()
+    list.viewBookmarks = true;
+    function getCollection(){
+      UserStorage
+        .getData('collection')
+        .then(function (data){
+          list.collection = data[0];
+          console.log("collection", data[0])
+        })
+    }
+    function getBookmarks(){
+      UserStorage
+        .getData('bookmarks')
+        .then(function (data){
+          list.bookmarks = data[0];
+          console.log("bookmarks", data[0])
+        })
+    }
+
+    function showBookmarks(){
+      list.viewCollection = false
+      list.viewBookmarks = true
+    };
+    function showCollection(){
+      list.viewBookmarks = false
+      list.viewCollection = true
+    };
     // function login(){
     //   Auth.setAuthToken( list.username, list.password );
     // };
   }
 
-  ListCtrl.$inject = ['$scope', 'Auth', 'User', 'List', 'listInit', '$state']
+  ListCtrl.$inject = ['$scope', 'Auth', 'User', 'List', 'listInit', '$state', 'UserStorage']
   angular
     .module('app.modules.tabs.list')
     .controller('ListCtrl', ListCtrl)

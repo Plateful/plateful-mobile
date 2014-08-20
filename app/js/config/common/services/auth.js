@@ -6,7 +6,7 @@
 
   var Auth = function($http, PromiseFactory) {
 
-    setAuthToken(localStorage.getItem(USER_ID_CACHE_KEY), 
+    setAuthToken(localStorage.getItem(USER_ID_CACHE_KEY),
                  localStorage.getItem(USER_EMAIL_CACHE_KEY),
                  localStorage.getItem(USER_TOKEN_CACHE_KEY));
 
@@ -52,7 +52,9 @@
     }
 
     function isSignedIn() {
-      return !!this.token;
+      var id = localStorage.getItem('user_id')
+      if(id) return true
+      return false
     }
 
     function resetSession() {

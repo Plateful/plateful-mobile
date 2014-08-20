@@ -75,11 +75,14 @@ Item.prototype.getItemPhotos = function(item_id, callback){
   var params = {item_id:Number(item_id)};
   var query = "START item=node({item_id}) MATCH item-[:HAS_PHOTOS]->()-->(p) RETURN p";
   db.cypherQuery(query, params, function(err, result){
-    console.log("photos", result.data);
-    if(err) return callback(err, result);
-    callback(err, result.data);
-  });
-};
+    // console.log("photos", result.data);
+    if(err) return callback(err, result)
+
+    callback(err, result.data)
+  })
+
+}
+
 
 Item.prototype.findByMenu = function(menu_id, callback) {
   var params = {
@@ -88,7 +91,7 @@ Item.prototype.findByMenu = function(menu_id, callback) {
   var query = [
     "START menu=node({menu}) ",
     "MATCH (menu)-[:HAS_ITEMS]->(item:ITEM), ",
-    "(item)-[:HAS_REVIEWS]->(reviews:ITEM_REVIEWS)-[:HAS_REVIEW]->(review:ITEM_REVIEW), ", 
+    "(item)-[:HAS_REVIEWS]->(reviews:ITEM_REVIEWS)-[:HAS_REVIEW]->(review:ITEM_REVIEW), ",
     "(item)-[:HAS_PHOTOS]->(photos:ITEM_PHOTOS)-[:HAS_PHOTO]->(photo:ITEM_PHOTO) ",
     "RETURN item, review, photo"
   ].join('');

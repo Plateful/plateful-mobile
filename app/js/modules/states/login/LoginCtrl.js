@@ -23,9 +23,9 @@
       });
 
     // Watch for changes on the User status property and update the view.
-    $scope.$watch(function () { 
-        return User.status; 
-      }, 
+    $scope.$watch(function () {
+        return User.status;
+      },
       function (newVal, oldVal) {
         if (typeof newVal !== 'undefined') {
           vm.status = User.status;
@@ -33,9 +33,9 @@
       }
     );
 
-    $scope.$watch(function () { 
-        return FbLogin.status; 
-      }, 
+    $scope.$watch(function () {
+        return FbLogin.status;
+      },
       function (newVal, oldVal) {
         if (typeof newVal !== 'undefined') {
           vm.fbStatus = FbLogin.status;
@@ -51,14 +51,21 @@
     vm.fbGetInfo      = fbGetInfo;
     vm.fbShare        = fbShare;
     vm.fbGetToken     = fbGetToken;
+    vm.nativeLogout   = nativeLogout;
+
+    vm.isSignedIn = Auth.isSignedIn();
+
+    console.log( "Logged",vm.isSignedIn)
 
     //////////////////////
 
     function nativeSignup() {
       User.signup(vm.username.toLowerCase(), vm.password);
+      vm.isSignedIn = Auth.isSignedIn();
     };
     function nativeLogin() {
       User.login(vm.username.toLowerCase(), vm.password);
+      vm.isSignedIn = Auth.isSignedIn();
     };
     function fbLogin() {
       FbLogin.login();
@@ -77,14 +84,20 @@
     };
     function fbGetToken() {
       FbLogin.getFbToken();
+      User.logout();
     };
+    function nativeLogout(){
+      User.logout();
+      vm.isSignedIn = false;
+    };
+
   };
 
   LoginCtrl
     .$inject = [
-      '$scope', 
-      '$ionicModal', 
-      'Auth', 
+      '$scope',
+      '$ionicModal',
+      'Auth',
       'User',
       'FbLogin'
     ];
