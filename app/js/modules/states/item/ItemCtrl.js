@@ -9,41 +9,104 @@
    * @param {[type]} $ionicLoading [description]
    * @param {[type]} Rest          [description]
    */
-  var ItemCtrl = function($scope, $stateParams, $http, Item, Review, $ionicLoading, Rest, makeStars, Auth) {
+  var ItemCtrl = function(resolvedItem, $scope, $stateParams, $http, Item, Review, $ionicLoading, Rest, makeStars, Auth, BackgroundGeo, $log, User, UserStorage) {
     var makeStars;
-
     var vm = this
 
-    vm.item_id = $stateParams.itemId;
+    vm.item = resolvedItem.item
+    vm.map = resolvedItem.map
+    vm.marker = resolvedItem.marker
+    vm.options = resolvedItem.options
+    vm.item_id = resolvedItem.item_id
+
+    UserStorage
+      .checkData('collection', vm.item_id)
+      .then(function (data){
+        console.log(data)
+        if(data) vm.has_collected = true
+      })
+    UserStorage
+      .checkData('bookmarks', vm.item_id)
+      .then(function (data){
+        console.log(data)
+        if(data) vm.has_bookmarked = true
+      })
+    // UserStorage
+    //   .collection(vm.item_id)
+    //   .then( function (data) {
+    //     if(data.length){
+    //       vm.has_collected = true;
+    //     }
+    //   });
+    // UserStorage
+    //   .bookmarks(vm.item_id)
+    //   .then( function (data) {
+    //     if(data.length){
+    //       vm.has_bookmarked = true;
+    //     }
+    //   });
+
+
+    // })
+    // vm.item_id = $stateParams.itemId;
+    // vm.map = {center: {latitude: 40.1451, longitude: -99.6680 }, zoom: 15 }
+
+    // Item
+    //   .find(vm.item_id)
+    //   .then(function(data) {
+    //     console.log("item", data);
+    //     vm.item = data[0]
+    //     // vm.options = {scrollwheel: false};
+
+    //     vm.options = {scrollwheel: false};
+    //     vm.map = {center: {latitude: vm.item.menu.latitude, longitude: vm.item.menu.longitude }, zoom: 15 }
+    //     vm.marker = {
+    //         id: vm.item._id,
+    //         coords: {
+    //             // latitude: 40.1451,
+    //             // longitude: -99.6680
+
+    //             latitude: vm.item.menu.latitude,
+    //             longitude: vm.item.menu.longitude
+    //         },
+    //         options: { draggable: true },
+    //         events: {
+    //             dragend: function (marker, eventName, args) {
+    //                 $log.log('marker dragend');
+    //                 $log.log(marker.getPosition().lat());
+    //                 $log.log(marker.getPosition().lng());
+    //             }
+    //         }
+    //     }
 
 
 
-    Item
-      .find(vm.item_id)
-      .then(function(data) {
-        vm.item = data[0];
-        vm.item.stars = makeStars(vm.item.rating);
-      });
 
-    vm.item = Item.getStorage(vm.item_id);
 
-    vm.showPhotos   = showPhotos;
-    vm.showReviews  = showReviews;
-    vm.reviewItem   = reviewItem;
-    vm.collectItem  = collectItem;
+    // vm.item = Item.getStorage(vm.item_id);
+
+    vm.showPhotos     = showPhotos;
+    vm.showReviews    = showReviews;
+    vm.reviewItem     = reviewItem;
+    vm.collectItem    = collectItem;
+    vm.unCollectItem  = unCollectItem;
+    vm.bookmarkItem   = bookmarkItem;
+    vm.unBookmarkItem = unBookmarkItem;
+
+
     vm.bookmarkItem = bookmarkItem;
-    vm.login        = login
 
+    vm.showPhotos()
 
     //////////////////////
 
-
     function showPhotos() {
       Item
-        .getItemGallery(this.item_id)
-        .then(function(photos) {
-          vm.photos = photos;
-        });
+        .getItemPhotos(vm.item_id)
+        .then(function(data){
+          // console.log("photos", data);
+          vm.photos = data
+        })
     };
     function showReviews() {
       Item
@@ -57,20 +120,48 @@
       alert('item reviewed');
     };
     function collectItem() {
+      User
+        .collectItem( vm.item )
+        .then(function (data){
+          console.log("collected",data)
+          vm.has_collected = true
+        })
 
-      alert('item collected');
+      // alert('item collected');
     };
-    function bookmarkItem() {
+    function unCollectItem(){
 
-      alert('item bookmarked');
+      User
+        .unCollectItem( vm.item )
+        .then(function (data){
+          console.log("unCollected",data)
+          vm.has_collected = false
+        })
+
     };
-    function login(){
-      Auth.setAuthToken( vm.username, vm.password );
+    function bookmarkItem(){
+
+      User
+        .bookmarkItem(vm.item)
+        .then( function ( data ){
+          vm.has_bookmarked = true
+        })
+
+    };
+    function unBookmarkItem(){
+
+      User
+        .unBookmarkItem(vm.item)
+        .then( function ( data ){
+          vm.has_bookmarked = false
+        })
+
     };
   };
 
   ItemCtrl
     .$inject = [
+      'resolvedItem',
       '$scope',
       '$stateParams',
       '$http',
@@ -79,8 +170,12 @@
       '$ionicLoading',
       'Restangular',
       'makeStars',
-      'Auth'
-      ];
+      'Auth',
+      'BackgroundGeo',
+      '$log',
+      'User',
+      'UserStorage'
+    ];
   angular
     .module('app.modules.states.item')
     .controller('ItemCtrl', ItemCtrl);

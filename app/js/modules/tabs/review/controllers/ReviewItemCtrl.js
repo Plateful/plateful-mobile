@@ -1,43 +1,23 @@
 (function() {
-  var ReviewItemCtrl = function($scope, CreateReview, MenuItem, $stateParams) {
+  var ReviewItemCtrl = function($scope, CreateReview, Menu, $stateParams, menuItemsInit, menuInit) {
 
-    var vm = this
+    var reviewItem = this
 
-    vm.menu_id = $stateParams.menu_id;
+    reviewItem.menu = menuInit;
+    reviewItem.items = menuItemsInit;
+    console.log(reviewItem.menu)
 
-    CreateReview.set('menu', $scope.menu_id);
+    reviewItem.menu_id = $stateParams.menu_id;
+
+    CreateReview.set('menu_id', reviewItem.menu._id);
 
     this.review = CreateReview.get();
 
     ////////////////
 
-    Menu
-      .find(this.menu_id)
-      .success(function(data) {
-
-        console.log("neo----", data[0][1]);
-
-        vm.menu = data[0][0];
-
-        if (Array.isArray(data[0][1])) {
-
-          vm.items = data[0][1];
-
-          console.log(vm.items);
-
-        } else {
-
-          vm.items.push(data[0][1]);
-
-        }
-
-        return $ionicLoading.hide();
-
-      });
-
   };
   ReviewItemCtrl
-    .$inject = ['$scope', 'CreateReview', 'MenuItem', '$stateParams'];
+    .$inject = ['$scope', 'CreateReview', 'Menu', '$stateParams', 'menuItemsInit', 'menuInit'];
   angular
     .module('app.modules.tabs.review')
     .controller('ReviewItemCtrl', ReviewItemCtrl);

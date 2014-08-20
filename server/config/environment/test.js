@@ -2,6 +2,5 @@
 
 // Test specific configuration
 module.exports = {
-	// MongoDB connection options  
+	// MongoDB connection options
 };
-

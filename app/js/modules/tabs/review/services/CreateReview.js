@@ -2,8 +2,7 @@
   (function() {
     var CreateReview;
     CreateReview = function() {
-      var review;
-      review = {};
+      var review = {};
       return {
         get: function(key) {
           if (key) {
@@ -16,7 +15,7 @@
         }
       };
     };
-    return angular.module('app').service('CreateReview', CreateReview);
+    return angular.module('app').factory('CreateReview', CreateReview);
   })();
 
 }).call(this);

@@ -29,7 +29,7 @@
     return angular.bootstrap(document, ['app']);
   });
 
-  app.run(function($rootScope, Auth, $window, $timeout, bGeo) {
+  app.run(function($rootScope, Auth, $window, $timeout, BackgroundGeo, Restangular) {
     $rootScope.currentLocation = window.backgroundGeoLocation;
     $rootScope.$apply();
     $rootScope.GLOBALS = GLOBALS;
@@ -43,7 +43,22 @@
     }), function() {
       return $rootScope.current_user = Auth.user;
     });
-
+    this.log = function() {
+      var array = Array.prototype.slice.call(arguments)
+      return console.log(array.join(" "));
+    };
+    this.info = function() {
+      var array = Array.prototype.slice.call(arguments)
+      return console.info(array.join(" "));
+    };
+    this.Err = function(parn) {
+      var array = Array.prototype.slice.call(arguments)
+      return console.error(array.join(" "));
+    };
+    this.warn = function(parn) {
+      var array = Array.prototype.slice.call(arguments)
+      return console.warn(array.join(" "));
+    };
     //  $angularCacheFactory('defaultCache', {
     //     maxAge: 900000, // Items added to this cache expire after 15 minutes.
     //     cacheFlushInterval: 6000000, // This cache will clear itself every hour.

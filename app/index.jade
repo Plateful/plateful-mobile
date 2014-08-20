@@ -13,6 +13,7 @@ html
     meta(name="apple-mobile-web-app-capable" content="yes")
     meta(name="apple-mobile-web-app-status-bar-style" content="white-translucent")
 
+    link(href='css/font-awesome.css?v=#{GLOBALS.CACHE_TAG}', rel='stylesheet')
     link(href='css/app.css?v=#{GLOBALS.CACHE_TAG}', rel='stylesheet')
 
     link(rel="icon", type="image/png", href="img/favicon.png")
@@ -34,9 +35,16 @@ html
     //- define required JS GLOBALS
     script.
       GLOBALS = !{JSON.stringify(GLOBALS)};
-    script(src="http://maps.google.com/maps/api/js?sensor=true&libraries=geometry")
+    //- script(src="http://maps.google.com/maps/api/js?libraries=geometry")
     //- script(type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false")
-    script(src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false")
+
+
+
+    //- script(src="http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization&sensor=false&language=en")
+
+    script(src="http://maps.googleapis.com/maps/api/js?libraries=places,weather,geometry,visualization&sensor=false")
+
+
 
 
     script(src="js/vendor.js?v=#{GLOBALS.CACHE_TAG}")

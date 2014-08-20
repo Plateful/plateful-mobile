@@ -1,11 +1,14 @@
 (function() {
 
+  var USER_ID_CACHE_KEY = "user_id";
   var USER_EMAIL_CACHE_KEY = "user_email";
   var USER_TOKEN_CACHE_KEY = "user_token";
 
   var Auth = function($http, PromiseFactory) {
 
-    setAuthToken(localStorage.getItem(USER_EMAIL_CACHE_KEY), localStorage.getItem(USER_TOKEN_CACHE_KEY));
+    setAuthToken(localStorage.getItem(USER_ID_CACHE_KEY),
+                 localStorage.getItem(USER_EMAIL_CACHE_KEY),
+                 localStorage.getItem(USER_TOKEN_CACHE_KEY));
 
 
     return {
@@ -15,18 +18,26 @@
       resetSession: resetSession
     };
 
-
-    function setAuthToken(email, token, user) {
-      this.email = email || null;
-      this.token = token || null;
+    function setAuthToken(id, email, token, fbtoken, user) {
+      this.id = id != null ? id : null;
+      this.email = email != null ? email : null;
+      this.token = token != null ? token : null;
+      // Update fbtoken if there is a token value.
+      if (fbtoken) {
+        sessionStorage.setItem('fbtoken', fbtoken);
+      }
       if (this.email && this.token) {
+        $http.defaults.headers.common["X-User-Id"] = this.id;
         $http.defaults.headers.common["X-User-Email"] = this.email;
         $http.defaults.headers.common["X-User-Token"] = this.token;
+        localStorage.setItem(USER_ID_CACHE_KEY, this.id);
         localStorage.setItem(USER_EMAIL_CACHE_KEY, this.email);
         localStorage.setItem(USER_TOKEN_CACHE_KEY, this.token);
       } else {
+        delete $http.defaults.headers.common["X-User-Id"];
         delete $http.defaults.headers.common["X-User-Email"];
         delete $http.defaults.headers.common["X-User-Token"];
+        localStorage.removeItem(USER_ID_CACHE_KEY);
         localStorage.removeItem(USER_EMAIL_CACHE_KEY);
         localStorage.removeItem(USER_TOKEN_CACHE_KEY);
       }
@@ -41,7 +52,9 @@
     }
 
     function isSignedIn() {
-      return !!this.token;
+      var id = localStorage.getItem('user_id')
+      if(id) return true
+      return false
     }
 
     function resetSession() {

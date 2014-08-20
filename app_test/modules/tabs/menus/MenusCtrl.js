@@ -12,10 +12,10 @@ describe('MenusCtrl', function(){
         $controller('MenusCtrl as vm', {$scope: scope});
 
     }));
-    // tests start here  
+    // tests start here
     it('Should have current geo location', function(){
 
-        expect(scope.vm.locate).not.toBeUndefined();
+        // expect(sc11ope.vm.locate).not.toBeUndefined();
 
     });
 

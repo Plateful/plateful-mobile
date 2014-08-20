@@ -1,25 +1,33 @@
 (function() {
-  var ItemsCtrl = function($scope, $ionicModal, MenuItem, Menu, ImagesService) {
+  var ItemsCtrl = function($scope, $ionicModal, MenuItem, Menu, ImagesService, $q, BackgroundGeo, findDistance, makeStars, ItemMapService, MakeMap) {
 
-    var vm = this
+    var vm,map,service,infowindow;
 
-    vm.locate = window.currLocation.coords;
+    vm = this
     vm.images = ImagesService.get();
     vm.querySearch = querySearch;
     vm.closeModal = closeModal;
     vm.openModal = openModal;
+    vm.storeItemForMap = storeItemForMap
 
-    vm.locationData = {lat: vm.locate.latitude, lng: vm.locate.longitude };
+    BackgroundGeo
+      .current()
+      .then(function(data){
+
+        vm.lat = data.latitude
+        vm.long = data.longitude
+
+        getMenuItems(null)
+          .then(function(data) {
+            console.log(data);
+            vm.items = data;
+            _.each(vm.items, function ( item, index ){
+              item.dist = BackgroundGeo.distance(item.lat, item.lon)
+            });
+          });
+      })
 
 
-
-    getMenuItems(null)
-
-      .then(function(data) {
-
-        vm.items = data;
-
-      });
 
     $ionicModal.fromTemplateUrl("js/modules/tabs/items/modals/filterModal.html", {
       scope: $scope,
@@ -31,25 +39,31 @@
 
     //////////////////
 
-    function getMenuItems(filter){
 
-      return MenuItem.getByLocation(vm.locationData, null);
+
+    function getMenuItems(filter){
+      console.log("from controller", vm.lat)
+      return MenuItem.getByLocation({
+        lat:vm.lat,
+        lng:vm.long,
+        dist: 1.0
+      }, null);
+      // return MenuItem.get()
 
     }
+
     function querySearch(itemsFilter){
 
       itemsFilter = itemsFilter || "empty";
 
-      getMenuItems(itemsFilter)
+      // getMenuItems(itemsFilter)
 
-        .then(function(data) {
+      //   .then(function(data) {
 
-          vm.items = newData;
+      //     vm.items = newData;
 
-        });
+      //   });
     }
-
-
 
     function openModal(){
 
@@ -61,10 +75,18 @@
       vm.filterModal.hide();
 
     }
+    function storeItemForMap(item){
+      ItemMapService.set(item._id, item)
+    }
   };
+
+
+
   ItemsCtrl
-    .$inject = ["$scope", "$ionicModal", "MenuItem", "Menu", "ImagesService"];
+    .$inject = ["$scope", "$ionicModal", "MenuItem", "Menu", "ImagesService", "$q", "BackgroundGeo", "findDistance", "makeStars", "ItemMapService"];
+
   angular
     .module("app")
-    .controller("ItemsCtrl", ItemsCtrl);
+    .controller("ItemsCtrl", ItemsCtrl)
+
 })();

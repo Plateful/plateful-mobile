@@ -9,6 +9,6 @@ export CORDOVA_PLATFORM=ios
 # Find the name by `security find-identity |  sed -n 's/.*\("[^"]*"\).*/\1/p' | grep 'iPhone'`
 export IOS_CODE_SIGN_IDENTITY='"iPhone Distribution: Adam Kowalsky Organization (123JASD82J)"'
 
-# Content of your iPhone Distribution key. 
+# Content of your iPhone Distribution key.
 # As you can see, it can be generated automatically.
 export IOS_SIGN_KEY=`security find-identity | grep "$IOS_CODE_SIGN_IDENTITY" | awk '{print $2}' | head -n 1`

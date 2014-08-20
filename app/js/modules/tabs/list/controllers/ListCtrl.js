@@ -1,51 +1,58 @@
 (function(){
-  var ListCtrl = function($scope, Auth, User){
+  var ListCtrl = function($scope, Auth, User, List, listInit, $state, UserStorage){
 
-    var vm = this
+    var list = this;
+    list.items = listInit;
 
-    vm.showPhotos     = showPhotos;
-    vm.showCollection = showCollection;
-    vm.showBookmarks  = showBookmarks;
-    vm.login          = login;
+    if (!localStorage.getItem('user_id')) {
+      console.log('y')
+      $state.go('tab.logins');
+    }
+    else if (!list.items) {
+      $state.go('tab.empty-list');
+    }
 
-    ////////////////
+    list.showCollection = showCollection;
+    list.showBookmarks  = showBookmarks;
+    // list.login          = login;
 
-    function showPhotos(){
-      User
-        .getPhotosByUsers()
-        .then(function(data){
-          vm.photos = data;
+
+    // ////////////////
+
+    getCollection()
+    getBookmarks()
+    list.viewBookmarks = true;
+    function getCollection(){
+      UserStorage
+        .getData('collection')
+        .then(function (data){
+          list.collection = data[0];
+          console.log("collection", data[0])
         })
-        .error(function(msg){
-          alert("Error on showPhotos", msg)
+    }
+    function getBookmarks(){
+      UserStorage
+        .getData('bookmarks')
+        .then(function (data){
+          list.bookmarks = data[0];
+          console.log("bookmarks", data[0])
         })
+    }
+
+    function showBookmarks(){
+      list.viewCollection = false
+      list.viewBookmarks = true
     };
     function showCollection(){
-      User
-        .getCollectionByUser()
-        .then(function(data){
-          vm.collection = data
-        })
-        .error(function(msg){
-          alert("Error on get Collection", msg)
-        })
+      list.viewBookmarks = false
+      list.viewCollection = true
     };
-    function showBookmarks(){
-      User
-        .getBookmarksByUser()
-        .then(function(data){
-          vm.bookmarks = data;
-        })
-        .error(function(msg){
-          alert("Error on get bookmarks", msg)
-        })
-    };
-    function login(){
-      Auth.setAuthToken( vm.username, vm.password );
-    };
+    // function login(){
+    //   Auth.setAuthToken( list.username, list.password );
+    // };
   }
 
-  ListCtrl.$inject = ['$scope', 'Auth']
+  ListCtrl.$inject = ['$scope', 'Auth', 'User', 'List', 'listInit', '$state', 'UserStorage']
   angular
     .module('app.modules.tabs.list')
     .controller('ListCtrl', ListCtrl)
