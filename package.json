@@ -52,6 +52,7 @@
   "dependencies": {
     "bluebird": "^2.2.2",
     "body-parser": "^1.4.3",
+    "browser-sync": "^1.3.5",
     "busboy": "^0.2.8",
     "composable-middleware": "^0.3.0",
     "compression": "^1.0.8",

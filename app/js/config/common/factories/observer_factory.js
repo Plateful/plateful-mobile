@@ -10,7 +10,7 @@
 
       ObserverFactory.prototype.on = function(eventName, listener) {
         var _base;
-        if ((_base = this.listeners)[eventName] == null) {
+        if ((_base = this.listeners)[eventName] === null) {
           _base[eventName] = [];
         }
         return this.listeners[eventName].push(listener);
@@ -46,7 +46,7 @@
       ObserverFactory.prototype.fireEvent = function() {
         var eventName, params, v, _i, _len, _ref, _ref1, _results;
         eventName = arguments[0], params = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-        if (!((_ref = this.listeners[eventName]) != null ? _ref.length : void 0)) {
+        if (!((_ref = this.listeners[eventName]) !== null ? _ref.length : void 0)) {
           return;
         }
         _ref1 = this.listeners[eventName];
