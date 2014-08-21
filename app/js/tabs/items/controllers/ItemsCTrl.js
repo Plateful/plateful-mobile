@@ -1,30 +1,15 @@
 (function() {
-  var ItemsCtrl = function($scope, $ionicModal, MenuItem, Menu, $q, BackgroundGeo, findDistance, makeStars, ItemMapService, MakeMap) {
+  var ItemsCtrl = function(resolvedData, $scope, $ionicModal, MenuItem, Menu, $q, BackgroundGeo, findDistance, makeStars, ItemMapService, MakeMap) {
+
 
     var vm,map,service,infowindow;
 
     vm = this;
+    vm.items = resolvedData
     vm.querySearch = querySearch;
     vm.closeModal = closeModal;
     vm.openModal = openModal;
     vm.storeItemForMap = storeItemForMap;
-
-    BackgroundGeo
-      .current()
-      .then(function(data){
-
-        vm.lat = data.latitude;
-        vm.long = data.longitude;
-
-        getMenuItems(null)
-          .then(function(data) {
-            console.log(data);
-            vm.items = data;
-            _.each(vm.items, function ( item, index ){
-              item.dist = BackgroundGeo.distance(item.lat, item.lon);
-            });
-          });
-      });
 
 
     $ionicModal.fromTemplateUrl("js/tabs/items/modals/filterModal.html", {
@@ -37,18 +22,6 @@
 
     //////////////////
 
-
-
-    function getMenuItems(filter){
-      console.log("from controller", vm.lat);
-      return MenuItem.getByLocation({
-        lat:vm.lat,
-        lng:vm.long,
-        dist: 1.0
-      }, null);
-      // return MenuItem.get()
-
-    }
 
     function querySearch(itemsFilter){
 
@@ -78,10 +51,19 @@
     }
   };
 
-
-
   ItemsCtrl
-    .$inject = ["$scope", "$ionicModal", "MenuItem", "Menu", "$q", "BackgroundGeo", "findDistance", "makeStars", "ItemMapService"];
+    .$inject = [
+      "resolvedData",
+      "$scope",
+      "$ionicModal",
+      "MenuItem",
+      "Menu",
+      "$q",
+      "BackgroundGeo",
+      "findDistance",
+      "makeStars",
+      "ItemMapService"
+    ];
 
   angular
     .module("app.tabs.items")

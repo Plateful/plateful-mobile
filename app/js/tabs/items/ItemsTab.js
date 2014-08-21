@@ -1,14 +1,19 @@
 (function() {
-  angular.module('app.tabs.items', []).config(function($stateProvider, $urlRouterProvider) {
-    return $stateProvider.state("tab.items", {
+
+  var ItemsTab = function($stateProvider, $urlRouterProvider){
+    $stateProvider.state("tab.items", {
       url: "/items",
       views: {
         "tab-items": {
           templateUrl: "js/tabs/items/views/items.html",
-          controller: "ItemsCtrl as vm"
+          controller: "ItemsCtrl as vm",
+          resolve: {
+            resolvedData: resolveItemsCtrl
+          }
         }
       }
-    }).state("tab.items-map", {
+    })
+    .state("tab.items-map", {
       url: "/items/map",
       views: {
         "tab-items": {
@@ -16,7 +21,8 @@
           controller: "MapCtrl as vm"
         }
       }
-    }).state("tab.items-item", {
+    })
+    .state("tab.items-item", {
       url: '/items/item/:itemId',
       views: {
         "tab-items": {
@@ -64,7 +70,8 @@
           }
         }
       }
-    }).state("tab.items-menu", {
+    })
+    .state("tab.items-menu", {
       url: '/items/menu/:menu_id',
       views: {
         "tab-items": {
@@ -72,7 +79,8 @@
           controller: "MenuCtrl as vm"
         }
       }
-    }).state("tab.item-map", {
+    })
+    .state("tab.item-map", {
       url: '/items/map/:item_id',
       views: {
         "tab-items": {
@@ -81,6 +89,31 @@
         }
       }
     });
-  });
 
+    /////////////////
+
+    // Function for resolving ItemsCtrl
+    function resolveItemsCtrl(BackgroundGeo, MenuItem){
+      return BackgroundGeo.current()
+        .then(function (data){
+          return MenuItem.getByLocation({lat:data.latitude,lng:data.longitude,dist: 1.0}, null)
+            .then(function(data) {
+              _.each(data, function ( item, index ){
+                item.dist = BackgroundGeo.distance(item.lat, item.lon);
+              });
+              return data;
+            });
+        });
+    }
+
+  }
+
+  ItemsTab
+    .$inject = [
+      '$stateProvider',
+      '$urlRouterProvider'
+    ]
+  angular
+    .module('app.tabs.items', [])
+    .config(ItemsTab)
 }).call(this);
