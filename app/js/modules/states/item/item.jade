@@ -1,18 +1,15 @@
 ion-view(title="{{vm.item.name}}" has-subheader="true")
-  ion-nav-buttons(side="right" ng-hide="vm.showReviews")
-    button.button.button-clear.icon.ion-ios7-camera(ng-click="vm.showReviews = true")
-  ion-nav-buttons(side="right" ng-show="vm.showReviews")
-    button.button.button-clear.icon.ion-ios7-list(ng-click="vm.showReviews = false")
   ion-content
-
-    div.button-bar
-      a.button.button-energized.icon.ion-ios7-bookmarks
-      a.button.button-energized.icon.ion-ios7-camera(ng-click="vm.reviewItem()")
-      a.button.button-energized.icon.ion-ios7-checkmark(ng-click="vm.collectItem()", ng-hide="vm.has_collected")
-      a.button.button-energized.icon.ion-ios7-checkmark.active(ng-click="vm.unCollectItem()", ng-show="vm.has_collected")
-      a.button.button-energized.icon.ion-bookmark(ng-click="vm.bookmarkItem()", ng-hide="vm.has_bookmarked")
-      a.button.button-energized.icon.ion-bookmark.active(ng-click="vm.unBookmarkItem()", ng-show="vm.has_bookmarked")
+    div.row
+      div.button-bar
+        a.button.button-outline.button-positive.icon.ion-ios7-bookmarks
+        a.button.button-outline.button-positive.icon.ion-ios7-camera(ng-click="vm.reviewItem()")
+        a.button.button-outline.button-positive.icon.ion-ios7-checkmark(ng-click="vm.collectItem()", ng-if="vm.has_collected === false" ng-hide="vm.has_collected")
+        a.button.button-outline.button-positive.icon.ion-ios7-checkmark.active(ng-click="vm.unCollectItem()", ng-if="vm.has_collected" ng-show="vm.has_collected")
+        a.button.button-outline.button-positive.icon.ion-bookmark(ng-click="vm.bookmarkItem()", ng-if="vm.has_bookmarked === false" ng-hide="vm.has_bookmarked")
+        a.button.button-outline.button-positive.icon.ion-bookmark.active(ng-click="vm.unBookmarkItem()", ng-if="vm.has_bookmarked" ng-show="vm.has_bookmarked")
     div.list
+
 
 
       img.full-image(src='{{vm.item.image}}')

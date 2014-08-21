@@ -1,6 +1,6 @@
 ion-view(hide-nav-bar="true" id="places")
-  div(class="bar bar-positive bar-header item-input-inset")
-    button.button.button-clear.ion-funnel(ng-click="openModal()") &nbsp&nbsp
+  div(class="bar bar-stable bar-header item-input-inset")
+    button.button.button-clear.button-assertive(ng-click="openModal()") Filter&nbsp&nbsp
     label(class="item-input-wrapper" disable-tap)
       i(class="icon ion-ios7-search placeholder-icon")
 
@@ -8,7 +8,7 @@ ion-view(hide-nav-bar="true" id="places")
       //- ng-places(placeholder="Enter an address, Apt# and ZIP" ng-model="location")
       input(type="text" id="Autocomplete" class="form-control" ng-autocomplete ng-model="result1")
 
-    a.button.button-clear.ion-map(href="#/tab/menus/map")
+    a.button.button-clear.button-assertive(href="#/tab/menus/map") Map
 
 
 

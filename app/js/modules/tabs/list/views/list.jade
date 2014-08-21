@@ -1,8 +1,10 @@
 ion-view(title="List")
   ion-content.bg-grey
-    div.button-bar
-      button.col.button.button-energized.button-small(ng-click="list.showBookmarks()") Bookmarks
-      button.col.button.button-energized.button-small(ng-click="list.showCollection()") Collections
+    ion-list
+      ion-item(style="padding:0px;")
+        div.button-bar
+          button.col.button.button-clear.button-stable(ng-click="list.showBookmarks()" ng-class="{ 'button-assertive': list.viewBookmarks }") Bookmarks ({{list.bookmarksCount}})
+          button.col.button.button-clear.button-stable(ng-click="list.showCollection()" ng-class="{ 'button-assertive': list.viewCollection }") Collection ({{list.collectionCount}})
 
     ion-list(ng-show="list.viewCollection")
 

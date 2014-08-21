@@ -18,7 +18,8 @@
     vm.marker = resolvedItem.marker
     vm.options = resolvedItem.options
     vm.item_id = resolvedItem.item_id
-
+    vm.has_collected = false
+    vm.has_bookmarked = false
     UserStorage
       .checkData('collection', vm.item_id)
       .then(function (data){

@@ -1,12 +1,12 @@
 ion-view(hide-nav-bar="true")
 
-  ion-header-bar.bar-positive.item-input-inset
-    button.button.button-clear.ion-funnel(ng-click="vm.openModal()") &nbsp&nbsp
+  ion-header-bar.bar-stable.item-input-inset
+    button.button.button-clear.button-assertive(ng-click="vm.openModal()") Filter&nbsp&nbsp
     label.item-input-wrapper
       i.icon.ion-ios7-search.placeholder-icon
       form(ng-submit="vm.querySearch(vm.itemsFilter)")
         input(type="search" placeholder="Search" ng-model="vm.itemsFilter")
-    a.button.button-clear.ion-map(href="#/tab/items/map")
+    a.button.button-clear.button-assertive(href="#/tab/items/map") Map
 
   ion-content.bg-grey
 
