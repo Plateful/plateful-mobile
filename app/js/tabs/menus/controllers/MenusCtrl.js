@@ -6,36 +6,18 @@
    * @test1  test to see if @locations has data
    * @test2  test to see if @locate is equal to our current longitude and latitude
    */
-  var MenusCtrl = function($scope, Menu, $timeout, $document, ngGPlacesAPI, BackgroundGeo) {
+  var MenusCtrl = function(resolvedMenuData, $scope, $document, ngGPlacesAPI) {
 
     var vm = this;
 
-    BackgroundGeo
-      .current()
-      .then(function(data){
-
-        vm.locate = data;
-
-        vm.searchQuery = {
-          vicinity: 'San Francisco',
-          // reference: "Cliffs house",
-          latitude: vm.locate.latitude,
-          longitude: vm.locate.longitude
-        };
-
-        googleSearch(vm.searchQuery)
-          .then(function(data) {
-            console.log(data);
-            vm.locations = data;
-          });
-      });
+    vm.locations = resolvedMenuData;
 
     vm.searchEventTimeout = void 0;
-
     vm.searchInputElement = angular.element($document.find('#searchQuery'));
 
 
     /////////////////////
+
 
     function googleSearch(query){
       return ngGPlacesAPI.nearbySearch(query);
@@ -44,7 +26,12 @@
   };
 
   MenusCtrl
-    .$inject = ['$scope', 'Menu', '$timeout', '$document', 'ngGPlacesAPI', 'BackgroundGeo'];
+    .$inject = [
+      'resolvedMenuData',
+      '$scope',
+      '$document',
+      'ngGPlacesAPI'
+    ];
   angular
     .module('app.tabs.menus.controllers', [])
     .controller('MenusCtrl', MenusCtrl);

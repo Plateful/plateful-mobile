@@ -122,7 +122,7 @@ Item.prototype.findByLocation = function(data, callback) {
   };
   console.log("model params", params);
 
-  var query = 'START n=node:geom({dist}) RETURN n';
+  var query = 'START n=node:geom({dist}) RETURN n LIMIT 30';
   db.cypherQuery(query, params, function(err, result) {
     // console.log(result.data)
     callback(err, result);
