@@ -11,10 +11,12 @@
     "fx.animations",
     "google-maps",
     "ion-google-place",
-    "app.modules",
+    "app.services",
     "app.directives",
     "app.filters",
-    "app.models"
+    "app.models",
+    "app.tabs",
+    "app.states"
     ]);
 
   app.config(function(RestangularProvider) {

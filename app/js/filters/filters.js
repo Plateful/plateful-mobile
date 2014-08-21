@@ -9,13 +9,13 @@
       if (!arr) { return; }
       var newArr = [];
       for (var i=0; i<arr.length; i+=size) {
-        newArr.push(arr.slice(i, i+size));        
+        newArr.push(arr.slice(i, i+size));
       }
       // Enter blank space for any remaining columns in the last row.
       newArr[newArr.length-1].length = size;
       var cachedParts;
       var arrString = JSON.stringify(arr);
-      cachedParts = arrayCache.get(arrString+size); 
+      cachedParts = arrayCache.get(arrString+size);
       if (JSON.stringify(cachedParts) === JSON.stringify(newArr)) {
         return cachedParts;
       }
@@ -23,7 +23,7 @@
       return newArr;
     };
     return filter;
-  }
+  };
 
   partition.$inject = ['$cacheFactory'];
 

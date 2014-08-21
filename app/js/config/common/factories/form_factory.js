@@ -3,12 +3,12 @@
 
     /*
     Basic form class that you can extend in your actual forms.
-    
+
     Object attributes:
     - loading[Boolean] - is the request waiting for response?
     - message[String] - after response, success message
     - errors[String[]] - after response, error messages
-    
+
     Options:
       - submitPromise[function] (REQUIRED) - creates a form request promise
       - onSuccess[function] - will be called on succeded promise
@@ -17,7 +17,7 @@
     var FormFactory;
     return FormFactory = (function() {
       function FormFactory(options) {
-        this.options = options != null ? options : {};
+        this.options = options !== null ? options : {};
         this.loading = false;
       }
 
@@ -34,7 +34,7 @@
 
       FormFactory.prototype._onFailure = function(response) {
         var _ref, _ref1, _ref2, _ref3, _ref4;
-        this.errors = ((_ref = response.data) != null ? (_ref1 = _ref.data) != null ? _ref1.errors : void 0 : void 0) || ((_ref2 = response.data) != null ? _ref2.errors : void 0) || [((_ref3 = response.data) != null ? _ref3.error : void 0) || response.error || ((_ref4 = response.data) != null ? _ref4.message : void 0) || response.message || "Something has failed. Try again."];
+        this.errors = ((_ref = response.data) !== null ? (_ref1 = _ref.data) !== null ? _ref1.errors : void 0 : void 0) || ((_ref2 = response.data) !== null ? _ref2.errors : void 0) || [((_ref3 = response.data) !== null ? _ref3.error : void 0) || response.error || ((_ref4 = response.data) !== null ? _ref4.message : void 0) || response.message || "Something has failed. Try again."];
         return $q.reject(response);
       };
 

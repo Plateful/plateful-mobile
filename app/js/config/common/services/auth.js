@@ -19,9 +19,9 @@
     };
 
     function setAuthToken(id, email, token, fbtoken, user) {
-      this.id = id != null ? id : null;
-      this.email = email != null ? email : null;
-      this.token = token != null ? token : null;
+      this.id = id !== null ? id : null;
+      this.email = email !== null ? email : null;
+      this.token = token !== null ? token : null;
       // Update fbtoken if there is a token value.
       if (fbtoken) {
         sessionStorage.setItem('fbtoken', fbtoken);
@@ -52,9 +52,9 @@
     }
 
     function isSignedIn() {
-      var id = localStorage.getItem('user_id')
-      if(id) return true
-      return false
+      var id = localStorage.getItem('user_id');
+      if(id) return true;
+      return false;
     }
 
     function resetSession() {

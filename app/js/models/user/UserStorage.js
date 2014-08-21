@@ -11,8 +11,8 @@
 
     var user_id = localStorage.getItem('user_id');
     var User = Restangular.one('users', user_id);
-    checkUser()
-    syncAll()
+    checkUser();
+    syncAll();
 
     // User Storage Object
     var storage = {
@@ -20,7 +20,7 @@
       bookmarks: {},
       reviews: {},
       photos: {}
-    }
+    };
 
     // Methods to return from UserStorage
     var store = {
@@ -31,7 +31,7 @@
       getData: getData,
       addItemToKeyInStorage: addItemToKeyInStorage,
       removeItemFromKeyInStorage: removeItemFromKeyInStorage
-    }
+    };
 
     // Return the Store
     return store;
@@ -43,7 +43,7 @@
     function checkUser(){
       user_id = localStorage.getItem('user_id');
       User = Restangular.one('users', user_id);
-    };
+    }
 
     /**
      * @name   chackData
@@ -53,23 +53,23 @@
      * @return  A promise that resolves a Boolean
      */
     function checkData(key, item_id){
-      console.log(storage)
-      var q = $q.defer()
-      var result = false
+      // console.log(storage);
+      var q = $q.defer();
+      var result = false;
 
       // retrieve the collection of items from local storage;
       get( key )
         .then(function (data){
           // if item_id exists as a key in data then result = true
           if(item_id in data){
-            result = true
+            result = true;
           } else {
-            result = false
+            result = false;
           }
-          q.resolve(result)
-        })
+          q.resolve(result);
+        });
       return q.promise;
-    };
+    }
 
     /**
      * @name   getData
@@ -80,8 +80,8 @@
      * @return  A promise that resolves an array of items
      */
     function getData(key, item_id){
-      var q = $q.defer()
-      var resultData = []
+      var q = $q.defer();
+      var resultData = [];
       // retrieve the collection of items from local storage
       get(key)
         .then( function (data){
@@ -91,18 +91,18 @@
 
           } else {
             for(var id in data){
-              resultData.push( data[id] )
+              resultData.push( data[id] );
             }
-            q.resolve( resultData )
+            q.resolve( resultData );
           }
-        })
+        });
       return q.promise;
-    };
+    }
     function set(key, val){
-      storage[key] = val
-    };
+      storage[key] = val;
+    }
     function get(key){
-      var q = $q.defer()
+      var q = $q.defer();
       if( Object.keys(storage[key]).length ){
         q.resolve( storage[key] );
       } else {
@@ -112,14 +112,14 @@
           });
       }
       return q.promise;
-    };
+    }
     function syncAll(){
       _.each(['collection', 'bookmarks', 'reviews', 'photos'], function(item){
-        sync(item)
-      })
-    };
+        sync(item);
+      });
+    }
     function sync(key){
-      var q = $q.defer()
+      var q = $q.defer();
       User
         .all(key)
         .getList()
@@ -131,27 +131,27 @@
         })
         .catch( function ( msg) {
           q.reject( msg );
-        })
+        });
       return q.promise;
-    };
+    }
     function addItemToKeyInStorage(key, item){
-      var q = $q.defer()
+      var q = $q.defer();
       addRelationshipInNeo4j(key, item._id)
         .then( function (addedItem){
 
           get( key )
             .then( function (data){
 
-              data[addedItem._id] = addedItem
-              set(key, data)
-              q.resolve( addedItem )
+              data[addedItem._id] = addedItem;
+              set(key, data);
+              q.resolve( addedItem );
 
             });
-        })
+        });
       return q.promise;
-    };
+    }
     function removeItemFromKeyInStorage(key, item){
-      var q = $q.defer()
+      var q = $q.defer();
 
       removeRelationshipInNeo4j( key, item._id )
         .then( function (removedData){
@@ -168,15 +168,15 @@
 
       return q.promise;
 
-    };
+    }
     function addRelationshipInNeo4j(key, item_id){
-      checkUser()
-      return User.all(key).all('true').post({item_id: item_id})
+      checkUser();
+      return User.all(key).all('true').post({item_id: item_id});
 
     }
     function removeRelationshipInNeo4j(key, item_id){
-      checkUser()
-      return User.all(key).all('false').post({item_id: item_id})
+      checkUser();
+      return User.all(key).all('false').post({item_id: item_id});
 
     }
 

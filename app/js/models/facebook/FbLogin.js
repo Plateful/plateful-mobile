@@ -15,7 +15,7 @@
 
       // Submits log-in request to facebook.
       login: function() {
-        var deferred = $q.defer()
+        var deferred = $q.defer();
         openFB.login(function(response) {
             if(response.status === 'connected') {
               alert('Facebook login succeeded, got access token: ' + response.authResponse.token);
@@ -83,7 +83,7 @@
       // Sends request to server for long term Facebook token.
       // Returns user with updated info or new user.
       getFbToken: function(dataToStore) {
-        var dataToStore = dataToStore || {}
+        var dataToStore = dataToStore || {};
         dataToStore.token = window.sessionStorage.fbtoken;
         dataToStore.username = window.localStorage.user_email;
         return Restangular.all('users').all('fb-login')
@@ -94,7 +94,7 @@
           })
           .catch(function(error) {
             console.log('uh oh');
-          })
+          });
 
       },
 
@@ -118,14 +118,14 @@
         var fbUser = this;
         this.login()
           .then(function(){
-            return fbUser.getFbUserCreationData()
+            return fbUser.getFbUserCreationData();
           })
           .then(function(data){
             var paramsToStore = {};
             paramsToStore.fbId = data.id;
             paramsToStore.email = data.email;
             paramsToStore.photo = 'http://graph.facebook.com/' + data.id + '/picture?width=150&height=150';
-            return fbUser.getFbToken(paramsToStore)
+            return fbUser.getFbToken(paramsToStore);
           })
           .then(function(){
             User.status = "Facebook connected!";
@@ -135,7 +135,7 @@
           .catch(function(error) {
             User.status = "An error occurred logging in with Facebook. Please try again.";
             console.log('Error: ', error);
-          })
+          });
       }
     };
   };

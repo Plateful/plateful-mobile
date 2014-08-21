@@ -3,10 +3,10 @@
     var constructor;
     return constructor = function(value, resolve) {
       var deferred;
-      if (resolve == null) {
+      if (resolve === null) {
         resolve = true;
       }
-      if ((value != null) && typeof (value != null ? value.then : void 0) === 'function') {
+      if ((value !== null) && typeof (value !== null ? value.then : void 0) === 'function') {
         return value;
       } else {
         deferred = $q.defer();

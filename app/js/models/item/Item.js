@@ -7,7 +7,7 @@
      * @return  {Object} returns an object with all given methods
      */
     var MenuItem;
-    MenuItem = function(Restangular, $q, findDistance, makeStars, ImagesService) {
+    MenuItem = function(Restangular, $q, findDistance, makeStars) {
       var Rest, findFilter, storage;
       Rest = Restangular.all('items');
       storage = {};
@@ -98,7 +98,6 @@
             item = data[_i];
             item.dist = findDistance.get(item);
             item.stars = makeStars.get(item.rating);
-            item.image_url = ImagesService.get();
           }
           return newPromise.resolve(data);
         });
@@ -121,7 +120,7 @@
       }
     };
 
-    MenuItem.$inject = ['Restangular', '$q', 'findDistance', 'makeStars', 'ImagesService'];
+    MenuItem.$inject = ['Restangular', '$q', 'findDistance', 'makeStars'];
     return angular.module('app.model.item', []).factory('MenuItem', MenuItem);
   })();
 
