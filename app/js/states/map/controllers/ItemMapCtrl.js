@@ -3,10 +3,10 @@
   ItemMapCtrl = function($scope, $ionicLoading, $compile, ItemMapService, BackgroundGeo, $stateParams) {
     var callback, createMarker, MenuItem, vm;
 
-    vm = this
-    vm.item_id = $stateParams.item_id
+    vm = this;
+    vm.item_id = $stateParams.item_id;
     console.log(vm.item_id);
-    MenuItem = ItemMapService.get(vm.item_id)
+    MenuItem = ItemMapService.get(vm.item_id);
     console.log("MenusItem", MenuItem);
 
     vm.initialize = initialize;
@@ -58,7 +58,7 @@
       // };
       // service = new google.maps.places.PlacesService(map);
       // service.nearbySearch(request, callback);
-      vm.map = map
+      vm.map = map;
       return vm.map;
 
     }
@@ -115,5 +115,5 @@
     };
   };
   ItemMapCtrl.$inject = ['$scope', '$ionicLoading', '$compile', 'ItemMapService', 'BackgroundGeo', '$stateParams'];
-  return angular.module('app.modules.states.map.controllers', []).controller('ItemMapCtrl', ItemMapCtrl);
+  return angular.module('app.states.map.controllers', []).controller('ItemMapCtrl', ItemMapCtrl);
 })();

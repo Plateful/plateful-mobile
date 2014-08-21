@@ -6,14 +6,14 @@
       var instance = {
         set: set,
         get: get
-      }
+      };
       return instance;
 
       ///////////
 
       function set(key, obj){
-        _storage = {}
-        _storage[key] = obj
+        _storage = {};
+        _storage[key] = obj;
       }
 
       function get(key){
@@ -22,8 +22,8 @@
         }
         return _storage;
       }
-    }
-    return angular.module('app').service('ItemMapService', ItemMapService);
+    };
+    return angular.module('app.states.map').service('ItemMapService', ItemMapService);
   })();
 
 }).call(this);

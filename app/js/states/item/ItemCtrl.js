@@ -10,28 +10,27 @@
    * @param {[type]} Rest          [description]
    */
   var ItemCtrl = function(resolvedItem, $scope, $stateParams, $http, Item, Review, $ionicLoading, Rest, makeStars, Auth, BackgroundGeo, $log, User, UserStorage) {
-    var makeStars;
-    var vm = this
+    var vm = this;
 
-    vm.item = resolvedItem.item
-    vm.map = resolvedItem.map
-    vm.marker = resolvedItem.marker
-    vm.options = resolvedItem.options
-    vm.item_id = resolvedItem.item_id
-    vm.has_collected = false
-    vm.has_bookmarked = false
+    vm.item = resolvedItem.item;
+    vm.map = resolvedItem.map;
+    vm.marker = resolvedItem.marker;
+    vm.options = resolvedItem.options;
+    vm.item_id = resolvedItem.item_id;
+    vm.has_collected = false;
+    vm.has_bookmarked = false;
     UserStorage
       .checkData('collection', vm.item_id)
       .then(function (data){
-        console.log(data)
-        if(data) vm.has_collected = true
-      })
+        console.log(data);
+        if(data) vm.has_collected = true;
+      });
     UserStorage
       .checkData('bookmarks', vm.item_id)
       .then(function (data){
-        console.log(data)
-        if(data) vm.has_bookmarked = true
-      })
+        console.log(data);
+        if(data) vm.has_bookmarked = true;
+      });
     // UserStorage
     //   .collection(vm.item_id)
     //   .then( function (data) {
@@ -97,7 +96,7 @@
 
     vm.bookmarkItem = bookmarkItem;
 
-    vm.showPhotos()
+    vm.showPhotos();
 
     //////////////////////
 
@@ -106,58 +105,58 @@
         .getItemPhotos(vm.item_id)
         .then(function(data){
           // console.log("photos", data);
-          vm.photos = data
-        })
-    };
+          vm.photos = data;
+        });
+    }
     function showReviews() {
       Item
         .getItemReviews(this.item_id)
         .then(function(reviews) {
           vm.reviews = reviews;
         });
-    };
+    }
     function reviewItem() {
 
       alert('item reviewed');
-    };
+    }
     function collectItem() {
       User
         .collectItem( vm.item )
         .then(function (data){
-          console.log("collected",data)
-          vm.has_collected = true
-        })
+          console.log("collected",data);
+          vm.has_collected = true;
+        });
 
       // alert('item collected');
-    };
+    }
     function unCollectItem(){
 
       User
         .unCollectItem( vm.item )
         .then(function (data){
-          console.log("unCollected",data)
-          vm.has_collected = false
-        })
+          console.log("unCollected",data);
+          vm.has_collected = false;
+        });
 
-    };
+    }
     function bookmarkItem(){
 
       User
         .bookmarkItem(vm.item)
         .then( function ( data ){
-          vm.has_bookmarked = true
-        })
+          vm.has_bookmarked = true;
+        });
 
-    };
+    }
     function unBookmarkItem(){
 
       User
         .unBookmarkItem(vm.item)
         .then( function ( data ){
-          vm.has_bookmarked = false
-        })
+          vm.has_bookmarked = false;
+        });
 
-    };
+    }
   };
 
   ItemCtrl
@@ -178,6 +177,6 @@
       'UserStorage'
     ];
   angular
-    .module('app.modules.states.item')
+    .module('app.states.item')
     .controller('ItemCtrl', ItemCtrl);
 })();

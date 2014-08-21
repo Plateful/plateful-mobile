@@ -35,7 +35,7 @@
     //   });
 
     $ionicModal
-      .fromTemplateUrl('js/modules/states/menu/modals/createItemModal.html', {
+      .fromTemplateUrl('js/states/menu/modals/createItemModal.html', {
         scope: $scope,
         animation: 'slide-in-up'
       })
@@ -76,7 +76,7 @@
       Auth.setAuthToken( vm.username, vm.password );
     }
     function placeDetails(){
-      log("id", vm.menu_id)
+      log("id", vm.menu_id);
       return ngGPlacesAPI.placeDetails({placeId: vm.menu_id});
     }
 
@@ -113,7 +113,7 @@
   MenuCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'Menu', 'MenuItem', '$ionicModal', '$ionicLoading', '$compile', 'ImagesService', 'Auth', 'ngGPlacesAPI', 'BackgroundGeo'];
   // addItemCtrl.$inject = ['$rootScope', '$scope', 'MenuItem'];
   angular
-    .module('app.modules.states.menu')
+    .module('app.states.menu')
     .controller('MenuCtrl', MenuCtrl)
     .controller('addItemCtrl', addItemCtrl);
 })();

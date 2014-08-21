@@ -5,7 +5,7 @@
     FbLogin.getStatus();
 
     $ionicModal
-      .fromTemplateUrl("js/modules/states/login/views/loginModal.html", {
+      .fromTemplateUrl("js/states/login/views/loginModal.html", {
         scope: $scope,
         animation: "slide-in-up"
       })
@@ -14,7 +14,7 @@
       });
 
     $ionicModal
-      .fromTemplateUrl("js/modules/states/login/views/signupModal.html", {
+      .fromTemplateUrl("js/states/login/views/signupModal.html", {
         scope: $scope,
         animation: "slide-in-up"
       })
@@ -55,41 +55,41 @@
 
     vm.isSignedIn = Auth.isSignedIn();
 
-    console.log( "Logged",vm.isSignedIn)
+    console.log( "Logged",vm.isSignedIn);
 
     //////////////////////
 
     function nativeSignup() {
       User.signup(vm.username.toLowerCase(), vm.password);
       vm.isSignedIn = Auth.isSignedIn();
-    };
+    }
     function nativeLogin() {
       User.login(vm.username.toLowerCase(), vm.password);
       vm.isSignedIn = Auth.isSignedIn();
-    };
+    }
     function fbLogin() {
       FbLogin.login();
-    };
+    }
     function fbLoginFlow() {
       FbLogin.loginFlow();
-    };
+    }
     function fbLogout() {
       FbLogin.logout();
-    };
+    }
     function fbGetInfo() {
       FbLogin.getInfo();
-    };
+    }
     function fbShare() {
       FbLogin.share();
-    };
+    }
     function fbGetToken() {
       FbLogin.getFbToken();
       User.logout();
-    };
+    }
     function nativeLogout(){
       User.logout();
       vm.isSignedIn = false;
-    };
+    }
 
   };
 
@@ -102,6 +102,6 @@
       'FbLogin'
     ];
   angular
-    .module('app.modules.states.login', [])
+    .module('app.states.login', [])
     .controller('LoginCtrl', LoginCtrl);
 })();

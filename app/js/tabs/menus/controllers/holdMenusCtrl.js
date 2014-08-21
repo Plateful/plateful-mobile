@@ -118,6 +118,6 @@
 //   MenusCtrl
 //     .$inject = ['$scope', 'Menu', '$timeout', '$document', 'ngGPlacesAPI'];
 //   angular
-//     .module('app.modules.tabs.menus.controllers')
+//     .module('app.tabs.menus.controllers')
 //     .controller('holdMenusCtrl', holdMenusCtrl);
 // })();

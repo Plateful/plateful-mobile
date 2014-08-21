@@ -4,7 +4,6 @@
 (function() {
   angular
     .module('app.modules', [
-      'app.modules.states',
       'app.modules.geo'
     ]);
 }).call(this);

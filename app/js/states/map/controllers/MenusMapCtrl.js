@@ -60,7 +60,7 @@
       };
     };
     MenusMapCtrl.$inject = ['$scope', '$ionicLoading', '$compile', 'MenusData'];
-    return angular.module('app.modules.states.map.controllers').controller('MenusMapCtrl', MenusMapCtrl);
+    return angular.module('app.states.map.controllers').controller('MenusMapCtrl', MenusMapCtrl);
   })();
 
 }).call(this);

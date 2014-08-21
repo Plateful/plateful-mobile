@@ -91,7 +91,7 @@
       };
     };
     MapCtrl.$inject = ['$scope', '$ionicLoading', '$compile'];
-    return angular.module('app.modules.states.map.controllers', []).controller('MapCtrl', MapCtrl);
+    return angular.module('app.states.map.controllers', []).controller('MapCtrl', MapCtrl);
   })();
 
 }).call(this);
