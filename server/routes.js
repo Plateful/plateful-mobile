@@ -12,19 +12,9 @@ var Menu = require('./controllers/menu.controller');
 var Review = require('./controllers/review.controller');
 var User = require('./controllers/user.controller');
 var List = require('./controllers/list.controller');
-
-var errors = require('./components/errors')
-    ,cors = require('cors')
-    ,busboy = require('connect-busboy')
-    ,express = require('express')
-    ,Item = require('./controllers/item.controller')
-    ,Menu = require('./controllers/menu.controller')
-    ,Review = require('./controllers/review.controller')
-    ,User = require('./controllers/user.controller')
-    ,Logger = require('./controllers/logger')
-    ,request = require('supertest')
-    ,should = require('should')
-
+var Logger = require('./controllers/logger')
+var request = require('supertest')
+var should = require('should')
 
 
 

@@ -27,6 +27,7 @@
         .getData('collection')
         .then(function (data){
           list.collection = data[0];
+          list.collectionCount = data[0].length;
           console.log("collection", data[0])
         })
     }
@@ -35,6 +36,7 @@
         .getData('bookmarks')
         .then(function (data){
           list.bookmarks = data[0];
+          list.bookmarksCount = data[0].length;
           console.log("bookmarks", data[0])
         })
     }

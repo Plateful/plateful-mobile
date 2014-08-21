@@ -40,7 +40,7 @@
           var q = $q.defer()
           UserStorage
             .addItemToKeyInStorage('collection', item)
-            .then(function(data){
+            .then(function (data){
               q.resolve(data)
             })
           return q.promise;
