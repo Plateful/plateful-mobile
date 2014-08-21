@@ -8,12 +8,12 @@
     };
 
     var getBookmarks = function() {
-      return Rest.one('John').get()
-    }
+      return Rest.one('John').get();
+    };
 
     var getCollections = function() {
-      return Rest.one('John').get()
-    }
+      return Rest.one('John').get();
+    };
 
 
 
@@ -21,10 +21,10 @@
       getList: getList,
       getBookmarks: getBookmarks,
       getCollections: getCollections
-    }
+    };
 
     return listFactory;
-  }
+  };
 
 
   List.$inject = ['Restangular'];

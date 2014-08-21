@@ -14,7 +14,7 @@
         }
       };
     };
-    return angular.module('app').service('findDistance', findDistance);
+    return angular.module('app.services.findDistance', []).service('findDistance', findDistance);
   })();
 
 }).call(this);

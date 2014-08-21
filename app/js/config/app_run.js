@@ -35,28 +35,28 @@
     $rootScope.GLOBALS = GLOBALS;
     $timeout(function() {
       var _ref;
-      return $window.$a = (_ref = angular.element(document.body).injector()) != null ? _ref.get : void 0;
+      return $window.$a = (_ref = angular.element(document.body).injector()) !== null ? _ref.get : void 0;
     });
     $rootScope.$watch((function() {
       var _ref;
-      return (_ref = Auth.user) != null ? _ref.id : void 0;
+      return (_ref = Auth.user) !== null ? _ref.id : void 0;
     }), function() {
       return $rootScope.current_user = Auth.user;
     });
     this.log = function() {
-      var array = Array.prototype.slice.call(arguments)
+      var array = Array.prototype.slice.call(arguments);
       return console.log(array.join(" "));
     };
     this.info = function() {
-      var array = Array.prototype.slice.call(arguments)
+      var array = Array.prototype.slice.call(arguments);
       return console.info(array.join(" "));
     };
     this.Err = function(parn) {
-      var array = Array.prototype.slice.call(arguments)
+      var array = Array.prototype.slice.call(arguments);
       return console.error(array.join(" "));
     };
     this.warn = function(parn) {
-      var array = Array.prototype.slice.call(arguments)
+      var array = Array.prototype.slice.call(arguments);
       return console.warn(array.join(" "));
     };
     //  $angularCacheFactory('defaultCache', {

@@ -1,6 +1,6 @@
 (function() {
   var addItemCtrl;
-  var MenuCtrl = function($rootScope, $scope, $stateParams, Menu, MenuItem, $ionicModal, $ionicLoading, $compile, ImagesService, Auth, ngGPlacesAPI, BackgroundGeo) {
+  var MenuCtrl = function($rootScope, $scope, $stateParams, Menu, MenuItem, $ionicModal, $ionicLoading, $compile, Auth, ngGPlacesAPI, BackgroundGeo) {
 
     var vm = this;
 
@@ -11,8 +11,6 @@
     //   });
 
     vm.menu_id = $stateParams.menu_id;
-
-    vm.images = ImagesService.get();
 
     Menu.getMenuItems(vm.menu_id)
       .then(function(data){
@@ -110,7 +108,7 @@
   //     return $rootScope.addNewItem($scope.newReview);
   //   };
   // };
-  MenuCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'Menu', 'MenuItem', '$ionicModal', '$ionicLoading', '$compile', 'ImagesService', 'Auth', 'ngGPlacesAPI', 'BackgroundGeo'];
+  MenuCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'Menu', 'MenuItem', '$ionicModal', '$ionicLoading', '$compile', 'Auth', 'ngGPlacesAPI', 'BackgroundGeo'];
   // addItemCtrl.$inject = ['$rootScope', '$scope', 'MenuItem'];
   angular
     .module('app.states.menu')

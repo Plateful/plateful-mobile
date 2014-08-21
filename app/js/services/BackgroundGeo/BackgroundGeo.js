@@ -32,6 +32,6 @@
   BackgroundGeo
     .$inject = ['$q'];
   angular
-    .module('app.modules.geo', [])
+    .module('app.services.BackgroundGeo', [])
     .factory('BackgroundGeo', BackgroundGeo);
 })();

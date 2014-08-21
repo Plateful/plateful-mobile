@@ -61,7 +61,7 @@
           $scope.src = imageData;
           $scope.$apply();
           CreateReview.set('image_url', imageData);
-          $scope.submit()
+          $scope.submit();
         };
         onFail = function(error) {
           return $scope.src = error;

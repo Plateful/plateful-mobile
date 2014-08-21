@@ -2,7 +2,7 @@ var gulp    = require('gulp');
 var gutil   = require('gulp-util');
 
 
-module.exports.APP_ROOT = APP_ROOT = require("execSync").exec("pwd").stdout.trim() + "/"
+module.exports.APP_ROOT = APP_ROOT = require("execSync").exec("pwd").stdout.trim() + "/";
 
 // # Used in "development" environment as a IP for the server.
 // # You can specify it by using LOCAL_IP env variable in your cli commands.
@@ -18,7 +18,7 @@ module.exports.ENV_GLOBALS = ENV_GLOBALS = {
     ENV: "development",
 
     BUNDLE_ID: "com.jtomaszewski.ionicstarter.development",
-    BUNDLE_NAME: "clurtch",
+    BUNDLE_NAME: "Plateful",
     BUNDLE_VERSION: "1.0.0",
 
     BACKEND_URL: "http://#{LOCAL_IP}:9000",
@@ -36,9 +36,9 @@ module.exports.ENV_GLOBALS = ENV_GLOBALS = {
     ENV: "production",
 
     BUNDLE_ID: "com.jtomaszewski.ionicstarter.production",
-    BUNDLE_NAME: "clurtch",
+    BUNDLE_NAME: "Plateful",
 
-    BACKEND_URL: "https://clurtch-v1.azurewebsites.net",
+    BACKEND_URL: "http://server4dave.cloudapp.net:9000",
     WEINRE_ADDRESS: null,
 
     // # If those 2 variables are defined, the app will be deployed to the remote server after compiling the release.
@@ -59,10 +59,10 @@ module.exports.ENV_GLOBALS = ENV_GLOBALS = {
     // # TESTFLIGHT_API_TOKEN: "123"
     // # TESTFLIGHT_TEAM_TOKEN: "456"
   }
-}
+};
 module.exports.GLOBALS = GLOBALS = require('extend')( true), {}, ENV_GLOBALS.development, (ENV_GLOBALS[gutil.env.env] || {})
 
-GLOBALS.CACHE_TAG = Date.now()
+GLOBALS.CACHE_TAG = Date.now();
 
 // # You can replace any of GLOBALS by defining ENV variable in your command line,
 // # f.e. `BACKEND_URL="http://192.168.0.666:1337" gulp`
@@ -70,7 +70,7 @@ GLOBALS.CACHE_TAG = Date.now()
   // GLOBALS[k] = process.env[k] if process.env[k]? && GLOBALS[k]?
 for(var k in GLOBALS){
   if( process.env[k] && GLOBALS[k] ){
-    GLOBALS[k] = process.env[k]
+    GLOBALS[k] = process.env[k];
   }
 }
 
@@ -154,9 +154,9 @@ module.exports.destinations = destinations = {
     "#{GLOBALS.BUILD_DIR}/templates/**",
     "#{GLOBALS.BUILD_DIR}/*.html",
   ]
-}
+};
 module.exports.options = options = {
   open: gulp.env.open || process.env['OPEN'] || false, //# open the server in the browser on init?,
   httpPort: 4400,
   riddlePort: 4400
-}
+};

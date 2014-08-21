@@ -11,7 +11,7 @@
     "fx.animations",
     "google-maps",
     "ion-google-place",
-    "app.modules",
+    "app.services",
     "app.directives",
     "app.filters",
     "app.models",

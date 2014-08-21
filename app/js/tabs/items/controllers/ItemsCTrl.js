@@ -1,10 +1,9 @@
 (function() {
-  var ItemsCtrl = function($scope, $ionicModal, MenuItem, Menu, ImagesService, $q, BackgroundGeo, findDistance, makeStars, ItemMapService, MakeMap) {
+  var ItemsCtrl = function($scope, $ionicModal, MenuItem, Menu, $q, BackgroundGeo, findDistance, makeStars, ItemMapService, MakeMap) {
 
     var vm,map,service,infowindow;
 
     vm = this;
-    vm.images = ImagesService.get();
     vm.querySearch = querySearch;
     vm.closeModal = closeModal;
     vm.openModal = openModal;
@@ -26,7 +25,6 @@
             });
           });
       });
-
 
 
     $ionicModal.fromTemplateUrl("js/tabs/items/modals/filterModal.html", {
@@ -83,7 +81,7 @@
 
 
   ItemsCtrl
-    .$inject = ["$scope", "$ionicModal", "MenuItem", "Menu", "ImagesService", "$q", "BackgroundGeo", "findDistance", "makeStars", "ItemMapService"];
+    .$inject = ["$scope", "$ionicModal", "MenuItem", "Menu", "$q", "BackgroundGeo", "findDistance", "makeStars", "ItemMapService"];
 
   angular
     .module("app.tabs.items")

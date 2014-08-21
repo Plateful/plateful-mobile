@@ -1,7 +1,7 @@
 (function() {
   this.addElement = function(container, tagName, attrs) {
     var fjs, k, tag, v;
-    if (attrs == null) {
+    if (attrs === null) {
       attrs = {};
     }
     if (attrs.id && container.getElementById(attrs.id)) {
@@ -32,7 +32,7 @@
     return JSON.parse(value);
   };
 
-  if (window.GLOBALS == null) {
+  if (window.GLOBALS === null) {
     window.GLOBALS = {};
   }
 

@@ -14,7 +14,7 @@
         }
       };
     };
-    return angular.module('app').service('makeStars', makeStars);
+    return angular.module('app.services.makeStars', []).service('makeStars', makeStars);
   })();
 
 }).call(this);
