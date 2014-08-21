@@ -3,33 +3,33 @@
 
     var vm,map,service,infowindow;
 
-    vm = this
+    vm = this;
     vm.images = ImagesService.get();
     vm.querySearch = querySearch;
     vm.closeModal = closeModal;
     vm.openModal = openModal;
-    vm.storeItemForMap = storeItemForMap
+    vm.storeItemForMap = storeItemForMap;
 
     BackgroundGeo
       .current()
       .then(function(data){
 
-        vm.lat = data.latitude
-        vm.long = data.longitude
+        vm.lat = data.latitude;
+        vm.long = data.longitude;
 
         getMenuItems(null)
           .then(function(data) {
             console.log(data);
             vm.items = data;
             _.each(vm.items, function ( item, index ){
-              item.dist = BackgroundGeo.distance(item.lat, item.lon)
+              item.dist = BackgroundGeo.distance(item.lat, item.lon);
             });
           });
-      })
+      });
 
 
 
-    $ionicModal.fromTemplateUrl("js/modules/tabs/items/modals/filterModal.html", {
+    $ionicModal.fromTemplateUrl("js/tabs/items/modals/filterModal.html", {
       scope: $scope,
       animation: "slide-in-up"
     })
@@ -42,7 +42,7 @@
 
 
     function getMenuItems(filter){
-      console.log("from controller", vm.lat)
+      console.log("from controller", vm.lat);
       return MenuItem.getByLocation({
         lat:vm.lat,
         lng:vm.long,
@@ -76,7 +76,7 @@
 
     }
     function storeItemForMap(item){
-      ItemMapService.set(item._id, item)
+      ItemMapService.set(item._id, item);
     }
   };
 
@@ -86,7 +86,7 @@
     .$inject = ["$scope", "$ionicModal", "MenuItem", "Menu", "ImagesService", "$q", "BackgroundGeo", "findDistance", "makeStars", "ItemMapService"];
 
   angular
-    .module("app")
-    .controller("ItemsCtrl", ItemsCtrl)
+    .module("app.tabs.items")
+    .controller("ItemsCtrl", ItemsCtrl);
 
 })();

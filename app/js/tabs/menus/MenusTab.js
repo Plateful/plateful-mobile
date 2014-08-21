@@ -1,10 +1,10 @@
 (function() {
-  angular.module('app.modules.tabs.menus', ['app.modules.tabs.menus.controllers', 'app.modules.tabs.menus.services']).config(function($stateProvider, $urlRouterProvider) {
+  angular.module('app.tabs.menus', ['app.tabs.menus.controllers', 'app.tabs.menus.services']).config(function($stateProvider, $urlRouterProvider) {
     return $stateProvider.state("tab.menus", {
       url: "/menus",
       views: {
         "tab-menus": {
-          templateUrl: "js/modules/tabs/menus/views/menus.html",
+          templateUrl: "js/tabs/menus/views/menus.html",
           controller: "MenusCtrl as vm"
         }
       }
@@ -12,7 +12,7 @@
       url: "/menus/map",
       views: {
         "tab-menus": {
-          templateUrl: "js/modules/states/map/views/menusMap.html",
+          templateUrl: "js/states/map/views/menusMap.html",
           controller: "MenusMapCtrl as vm"
         }
       }
@@ -20,7 +20,7 @@
       url: '/menus/item/:itemId',
       views: {
         "tab-menus": {
-          templateUrl: "js/modules/states/item/item.html",
+          templateUrl: "js/states/item/item.html",
           controller: "ItemCtrl as vm"
         }
       }
@@ -28,7 +28,7 @@
       url: '/menus/menu/:menu_id',
       views: {
         "tab-menus": {
-          templateUrl: "js/modules/states/menu/menu.html",
+          templateUrl: "js/states/menu/menu.html",
           controller: "MenuCtrl as vm"
         }
       }

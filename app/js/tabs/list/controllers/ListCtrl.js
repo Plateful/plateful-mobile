@@ -5,7 +5,6 @@
     list.items = listInit;
 
     if (!localStorage.getItem('user_id')) {
-      console.log('y')
       $state.go('tab.logins');
     }
     else if (!list.items) {
@@ -19,8 +18,8 @@
 
     // ////////////////
 
-    getCollection()
-    getBookmarks()
+    getCollection();
+    getBookmarks();
     list.viewBookmarks = true;
     function getCollection(){
       UserStorage
@@ -28,8 +27,8 @@
         .then(function (data){
           list.collection = data[0];
           list.collectionCount = data[0].length;
-          console.log("collection", data[0])
-        })
+          // console.log("collection", data[0]);
+        });
     }
     function getBookmarks(){
       UserStorage
@@ -37,26 +36,26 @@
         .then(function (data){
           list.bookmarks = data[0];
           list.bookmarksCount = data[0].length;
-          console.log("bookmarks", data[0])
-        })
+          // console.log("bookmarks", data[0]);
+        });
     }
 
     function showBookmarks(){
-      list.viewCollection = false
-      list.viewBookmarks = true
-    };
+      list.viewCollection = false;
+      list.viewBookmarks = true;
+    }
     function showCollection(){
-      list.viewBookmarks = false
-      list.viewCollection = true
-    };
+      list.viewBookmarks = false;
+      list.viewCollection = true;
+    }
     // function login(){
     //   Auth.setAuthToken( list.username, list.password );
     // };
-  }
+  };
 
-  ListCtrl.$inject = ['$scope', 'Auth', 'User', 'List', 'listInit', '$state', 'UserStorage']
+  ListCtrl.$inject = ['$scope', 'Auth', 'User', 'List', 'listInit', '$state', 'UserStorage'];
   angular
-    .module('app.modules.tabs.list')
-    .controller('ListCtrl', ListCtrl)
+    .module('app.tabs.list')
+    .controller('ListCtrl', ListCtrl);
 
 })();

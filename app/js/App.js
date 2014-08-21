@@ -14,7 +14,8 @@
     "app.modules",
     "app.directives",
     "app.filters",
-    "app.models"
+    "app.models",
+    "app.tabs"
     ]);
 
   app.config(function(RestangularProvider) {

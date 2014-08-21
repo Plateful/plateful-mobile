@@ -1,6 +1,6 @@
 (function() {
   var ReviewMenuCtrl = function($scope, Menu, reviewMenuInit, locationData) {
-    var reviewMenu = this
+    var reviewMenu = this;
     var LocationData = locationData;
     reviewMenu.menus = reviewMenuInit;
 
@@ -18,12 +18,12 @@
         .then(function(data) {
           reviewMenu.menus = data;
         });
-    };
+    }
   };
 
   ReviewMenuCtrl
     .$inject = ['$scope', 'Menu', 'reviewMenuInit', 'locationData'];
   angular
-    .module('app.modules.tabs.review.controllers', [])
+    .module('app.tabs.review.controllers', [])
     .controller('ReviewMenuCtrl', ReviewMenuCtrl);
 })();

@@ -1,10 +1,10 @@
 (function() {
-  angular.module('app.modules.tabs.items', []).config(function($stateProvider, $urlRouterProvider) {
+  angular.module('app.tabs.items', []).config(function($stateProvider, $urlRouterProvider) {
     return $stateProvider.state("tab.items", {
       url: "/items",
       views: {
         "tab-items": {
-          templateUrl: "js/modules/tabs/items/views/items.html",
+          templateUrl: "js/tabs/items/views/items.html",
           controller: "ItemsCtrl as vm"
         }
       }
@@ -12,7 +12,7 @@
       url: "/items/map",
       views: {
         "tab-items": {
-          templateUrl: "js/modules/states/map/views/map.html",
+          templateUrl: "js/states/map/views/map.html",
           controller: "MapCtrl as vm"
         }
       }
@@ -20,24 +20,24 @@
       url: '/items/item/:itemId',
       views: {
         "tab-items": {
-          templateUrl: "js/modules/states/item/item.html",
+          templateUrl: "js/states/item/item.html",
           controller: "ItemCtrl as vm",
           resolve: {
             resolvedItem: function(MenuItem, $q, $stateParams){
 
-              var scope = {}
-              scope.item_id = $stateParams.itemId
-              var q = $q.defer()
+              var scope = {};
+              scope.item_id = $stateParams.itemId;
+              var q = $q.defer();
 
               MenuItem
                 .find(scope.item_id)
                 .then(function(data) {
                   console.log("item", data[0]);
-                  scope.item = data[0]
+                  scope.item = data[0];
                   // vm.options = {scrollwheel: false};
 
                   scope.options = {scrollwheel: false};
-                  scope.map = {center: {latitude: scope.item.lat, longitude: scope.item.lon }, zoom: 15 }
+                  scope.map = {center: {latitude: scope.item.lat, longitude: scope.item.lon }, zoom: 15 };
                   scope.marker = {
                       id: scope.item._id,
                       coords: {
@@ -55,8 +55,8 @@
                               console.log(marker.getPosition().lng());
                           }
                       }
-                  }
-                q.resolve(scope)
+                  };
+                q.resolve(scope);
               });
               return q.promise;
 
@@ -68,7 +68,7 @@
       url: '/items/menu/:menu_id',
       views: {
         "tab-items": {
-          templateUrl: "js/modules/states/menu/menu.html",
+          templateUrl: "js/states/menu/menu.html",
           controller: "MenuCtrl as vm"
         }
       }
@@ -76,7 +76,7 @@
       url: '/items/map/:item_id',
       views: {
         "tab-items": {
-          templateUrl: "js/modules/states/map/views/menusMap.html",
+          templateUrl: "js/states/map/views/menusMap.html",
           controller: "ItemMapCtrl as vm"
         }
       }

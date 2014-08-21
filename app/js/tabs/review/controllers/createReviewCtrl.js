@@ -1,9 +1,9 @@
 (function() {
   var createReviewCtrl = function($scope, CreateReview, Review, createReviewInit) {
-    var createReviewView = this
+    var createReviewView = this;
     createReviewView.item = createReviewInit;
     createReviewView.buttons = [1, 2, 3, 4, 5];
-    
+
     createReviewView.rating = 0;
     CreateReview.set('item_id', createReviewView.item._id);
     createReviewView.review = CreateReview.get();
@@ -19,7 +19,7 @@
 
     createReviewView.submitReview = function() {
       var fail, ft, imgUrl, options, params, win;
-      CreateReview.set('text', createReviewView.reviewText)
+      CreateReview.set('text', createReviewView.reviewText);
       // imgUrl = CreateReview.get('image_url');
       // win = function(r) {
       //   console.log("Code = " + r.responseCode);
@@ -46,5 +46,5 @@
     };
   };
   createReviewCtrl.$inject = ['$scope', 'CreateReview', 'Review', 'createReviewInit'];
-  return angular.module('app').controller('createReviewCtrl', createReviewCtrl);
+  return angular.module('app.tabs.review').controller('createReviewCtrl', createReviewCtrl);
 })();

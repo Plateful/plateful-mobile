@@ -1,10 +1,10 @@
 (function() {
-  angular.module('app.modules.tabs.settings', ['app.modules.tabs.settings.controllers']).config(function($stateProvider) {
+  angular.module('app.tabs.settings', ['app.tabs.settings.controllers']).config(function($stateProvider) {
     return $stateProvider.state('tab.settings', {
       url: '/settings',
       views: {
         'tab-settings': {
-          templateUrl: 'js/modules/tabs/settings/views/settings.html',
+          templateUrl: 'js/tabs/settings/views/settings.html',
           controller: 'SettingsCtrl as vm'
         }
       }
@@ -12,14 +12,14 @@
       url: '/account',
       views: {
         'tab-settings': {
-          templateUrl: 'js/modules/tabs/settings/views/account.html'
+          templateUrl: 'js/tabs/settings/views/account.html'
         }
       }
     }).state('tab.login', {
       url: '/login',
       views: {
         'tab-settings': {
-          templateUrl: 'js/modules/states/login/views/login.html',
+          templateUrl: 'js/states/login/views/login.html',
           controller: 'LoginCtrl as login'
         }
       }

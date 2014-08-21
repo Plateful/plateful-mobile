@@ -5,6 +5,6 @@
   SettingsCtrl
     .$inject = ['$scope'];
   angular
-    .module('app.modules.tabs.settings.controllers', [])
+    .module('app.tabs.settings.controllers', [])
     .controller('SettingsCtrl', SettingsCtrl);
 })();

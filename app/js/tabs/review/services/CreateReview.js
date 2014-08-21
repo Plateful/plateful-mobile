@@ -15,7 +15,7 @@
         }
       };
     };
-    return angular.module('app').factory('CreateReview', CreateReview);
+    return angular.module('app.tabs.review').factory('CreateReview', CreateReview);
   })();
 
 }).call(this);

@@ -14,7 +14,7 @@
         }
       };
     };
-    return angular.module('app.modules.tabs.menus.services', []).service('MenusData', MenusData);
+    return angular.module('app.tabs.menus.services', []).service('MenusData', MenusData);
   })();
 
 }).call(this);

@@ -46,6 +46,6 @@
   MenusCtrl
     .$inject = ['$scope', 'Menu', '$timeout', '$document', 'ngGPlacesAPI', 'BackgroundGeo'];
   angular
-    .module('app.modules.tabs.menus.controllers', [])
+    .module('app.tabs.menus.controllers', [])
     .controller('MenusCtrl', MenusCtrl);
 })();

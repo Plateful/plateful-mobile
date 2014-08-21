@@ -1,11 +1,11 @@
 (function() {
-  angular.module('app.modules.tabs.review', ['app.modules.tabs.review.controllers'])
+  angular.module('app.tabs.review', ['app.tabs.review.controllers'])
     .config(function($stateProvider, $urlRouterProvider) {
       return $stateProvider.state("tab.review", {
         url: "/review",
         views: {
           "tab-review": {
-            templateUrl: "js/modules/tabs/review/views/review.html",
+            templateUrl: "js/tabs/review/views/review.html",
             controller: 'ReviewMenuCtrl as reviewMenu'
           }
         },
@@ -25,7 +25,7 @@
                 // Add distance from user to each menu.
                 _.each(menus, function(menu) {
                   menu.dist = BackgroundGeo.distance(menu.latitude, menu.longitude);
-                })
+                });
                 $ionicLoading.hide();
                 return menus;
               });
@@ -35,7 +35,7 @@
         url: '/review/choose-item/:menuId',
         views: {
           "tab-review": {
-            templateUrl: 'js/modules/tabs/review/views/chooseItem.html',
+            templateUrl: 'js/tabs/review/views/chooseItem.html',
             controller: 'ReviewItemCtrl as reviewItem'
           }
         },
@@ -61,7 +61,7 @@
         url: '/review/create-item',
         views: {
           "tab-review": {
-            templateUrl: 'js/modules/tabs/review/views/create-item.html',
+            templateUrl: 'js/tabs/review/views/create-item.html',
             controller: 'createItemCtrl as vm'
           }
         }
@@ -69,7 +69,7 @@
         url: '/review/create/:itemId',
         views: {
           "tab-review": {
-            templateUrl: 'js/modules/tabs/review/views/create.html',
+            templateUrl: 'js/tabs/review/views/create.html',
             controller: 'createReviewCtrl as createReviewView'
           }
         },
@@ -81,7 +81,7 @@
               .then(function(item) {
                 $ionicLoading.hide();
                 return item[0];
-              })
+              });
           }
         }
       });
