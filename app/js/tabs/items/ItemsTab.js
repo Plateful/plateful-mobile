@@ -101,7 +101,6 @@
         .then(function (data){
           console.info(window.locality.latitude)
           return MenuItem.getByLocation({lat:data.latitude,lng:data.longitude,dist: 1.0}, null)
-          // return MenuItem.getByLocation({lat:window.locality.latitude,lng:window.locality.longitude,dist: 1.0}, null)
             .then(function(data) {
               _.each(data, function ( item, index ){
                 item.dist = BackgroundGeo.distance(item.lat, item.lon);

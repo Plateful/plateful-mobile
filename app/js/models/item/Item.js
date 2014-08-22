@@ -92,16 +92,17 @@
           findFilter = "";
         }
         // data.val = findFilter;
-        Rest.all('location').all(JSON.stringify(data)).getList().then(function(data) {
+        return Rest.all('location').all(JSON.stringify(data)).getList().then(function(data) {
           var item, _i, _len;
           for (_i = 0, _len = data.length; _i < _len; _i++) {
             item = data[_i];
             item.dist = findDistance.get(item);
             item.stars = makeStars.get(item.rating);
           }
-          return newPromise.resolve(data);
+          return data
+          // return newPromise.resolve(data);
         });
-        return newPromise.promise;
+        // return newPromise.promise;
       }
       function set(key, obj) {
         return storage[key] = obj;
