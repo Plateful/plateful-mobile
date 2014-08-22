@@ -35,11 +35,11 @@
     $rootScope.GLOBALS = GLOBALS;
     $timeout(function() {
       var _ref;
-      return $window.$a = (_ref = angular.element(document.body).injector()) !== null ? _ref.get : void 0;
+      return $window.$a = (_ref = angular.element(document.body).injector()) != null ? _ref.get : void 0;
     });
     $rootScope.$watch((function() {
       var _ref;
-      return (_ref = Auth.user) !== null ? _ref.id : void 0;
+      return (_ref = Auth.user) != null ? _ref.id : void 0;
     }), function() {
       return $rootScope.current_user = Auth.user;
     });
