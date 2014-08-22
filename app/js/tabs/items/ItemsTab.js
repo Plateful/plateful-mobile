@@ -29,6 +29,9 @@
           templateUrl: "js/states/item/item.html",
           controller: "ItemCtrl as vm",
           resolve: {
+            checkUserCollection: checkUserCollection,
+            checkUserBookmarks: checkUserBookmarks,
+            showSingleItemPhotos: showSingleItemPhotos,
             resolvedItem: function(MenuItem, $q, $stateParams){
 
               var scope = {};
@@ -93,16 +96,53 @@
     /////////////////
 
     // Function for resolving ItemsCtrl
-    function resolveItemsCtrl(BackgroundGeo, MenuItem){
+    function resolveItemsCtrl(BackgroundGeo, MenuItem, $window){
       return BackgroundGeo.current()
         .then(function (data){
+          console.info(window.locality.latitude)
           return MenuItem.getByLocation({lat:data.latitude,lng:data.longitude,dist: 1.0}, null)
+          // return MenuItem.getByLocation({lat:window.locality.latitude,lng:window.locality.longitude,dist: 1.0}, null)
             .then(function(data) {
               _.each(data, function ( item, index ){
                 item.dist = BackgroundGeo.distance(item.lat, item.lon);
               });
               return data;
             });
+        });
+    }
+
+
+    function checkUserCollection( UserStorage, $stateParams ){
+      var item_id = $stateParams.itemId
+      return UserStorage.checkData('collection', item_id)
+        .then(function ( bool ){
+          // log("checkUserCollection", bool)
+          return bool;
+        });
+    }
+    function checkUserBookmarks( UserStorage, $stateParams ){
+      var item_id = $stateParams.itemId
+      return UserStorage.checkData('bookmarks', item_id)
+        .then(function ( bool ){
+          // console.log("checkUserBookmarks",bool);
+          return bool;
+        });
+    }
+    function showSingleItemPhotos( MenuItem, $stateParams ) {
+      var item_id = $stateParams.itemId
+      return MenuItem.getItemPhotos(item_id)
+        .then(function ( photos ){
+          // console.log("showSingleItemPhotos", photos);
+          return photos;
+        });
+    }
+
+    function showSingleItemReviews( MenuItem, $stateParams ) {
+      var item_id = $stateParams.itemId
+      return MenuItem.getItemReviews(item_id)
+        .then(function ( reviews ) {
+          // console.log("showSingleItemReviews", reviews);
+          return reviews;
         });
     }
 

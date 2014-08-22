@@ -9,7 +9,8 @@
    * @param {[type]} $ionicLoading [description]
    * @param {[type]} Rest          [description]
    */
-  var ItemCtrl = function(resolvedItem, $scope, $stateParams, Item, User, UserStorage) {
+
+  var ItemCtrl = function(checkUserCollection, checkUserBookmarks, showSingleItemPhotos, resolvedItem, $scope, $stateParams, Item, User, UserStorage) {
     var vm = this;
 
     // Data from resolve
@@ -18,6 +19,9 @@
     vm.marker = resolvedItem.marker;
     vm.options = resolvedItem.options;
     vm.item_id = resolvedItem.item_id;
+    vm.has_bookmarked = checkUserBookmarks;
+    vm.has_collected = checkUserCollection;
+    vm.photos = showSingleItemPhotos;
 
     // initial scope data
     vm.showPhotos     = showPhotos;
@@ -29,28 +33,9 @@
     vm.unBookmarkItem = unBookmarkItem;
     vm.bookmarkItem = bookmarkItem;
 
-    vm.has_bookmarked = false;
-    vm.has_collected = false;
-
-    vm.showPhotos();
-    checkUserStorage();
 
     //////////////////////
 
-    function checkUserStorage(){
-      UserStorage
-        .checkData('collection', vm.item_id)
-        .then(function (data){
-          console.log(data);
-          if(data) vm.has_collected = true;
-        });
-      UserStorage
-        .checkData('bookmarks', vm.item_id)
-        .then(function (data){
-          console.log(data);
-          if(data) vm.has_bookmarked = true;
-        });
-    }
 
     function showPhotos() {
       Item
@@ -116,6 +101,9 @@
 
   ItemCtrl
     .$inject = [
+      'checkUserCollection',
+      'checkUserBookmarks',
+      'showSingleItemPhotos',
       'resolvedItem',
       '$scope',
       '$stateParams',

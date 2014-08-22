@@ -54,6 +54,10 @@
         speed: null
       }
     };
+    window.locality = {
+      latitude: 37.783692599999995,
+      longitude: 122.409235
+    }
     if(window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }

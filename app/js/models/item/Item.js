@@ -77,7 +77,7 @@
         return Rest.one('user', user_id).get();
       }
       function getItemReviews(item_id, cb) {
-        return Restangular.one('items', item_id).all('essay').getList();
+        return Restangular.one('items', item_id).all('photos').getList();
       }
       function getItemPhotos(item_id, cb) {
         return Restangular.one('items', item_id).all('photos').getList();

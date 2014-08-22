@@ -1,38 +1,1 @@
-ion-view(title="{{vm.item.name}}" has-subheader="true")
-  ion-content
-    div.row
-      div.button-bar
-        a.button.button-outline.button-positive.icon.ion-ios7-bookmarks
-        a.button.button-outline.button-positive.icon.ion-ios7-camera(ng-click="vm.reviewItem()")
-        a.button.button-outline.button-positive.icon.ion-ios7-checkmark(ng-click="vm.collectItem()", ng-if="vm.has_collected === false" ng-hide="vm.has_collected")
-        a.button.button-outline.button-positive.icon.ion-ios7-checkmark.active(ng-click="vm.unCollectItem()", ng-if="vm.has_collected" ng-show="vm.has_collected")
-        a.button.button-outline.button-positive.icon.ion-bookmark(ng-click="vm.bookmarkItem()", ng-if="vm.has_bookmarked === false" ng-hide="vm.has_bookmarked")
-        a.button.button-outline.button-positive.icon.ion-bookmark.active(ng-click="vm.unBookmarkItem()", ng-if="vm.has_bookmarked" ng-show="vm.has_bookmarked")
-    div.list
-
-
-
-      img.full-image(src='{{vm.item.image}}')
-      div(id="map_canvas")
-        google-map(center="vm.map.center" zoom="vm.map.zoom" draggable="true" options="vm.options")
-          marker(coords="vm.marker.coords" options="vm.marker.options" events="vm.marker.events" idkey="vm.marker.id")
-
-
-
-
-
-
-
-
-
-
-      div.button-bar.button-bar-small
-        button.button.button-light.button-small Photos
-        button.button.button-light.button-small Reviews
-
-    div(class="list card" style="width:50%;")
-      div(class="item")
-        {{vm.hello}}
-    div(class="list card" ng-repeat="photo in vm.photos" style="width:50%;")
-      div(class="item item-image")
-        img(src='{{photo.url}}')
+ion-view(title="{{vm.item.name}}" has-subheader="true")  ion-content    div.button-bar.button-bar-small      button.button.button-outline.button-option Menu      button.button.button-outline.button-option(ng-click="vm.reviewItem()") Review      button.button.button-outline.button-option(ng-click="vm.collectItem()", ng-if="vm.has_collected === false" ng-hide="vm.has_collected") Collect      button.button.button-outline.button-option.active(ng-click="vm.unCollectItem()", ng-show="vm.has_collected") Collect      button.button.button-outline.button-option(ng-click="vm.bookmarkItem()", ng-hide="vm.has_bookmarked") Bookmark      button.button.button-outline.button-option.active(ng-click="vm.unBookmarkItem()", ng-show="vm.has_bookmarked") Bookmark    ion-list      img.full-image(src='{{vm.item.image}}')      div(id="map_canvas")        google-map(center="vm.map.center" zoom="vm.map.zoom" draggable="false" options="vm.options")          marker(coords="vm.marker.coords" options="vm.marker.options" events="vm.marker.events" idkey="vm.marker.id")      div.button-bar.button-bar-small        button.button.button-light.button-small Photos        button.button.button-light.button-small Reviews    div(class="list card" ng-repeat="photo in vm.photos" style="width:50%;")      div(class="item item-image")        img(src='{{photo.url}}')

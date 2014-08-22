@@ -286,3 +286,20 @@ $button-facebook-active-border:  darken($facebook, 15%) !default;
 .tab-item.activated {
   color: #fc3d39;
 }
+
+.button.button-option {
+  background-color: #ffffff;
+  background: #ffffff;
+  color: #b2b2b2;
+  border-right: 1px solid #dedede;
+  border-left: none;
+  border-top:none;
+  border-bottom:none;
+}
+.button.button-option.active {
+  background-color: #ffffff;
+  background: #ffffff;
+  color: #fc3d39;
+}
+
+
