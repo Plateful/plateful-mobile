@@ -5,6 +5,7 @@
 
 var neo4j = require('node-neo4j');
 var db = new neo4j('http://localhost:7474');
+var Parse = require('./parse.js');
 
 module.exports.neo4jtest = {
   initialize: function(cb){
@@ -29,11 +30,14 @@ module.exports.neo4jtest = {
       "DELETE n, r;"
     ].join('');
     db.cypherQuery(q, function(err, result){
-      // if(err){
-      //   console.log(err);
-      // }
-      // console.log(result);
-      cb();
+      Parse.Cloud.useMasterKey();
+      var query = new Parse.Query(Parse.User);
+      query.equalTo("username", "newuser");
+      query.find()
+        .then(function(user) {
+          user[0].destroy()
+          return cb();
+        });
     });
   }
 };

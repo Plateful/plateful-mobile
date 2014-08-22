@@ -5,7 +5,7 @@ var request = require('supertest'),
     url = '/api/v1';
 
 
-describe('List API', function() {
+xdescribe('List API', function() {
   console.log(neo4jtest);
   beforeEach(function(done){
     neo4jtest.initialize(function(){

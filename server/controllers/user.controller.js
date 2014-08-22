@@ -86,7 +86,7 @@ exports.login = function (req, res) {
   Parse.User.logIn(req.body.username, req.body.password)
     .then(function(data) {
       data.attributes.token = data._sessionToken;
-      res.json(data);
+      res.status(200).json(data);
     }, function(error) {
       error.error = true;
       res.send(error);
