@@ -30,6 +30,9 @@ ion-view(title="{{vm.item.name}}" has-subheader="true")
         button.button.button-light.button-small Photos
         button.button.button-light.button-small Reviews
 
+    div(class="list card" style="width:50%;")
+      div(class="item")
+        {{vm.hello}}
     div(class="list card" ng-repeat="photo in vm.photos" style="width:50%;")
       div(class="item item-image")
         img(src='{{photo.url}}')

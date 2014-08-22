@@ -120,7 +120,7 @@
       '$scope',
       '$stateParams',
       'MenuItem',
-      'Review',
+      'User',
       'UserStorage'
     ];
   angular
