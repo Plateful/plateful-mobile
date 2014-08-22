@@ -4,61 +4,62 @@
 
     var vm = this;
 
-    // BackgroundGeo
-    //   .current()
-    //   .then(function(data){
-    //     vm.locate = data;
-    //   });
-
     vm.menu_id = $stateParams.menu_id;
-
-    Menu.getMenuItems(vm.menu_id)
-      .then(function(data){
-        vm.items = data;
-        console.log(data);
-      })
-      .catch(function(err){
-        console.log(err);
-      });
-
-    // Menu
-    //   .find($scope.menu_id)
-    //   .then(function(data) {
-    //     var dist, from, to;
-    //     vm.menu = data;
-    //     from = new google.maps.LatLng(vm.locate.latitude, vm.locate.longitude);
-    //     to = new google.maps.LatLng(data.lat, data.long);
-    //     dist = google.maps.geometry.spherical.computeDistanceBetween(from, to) * 0.000621371192;
-    //     vm.menu.dist = dist - dist % 0.001;
-    //   });
-
-    $ionicModal
-      .fromTemplateUrl('js/states/menu/modals/createItemModal.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-      })
-      .then(function(modal) {
-        vm.createModal = modal;
-      });
-
-    placeDetails()
-      .then(function(data){
-        console.log(data);
-        vm.menu = data;
-        vm.menu.distance = BackgroundGeo.distance(vm.menu.geometry.location.k, vm.menu.geometry.location.B);
-        console.log(vm.menu.distance);
-      })
-      .catch(function(err){
-        console.log(err);
-      });
-
     vm.closeModal     = closeModal;
     vm.openModal      = openModal;
     vm.login          = login;
     vm.addNewItem     = addNewItem;
     vm.placeDetails   = placeDetails;
 
+    getMenu()
+    getMenuItems()
+    initializeIonicModal()
+
+
     /////////////////
+
+
+    function getMenu(){
+
+      placeDetails()
+        .then(function(data){
+          console.log(data);
+          vm.menu = data;
+          vm.menu.distance = BackgroundGeo.distance(vm.menu.geometry.location.k, vm.menu.geometry.location.B);
+          console.log(vm.menu.distance);
+        })
+        .catch(function(err){
+          console.log(err);
+        });
+
+    }
+
+    function getMenuItems(){
+
+      Menu
+        .getMenuItems(vm.menu_id)
+        .then(function(data){
+          vm.items = data;
+          console.log(data);
+        })
+        .catch(function(err){
+          console.log(err);
+        });
+
+    }
+
+    function initializeIonicModal(){
+
+      $ionicModal
+        .fromTemplateUrl('js/states/menu/modals/createItemModal.html', {
+          scope: $scope,
+          animation: 'slide-in-up'
+        })
+        .then(function(modal) {
+          vm.createModal = modal;
+        });
+
+    }
 
     function openModal(){
 
@@ -78,38 +79,21 @@
       return ngGPlacesAPI.placeDetails({placeId: vm.menu_id});
     }
 
-    vm.priceOptions = [
-      {
-        id: 1,
-        title: '$',
-        active: false
-      }, {
-        id: 2,
-        title: '$$',
-        active: false
-      }, {
-        id: 3,
-        title: '$$$',
-        active: false
-      }, {
-        id: 4,
-        title: '$$$$',
-        active: false
-      }
-    ];
-    vm.items = [];
-    vm.newItem = {};
-
   };
-  // addItemCtrl = function($rootScope, $scope, MenuItem) {
-  //   $scope.newReview = {};
-  //   $scope.addItem = function() {
-  //     console.log($scope.newReview);
-  //     return $rootScope.addNewItem($scope.newReview);
-  //   };
-  // };
-  MenuCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'Menu', 'MenuItem', '$ionicModal', '$ionicLoading', '$compile', 'Auth', 'ngGPlacesAPI', 'BackgroundGeo'];
-  // addItemCtrl.$inject = ['$rootScope', '$scope', 'MenuItem'];
+
+  MenuCtrl.$inject = [
+    '$rootScope',
+    '$scope',
+    '$stateParams',
+    'Menu',
+    'MenuItem',
+    '$ionicModal',
+    '$ionicLoading',
+    '$compile',
+    'Auth',
+    'ngGPlacesAPI',
+    'BackgroundGeo'
+  ];
   angular
     .module('app.states.menu')
     .controller('MenuCtrl', MenuCtrl)

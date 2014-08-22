@@ -1,11 +1,14 @@
 (function() {
-  angular.module('app.tabs.menus', ['app.tabs.menus.controllers', 'app.tabs.menus.services']).config(function($stateProvider, $urlRouterProvider) {
+  var MenusTab = function($stateProvider, $urlRouterProvider) {
     return $stateProvider.state("tab.menus", {
       url: "/menus",
       views: {
         "tab-menus": {
           templateUrl: "js/tabs/menus/views/menus.html",
-          controller: "MenusCtrl as vm"
+          controller: "MenusCtrl as vm",
+          resolve: {
+            resolvedMenuData: resolveMenusCtrl
+          }
         }
       }
     }).state("tab.menus-map", {
@@ -33,6 +36,35 @@
         }
       }
     });
-  });
+
+    ////////////////////
+
+    function resolveMenusCtrl(BackgroundGeo, ngGPlacesAPI){
+
+      return BackgroundGeo.current()
+        .then(function (data){
+          var searchQuery = {
+            vicinity: 'San Francisco',
+            latitude: data.latitude,
+            longitude: data.longitude
+          };
+          return ngGPlacesAPI.nearbySearch( searchQuery )
+            .then(function (data) {
+              return data;
+            });
+        });
+    }
+  };
+
+MenusTab.$inject = [
+  '$stateProvider',
+  '$urlRouterProvider'
+];
+angular
+  .module('app.tabs.menus', [
+    'app.tabs.menus.controllers',
+    'app.tabs.menus.services'
+  ])
+  .config(MenusTab);
 
 }).call(this);
