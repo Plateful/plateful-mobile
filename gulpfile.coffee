@@ -164,7 +164,7 @@ destinations =
     "#{GLOBALS.BUILD_DIR}/fonts/**"
     "#{GLOBALS.BUILD_DIR}/img/**"
     "#{GLOBALS.BUILD_DIR}/js/**"
-    "#{GLOBALS.BUILD_DIR}/templates/**"
+    "#{GLOBALS.BUILD_DIR}/**/*.html"
     "#{GLOBALS.BUILD_DIR}/*.html"
   ]
 
@@ -371,7 +371,7 @@ gulp.task 'watch', ->
   gulp.watch(paths.scripts.bootstrap, ['scripts:bootstrap'])
   gulp.watch(paths.scripts.vendor, ['scripts:vendor'])
   gulp.watch(paths.styles, ['styles'])
-  # gulp.watch(paths.templates, ['templates'])
+  gulp.watch(paths.templates, ['templates'])
   # gulp.watch(paths.server, ['compile:server'])
 
   livereloadServer = livereload()
