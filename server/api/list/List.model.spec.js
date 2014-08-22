@@ -1,18 +1,17 @@
 var request = require('supertest'),
     should = require('should'),
-    app = require('../app'),
-    neo4jtest = require('../config/neo4jtest.js').neo4jtest,
+    app = require('../../app.js'),
+    neo4jtest = require('../../config/neo4jtest.js').neo4jtest,
     url = '/api/v1';
 
 
 describe('List API', function() {
-  console.log(neo4jtest);
-  beforeEach(function(done){
+  before(function(done){
     neo4jtest.initialize(function(){
       done();
     });
   });
-  afterEach(function(done){
+  after(function(done){
     neo4jtest.clear(function(){
       done();
     });
