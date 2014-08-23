@@ -20,7 +20,9 @@
       vm.filterModal = $ionicModal;
     });
 
+
     //////////////////
+
 
 
     function querySearch(itemsFilter){

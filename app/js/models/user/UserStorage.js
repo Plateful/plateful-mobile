@@ -45,6 +45,8 @@
       User = Restangular.one('users', user_id);
     }
 
+    // console.info("Checked",  checkData())
+
     /**
      * @name   chackData
      * @desc   Check to see if a given item exists in storage[key]
