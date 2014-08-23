@@ -36,8 +36,12 @@
         getReviewsByUser: function(id){
           return Restangular.one('users', id).all('reviews').getList();
         },
-        collectItem: function(item){
-          return UserStorage.addRelationshipInNeo4j('collection', item)
+        interactWithItem: function(key, item_id, bool){
+          var queries = {
+            true: UserStorage.addRelationshipInNeo4j,
+            false: UserStorage.removeRelationshipInNeo4j
+          }
+          return queries[bool](key, item_id)
             .then(function ( data ){
               return data;
             });

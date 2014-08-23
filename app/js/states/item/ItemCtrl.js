@@ -14,24 +14,20 @@
     var vm = this;
 
     // Data from resolve
-    vm.item = resolvedItem.item;
-    vm.map = resolvedItem.map;
-    vm.marker = resolvedItem.marker;
-    vm.options = resolvedItem.options;
-    vm.item_id = resolvedItem.item_id;
-    vm.has_bookmarked = checkUserBookmarks;
-    vm.has_collected = checkUserCollection;
+    vm.item           = resolvedItem.item;
+    vm.map            = resolvedItem.map;
+    vm.marker         = resolvedItem.marker;
+    vm.options        = resolvedItem.options;
+    vm.item_id        = resolvedItem.item_id;
+    vm.has_bookmarks  = checkUserBookmarks;
+    vm.has_collection = checkUserCollection;
     vm.photos = showSingleItemPhotos;
 
     // initial scope data
     vm.showPhotos     = showPhotos;
     vm.showReviews    = showReviews;
     vm.reviewItem     = reviewItem;
-    vm.collectItem    = collectItem;
-    vm.unCollectItem  = unCollectItem;
-    vm.bookmarkItem   = bookmarkItem;
-    vm.unBookmarkItem = unBookmarkItem;
-    vm.bookmarkItem   = bookmarkItem;
+    vm.interact       = interact;
 
 
     //////////////////////
@@ -59,44 +55,17 @@
       alert('item reviewed');
     }
 
-    function collectItem() {
+    function interact(key, bool) {
 
       User
-        .collectItem( vm.item )
+        .interactWithItem(key, vm.item._id, !bool)
         .then(function (data){
           console.log("collected",data);
-          vm.has_collected = true;
+          vm['has_' + key] = !bool;
         });
 
     }
-    function unCollectItem(){
 
-      User
-        .unCollectItem( vm.item )
-        .then(function (data){
-          console.log("unCollected",data);
-          vm.has_collected = false;
-        });
-
-    }
-    function bookmarkItem(){
-
-      User
-        .bookmarkItem(vm.item)
-        .then( function ( data ){
-          vm.has_bookmarked = true;
-        });
-
-    }
-    function unBookmarkItem(){
-
-      User
-        .unBookmarkItem(vm.item)
-        .then( function ( data ){
-          vm.has_bookmarked = false;
-        });
-
-    }
   };
 
   ItemCtrl
