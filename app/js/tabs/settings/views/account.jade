@@ -1,7 +1,6 @@
 ion-view(title="Account")
   ion-content
     ion-list
-      //- ion-item.item-divider
       label.item.item-input.item-floating-label
         span.input-label First Name
         input(type="text" placeholder="First Name" ng-model="user.first")
@@ -14,3 +13,4 @@ ion-view(title="Account")
       label.item.item-input.item-floating-label
         span.input-label Phone
         input(type="tel" placeholder="Phone" ng-model="user.phone")
+      button.button.button-positive.button-block(ng-click="account.update()") Update

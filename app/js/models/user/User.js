@@ -82,6 +82,7 @@
               if (data.error) {
                 return this.status = data.message;
               }
+              console.log(data)
               Auth.setAuthToken(data.neoId, data.username, data.token, data.fbSessionId, data);
               UserStorage.syncAll();
               this.status = 'Logged In!';

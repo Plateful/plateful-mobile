@@ -12,7 +12,8 @@
       url: '/account',
       views: {
         'tab-settings': {
-          templateUrl: 'js/tabs/settings/views/account.html'
+          templateUrl: 'js/tabs/settings/views/account.html',
+          controller: 'AccountCtrl as account'
         }
       }
     }).state('tab.login', {
