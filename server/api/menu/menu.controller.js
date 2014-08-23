@@ -2,22 +2,21 @@
 
 var _ = require('lodash');
 var http = require('http');
-var storeData = require('./storeData');
 
 // NEO4J API
-var db = require('../config/neo4j').db;
+var db = require('../../config/neo4j').db;
 
 // LOCU API
-var Venue = require('../config/api/locu').VenueClient;
+var Venue = require('../../config/api/locu').VenueClient;
 
 // FACTUAL API
-var factual = require('../config/api/factual').factual;
+var factual = require('../../config/api/factual').factual;
 
 // YELP API
-var yelp = require('../config/api/yelp').yelp;
+var yelp = require('../../config/api/yelp').yelp;
 
 // Menu Model
-var Menu = require('../models/Menu.model');
+var Menu = require('./Menu.model');
 
 exports.index = function(req, res) {
   Menu.all(function(err, data) {

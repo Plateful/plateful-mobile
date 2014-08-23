@@ -1,7 +1,7 @@
 'use strict';
 
-var db = require('../config/neo4j').db;
-var List = require('../models/List.model');
+var db = require('../../config/neo4j').db;
+var List = require('./List.model');
 
 exports.show = function(req, res) {
   List.show(req.params.id, function(err, data) {

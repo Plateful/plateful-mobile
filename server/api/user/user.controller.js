@@ -1,12 +1,12 @@
 'use strict';
 
-var Parse = require('../config/parse.js');
-var Facebook = require('../config/api/facebook.js');
+var Parse = require('../../config/parse.js');
+var Facebook = require('../../config/api/facebook.js');
 var request = require('request');
-var Promise = require("bluebird");
-var User = require('../models/User.model.js')
+var Promise = require('bluebird');
+var User = require('./User.model.js')
 
-var db = require('../config/neo4j').db;
+var db = require('../../config/neo4j').db;
 Promise.promisifyAll(request);
 Promise.promisifyAll(db);
 
