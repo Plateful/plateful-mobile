@@ -35,7 +35,7 @@ module.exports.neo4jtest = {
       query.equalTo("username", "newuser");
       query.find()
         .then(function(user) {
-          user[0].destroy()
+          user[0] && user[0].destroy()
           return cb();
         });
     });
