@@ -31,7 +31,7 @@
     vm.unCollectItem  = unCollectItem;
     vm.bookmarkItem   = bookmarkItem;
     vm.unBookmarkItem = unBookmarkItem;
-    vm.bookmarkItem = bookmarkItem;
+    vm.bookmarkItem   = bookmarkItem;
 
 
     //////////////////////

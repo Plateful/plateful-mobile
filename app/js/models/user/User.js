@@ -37,40 +37,28 @@
           return Restangular.one('users', id).all('reviews').getList();
         },
         collectItem: function(item){
-          var q = $q.defer();
-          UserStorage
-            .addItemToKeyInStorage('collection', item)
-            .then(function (data){
-              q.resolve(data);
+          return UserStorage.addRelationshipInNeo4j('collection', item)
+            .then(function ( data ){
+              return data;
             });
-          return q.promise;
         },
         unCollectItem: function(item, callback){
-          var q = $q.defer();
-          UserStorage
-            .removeItemFromKeyInStorage('collection', item)
+          return UserStorage.removeRelationshipInNeo4j('collection', item)
             .then(function(data){
-              q.resolve(data);
+              return data;
             });
-          return q.promise;
         },
         bookmarkItem: function(item){
-          var q = $q.defer();
-          UserStorage
-            .addItemToKeyInStorage('bookmarks', item)
-            .then(function(data){
-              q.resolve(data);
+          return UserStorage.addRelationshipInNeo4j('bookmarks', item._id)
+            .then(function ( data ){
+              return data;
             });
-          return q.promise;
         },
         unBookmarkItem: function(item){
-          var q = $q.defer();
-          UserStorage
-            .removeItemFromKeyInStorage('bookmarks', item)
-            .then(function(data){
-              q.resolve(data)
+          return UserStorage.removeRelationshipInNeo4j('bookmarks', item._id)
+            .then(function ( data ){
+              return data;
             })
-          return q.promise;
         },
         signup: function(username, password){
           return Restangular.all('users').all('signup')
