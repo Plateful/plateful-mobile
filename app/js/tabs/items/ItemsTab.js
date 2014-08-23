@@ -115,7 +115,7 @@
       var item_id = $stateParams.itemId
       return UserStorage.checkData('collection', item_id)
         .then(function ( bool ){
-          // log("checkUserCollection", bool)
+          console.log("checkUserCollection", bool)
           return bool;
         });
     }
@@ -123,7 +123,7 @@
       var item_id = $stateParams.itemId
       return UserStorage.checkData('bookmarks', item_id)
         .then(function ( bool ){
-          // console.log("checkUserBookmarks",bool);
+          console.log("checkUserBookmarks",bool);
           return bool;
         });
     }
