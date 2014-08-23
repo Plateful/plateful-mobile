@@ -1,20 +1,30 @@
 ion-view(title="Login")
   ion-content
-    .row
-      .col-6
-        img#userPic
-      .col-6#userName
-    .row.
-      {{ login.status }}
-    .row
-      button.button.button-block.positive(ng-click="login.signupModal.show()") Sign-Up with Plateful
-    .row
-      button.button.button-block.positive(ng-click="login.loginModal.show()") Login with Plateful
-    .row
-      button.button.button-block.button-facebook-style(ng-click="login.fbLoginFlow()" ng-show="login.fbStatus!=='connected'") Login with Facebook
-    .row
+    form(ng-submit="login.nativeLogin()")
+      ion-list
+        label.item.item-input
+          span.input-label Username
+          //- Change to email type later
+          input(type="text" ng-model="login.username")
+
+        label.item.item-input
+          span.input-label Password
+          input(type="password" ng-model="login.password")
+
+      button.button.button-balanced.button-block(ng-click="login.loginModal.hide()") Login
+      div.button-bar
+        button.button.button-block.button-calm(ng-click="login.signupModal.show()") Create Account
+        button.button.button-block.button-facebook-style(ng-click="login.fbLoginFlow()" ng-show="login.fbStatus!=='connected'") Login with Facebook
+
       button.button.button-block.button-facebook-style(ng-click="login.fbLogout()" ng-show="login.fbStatus==='connected'") Logout from Facebook
-    .row
+
       button.button.button-block.assertive(ng-click="login.nativeLogout()" ng-show="login.isSignedIn") Logout
+    //- .row
+    //-   .col-6
+    //-     img#userPic
+    //-   .col-6#userName
+    //- .row.
+    //-   {{ login.status }}
+    //- .row
     //- .row
       //- button.button.button-block.positive(ng-click="login.fbGetInfo()") GetInfo from Facebook
