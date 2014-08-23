@@ -7,7 +7,7 @@ var neo4j = require('node-neo4j');
 var db = new neo4j('http://localhost:7474');
 var Parse = require('./parse.js');
 
-module.exports.neo4jtest = {
+module.exports = {
   initialize: function(cb){
     var q = [
       "CREATE (u:USER {username: 'TestUser'}) ",
@@ -35,7 +35,7 @@ module.exports.neo4jtest = {
       query.equalTo("username", "newuser");
       query.find()
         .then(function(user) {
-          user[0].destroy()
+          user[0] && user[0].destroy()
           return cb();
         });
     });

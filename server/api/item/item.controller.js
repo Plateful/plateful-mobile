@@ -1,8 +1,8 @@
 'use strict';
 
 var _ = require('lodash');
-var MenuClient = require('../config/api/locu').MenuClient;
-var Item = require('../models/Item.model');
+var MenuClient = require('../../config/api/locu').MenuClient;
+var Item = require('./Item.model');
 var apiKey, outputFormat
 
 

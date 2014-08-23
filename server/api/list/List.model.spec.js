@@ -1,9 +1,8 @@
 var request = require('supertest'),
     should = require('should'),
     app = require('../../app.js'),
-    neo4jtest = require('../../config/neo4jtest.js').neo4jtest,
+    neo4jtest = require('../../config/neo4jtest.js'),
     url = '/api/v1';
-
 
 describe('List API', function() {
   before(function(done){

@@ -1,7 +1,7 @@
 var request = require('supertest'),
     should = require('should'),
     app = require('../../app'),
-    neo4jtest = require('../../config/neo4jtest.js').neo4jtest,
+    neo4jtest = require('../../config/neo4jtest.js'),
     url = '/api/v1';
 
 
