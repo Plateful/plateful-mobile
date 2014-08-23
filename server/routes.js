@@ -2,22 +2,18 @@
  * Main application routes
  */
 
-
 var errors = require('./components/errors');
 var cors = require('cors');
 var busboy = require('connect-busboy');
 var express = require('express');
-var Item = require('./controllers/item.controller');
-var Menu = require('./controllers/menu.controller');
-var Review = require('./controllers/review.controller');
-var User = require('./controllers/user.controller');
-var List = require('./controllers/list.controller');
-var Logger = require('./controllers/logger')
-var request = require('supertest')
-var should = require('should')
-
-
-
+var Item = require('./api/item/item.controller');
+var Menu = require('./api/menu/menu.controller');
+var Review = require('./api/review/review.controller');
+var User = require('./api/user/user.controller');
+var List = require('./api/list/list.controller');
+var Logger = require('./controllers/logger');
+var request = require('supertest');
+var should = require('should');
 
 module.exports.applyRoutes = function(app) {
 
@@ -85,12 +81,11 @@ module.exports.applyRoutes = function(app) {
   Users.post('/:id/bookmarks/:method', User.bookmarkItem);
   Users.get('/:id/:data', User.getUserData);
 
-
+  // Logger routes.
   Logs.post('/log', Logger.log)
   Logs.post('/info', Logger.info)
   Logs.post('/warn', Logger.warn)
   Logs.post('/error', Logger.error)
-
 
   // List tab API routes.
   Lists.get('/:id', List.show);
