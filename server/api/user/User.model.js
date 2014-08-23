@@ -127,7 +127,6 @@ User.prototype.fbLogin = function (fbData, callback) {
       });
 };
 
-
 User.prototype.update = function(user_id, user, callback) {
   var params = {
     user_id: user_id,
@@ -137,6 +136,30 @@ User.prototype.update = function(user_id, user, callback) {
   this.query(q, params, function(err, result) {
     callback(err, result.data);
   });
+};
+
+var collectQueries = {
+  true:  ["START u=node({user_id}), i=node({item_id})",
+          "MATCH u-[:HAS_COLLECTIONS]->(c)",
+          "MERGE (c)-[:COLLECTED]->(i)",
+          "RETURN i"].join(""),
+
+  false: ["START u=node({user_id}), i=node({item_id})",
+          "MATCH u-[:HAS_COLLECTIONS]->(c)-[r:COLLECTED]->(i)",
+          "DELETE r",
+          "RETURN i"].join(" ")
+};
+
+var bookmarkQueries = {
+  true:  ["START u=node({user_id}), i=node({item_id})",
+          "MATCH u-[:HAS_BOOKMARKS]->(c)",
+          "MERGE (c)-[:BOOKMARKED]->(i)",
+          "RETURN i"].join(""),
+
+  false: ["START u=node({user_id}), i=node({item_id})",
+          "MATCH u-[:HAS_BOOKMARKS]->(c)-[r:BOOKMARKED]->(i)",
+          "DELETE r",
+          "RETURN i"].join(" ")
 };
 
 User.prototype.collectItem = function(user_id, item_id, method){
@@ -240,28 +263,7 @@ User.prototype.destroy = function(user_id, callback) {
 
 module.exports = new User();
 
-var collectQueries = {
-  true:  ["START u=node({user_id}), i=node({item_id})",
-          "MATCH u-[:HAS_COLLECTIONS]->(c)",
-          "MERGE (c)-[:COLLECTED]->(i)",
-          "RETURN i"].join(""),
 
-  false: ["START u=node({user_id}), i=node({item_id})",
-          "MATCH u-[:HAS_COLLECTIONS]->(c)-[r:COLLECTED]->(i)",
-          "DELETE r",
-          "RETURN i"].join(" ")
-}
-var bookmarkQueries = {
-  true:  ["START u=node({user_id}), i=node({item_id})",
-          "MATCH u-[:HAS_BOOKMARKS]->(c)",
-          "MERGE (c)-[:BOOKMARKED]->(i)",
-          "RETURN i"].join(""),
-
-  false: ["START u=node({user_id}), i=node({item_id})",
-          "MATCH u-[:HAS_BOOKMARKS]->(c)-[r:BOOKMARKED]->(i)",
-          "DELETE r",
-          "RETURN i"].join(" ")
-}
 
 // Creates a new Parse and Neo4j user each with references to each other's ID.
 // Returns the new Parse user as a promise.
