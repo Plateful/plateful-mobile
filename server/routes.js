@@ -11,7 +11,6 @@ var Menu = require('./api/menu/menu.controller');
 var Review = require('./api/review/review.controller');
 var User = require('./api/user/user.controller');
 var List = require('./api/list/list.controller');
-var Logger = require('./controllers/logger');
 var request = require('supertest');
 var should = require('should');
 
@@ -80,12 +79,6 @@ module.exports.applyRoutes = function(app) {
   Users.post('/:id/collection/:method', User.collectItem);
   Users.post('/:id/bookmarks/:method', User.bookmarkItem);
   Users.get('/:id/:data', User.getUserData);
-
-  // Logger routes.
-  Logs.post('/log', Logger.log)
-  Logs.post('/info', Logger.info)
-  Logs.post('/warn', Logger.warn)
-  Logs.post('/error', Logger.error)
 
   // List tab API routes.
   Lists.get('/:id', List.show);
