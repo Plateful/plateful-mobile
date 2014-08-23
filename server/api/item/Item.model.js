@@ -65,9 +65,14 @@ Item.prototype.find = function(item_id, callback) {
   var params = {
     id: Number(item_id)
   };
-  var query = "START item=node({id}) RETURN item";
+  var query = "START item=node({id}) MATCH item<-[:HAS_ITEMS]-(menu) RETURN item,menu";
   db.cypherQuery(query, params, function(err, result) {
-    callback(err, result.data);
+    var obj = {};
+    if(result.data){
+      obj = result.data[0]
+      obj.menu = result.data[1]
+    }
+    callback(err, obj);
   });
 };
 
