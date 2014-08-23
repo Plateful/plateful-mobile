@@ -1,5 +1,13 @@
 var db = require('../../config/neo4j').db;
 var Q = require('q');
+var Parse = require('../../config/parse.js');
+var Facebook = require('../../config/api/facebook.js');
+var request = require('request');
+var Promise = require('bluebird');
+var User = require('./User.model.js')
+
+Promise.promisifyAll(request);
+Promise.promisifyAll(db);
 
 
 var User = function() {
@@ -23,15 +31,39 @@ User.prototype.find = function(review_id, callback) {
   });
 };
 
-User.prototype.create = function(user_id, user, callback) {
-  var params = {
-    user_id: Number(user_id),
-    review: user
+// Creates a new Parse user and new neo4j user.
+User.prototype.create = function(userInfo, callback) {
+  var newParseUserData = {
+    username: userInfo.username,
+    password: userInfo.password
   };
-  var q = "";
-  this.query(q, params(function(err, result) {
-    callback(err, data);
-  }));
+
+  return createParseUser(newParseUserData)
+    .then(function(completeUser) {
+      // Check for Facebook session ID and use for local storage token.
+      if (completeUser.attributes.fbSessionId) {
+        completeUser.attributes.token = completeUser.attributes.fbSessionId;
+      }
+      else {
+        completeUser.attributes.token = completeUser._sessionToken;
+      }
+      callback(null, completeUser);
+    }, function(error) {
+      // Any errors upstream will be caught and handled here.
+      error.error = true;
+      callback(error, null);
+    });
+};
+
+User.prototype.login = function (username, password, callback) {
+  Parse.User.logIn(username, password)
+    .then(function(data) {
+      data.attributes.token = data._sessionToken;
+      callback(null, data);
+    }, function(error) {
+      error.error = true;
+      callback(error, null);
+    });
 };
 
 User.prototype.update = function(user_id, user, callback) {
@@ -66,6 +98,52 @@ var bookmarkQueries = {
           "MATCH u-[:HAS_BOOKMARKS]->(c)-[r:BOOKMARKED]->(i)",
           "DELETE r",
           "RETURN i"].join(" ")
+}
+
+// Creates a new Parse and Neo4j user each with references to each other's ID.
+// Returns the new Parse user as a promise.
+var createParseUser = function(newUserData, res) {
+  var user = new Parse.User();
+  var newParseUser;
+  user.set(newUserData);
+
+  // Creates a new Parse user.
+  return user.signUp()
+    .then(function(createdParseUser) {
+      newParseUser = createdParseUser
+      var neoParams = {
+        username: newParseUser.attributes.username,
+        parseId: newParseUser.id
+      };
+
+      // Create a new neo4j user.
+      return createNeo4jUser(neoParams)
+    })
+    .then(function(newNeoUser) {
+      // Stores the neo4j id with the new Parse user and saves the user.
+      var neoId = newNeoUser.data[0]._id;
+      newParseUser.set('neoId', neoId);
+
+      return newParseUser.save()
+    });
+}
+
+
+// Creates new neo4j user from Parse username and ID. Returns the new neo4j user as a promise.
+var createNeo4jUser = function(data, callback) {
+  var params = {
+    dataToCreateUser: {
+      username: data.username,
+      parse_id: data.parseId
+    }
+  };
+  var q = ["CREATE (u:USER {dataToCreateUser})",
+          "CREATE (u)-[:HAS_BOOKMARKS]->(:USER_BOOKMARKS)",
+          "CREATE (u)-[:HAS_COLLECTIONS]->(:USER_COLLECTIONS)",
+          "CREATE (u)-[:HAS_PHOTOS]->(:USER_PHOTOS)",
+          "CREATE (u)-[:HAS_REVIEWS]->(:USER_REVIEWS)",
+          "RETURN u"].join("");
+  return db.cypherQueryAsync(q, params);
 }
 
 User.prototype.collectItem = function(user_id, item_id, method){

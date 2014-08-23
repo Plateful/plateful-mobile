@@ -58,39 +58,24 @@ exports.getUserData = function(req, res){
 }
 
 
-// Creates a new native Parse user.
+// Creates a new native Parse user account and new neo4j user.
 exports.create = function (req, res) {
-  var newParseUserData = {
-    username: req.body.username,
-    password: req.body.password
-  };
-
-  return createParseUser(newParseUserData)
-    .then(function(completeUser) {
-      // Check for Facebook session ID and use for local storage token.
-      if (completeUser.attributes.fbSessionId) {
-        completeUser.attributes.token = completeUser.attributes.fbSessionId;
-      }
-      else {
-        completeUser.attributes.token = completeUser._sessionToken;
-      }
-      res.status(201).json(completeUser);
-    }, function(error) {
-      // Any errors upstream will be caught and handled here.
-      error.error = true;
-      res.send(error);
-    });
+  User.create(req.body, function(error, data) {
+    if (error) {
+      return res.status(401).send(error);
+    }
+    res.status(201).json(data);
+  });
 };
 
+// Login a native user through Parse.
 exports.login = function (req, res) {
-  Parse.User.logIn(req.body.username, req.body.password)
-    .then(function(data) {
-      data.attributes.token = data._sessionToken;
-      res.json(data);
-    }, function(error) {
-      error.error = true;
-      res.send(error);
-    });
+  User.login(req.body.username, req.body.password, function(error, data) {
+    if (error) {
+      return res.status(401).send(error);
+    }
+    res.status(200).json(data);
+  });
 };
 
 // Retrieves a long term token for Facebook.
@@ -168,51 +153,6 @@ var findUserByFbId = function(fbId) {
   query.equalTo('fbId', fbId);
   return query.find();
 };
-
-// Creates a new Parse and Neo4j user each with references to each other's ID.
-// Returns the new Parse user as a promise.
-var createParseUser = function(newUserData, res) {
-  var user = new Parse.User();
-  var newParseUser;
-  user.set(newUserData);
-
-  // Creates a new Parse user.
-  return user.signUp()
-    .then(function(createdParseUser) {
-      newParseUser = createdParseUser
-      var neoParams = {
-        username: newParseUser.attributes.username,
-        parseId: newParseUser.id
-      };
-
-      // Create a new neo4j user.
-      return createNeo4jUser(neoParams)
-    })
-    .then(function(newNeoUser) {
-      // Stores the neo4j id with the new Parse user and saves the user.
-      var neoId = newNeoUser.data[0]._id;
-      newParseUser.set('neoId', neoId);
-
-      return newParseUser.save()
-    });
-}
-
-// Creates new neo4j user from Parse username and ID. Returns the new neo4j user as a promise.
-var createNeo4jUser = function(data, callback) {
-  var params = {
-    dataToCreateUser: {
-      username: data.username,
-      parse_id: data.parseId
-    }
-  };
-  var q = ["CREATE (u:USER {dataToCreateUser})",
-          "CREATE (u)-[:HAS_BOOKMARKS]->(:USER_BOOKMARKS)",
-          "CREATE (u)-[:HAS_COLLECTIONS]->(:USER_COLLECTIONS)",
-          "CREATE (u)-[:HAS_PHOTOS]->(:USER_PHOTOS)",
-          "CREATE (u)-[:HAS_REVIEWS]->(:USER_REVIEWS)",
-          "RETURN u"].join("");
-  return db.cypherQueryAsync(q, params);
-}
 
 // Create new user from Facebook connect info.
 // Returns the new user object as a promise.
