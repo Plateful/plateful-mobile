@@ -6,7 +6,7 @@
    * @test1  test to see if @locations has data
    * @test2  test to see if @locate is equal to our current longitude and latitude
    */
-  var MenusCtrl = function(resolvedMenuData, $scope, $document, ngGPlacesAPI) {
+  var MenusCtrl = function(resolvedMenuData, $scope, $document, ngGPlacesAPI, $location) {
 
     var vm = this;
 
@@ -16,6 +16,13 @@
     vm.searchInputElement = angular.element($document.find('#searchQuery'));
 
 
+    $scope.place = ""
+
+    $scope.$watch('place', function(val){
+      if(val.place_id){
+        $location.path('/tab/menus/menu/' + val.place_id)
+      }
+    })
     /////////////////////
 
 
@@ -30,7 +37,8 @@
       'resolvedMenuData',
       '$scope',
       '$document',
-      'ngGPlacesAPI'
+      'ngGPlacesAPI',
+      '$location'
     ];
   angular
     .module('app.tabs.menus.controllers', [])

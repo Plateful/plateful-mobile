@@ -87,7 +87,7 @@ describe('User', function(){
     expect(localStorage.user_token).toBe(undefined);
   });
   it('Should login and return registered user', function(){
-    var responseData = { username : 'joel', token : 123 };
+    var responseData = { username : 'Joelcoxio', token : 'NLQT4BUbQaxjMthw6BTFxLENO' };
     $httpBackend.expect('POST', 'http://localhost:9000/api/v1/users/login/')
       .respond(200, responseData);
 

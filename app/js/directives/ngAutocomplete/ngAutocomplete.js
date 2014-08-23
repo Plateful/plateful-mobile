@@ -57,14 +57,15 @@ angular.module( "ngAutocomplete", [])
         }
         google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
           var result = scope.gPlace.getPlace();
+
           if (result !== undefined) {
             if (result.address_components !== undefined) {
 
               scope.$apply(function() {
 
                 scope.details = result;
-                console.log(element);
-                $location.path('/tab/menus/menu/' + scope.details.place_id);
+                console.log(result);
+                // $location.path('/tab/menus/menu/' + scope.details.place_id);
 
                 controller.$setViewValue(element.val());
               });
@@ -88,6 +89,7 @@ angular.module( "ngAutocomplete", [])
                 offset: result.name.length
               },
               function listentoresult(list, status) {
+
                 if(list === null || list.length === 0) {
 
                   scope.$apply(function() {
@@ -100,7 +102,7 @@ angular.module( "ngAutocomplete", [])
                   placesService.getDetails(
                     {'reference': list[0].reference},
                     function detailsresult(detailsResult, placesServiceStatus) {
-
+                      console.log(detailsResult)
                       if (placesServiceStatus == google.maps.GeocoderStatus.OK) {
                         scope.$apply(function() {
 
@@ -108,6 +110,8 @@ angular.module( "ngAutocomplete", [])
                           element.val(detailsResult.formatted_address);
 
                           scope.details = detailsResult;
+                          scope.vm.locations = detailsResult;
+
 
                           //on focusout the value reverts, need to set it again.
                           var watchFocusOut = element.on('focusout', function(event) {

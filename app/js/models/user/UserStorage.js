@@ -6,8 +6,10 @@
   var UserStorage;
 
   UserStorage = function(Restangular, $q) {
+    if(localStorage.user_id){
 
-    syncAll();
+      syncAll();
+    }
 
     // User Storage Object
     var storage = {
@@ -32,20 +34,23 @@
     //////////////////////////
 
     function checkData(key, item_id){
-      return getFromLocalStorage( key )
-        .then(function ( data ){
-          return _.has(data, item_id);
-        })
+      // if(!localStorage.user_id){
+
+        return getFromLocalStorage( key )
+          .then(function ( data ){
+            return _.has(data, item_id);
+          })
+      // }
     }
 
 
     function getData(key, item_id){
-      return getFromLocalStorage( key ).then(function (data){
-        if(item_id) return data[item_id];
-        else {
-          return _.values(data);
-        }
-      })
+        return getFromLocalStorage( key ).then(function (data){
+          if(item_id) return data[item_id];
+          else {
+            return _.values(data);
+          }
+        });
     }
 
     function getFromLocalStorage(key){
@@ -73,9 +78,11 @@
     }
 
     function syncAll(){
-      _.forEach(['collection', 'bookmarks', 'reviews', 'photos'], function (item){
-        sync(item);
-      });
+      if(localStorage.user_id){
+        _.forEach(['collection', 'bookmarks', 'reviews', 'photos'], function (item){
+          sync(item);
+        });
+      }
     }
 
     function addRelationshipInNeo4j(key, item_id){

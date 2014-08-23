@@ -1,12 +1,18 @@
 ion-view(hide-nav-bar="true" id="places")
   div(class="bar bar-stable bar-header item-input-inset")
     button.button.button-clear.button-assertive(ng-click="openModal()") Filter&nbsp&nbsp
-    label(class="item-input-wrapper" disable-tap)
+    label(class="item-input-wrapper")
       i(class="icon ion-ios7-search placeholder-icon")
 
+      input(type="text" g-places-autocomplete class="form-control" ng-model="place" placeholder="Search")
       //- input(id="searchQuery" class="google-place-search" type="search" ng-model="location" placeholder="Enter an address, place or ZIP code")
       //- ng-places(placeholder="Enter an address, Apt# and ZIP" ng-model="location")
-      input(type="text" id="Autocomplete" class="form-control" ng-autocomplete ng-model="result1")
+      //- input(type="text" id="Autocomplete" class="form-control" ng-autocomplete ng-model="result1")
+      //<div>selection is: {{chosenPlace}}</div>
+
+      //- input(ng-model="chosenPlace" googleplace)
+      //- form(class="form")
+
 
     a.button.button-clear.button-assertive(href="#/tab/menus/map") Map
 

@@ -26,7 +26,7 @@
         getBookmarksByUser: function(id){
           return Restangular.one('users', id).all('bookmarks').getList();
         },
-        getCollectionByUser: function(){
+        getCollectionByUser: function(id){
           var q = $q.defer();
           Restangular.one('users', id).all('collection').getList().then(function (data){
             q.resolve(data);
