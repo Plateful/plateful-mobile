@@ -3,7 +3,7 @@
 
   app = angular.module("app");
 
-  app.constant('ServerUrl', 'http://localhost:9000/');
+  app.constant('ServerUrl', 'http://server4dave.cloudapp.net:9000/');
 
   ionic.Platform.ready(function() {
     app.config(function($provide, $httpProvider) {
@@ -44,19 +44,19 @@
       return $rootScope.current_user = Auth.user;
     });
     this.log = function() {
-      var array = Array.prototype.slice.call(arguments)
+      var array = Array.prototype.slice.call(arguments);
       return console.log(array.join(" "));
     };
     this.info = function() {
-      var array = Array.prototype.slice.call(arguments)
+      var array = Array.prototype.slice.call(arguments);
       return console.info(array.join(" "));
     };
     this.Err = function(parn) {
-      var array = Array.prototype.slice.call(arguments)
+      var array = Array.prototype.slice.call(arguments);
       return console.error(array.join(" "));
     };
     this.warn = function(parn) {
-      var array = Array.prototype.slice.call(arguments)
+      var array = Array.prototype.slice.call(arguments);
       return console.warn(array.join(" "));
     };
     //  $angularCacheFactory('defaultCache', {

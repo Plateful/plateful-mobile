@@ -15,62 +15,54 @@
           return User.post(data);
         },
         update: function(id, data) {
-          return Restangular.one('users', id).post(data).get()
+          return Restangular.one('users', id).post(data).get();
         },
         destroy: function(id) {
-          return Restangular.on('users', id).delete()
+          return Restangular.on('users', id).delete();
         },
         getPhotosByUser: function(id){
-          return Restangular.one('users', id).all('photos').getList()
+          return Restangular.one('users', id).all('photos').getList();
         },
         getBookmarksByUser: function(id){
-          return Restangular.one('users', id).all('bookmarks').getList()
+          return Restangular.one('users', id).all('bookmarks').getList();
         },
-        getCollectionByUser: function(){
-          var q = $q.defer()
+        getCollectionByUser: function(id){
+          var q = $q.defer();
           Restangular.one('users', id).all('collection').getList().then(function (data){
             q.resolve(data);
-          })
+          });
           return q.promise;
         },
         getReviewsByUser: function(id){
           return Restangular.one('users', id).all('reviews').getList();
         },
-        collectItem: function(item){
-          var q = $q.defer()
-          UserStorage
-            .addItemToKeyInStorage('collection', item)
-            .then(function(data){
-              q.resolve(data)
-            })
-          return q.promise;
+        interactWithItem: function(key, item_id, bool){
+          var queries = {
+            true: UserStorage.addRelationshipInNeo4j,
+            false: UserStorage.removeRelationshipInNeo4j
+          }
+          return queries[bool](key, item_id)
+            .then(function ( data ){
+              return data;
+            });
         },
         unCollectItem: function(item, callback){
-          var q = $q.defer()
-          UserStorage
-            .removeItemFromKeyInStorage('collection', item)
+          return UserStorage.removeRelationshipInNeo4j('collection', item)
             .then(function(data){
-              q.resolve(data)
-            })
-          return q.promise;
+              return data;
+            });
         },
         bookmarkItem: function(item){
-          var q = $q.defer()
-          UserStorage
-            .addItemToKeyInStorage('bookmarks', item)
-            .then(function(data){
-              q.resolve(data)
-            })
-          return q.promise;
+          return UserStorage.addRelationshipInNeo4j('bookmarks', item._id)
+            .then(function ( data ){
+              return data;
+            });
         },
         unBookmarkItem: function(item){
-          var q = $q.defer()
-          UserStorage
-            .removeItemFromKeyInStorage('bookmarks', item)
-            .then(function(data){
-              q.resolve(data)
+          return UserStorage.removeRelationshipInNeo4j('bookmarks', item._id)
+            .then(function ( data ){
+              return data;
             })
-          return q.promise;
         },
         signup: function(username, password){
           return Restangular.all('users').all('signup')
@@ -80,7 +72,7 @@
                 return this.status = data.message;
               }
               Auth.setAuthToken(data.neoId, data.username, data.token, data.fbSessionId, data);
-              this.status = 'Account created!'
+              this.status = 'Account created!';
             }.bind(this));
         },
         login: function(username, password){
@@ -91,9 +83,9 @@
                 return this.status = data.message;
               }
               Auth.setAuthToken(data.neoId, data.username, data.token, data.fbSessionId, data);
-              UserStorage.syncAll()
-              this.status = 'Logged In!'
-            }.bind(this))
+              UserStorage.syncAll();
+              this.status = 'Logged In!';
+            }.bind(this));
         },
         logout: function() {
           Auth.resetSession();

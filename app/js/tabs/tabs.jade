@@ -1,0 +1,18 @@
+ion-tabs.tabs-icon-top.tabs-default
+
+  ion-tab(title="Dishes" icon='plateful plateful-dish', href='#/tab/items/')
+    ion-nav-view(name='tab-items')
+
+  ion-tab(title="Menus" icon='plateful plateful-menus', href='#/tab/menus')
+    ion-nav-view(name='tab-menus')
+
+
+    //- ion-tab(title='Review', icon='icon ion-ios7-camera', href='#/tab/review' on-select="takePhoto()")
+  ion-tab(title="Review" icon='icon ion-ios7-camera-outline', href='#/tab/review')
+    ion-nav-view(name='tab-review')
+
+  ion-tab(title="Bookmarks" icon='plateful plateful-bookmarks', href='#/tab/list')
+    ion-nav-view(name='tab-list')
+
+  ion-tab(title="Me" icon='icon ion-ios7-person-outline', href='#/tab/settings')
+    ion-nav-view(name='tab-settings')

@@ -1,7 +1,7 @@
-var db = require('../config/neo4j').db;
-var spatial = require('../config/neo4j').spatial;
-var spatialURI = require('../config/neo4j').spatialURI;
-var serif = require('../config/neo4j').serif;
+var db = require('../../config/neo4j').db;
+var spatial = require('../../config/neo4j').spatial;
+var spatialURI = require('../../config/neo4j').spatialURI;
+var serif = require('../../config/neo4j').serif;
 var _ = require('lodash');
 
 // serif.query('START n = node(24233) RETURN n', function(err, result){
@@ -122,7 +122,7 @@ Item.prototype.findByLocation = function(data, callback) {
   };
   console.log("model params", params);
 
-  var query = 'START n=node:geom({dist}) RETURN n';
+  var query = 'START n=node:geom({dist}) RETURN n LIMIT 30';
   db.cypherQuery(query, params, function(err, result) {
     // console.log(result.data)
     callback(err, result);

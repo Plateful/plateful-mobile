@@ -1,7 +1,7 @@
 (function() {
   var app, k, v,
     __slice = [].slice;
-
+  var GLOBALS = GLOBALS || {};
   app = angular.module("app", [
     "ionic",
     "restangular",
@@ -11,19 +11,24 @@
     "fx.animations",
     "google-maps",
     "ion-google-place",
-    "app.modules",
+    "app.services",
     "app.directives",
     "app.filters",
-    "app.models"
+    "app.models",
+    "app.tabs",
+    "app.states",
+    'google.places'
     ]);
 
   app.config(function(RestangularProvider) {
-    // RestangularProvider.setBaseUrl('http://server4dave.cloudapp.net:9000/api/v1/');
+
+
+    RestangularProvider.setBaseUrl('http://server4dave.cloudapp.net:9000/api/v1/');
     // RestangularProvider.setBaseUrl('http://10.8.29.210:9000/api/v1/');
-    RestangularProvider.setBaseUrl('http://localhost:9000/api/v1/');
+    // RestangularProvider.setBaseUrl('http://localhost:9000/api/v1/');
 
 
-    RestangularProvider.setDefaultHttpFields({cache: true});
+
     RestangularProvider.setRequestSuffix('/');
     RestangularProvider.setRestangularFields({
       cache: true,

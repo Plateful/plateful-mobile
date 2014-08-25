@@ -1,4 +1,4 @@
-var db = require('../config/neo4j').db;
+var db = require('../../config/neo4j').db;
 
 var Menu = function() {
   this.query = db.cypherQuery;

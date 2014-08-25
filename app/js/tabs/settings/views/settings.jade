@@ -1,0 +1,23 @@
+ion-view(title="Settings")
+  ion-content.bg-grey
+    ion-list
+      ion-item.item-divider
+      ion-item.item-icon-right(ng-hide="vm.isSignedIn()" ui-sref="tab.login")
+        i.icon.ion-ios7-arrow-right
+        p Account
+      ion-item.item-icon-right(ng-show="vm.isSignedIn()" ui-sref="tab.account")
+        i.icon.ion-ios7-arrow-right
+        p Account
+      ion-item
+        p Settings
+
+      ion-item
+        p Collection
+
+      ion-item.item-divider
+
+      ion-item
+        p About Plateful
+      ion-item
+        p Contact Plateful
+    button.button.button-block.positive(ui-sref="tab.login") User Account

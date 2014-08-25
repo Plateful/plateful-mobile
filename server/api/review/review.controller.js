@@ -5,16 +5,16 @@ var _ = require('lodash');
 var fs = require('fs');
 var Busboy = require('busboy');
 // NEO4J API
-var db = require('../config/neo4j').db;
+var db = require('../../config/neo4j').db;
 
 // FACTUAL API
-var factual = require('../config/api/factual').factual;
+var factual = require('../../config/api/factual').factual;
 
 // YELP API
-var yelp = require('../config/api/yelp').yelp;
+var yelp = require('../../config/api/yelp').yelp;
 
 // Review Model
-var Review = require('../models/Review.model');
+var Review = require('./Review.model');
 
 exports.index = function(req, res) {
   Review.all(function(err, data) {

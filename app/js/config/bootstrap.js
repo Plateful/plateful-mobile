@@ -1,7 +1,7 @@
 (function() {
   this.addElement = function(container, tagName, attrs) {
     var fjs, k, tag, v;
-    if (attrs == null) {
+    if (attrs === null) {
       attrs = {};
     }
     if (attrs.id && container.getElementById(attrs.id)) {
@@ -32,7 +32,7 @@
     return JSON.parse(value);
   };
 
-  if (window.GLOBALS == null) {
+  if (window.GLOBALS === null) {
     window.GLOBALS = {};
   }
 
@@ -54,6 +54,10 @@
         speed: null
       }
     };
+    window.locality = {
+      latitude: 37.783692599999995,
+      longitude: 122.409235
+    }
     if(window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }

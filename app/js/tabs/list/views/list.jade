@@ -1,0 +1,45 @@
+ion-view(title="List")
+  ion-content.bg-grey
+    ion-list
+      ion-item(style="padding:0px;")
+        div.button-bar
+          button.col.button.button-clear.button-stable(ng-click="list.showBookmarks()" ng-class="{ 'button-assertive': list.viewBookmarks }") Bookmarks ({{list.bookmarksCount}})
+          button.col.button.button-clear.button-stable(ng-click="list.showCollection()" ng-class="{ 'button-assertive': list.viewCollection }") Collection ({{list.collectionCount}})
+
+    ion-list(ng-show="list.viewCollection")
+
+      a.menu-card(ng-repeat="item in list.collection")
+        div.menu-card-content
+          img(src="{{item.image}}")
+          div.menu-card-footer
+            div {{item.name | limitTo:30 }}
+            div @{{item.menu_name | limitTo:30 }}
+            div.text-left.assertive {{item.stars}}
+            //- div.text-left.energized.pull-right (250)
+
+            span.text-right
+              i.icon.ion-navigate(style="color:grey;") &nbsp
+              span {{item.dist}} mi
+
+
+    ion-list(ng-show="list.viewBookmarks")
+
+      a.menu-card(ng-repeat="item in list.bookmarks")
+        div.menu-card-content
+          img(src="{{item.image}}")
+          div.menu-card-footer
+            div {{item.name | limitTo:30 }}
+            div @{{item.menu_name | limitTo:30 }}
+            div.text-left.assertive {{item.stars}}
+            //- div.text-left.energized.pull-right (250)
+
+            span.text-right
+              i.icon.ion-navigate(style="color:grey;") &nbsp
+              span {{item.dist}} mi
+
+    //- .row(ng-repeat="row in list.items | partition:2")
+    //-   .col(ng-repeat="item in row")
+    //-     .row
+    //-       div(ng-back-img="{{item.image}}")
+    //-     .row
+    //-       div {{item.name}}<br/>{{item.menu_name}}

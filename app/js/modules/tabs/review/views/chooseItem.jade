@@ -1,9 +1,0 @@
-ion-view(title="Select Your Dish")
-  .bar.bar-subheader
-    h2.title {{reviewItem.menu.name}}
-  ion-content.has-subheader
-    ion-list
-      ion-item.item-text-wrap(ng-repeat="item in reviewItem.items" href="#/tab/review/create/{{item._id}}")
-        p {{item.name}}
-      div(style="text-align: center; padding-top: 20px; padding-bottom: 0px") Dish not listed? Be the first to review it:
-      .button.button-block.positive(href="#/tab/review/create-item") Add New Menu Item

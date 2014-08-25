@@ -39,7 +39,7 @@ ENV_GLOBALS =
     ENV: "development"
 
     BUNDLE_ID: "com.jtomaszewski.ionicstarter.development"
-    BUNDLE_NAME: "clurtch"
+    BUNDLE_NAME: "Plateful"
     BUNDLE_VERSION: "1.0.0"
 
     BACKEND_URL: "http://#{LOCAL_IP}:9000"
@@ -56,9 +56,9 @@ ENV_GLOBALS =
     ENV: "production"
 
     BUNDLE_ID: "com.jtomaszewski.ionicstarter.production"
-    BUNDLE_NAME: "clurtch"
+    BUNDLE_NAME: "Plateful"
 
-    BACKEND_URL: "https://clurtch-v1.azurewebsites.net"
+    BACKEND_URL: "http://server4dave.cloudapp.net:9000"
     WEINRE_ADDRESS: null
 
     # If those 2 variables are defined, the app will be deployed to the remote server after compiling the release.
@@ -130,6 +130,8 @@ paths =
       "assets/components/angularjs-google-places/dist/angularjs-google-places.min.js"
       "assets/components/angular-classy/angular-classy.min.js"
       "assets/components/angular-cache/dist/angular-cache.js"
+      "assets/components/angular-google-places-autocomplete/src/autocomplete.js"
+
       # "assets/components/angularjs-google-places/src/angularjs-google-places.js"
       # "assets/components/angularjs-google-places/src/google-api.js"
       "assets/components/ion-google-place/ion-google-place.js"
@@ -164,7 +166,7 @@ destinations =
     "#{GLOBALS.BUILD_DIR}/fonts/**"
     "#{GLOBALS.BUILD_DIR}/img/**"
     "#{GLOBALS.BUILD_DIR}/js/**"
-    "#{GLOBALS.BUILD_DIR}/templates/**"
+    "#{GLOBALS.BUILD_DIR}/**/*.html"
     "#{GLOBALS.BUILD_DIR}/*.html"
   ]
 

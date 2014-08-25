@@ -7,7 +7,7 @@
      * @return  {Object} returns an object with all given methods
      */
     var MenuItem;
-    MenuItem = function(Restangular, $q, findDistance, makeStars, ImagesService) {
+    MenuItem = function(Restangular, $q, findDistance, makeStars) {
       var Rest, findFilter, storage;
       Rest = Restangular.all('items');
       storage = {};
@@ -77,7 +77,7 @@
         return Rest.one('user', user_id).get();
       }
       function getItemReviews(item_id, cb) {
-        return Restangular.one('items', item_id).all('essay').getList();
+        return Restangular.one('items', item_id).all('photos').getList();
       }
       function getItemPhotos(item_id, cb) {
         return Restangular.one('items', item_id).all('photos').getList();
@@ -92,17 +92,17 @@
           findFilter = "";
         }
         // data.val = findFilter;
-        Rest.all('location').all(JSON.stringify(data)).getList().then(function(data) {
+        return Rest.all('location').all(JSON.stringify(data)).getList().then(function(data) {
           var item, _i, _len;
           for (_i = 0, _len = data.length; _i < _len; _i++) {
             item = data[_i];
             item.dist = findDistance.get(item);
             item.stars = makeStars.get(item.rating);
-            item.image_url = ImagesService.get();
           }
-          return newPromise.resolve(data);
+          return data
+          // return newPromise.resolve(data);
         });
-        return newPromise.promise;
+        // return newPromise.promise;
       }
       function set(key, obj) {
         return storage[key] = obj;
@@ -121,7 +121,7 @@
       }
     };
 
-    MenuItem.$inject = ['Restangular', '$q', 'findDistance', 'makeStars', 'ImagesService'];
+    MenuItem.$inject = ['Restangular', '$q', 'findDistance', 'makeStars'];
     return angular.module('app.model.item', []).factory('MenuItem', MenuItem);
   })();
 

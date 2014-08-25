@@ -1,0 +1,16 @@
+ion-view(title="Account")
+  ion-content
+    ion-list
+      //- ion-item.item-divider
+      label.item.item-input.item-floating-label
+        span.input-label First Name
+        input(type="text" placeholder="First Name" ng-model="user.first")
+      label.item.item-input.item-floating-label
+        span.input-label Last Name
+        input(type="text" placeholder="Last Name" ng-model="user.last")
+      label.item.item-input.item-floating-label
+        span.input-label Email
+        input(type="email" placeholder="Last Name" ng-model="user.email")
+      label.item.item-input.item-floating-label
+        span.input-label Phone
+        input(type="tel" placeholder="Phone" ng-model="user.phone")
