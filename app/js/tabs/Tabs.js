@@ -13,7 +13,7 @@
       templateUrl: "js/tabs/tabs.html"
     });
 
-    // $urlRouterProvider.otherwise('/tab/items');
+    $urlRouterProvider.otherwise('/tab/items');
   });
 
 }).call(this);
