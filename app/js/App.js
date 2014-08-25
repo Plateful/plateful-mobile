@@ -1,7 +1,7 @@
 (function() {
   var app, k, v,
     __slice = [].slice;
-
+  var GLOBALS = GLOBALS || {};
   app = angular.module("app", [
     "ionic",
     "restangular",
@@ -16,7 +16,8 @@
     "app.filters",
     "app.models",
     "app.tabs",
-    "app.states"
+    "app.states",
+    'google.places'
     ]);
 
   app.config(function(RestangularProvider) {

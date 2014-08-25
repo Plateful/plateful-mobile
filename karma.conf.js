@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: '.',
 
 
     // frameworks to use
@@ -19,7 +19,8 @@ module.exports = function(config) {
       'www/js/vendor.js',
       'assets/components/angular-mocks/angular-mocks.js',
       'www/js/bootstrap.js',
-      'www/js/app.js',      
+      'www/js/app.js',
+      'app_test/tests-config.js',
       'app_test/**/*.js'
     ],
 
