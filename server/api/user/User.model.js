@@ -4,7 +4,8 @@ var Parse = require('../../config/parse.js');
 var Facebook = require('../../config/api/facebook.js');
 var request = require('request');
 var Promise = require('bluebird');
-var User = require('./User.model.js')
+var User = require('./User.model.js');
+var _ = require('lodash');
 
 Promise.promisifyAll(request);
 Promise.promisifyAll(db);
@@ -29,6 +30,19 @@ User.prototype.find = function(review_id, callback) {
   this.query(q, params, function(err, result) {
     callback(err, result.data);
   });
+};
+
+User.prototype.findByParseUsername = function(username, callback) {
+  var query = new Parse.Query(Parse.User);
+  query.equalTo('username', username);
+  return query.find()
+    .then(function(user) {
+      console.log(user)
+      callback(null, user[0]);
+    }, function(error) {
+      error.error = true;
+      callback(error, null);
+    });
 };
 
 // Creates a new Parse user and new neo4j user.
@@ -127,15 +141,23 @@ User.prototype.fbLogin = function (fbData, callback) {
       });
 };
 
-User.prototype.update = function(user_id, user, callback) {
-  var params = {
-    user_id: user_id,
-    changes: user
-  };
-  var q = "";
-  this.query(q, params, function(err, result) {
-    callback(err, result.data);
-  });
+User.prototype.updateParseUser = function(username, updateData, callback) {
+  Parse.Cloud.useMasterKey();
+  var query = new Parse.Query(Parse.User);
+  query.equalTo('username', username);
+  return query.find()
+    .then(function(updateUser) {
+      _.forOwn(updateData, function(value, key) {
+        updateUser[0].set(key, value);
+      });
+      return updateUser[0].save();
+    })
+    .then(function(updatedUser) {
+      callback(null, updatedUser);
+    }, function(error) {
+      error.error = true;
+      callback(error, null);
+    });
 };
 
 var collectQueries = {
