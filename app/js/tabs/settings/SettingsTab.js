@@ -12,7 +12,19 @@
       url: '/account',
       views: {
         'tab-settings': {
-          templateUrl: 'js/tabs/settings/views/account.html'
+          templateUrl: 'js/tabs/settings/views/account.html',
+          controller: 'AccountCtrl as account'
+        }
+      },
+      resolve: {
+        accountInit: function(User, $ionicLoading) {
+          $ionicLoading.show({template:'Fetching Your Info...'});
+          return User.findByParseUsername(localStorage.getItem('user_email'))
+            .then(function(data) {
+              $ionicLoading.hide();
+              console.log(data)
+              return data;
+            });
         }
       }
     }).state('tab.login', {

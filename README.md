@@ -1,5 +1,5 @@
 # Features
-For more detailed information please visit the project [wiki page](https://github.com/Clurtchio/clurtch/wiki).
+For more detailed information please visit the project [wiki page](https://github.com/Plateful/plateful-mobile/wiki).
 
 * Application can be run in a local http server, or emulated/released to Android/iOS
 * A lot of useful gulp tasks, like:
@@ -21,8 +21,8 @@ For more detailed information please visit the project [wiki page](https://githu
 # How to install
 
 ```
-git clone https://github.com/Clurtchio/clurtch.git
-cd clurtch
+git clone https://github.com/Plateful/plateful-mobile.git
+cd plateful-mobile
 
 # install dependencies
 npm install # or sudo npm install if you need permission to make system changes

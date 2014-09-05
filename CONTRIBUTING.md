@@ -1,13 +1,13 @@
 ## General Workflow
 
 1. Fork the repo.
-2. Clone the forked repo to local computer: `git clone https://github.com/<user_name>/clurtch.git`
-3. Create an upstream remote to clurtch.io: `git remote add upstream https://github.com/clurtchio/clurtch.git`
+2. Clone the forked repo to local computer: `git clone https://github.com/<user_name>/plateful-mobile.git`
+3. Create an upstream remote to Plateful: `git remote add upstream https://github.com/Plateful/plateful-mobile/wiki`
 4. Create a local branch for the current feature: `git checkout -b <feat>`
 5. Make commits to your local master branch: `git commit`
 5. Pull from upstream master using rebase and resolve conflicts before pushing to your fork origin: `git pull --rebase upstream <feat OR master>`
 6. Push to your fork's feature branch: `git push origin <feat>`
-7. Create Pull request to clurch.io <feat> branch.
+7. Create Pull request to plateful <feat> branch.
 8. Project admins will review pull requests and merge or leave comments for resubmitting.
 9. Once a feature or sprint is done issue a pull request to master to merge the branch.
 
@@ -17,13 +17,13 @@
 
 Use github’s interface to make a fork of the project repo. Clone your forked repo to your local computer:
 ```
-git clone https://github.com/<USER_NAME>/clurtch.git
+git clone https://github.com/<USER_NAME>/plateful-mobile.git
 ```
 
 Once complete navigate into the cloned folder and add the project repo as an upstream remote:
 ```
-cd clurtch
-git remote add upstream https://github.com/clurtchio/clurtch.git
+cd plateful-mobile
+git remote add upstream https://github.com/plateful/plateful-mobile.git
 ```
 
 ### Commit Message Guidelines

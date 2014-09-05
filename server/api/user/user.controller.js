@@ -34,6 +34,25 @@ exports.fbLogin = function (req, res) {
   });
 };
 
+// Creates a new native Parse user account and new neo4j user.
+exports.getByParseUsername = function (req, res) {
+  User.findByParseUsername(req.params.id, function(error, data) {
+    if (error) {
+      return res.status(401).send(error);
+    }
+    res.status(201).json(data);
+  });
+};
+
+exports.updateParseUser = function (req, res) {
+  User.updateParseUser(req.params.id, req.body, function(error, data) {
+    if (error) {
+      return res.status(401).send(error);
+    }
+    res.status(201).json(data);
+  });
+};
+
 exports.collectItem = function(req, res){
   User
     .collectItem(req.params.id, req.body.item_id, req.params.method)

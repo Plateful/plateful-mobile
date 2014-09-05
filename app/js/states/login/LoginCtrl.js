@@ -1,8 +1,9 @@
 (function() {
-  var LoginCtrl = function($scope, $ionicModal, Auth, User, FbLogin) {
+  var LoginCtrl = function($scope, $ionicModal, Auth, User, FbLogin, $state, $ionicLoading) {
     var vm = this;
     vm.status = User.status;
-    FbLogin.getStatus();
+    vm.isSignedIn = Auth.isSignedIn();
+    vm.fbStatus = FbLogin.getStatus();
 
     $ionicModal
       .fromTemplateUrl("js/states/login/views/loginModal.html", {
@@ -10,7 +11,7 @@
         animation: "slide-in-up"
       })
       .then(function(modal) {
-          vm.loginModal = modal;
+        vm.loginModal = modal;
       });
 
     $ionicModal
@@ -19,7 +20,7 @@
         animation: "slide-in-up"
       })
       .then(function(modal) {
-          vm.signupModal = modal;
+        vm.signupModal = modal;
       });
 
     // Watch for changes on the User status property and update the view.
@@ -53,25 +54,28 @@
     vm.fbGetToken     = fbGetToken;
     vm.nativeLogout   = nativeLogout;
 
-    vm.isSignedIn = Auth.isSignedIn();
-
-    console.log( "Logged",vm.isSignedIn);
-
     //////////////////////
 
     function nativeSignup() {
-      User.signup(vm.username.toLowerCase(), vm.password);
-      vm.isSignedIn = Auth.isSignedIn();
+      loginLoading('Creating your account...');
+      User.signup(vm.username.toLowerCase(), vm.password)
+        .then(loginConfirmed)
+        .catch(loginFailed);
     }
     function nativeLogin() {
-      User.login(vm.username.toLowerCase(), vm.password);
-      vm.isSignedIn = Auth.isSignedIn();
+      loginLoading('Logging you in...');
+      User.login(vm.username.toLowerCase(), vm.password)
+        .then(loginConfirmed)
+        .catch(loginFailed);
     }
     function fbLogin() {
       FbLogin.login();
     }
     function fbLoginFlow() {
-      FbLogin.loginFlow();
+      loginLoading('Logging you in through Facebook...');
+      FbLogin.loginFlow()
+        .then(loginConfirmed)
+        .catch(loginFailed);
     }
     function fbLogout() {
       FbLogin.logout();
@@ -86,9 +90,25 @@
       FbLogin.getFbToken();
       User.logout();
     }
-    function nativeLogout(){
+    function nativeLogout() {
       User.logout();
+      if (vm.fbStatus) {
+        vm.fbLogout();
+      }
       vm.isSignedIn = false;
+    }
+    function loginLoading(msg) {
+      $ionicLoading.show({template: msg});
+      vm.statusMessage = '';
+    }
+    function loginConfirmed() {
+      $ionicLoading.hide();
+      $state.go('tab.settings')
+      vm.isSignedIn = Auth.isSignedIn();
+    }
+    function loginFailed(errorMsg) {
+      $ionicLoading.hide();
+      vm.statusMessage = errorMsg.data.message;
     }
 
   };
@@ -99,7 +119,9 @@
       '$ionicModal',
       'Auth',
       'User',
-      'FbLogin'
+      'FbLogin',
+      '$state',
+      '$ionicLoading'
     ];
   angular
     .module('app.states.login', [])

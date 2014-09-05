@@ -79,6 +79,8 @@ module.exports.applyRoutes = function(app) {
   Users.post('/:id/collection/:method', User.collectItem);
   Users.post('/:id/bookmarks/:method', User.bookmarkItem);
   Users.get('/:id/:data', User.getUserData);
+  Users.get('/parse/username/:id', User.getByParseUsername);
+  Users.put('/parse/username/:id', User.updateParseUser);
 
   // List tab API routes.
   Lists.get('/:id', List.show);
