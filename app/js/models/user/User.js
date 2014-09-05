@@ -11,11 +11,15 @@
         find: function(id) {
           return Restangular.one('users', id);
         },
+        findByParseUsername: function(id) {
+          return Restangular.all('users').all('parse').one('username', id.toString()).get();
+        },
         create: function(data) {
           return User.post(data);
         },
         update: function(id, data) {
-          return Restangular.one('users', id).post(data).get();
+          console.log('yo')
+          return Restangular.one('users', id).all('update').post(id);
         },
         destroy: function(id) {
           return Restangular.on('users', id).delete();
