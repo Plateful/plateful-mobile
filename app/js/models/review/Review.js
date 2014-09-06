@@ -26,6 +26,9 @@
       create: function(data) {
         return Rest.post(data);
       },
+      createTextOnly: function(data) {
+        return Rest.all('text').post(data);
+      },
       destroy: function(id) {
         return Restangular.one('review', id).remove();
       }

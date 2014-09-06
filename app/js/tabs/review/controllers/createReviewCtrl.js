@@ -40,6 +40,7 @@
       params.menu_id = CreateReview.get('menu_id');
       params.rating = CreateReview.get('rating');
       params.text = CreateReview.get('text');
+      Review.createTextOnly(params);
       // options.params = params;
       // ft = new FileTransfer();
       // return ft.upload(imgUrl, encodeURI('http://192.168.1.9:9000/api/reviews'), win, fail, options);
