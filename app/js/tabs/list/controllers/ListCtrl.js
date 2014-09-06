@@ -4,7 +4,7 @@
     var list = this;
     list.items = listInit;
 
-    if (!localStorage.getItem('user_id')) {
+    if (!Auth.isSignedIn()) {
       $state.go('tab.logins');
     }
     else if (!list.items) {
