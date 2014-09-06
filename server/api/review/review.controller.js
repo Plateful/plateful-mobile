@@ -99,6 +99,15 @@ exports.create = function(req, res) {
   res.json("hello")
 };
 
+exports.createTextOnly = function(req, res) {
+  Review.createTextOnly(req.body, function(err, data) {
+    if (err) {
+      return handleError(res, err);
+    }
+    res.json(201, data);
+  });
+}
+
 // PUT http://localhost:9000/api/reviews/:id
 exports.update = function(req, res) {
   Review.update(req.params.id, req.body.review, function(err, data) {
