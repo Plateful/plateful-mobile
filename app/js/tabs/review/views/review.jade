@@ -6,7 +6,7 @@ ion-view(title="Select Your Menu")
         input(type="search" placeholder="Search" ng-model="reviewMenu.nearbyFilter")
   ion-content.bg-grey.has-subheader
     div.list
-      a.item(ng-repeat="menu in reviewMenu.menus | filter:reviewMenu.nearbyFilter" href="#/tab/review/choose-item/{{menu._id}}")
+      a.item(ng-repeat="menu in reviewMenu.menus | orderBy: 'dist'" href="#/tab/review/choose-item/{{menu._id}}")
         //- img(src='{{business.image_url}}')
         h2 {{menu.name}}
         h4.text-left {{menu.address + " - " + menu.city}}
