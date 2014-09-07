@@ -15,7 +15,8 @@
       setAuthToken: setAuthToken,
       refreshUser: refreshUser,
       isSignedIn: isSignedIn,
-      resetSession: resetSession
+      resetSession: resetSession,
+      get: get
     };
 
     function setAuthToken(id, email, token, fbtoken, user) {
@@ -59,6 +60,10 @@
 
     function resetSession() {
       return setAuthToken(null, null);
+    }
+
+    function get(key) {
+      return localStorage.getItem(key);
     }
   };
 

@@ -17,15 +17,14 @@
       login: function() {
         var deferred = $q.defer();
         openFB.login(function(response) {
-            if(response.status === 'connected') {
-              alert('Facebook login succeeded, got access token: ' + response.authResponse.token);
-              return deferred.resolve();
-            }
-            else {
-              alert('Facebook login failed: ' + response.error);
-              return deferred.reject();
-            }
-          }, {scope: 'email,read_stream,publish_stream'});
+          if(response.status === 'connected') {
+            return deferred.resolve();
+          }
+          else {
+            alert('Facebook login failed: ' + response.error);
+            return deferred.reject();
+          }
+        }, {scope: 'email,read_stream,publish_stream'});
         return deferred.promise;
       },
 
@@ -47,8 +46,8 @@
           // params: {fields: 'id, name, email'},
           success: function(data) {
             console.log("yo ",JSON.stringify(data));
-            document.getElementById("userName").innerHTML = data.name;
-            document.getElementById("userPic").src = 'http://graph.facebook.com/' + data.id + '/picture?width=150&height=150';
+            // document.getElementById("userName").innerHTML = data.name;
+            // document.getElementById("userPic").src = 'http://graph.facebook.com/' + data.id + '/picture?width=150&height=150';
           },
           error: this.errorHandler
         });
@@ -116,7 +115,7 @@
       // Facebook token and data in database.
       loginFlow: function () {
         var fbUser = this;
-        this.login()
+        return this.login()
           .then(function(){
             return fbUser.getFbUserCreationData();
           })
@@ -129,7 +128,7 @@
           })
           .then(function(){
             User.status = "Facebook connected!";
-            fbUser.getInfo();
+            // fbUser.getInfo();
             fbUser.getStatus();
           })
           .catch(function(error) {
