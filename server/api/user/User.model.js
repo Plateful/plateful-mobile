@@ -162,7 +162,7 @@ User.prototype.updateParseUser = function(username, updateData, callback) {
 
 var collectQueries = {
   true:  ["START u=node({user_id}), i=node({item_id})",
-          "MATCH u-[:HAS_COLLECTIONS]->(c)",
+          "MERGE u-[:HAS_COLLECTIONS]->(c)",
           "MERGE (c)-[:COLLECTED]->(i)",
           "RETURN i"].join(""),
 
@@ -174,7 +174,7 @@ var collectQueries = {
 
 var bookmarkQueries = {
   true:  ["START u=node({user_id}), i=node({item_id})",
-          "MATCH u-[:HAS_BOOKMARKS]->(c)",
+          "MERGE u-[:HAS_BOOKMARKS]->(c)",
           "MERGE (c)-[:BOOKMARKED]->(i)",
           "RETURN i"].join(""),
 
