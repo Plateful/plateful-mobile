@@ -10,6 +10,7 @@
 
     createReviewView.rating = 0;
     CreateReview.set('item_id', createReviewView.item._id);
+    CreateReview.set('menu_id', createReviewView.item.menu_id);
     CreateReview.set('user_id', Number(Auth.get('user_id')));
     createReviewView.review = CreateReview.get();
 

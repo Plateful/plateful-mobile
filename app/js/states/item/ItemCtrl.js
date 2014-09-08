@@ -10,7 +10,7 @@
    * @param {[type]} Rest          [description]
    */
 
-  var ItemCtrl = function(checkUserCollection, checkUserBookmarks, showSingleItemPhotos, resolvedItem, $scope, $stateParams, Item, User, UserStorage) {
+  var ItemCtrl = function(checkUserCollection, checkUserBookmarks, showSingleItemPhotos, resolvedItem, $scope, $stateParams, Item, User, UserStorage, $state) {
     var vm = this;
 
     // Data from resolve
@@ -34,38 +34,29 @@
 
 
     function showPhotos() {
-      Item
-        .getItemPhotos(vm.item_id)
+      Item.getItemPhotos(vm.item_id)
         .then(function(data){
-          // console.log("photos", data);
           vm.photos = data;
         });
     }
 
     function showReviews() {
-      Item
-        .getItemReviews(this.item_id)
+      Item.getItemReviews(this.item_id)
         .then(function(reviews) {
           vm.reviews = reviews;
         });
-    }
+    };
 
     function reviewItem() {
-
-      alert('item reviewed');
-    }
+      $state.go('tab.review-create', {itemId: vm.item_id});
+    };
 
     function interact(key, bool) {
-
-      User
-        .interactWithItem(key, vm.item._id, !bool)
+      User.interactWithItem(key, vm.item._id, !bool)
         .then(function (data){
-          console.log("collected",data);
           vm['has_' + key] = !bool;
         });
-
-    }
-
+    };
   };
 
   ItemCtrl
@@ -78,7 +69,8 @@
       '$stateParams',
       'MenuItem',
       'User',
-      'UserStorage'
+      'UserStorage',
+      '$state'
     ];
   angular
     .module('app.states.item')
