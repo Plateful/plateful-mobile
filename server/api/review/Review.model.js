@@ -63,6 +63,28 @@ Review.prototype.create = function(item_id, review, callback) {
   }));
 };
 
+Review.prototype.createTextOnly = function(reviewData, callback) {
+  var params = {
+    item_id: reviewData.item_id,
+    user_id: reviewData.user_id,
+    review: {
+      rating: reviewData.rating,
+      reviewText: reviewData.text
+    }
+  };
+  var q = [
+    "START item=node({item_id}), user=node({user_id})",
+    "MATCH (item)-[:HAS_REVIEWS]->(itemReviews:ITEM_REVIEWS)",
+    "MERGE (user)-[:HAS_REVIEWS]->(userReviews:USER_REVIEWS)",
+    "CREATE (itemReviews)-[:HAS_REVIEW]->(review:ITEM_REVIEW {review})",
+    "CREATE (userReviews)-[:HAS_REVIEW]->(review)"
+  ].join(" ");
+
+  db.cypherQuery(q, params, function(err, result) {
+    callback(err, result.data);
+  });
+};
+
 Review.prototype.update = function(review_id, review, callback) {
   var params = {
     review_id: review_id,

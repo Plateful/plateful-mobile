@@ -34,6 +34,20 @@
           templateUrl: "js/states/menu/menu.html",
           controller: "MenuCtrl as vm"
         }
+      },
+      resolve: {
+        menuInit: function(Menu, $stateParams) {
+          return Menu.find($stateParams.menu_id)
+            .then(function(data) {
+              return data;
+            });
+        },
+        menuItemsInit: function(Menu, $stateParams) {
+          return Menu.getMenuItems($stateParams.menu_id)
+            .then(function(data) {
+              return data;
+            });
+        }
       }
     });
 

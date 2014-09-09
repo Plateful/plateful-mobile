@@ -58,7 +58,7 @@
     function destroy(id){
       return Restangular.one('menus', id).delete();
     }
-    function getByLocation(data, cb, filter) {
+    function getByLocation(data, filter) {
       if (filter) {
         nearbyFilter = filter;
       }

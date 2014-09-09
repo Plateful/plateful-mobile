@@ -11,8 +11,6 @@ var Menu = require('./api/menu/menu.controller');
 var Review = require('./api/review/review.controller');
 var User = require('./api/user/user.controller');
 var List = require('./api/list/list.controller');
-var request = require('supertest');
-var should = require('should');
 
 module.exports.applyRoutes = function(app) {
 
@@ -68,6 +66,7 @@ module.exports.applyRoutes = function(app) {
   Reviews.get('/item/:item_id', Review.getByItem);
   Reviews.get('/:id', Review.show);
   Reviews.post('/', Review.create);
+  Reviews.post('/text', Review.createTextOnly);
   Reviews.put('/:id', Review.update);
   Reviews.patch('/:id', Review.update);
   Reviews.delete('/:id', Review.destroy);

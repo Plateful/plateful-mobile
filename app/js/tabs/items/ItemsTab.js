@@ -96,15 +96,17 @@
     /////////////////
 
     // Function for resolving ItemsCtrl
-    function resolveItemsCtrl(BackgroundGeo, MenuItem, $window){
+    function resolveItemsCtrl(BackgroundGeo, MenuItem, $window, $ionicLoading){
       return BackgroundGeo.current()
         .then(function (data){
+          $ionicLoading.show({template: 'Finding dishes near you...'});
           console.info(window.locality.latitude)
           return MenuItem.getByLocation({lat:data.latitude,lng:data.longitude,dist: 1.0}, null)
             .then(function(data) {
               _.each(data, function ( item, index ){
                 item.dist = BackgroundGeo.distance(item.lat, item.lon);
               });
+              $ionicLoading.hide();
               return data;
             });
         });
