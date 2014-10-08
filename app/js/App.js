@@ -18,7 +18,7 @@
     "app.tabs",
     "app.states",
     'google.places'
-    ]);
+  ]);
 
   app.config(function(RestangularProvider) {
 

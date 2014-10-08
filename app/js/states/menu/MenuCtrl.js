@@ -1,6 +1,6 @@
 (function() {
   var addItemCtrl;
-  var MenuCtrl = function($rootScope, $scope, $stateParams, Menu, MenuItem, $ionicModal, $ionicLoading, $compile, Auth, ngGPlacesAPI, BackgroundGeo, menuInit, menuItemsInit) {
+  var MenuCtrl = function($scope, $stateParams, Menu, $ionicModal, $compile, Auth, ngGPlacesAPI, BackgroundGeo, menuInit, menuItemsInit) {
 
     var vm = this;
 
@@ -52,13 +52,10 @@
   };
 
   MenuCtrl.$inject = [
-    '$rootScope',
     '$scope',
     '$stateParams',
     'Menu',
-    'MenuItem',
     '$ionicModal',
-    '$ionicLoading',
     '$compile',
     'Auth',
     'ngGPlacesAPI',
