@@ -62,6 +62,9 @@ a.menu-card {
   float: left;
   text-decoration: none;
 }
+a.menu-card.new-row {
+  clear: both;
+}
 a.menu-card .menu-card-content {
   // min-height: 270px;
   background-color: #ffffff;

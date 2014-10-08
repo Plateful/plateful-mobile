@@ -8,8 +8,8 @@ ion-view(title="List")
 
     ion-list(ng-show="list.viewCollection")
 
-      a.menu-card(ng-repeat="item in list.collection")
-        div.menu-card-content
+      a.menu-card(ng-repeat="item in list.collection"  ng-class="{'new-row': $index%2===0}")
+        div.menu-card-content(ui-sref="tab.items-item({itemId: item._id})")
           img(src="{{item.image}}")
           div.menu-card-footer
             div {{item.name | limitTo:30 }}
@@ -24,8 +24,8 @@ ion-view(title="List")
 
     ion-list(ng-show="list.viewBookmarks")
 
-      a.menu-card(ng-repeat="item in list.bookmarks")
-        div.menu-card-content
+      a.menu-card(ng-repeat="item in list.bookmarks" ng-class="{'new-row': $index%2===0}")
+        div.menu-card-content(ui-sref="tab.items-item({itemId: item._id})")
           img(src="{{item.image}}")
           div.menu-card-footer
             div {{item.name | limitTo:30 }}
