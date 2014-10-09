@@ -10,10 +10,10 @@ ion-view(title="Login")
           span.input-label Password
           input(type="password" ng-model="login.password")
 
-      button.button.button-balanced.button-block(ng-click="login.loginModal.hide()" ng-hide="login.isSignedIn") Login
+      button.button.assertive.button-block(ng-click="login.loginModal.hide()" ng-hide="login.isSignedIn") Login
     div.button-bar(ng-hide="login.isSignedIn")
-      button.button.button-block.button-calm(ng-click="login.signupModal.show()") Create Account
-      button.button.button-block.button-facebook-style(ng-click="login.fbLoginFlow()") Login with Facebook
+      button.button.button-block.button-assertive(ng-click="login.signupModal.show()") Create Account
+      button.button.button-block.button-facebook-style(ng-click="login.fbLoginFlow()") Facebook Login
 
     button.button.button-block.assertive(ng-click="login.nativeLogout()" ng-show="login.isSignedIn") Logout
 

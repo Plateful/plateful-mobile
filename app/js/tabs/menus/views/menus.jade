@@ -20,11 +20,14 @@ ion-view(hide-nav-bar="true" id="places")
 
   ion-content(class="has-header has-header")
     //- div result: {{result1}}
-    ion-list
+    div.list
 
-      ion-item.item-avatar(ng-repeat="location in vm.locations" type="item-text-wrap" href="#/tab/menus/menu/{{location.place_id}}")
-        img(ng-src="{{location.photos[0].getUrl({'maxWidth': 65, 'maxHeight': 65})}}")
+      a.item(ng-repeat="location in vm.locations | orderBy: 'dist'" type="item-text-wrap" href="#/tab/menus/menu/{{location._id}}")
         h2 {{location.name}}
+        h4.text-left {{location.address + " - " + location.city}}
+        span.text-right
+          i.icon.ion-navigate(style="color:grey;") &nbsp
+          span {{location.dist}} mi
 
 
 

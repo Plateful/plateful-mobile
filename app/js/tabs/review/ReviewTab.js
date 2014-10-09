@@ -19,7 +19,7 @@
           },
           reviewMenuInit: function(Menu, BackgroundGeo, $ionicLoading) {
             var coords = this.resolve.locationData();
-            $ionicLoading.show({template:'Loading Menus...'});
+            $ionicLoading.show({template:'Finding Nearby Restaurants...'});
             return Menu.getByLocation(coords, null)
               .then(function(menus) {
                 // Add distance from user to each menu.
