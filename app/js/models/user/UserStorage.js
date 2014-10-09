@@ -55,7 +55,7 @@
 
     function getFromLocalStorage(key){
       var q = $q.defer();
-      if( Object.keys(storage[key]).length ) q.resolve(storage[key]);
+      if( Object.keys(storage[key]).length || !localStorage.user_id ) q.resolve(storage[key]);
       else {
         return sync(key).then(function(data){
           return storage[key];
