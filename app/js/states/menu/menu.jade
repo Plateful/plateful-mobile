@@ -20,7 +20,7 @@ ion-view(title="{{vm.menu.name}}")
       div.item-divider
       a.menu-card(ng-repeat="item in vm.items" href="#/tab/items/item/{{item._id}}")
         div.menu-card-content
-          img(src='{{item.image}}')
+          img(ng-src='{{item.image}}')
           div.menu-card-footer
             div {{item.name}}
             div.text-left.assertive ★★★★
