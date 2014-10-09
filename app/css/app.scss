@@ -62,6 +62,9 @@ a.menu-card {
   float: left;
   text-decoration: none;
 }
+a.menu-card.new-row {
+  clear: both;
+}
 a.menu-card .menu-card-content {
   // min-height: 270px;
   background-color: #ffffff;
@@ -301,4 +304,17 @@ $button-facebook-active-border:  darken($facebook, 15%) !default;
   background-color: #ffffff;
   background: #ffffff;
   color: #fc3d39;
+}
+#splash-page {
+  text-align: center;
+  #plateful-logo {
+    margin: 50px 0 30px 0;
+    background: url("../img/plateful-logo.png") no-repeat scroll center top;
+    background-size: contain;
+    height: 200px;
+  }
+  a {
+    text-decoration: none;
+    font-size: 14px;
+  }
 }

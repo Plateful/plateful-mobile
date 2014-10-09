@@ -5,6 +5,7 @@
     "ngPlaces",
     "ngBackImg",
     "ngAutocomplete",
+    "ngFadeIn"
     // "googleAutocomplete"
   ])
   .directive('googleplace', function() {

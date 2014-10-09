@@ -13,7 +13,7 @@ ion-view(hide-nav-bar="true")
     //- ng-single-select(options="options")
     div(class="list card" ng-repeat="item in vm.items | orderBy: 'dist' | filter:vm.itemsFilter" ng-click="vm.storeItem(item)")
       div(class="item item-image")
-        img(src='{{item.image}}')
+        img(ng-src='{{item.image}}')
 
       a(class="item" href="#/tab/items/item/{{item._id}}")
         div {{item.name | limitTo:30 }}

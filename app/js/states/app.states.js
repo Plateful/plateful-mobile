@@ -4,6 +4,7 @@
       "app.states.menu",
       "app.states.item",
       "app.states.map",
-      "app.states.login"
+      "app.states.login",
+      "app.states.splash"
     ]);
 }).call(this);

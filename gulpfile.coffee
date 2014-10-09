@@ -58,7 +58,7 @@ ENV_GLOBALS =
     BUNDLE_ID: "com.jtomaszewski.ionicstarter.production"
     BUNDLE_NAME: "Plateful"
 
-    BACKEND_URL: "http://server4dave.cloudapp.net:9000"
+    BACKEND_URL: "http://platefulserver.herokuapp.com"
     WEINRE_ADDRESS: null
 
     # If those 2 variables are defined, the app will be deployed to the remote server after compiling the release.

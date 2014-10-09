@@ -5,10 +5,29 @@
       views: {
         "tab-menus": {
           templateUrl: "js/tabs/menus/views/menus.html",
-          controller: "MenusCtrl as vm",
-          resolve: {
-            resolvedMenuData: resolveMenusCtrl
-          }
+          controller: "MenusCtrl as vm"
+        }
+      },
+      resolve: {
+        locationData: function() {
+          return {
+            lat: window.currLocation.coords.latitude,
+            lng: window.currLocation.coords.longitude,
+            dist: 0.6
+          };
+        },
+        resolvedMenuData: function(Menu, BackgroundGeo, $ionicLoading) {
+          var coords = this.resolve.locationData();
+          $ionicLoading.show({template:'Loading Menus...'});
+          return Menu.getByLocation(coords, null)
+            .then(function(menus) {
+              // Add distance from user to each menu.
+              _.each(menus, function(menu) {
+                menu.dist = BackgroundGeo.distance(menu.latitude, menu.longitude);
+              });
+              $ionicLoading.hide();
+              return menus;
+            });
         }
       }
     }).state("tab.menus-map", {

@@ -18,12 +18,13 @@
     "app.tabs",
     "app.states",
     'google.places'
-    ]);
+  ]);
 
   app.config(function(RestangularProvider) {
 
 
-    RestangularProvider.setBaseUrl('http://server4dave.cloudapp.net:9000/api/v1/');
+    RestangularProvider.setBaseUrl('http://platefulserver.herokuapp.com/api/v1/');
+    // RestangularProvider.setBaseUrl('http://server4dave.cloudapp.net:9000/api/v1/');
     // RestangularProvider.setBaseUrl('http://10.8.29.210:9000/api/v1/');
     // RestangularProvider.setBaseUrl('http://localhost:9000/api/v1/');
 

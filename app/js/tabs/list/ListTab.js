@@ -10,9 +10,11 @@ angular
         }
       },
       resolve: {
-        listInit: function(List, $q) {
+        listInit: function(List, $q, $ionicLoading) {
+          $ionicLoading.show({template:'Loading Bookmarks...'});
           return List.getList()
             .then(function(data) {
+              $ionicLoading.hide();
               if (data.itemArray.length === 0) {
                 return null;
               }

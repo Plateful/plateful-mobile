@@ -9,7 +9,7 @@
           service;
           infowindow;
           var compiled, contentString, infowindow, map, mapOptions, marker, myLatlng, request, service;
-          myLatlng = new google.maps.LatLng(43.07493, -89.381388);
+          myLatlng = new google.maps.LatLng(window.currLocation.coords.latitude, window.currLocation.coords.longitude);
           mapOptions = {
             center: myLatlng,
             zoom: 16,
