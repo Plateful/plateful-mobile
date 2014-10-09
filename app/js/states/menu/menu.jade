@@ -15,7 +15,7 @@ ion-view(title="{{vm.menu.name}}")
             h4 {{vm.menu.city}}, {{vm.menu.state}}
             i.icon.ion-navigate(style="color:grey;") &nbsp{{vm.menu.distance}}mi
           div.menu-banner-left
-            iframe(src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d6306.533204574925!2d-122.4091305!3d37.78379139999996!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1406251064525" width="50%" height="200px" frameborder="0" style="border:0")
+            iframe(ng-src="{{vm.placeUrl}}" width="50%" height="200px" frameborder="0" style="border:0")
 
       div.item-divider
       a.menu-card(ng-repeat="item in vm.items" href="#/tab/items/item/{{item._id}}")
