@@ -3,7 +3,7 @@
   var FbLogin;
   FbLogin = function(Restangular, $q, Auth, User) {
     // Defaults to sessionStorage for storing the Facebook token
-    openFB.init({appId: '1495225764050843'});
+    openFB.init({appId: '571600419638677'});
     console.log("i'm in");
     FbUser = Restangular.all('users');
 
