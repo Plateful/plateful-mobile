@@ -1,7 +1,7 @@
 module.exports = {
   // Production:
-  appId: '1495225764050843',
-  appSecret: '3bb65403e3c2d3d54a0a45ee52383920'
+  appId: '571600419638677',
+  appSecret: '3e3ddd76ce6301e005cc9ca28d0350ef'
 
   // Development:
   // appId: '1506017746304978',
